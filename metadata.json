@@ -1,0 +1,6 @@
+{
+  "name": "Mission Villa Senior Living",
+  "description": "Compassionate Memory Care and Respite Care in a welcoming, homelike community at 995 East Market Street, Daly City, CA.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

@@ -1,0 +1,1705 @@
+<!DOCTYPE html>
+<html lang="en" class="lenis">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mission Villa Senior Living | The Honor They Deserve, The Care You'll Love</title>
+
+  <!-- Google Fonts: Lora (Primary), Poppins (Secondary), Allura (Script Accent) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Allura&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            plum: { DEFAULT: '#3B2348', dark: '#23122C', light: '#533564' },
+            sage: { DEFAULT: '#8FAF78', light: '#E6EFE0', dark: '#64854E' },
+            sand: { DEFAULT: '#D8C7A5', light: '#EFE7D6', dark: '#BFA97E' },
+            terracotta: { DEFAULT: '#C98268', light: '#F5E4DD', dark: '#AC6247' },
+            cream: { DEFAULT: '#F7F4ED', paper: '#FCFBF7' },
+            charcoal: { DEFAULT: '#29272B', muted: '#5C5861' }
+          },
+          fontFamily: {
+            serif: ['Lora', 'Georgia', 'serif'],
+            sans: ['Poppins', 'system-ui', 'sans-serif'],
+            script: ['Allura', 'cursive']
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    :root {
+      --plum: #3B2348;
+      --sage: #8FAF78;
+      --sand: #D8C7A5;
+      --terracotta: #C98268;
+      --cream: #F7F4ED;
+      --cream-paper: #FCFBF7;
+      --charcoal: #29272B;
+      /* Full-Width Fluid Gutter: Scales from 20px on mobile to 112px on 4K Ultrawide */
+      --gutter: clamp(1.25rem, 4.5vw, 7rem);
+      --font-scale: 1;
+      --curve-r: 32px;
+    }
+
+    html {
+      font-size: calc(16px * var(--font-scale));
+      background-color: var(--cream);
+      color: var(--charcoal);
+      overflow-x: hidden;
+    }
+
+    /* Lenis Smooth Scroll Setup */
+    html.lenis, html.lenis body { height: auto; }
+    .lenis.lenis-smooth { scroll-behavior: auto !important; }
+    .lenis.lenis-stopped { overflow: hidden; }
+
+    /* Full-Width Fluid Container (Zero Box Constraint) */
+    .fluid-canvas {
+      width: 100%;
+      padding-left: var(--gutter);
+      padding-right: var(--gutter);
+    }
+
+    /* Fluid Ultrawide Typography Scales */
+    .hero-display {
+      font-size: clamp(2.6rem, 4.3vw + 0.75rem, 6.4rem);
+      line-height: 1.04;
+      letter-spacing: -0.022em;
+    }
+    .section-display {
+      font-size: clamp(2.1rem, 3.1vw + 0.5rem, 4.6rem);
+      line-height: 1.08;
+      letter-spacing: -0.018em;
+    }
+    .script-display {
+      font-size: clamp(2.1rem, 2.4vw + 0.75rem, 3.75rem);
+      line-height: 1;
+    }
+
+    /* Split-Line Mask Helpers for Choreographed Text Timelines */
+    .line-mask {
+      overflow: hidden;
+      display: block;
+      padding-bottom: 0.08em;
+    }
+    .line-inner {
+      display: block;
+      will-change: transform;
+    }
+
+    /* Exposed Architectural Grid Lines for Ultrawide Polish */
+    .grid-line-b { border-bottom: 1px solid rgba(59, 35, 72, 0.12); }
+    .grid-line-t { border-top: 1px solid rgba(59, 35, 72, 0.12); }
+    .grid-line-r { border-right: 1px solid rgba(59, 35, 72, 0.12); }
+
+    /* Warm Sunlight Brand Color Grading Filter (Matches Mood Board PDF) */
+    .mood-grade {
+      filter: sepia(10%) saturate(108%) contrast(102%);
+      will-change: transform;
+    }
+
+    /* =====================================================================
+       SURGICAL INVERTED-RADIUS CORNER CUTOUT SYSTEM (BENTO NEGATIVE SPACE)
+    ====================================================================== */
+    .bento-frame {
+      position: relative;
+      border-radius: var(--curve-r);
+      overflow: hidden;
+    }
+
+    /* 1. Bottom-Right Cutout on Soft Cream (#F7F4ED) */
+    .cutout-br-cream {
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      background-color: var(--cream);
+      border-top-left-radius: var(--curve-r);
+      padding: 16px 0 0 16px;
+      z-index: 25;
+    }
+    .cutout-br-cream::before {
+      content: "";
+      position: absolute;
+      top: calc(var(--curve-r) * -1);
+      right: 0;
+      width: var(--curve-r);
+      height: var(--curve-r);
+      border-bottom-right-radius: var(--curve-r);
+      box-shadow: 16px 16px 0 16px var(--cream);
+      pointer-events: none;
+    }
+    .cutout-br-cream::after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: calc(var(--curve-r) * -1);
+      width: var(--curve-r);
+      height: var(--curve-r);
+      border-bottom-right-radius: var(--curve-r);
+      box-shadow: 16px 16px 0 16px var(--cream);
+      pointer-events: none;
+    }
+
+    /* 2. Top-Left Cutout on Soft Cream (#F7F4ED) */
+    .cutout-tl-cream {
+      position: absolute;
+      top: 0;
+      left: 0;
+      background-color: var(--cream);
+      border-bottom-right-radius: var(--curve-r);
+      padding: 0 16px 16px 0;
+      z-index: 25;
+    }
+    .cutout-tl-cream::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      right: calc(var(--curve-r) * -1);
+      width: var(--curve-r);
+      height: var(--curve-r);
+      border-top-left-radius: var(--curve-r);
+      box-shadow: -16px -16px 0 16px var(--cream);
+      pointer-events: none;
+    }
+    .cutout-tl-cream::after {
+      content: "";
+      position: absolute;
+      bottom: calc(var(--curve-r) * -1);
+      left: 0;
+      width: var(--curve-r);
+      height: var(--curve-r);
+      border-top-left-radius: var(--curve-r);
+      box-shadow: -16px -16px 0 16px var(--cream);
+      pointer-events: none;
+    }
+
+    /* 3. Bottom-Left Cutout on Soft Cream (#F7F4ED) */
+    .cutout-bl-cream {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      background-color: var(--cream);
+      border-top-right-radius: var(--curve-r);
+      padding: 16px 16px 0 0;
+      z-index: 25;
+    }
+    .cutout-bl-cream::before {
+      content: "";
+      position: absolute;
+      top: calc(var(--curve-r) * -1);
+      left: 0;
+      width: var(--curve-r);
+      height: var(--curve-r);
+      border-bottom-left-radius: var(--curve-r);
+      box-shadow: -16px 16px 0 16px var(--cream);
+      pointer-events: none;
+    }
+    .cutout-bl-cream::after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      right: calc(var(--curve-r) * -1);
+      width: var(--curve-r);
+      height: var(--curve-r);
+      border-bottom-left-radius: var(--curve-r);
+      box-shadow: -16px 16px 0 16px var(--cream);
+      pointer-events: none;
+    }
+
+    /* 4. Bottom-Right Cutout on Deep Plum (#3B2348) */
+    .cutout-br-plum {
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      background-color: var(--plum);
+      border-top-left-radius: var(--curve-r);
+      padding: 16px 0 0 16px;
+      z-index: 25;
+    }
+    .cutout-br-plum::before,
+    .cutout-br-plum::after {
+      content: "";
+      position: absolute;
+      width: var(--curve-r);
+      height: var(--curve-r);
+      border-bottom-right-radius: var(--curve-r);
+      box-shadow: 16px 16px 0 16px var(--plum);
+      pointer-events: none;
+    }
+    .cutout-br-plum::before { top: calc(var(--curve-r) * -1); right: 0; }
+    .cutout-br-plum::after { bottom: 0; left: calc(var(--curve-r) * -1); }
+
+    /* Custom Range Sliders */
+    input[type=range] {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 100%;
+      background: transparent;
+    }
+    input[type=range]::-webkit-slider-runnable-track {
+      width: 100%;
+      height: 10px;
+      cursor: pointer;
+      background: #EFE7D6;
+      border-radius: 999px;
+      border: 1px solid #D8C7A5;
+    }
+    input[type=range]::-webkit-slider-thumb {
+      height: 26px;
+      width: 26px;
+      border-radius: 50%;
+      background: #C98268;
+      border: 3px solid #FCFBF7;
+      box-shadow: 0 4px 12px rgba(59, 35, 72, 0.3);
+      cursor: pointer;
+      -webkit-appearance: none;
+      margin-top: -9px;
+      transition: transform 0.15s ease, background-color 0.15s ease;
+    }
+    input[type=range]::-webkit-slider-thumb:hover {
+      transform: scale(1.15);
+      background: #3B2348;
+    }
+
+    /* Scroll Progress Bar */
+    #scroll-progress {
+      transform-origin: left center;
+      transform: scaleX(0);
+    }
+  </style>
+</head>
+
+<body class="font-sans antialiased selection:bg-plum selection:text-cream">
+
+  <!-- Top Fixed Scroll Timeline Progress Ribbon -->
+  <div id="scroll-progress" class="fixed top-0 left-0 right-0 h-1 bg-gradient-to-r from-plum via-sage to-terracotta z-50"></div>
+
+  <!-- =====================================================================
+       1. EDGE-TO-EDGE SENIOR ACCESSIBILITY & CLINICAL ADVISORY BAR
+  ====================================================================== -->
+  <div class="w-full bg-plum text-cream/90 text-xs sm:text-sm py-2.5 fluid-canvas border-b border-white/10 relative z-40">
+    <div class="w-full flex flex-wrap items-center justify-between gap-4">
+      <div class="flex items-center gap-4">
+        <span class="inline-flex items-center gap-2 font-medium text-sand">
+          <span class="w-2 h-2 rounded-full bg-sage animate-ping"></span>
+          <span>Live Sanctuary Status: 2 Sunlit Garden Suites Available for Autumn</span>
+        </span>
+        <span class="hidden xl:inline text-white/20">|</span>
+        <span class="hidden xl:inline text-cream/75">A Flagship Community of <strong>Peninsula Senior Living</strong></span>
+      </div>
+
+      <div class="flex items-center gap-6 ml-auto">
+        <!-- Senior-Friendly Typography Scale Controller -->
+        <div class="flex items-center gap-1.5 bg-white/10 rounded-full px-3 py-1" role="group" aria-label="Text Size">
+          <span class="text-sand text-xs mr-1 hidden sm:inline">Reading Scale:</span>
+          <button onclick="setFontScale(1)" id="scale-1" class="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-sand text-plum transition">A</button>
+          <button onclick="setFontScale(1.08)" id="scale-2" class="px-2.5 py-0.5 rounded-full text-xs font-semibold text-cream hover:bg-white/10 transition">A+</button>
+          <button onclick="setFontScale(1.15)" id="scale-3" class="px-2.5 py-0.5 rounded-full text-xs font-semibold text-cream hover:bg-white/10 transition">A++</button>
+        </div>
+
+        <a href="tel:18005558455" class="inline-flex items-center gap-2 font-medium text-cream hover:text-sand transition">
+          <span class="w-2 h-2 rounded-full bg-terracotta"></span>
+          <span>24/7 Registered Nurse & Family Desk: <strong>(800) 555-VILLA</strong></span>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- =====================================================================
+       2. FULL-WIDTH ARCHITECTURAL NAVIGATION
+  ====================================================================== -->
+  <header class="sticky top-0 z-40 w-full bg-cream/90 backdrop-blur-md grid-line-b fluid-canvas">
+    <div class="w-full h-20 sm:h-24 flex items-center justify-between gap-6">
+      
+      <!-- Brand Identity Lockup with Animated SVG Path Emblem -->
+      <a href="#" class="flex items-center gap-4 group">
+        <div class="w-12 h-12 sm:w-14 sm:h-14 flex-shrink-0">
+          <svg id="brand-emblem-svg" viewBox="0 0 120 110" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-full h-full">
+            <defs>
+              <linearGradient id="plumGrad" x1="10" y1="10" x2="60" y2="95" gradientUnits="userSpaceOnUse">
+                <stop offset="0%" stop-color="#5B3270"/>
+                <stop offset="55%" stop-color="#3B2348"/>
+                <stop offset="100%" stop-color="#22112B"/>
+              </linearGradient>
+              <linearGradient id="sageGrad" x1="35" y1="8" x2="65" y2="100" gradientUnits="userSpaceOnUse">
+                <stop offset="0%" stop-color="#C5DFB0"/>
+                <stop offset="50%" stop-color="#8FAF78"/>
+                <stop offset="100%" stop-color="#3D682E"/>
+              </linearGradient>
+              <linearGradient id="terraGrad" x1="115" y1="30" x2="48" y2="102" gradientUnits="userSpaceOnUse">
+                <stop offset="0%" stop-color="#E57B52"/>
+                <stop offset="50%" stop-color="#C98268"/>
+                <stop offset="100%" stop-color="#9A482B"/>
+              </linearGradient>
+              <linearGradient id="sandGrad" x1="25" y1="70" x2="52" y2="102" gradientUnits="userSpaceOnUse">
+                <stop offset="0%" stop-color="#F5E6C8"/>
+                <stop offset="100%" stop-color="#D8C7A5"/>
+              </linearGradient>
+            </defs>
+            <path class="emblem-petal" d="M26 74C34 80 45 84 48 104C36 93 29 84 26 74Z" fill="url(#sandGrad)" />
+            <path class="emblem-petal" d="M28 6C5 34 4 68 32 80C42 84 47 92 48 104C49 85 40 66 32 48C25 32 24 18 28 6Z" fill="url(#plumGrad)" />
+            <path class="emblem-petal" d="M28 6C26 26 36 46 47 64C55 77 54 92 48 104C66 86 72 60 56 38C44 22 33 16 28 6Z" fill="url(#sageGrad)" />
+            <path class="emblem-petal" d="M114 34C82 42 64 58 64 78C64 89 56 97 48 104C76 94 96 76 114 34Z" fill="url(#terraGrad)" />
+            <path class="emblem-vein" d="M28 6C26 32 46 66 48 104" stroke="#F7F4ED" stroke-width="1.75" stroke-linecap="round"/>
+            <path class="emblem-vein" d="M114 34C86 56 68 78 48 104" stroke="#F7F4ED" stroke-width="1.75" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <div>
+          <span class="block font-serif text-xl sm:text-2xl font-bold tracking-tight text-plum leading-none">MISSION VILLA</span>
+          <span class="block font-sans text-[11px] sm:text-xs tracking-[0.28em] uppercase text-charcoal/75 font-medium mt-1">Senior Living</span>
+        </div>
+      </a>
+
+      <!-- Center Full-Width Editorial Links -->
+      <nav class="hidden 2xl:flex items-center gap-10 text-sm font-medium text-charcoal">
+        <a href="#pinned-pillars" class="hover:text-plum transition py-2">Nature · People · Purpose</a>
+        <a href="#care-cockpit" class="hover:text-plum transition py-2">Interactive Care Diagnostic</a>
+        <a href="#cad-suites" class="hover:text-plum transition py-2">Live CAD Floorplans</a>
+        <a href="#horizontal-day" class="hover:text-plum transition py-2">24-Hour Sanctuary Filmstrip</a>
+        <a href="#value-engine" class="hover:text-plum transition py-2">Financial Value Engine</a>
+      </nav>
+
+      <!-- Right Conversion CTAs -->
+      <div class="flex items-center gap-3 sm:gap-4">
+        <a href="#care-cockpit" class="hidden md:inline-flex items-center gap-2 px-5 py-2.5 rounded-full border border-plum/25 text-plum font-medium text-sm hover:bg-plum hover:text-cream transition">
+          <span>Assess Care Fit (45s)</span>
+        </a>
+        <a href="#reserve-tour" class="inline-flex items-center gap-2.5 px-6 py-3.5 rounded-full bg-terracotta text-white font-medium text-sm shadow-lg shadow-terracotta/25 hover:bg-plum transition-all duration-300">
+          <span>Reserve a Chef’s Lunch Tour</span>
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+        </a>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- =====================================================================
+       3. ULTRAWIDE FULL-VIEWPORT HERO WITH INVERTED-RADIUS BENTO ARCHITECTURE
+  ====================================================================== -->
+  <section id="hero-stage" class="w-full pt-8 pb-16 lg:pt-12 lg:pb-24 fluid-canvas grid-line-b">
+    
+    <!-- Row 1: Asymmetric 12-Column Editorial Header Across Full Viewport -->
+    <div class="w-full grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-end mb-8 lg:mb-12">
+      
+      <div class="lg:col-span-8 space-y-2">
+        <div class="flex flex-wrap items-center gap-4 mb-2">
+          <span class="font-script script-display text-terracotta hero-badge-reveal">A Place to Belong</span>
+          <span class="px-4 py-1.5 rounded-full bg-sand/40 border border-sand text-plum text-xs uppercase tracking-[0.22em] font-semibold hero-badge-reveal">
+            Inspired by Nature · Designed for a Brighter Tomorrow
+          </span>
+        </div>
+
+        <h1 class="font-serif hero-display text-plum font-semibold">
+          <span class="line-mask"><span class="line-inner hero-line">The honor they deserve,</span></span>
+          <span class="line-mask"><span class="line-inner hero-line italic font-normal text-terracotta">the care you’ll love.</span></span>
+        </h1>
+      </div>
+
+      <div class="lg:col-span-4 flex flex-col justify-between space-y-6 lg:border-l lg:border-plum/15 lg:pl-10">
+        <p class="text-charcoal/85 text-base sm:text-lg leading-relaxed max-w-[54ch] hero-sub-reveal">
+          Senior living shouldn’t feel like surrendering autonomy—it should feel like stepping into a sunlit botanical sanctuary where clinical peace of mind meets five-star warmth.
+        </p>
+
+        <div class="flex flex-wrap items-center gap-3 hero-sub-reveal">
+          <a href="#reserve-tour" class="px-7 py-4 rounded-full bg-plum text-cream font-medium text-sm sm:text-base hover:bg-terracotta transition-all duration-300 inline-flex items-center gap-3 shadow-xl">
+            <span>Experience a Chef’s Lunch Tour</span>
+            <span>→</span>
+          </a>
+          <a href="#care-cockpit" class="px-6 py-4 rounded-full bg-cream-paper border border-sand text-plum font-medium text-sm sm:text-base hover:border-plum transition">
+            <span>Run Care Fit Diagnostic</span>
+          </a>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Row 2: Full-Width Asymmetric Bento Panorama with Inverted Radius Cutouts -->
+    <div class="w-full grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-stretch">
+      
+      <!-- Left 8 Columns: Main Sunlit Conservatory Portal (Matches Brand Mood Board Interior) -->
+      <div class="lg:col-span-8 bento-frame min-h-[460px] sm:min-h-[580px] xl:min-h-[660px] relative bg-plum group" id="hero-portal-frame">
+        <img
+          id="hero-main-img"
+          src="https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=2000&q=85"
+          alt="Sunlit Mission Villa Grand Conservatory with lush indoor palm trees, warm timber beams, and sunlit seating"
+          class="w-full h-[118%] object-cover object-center mood-grade -mt-[5%]"
+        />
+        <div class="absolute inset-0 bg-gradient-to-t from-plum/75 via-plum/15 to-transparent"></div>
+
+        <!-- Top-Left Inverted Radius Corner Cutout Pod -->
+        <div class="cutout-tl-cream">
+          <div class="bg-cream-paper border border-sand px-4 py-2.5 rounded-2xl flex items-center gap-3 shadow-sm">
+            <span class="w-3 h-3 rounded-full bg-sage"></span>
+            <span class="text-xs font-semibold uppercase tracking-wider text-plum">01 · Sunlit Palm Conservatory</span>
+          </div>
+        </div>
+
+        <!-- Bottom-Left Editorial Caption Overlay -->
+        <div class="absolute bottom-7 left-7 right-64 hidden sm:block text-cream z-10">
+          <p class="text-xs uppercase tracking-[0.2em] text-sand font-semibold mb-1">Biophilic Daylight Architecture</p>
+          <p class="font-serif text-xl xl:text-2xl italic leading-snug max-w-lg">
+            “Floor-to-ceiling south windows bathe our palm lounge in natural warmth from 7 AM to golden hour.”
+          </p>
+        </div>
+
+        <!-- Bottom-Right Inverted Radius Corner Cutout CTA Pod -->
+        <div class="cutout-br-cream">
+          <a href="#care-cockpit" class="flex items-center gap-4 bg-plum text-cream px-6 py-4 rounded-2xl hover:bg-terracotta transition-all duration-300 shadow-lg group/btn">
+            <div>
+              <span class="block text-[10px] uppercase tracking-[0.2em] text-sand">Interactive Decision Tool</span>
+              <span class="block font-serif text-base sm:text-lg font-semibold">Match Your Parent’s Care Needs</span>
+            </div>
+            <span class="w-10 h-10 rounded-full bg-white/15 flex items-center justify-center group-hover/btn:rotate-45 transition-transform">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M7 17L17 7M17 7H7M17 7V17"/></svg>
+            </span>
+          </a>
+        </div>
+      </div>
+
+      <!-- Right 4 Columns: Dual Stacked Mood-Board Bento Cards (Olive Grove + Blooming Cosmos) -->
+      <div class="lg:col-span-4 flex flex-col gap-6 lg:gap-8 justify-between">
+        
+        <!-- Upper Card: Olive Grove & Nature Pillar (Matches PDF Olive Branch Photo) -->
+        <div class="bento-frame flex-1 min-h-[270px] bg-plum text-cream p-7 sm:p-8 flex flex-col justify-between relative group hero-side-card">
+          <img
+            src="https://images.unsplash.com/photo-1509316975850-ff9c5deb0cd9?auto=format&fit=crop&w=1000&q=85"
+            alt="Mediterranean olive tree branches in warm sunlight"
+            class="absolute inset-0 w-full h-full object-cover opacity-45 mood-grade group-hover:scale-105 transition-transform duration-700"
+          />
+          <div class="absolute inset-0 bg-gradient-to-br from-plum/90 via-plum/60 to-transparent"></div>
+
+          <div class="relative z-10 flex items-center justify-between">
+            <span class="px-3 py-1 rounded-full bg-sage/30 border border-sage text-sand text-xs uppercase tracking-widest font-semibold">
+              Nature · People · Purpose
+            </span>
+            <span class="text-xs font-mono text-sand">2.4 ACRES</span>
+          </div>
+
+          <div class="relative z-10 space-y-2 my-auto pt-6 pr-12">
+            <h2 class="font-serif text-2xl sm:text-3xl font-semibold leading-tight">
+              Level Olive Groves & Sensory Courtyards.
+            </h2>
+            <p class="text-xs sm:text-sm text-cream/85 leading-relaxed">
+              Zero-step botanical walking loops engineered to restore balance, lower blood pressure, and spark daily joy.
+            </p>
+          </div>
+
+          <!-- Inverted Cutout Bottom Right -->
+          <div class="cutout-br-cream">
+            <div class="w-12 h-12 rounded-2xl bg-sage text-plum flex items-center justify-center font-serif font-bold text-lg">
+              🌿
+            </div>
+          </div>
+        </div>
+
+        <!-- Lower Card: Blooming Cosmos & Clinical Trust Metrics (Matches PDF Pink Cosmos Flower) -->
+        <div class="bento-frame flex-1 min-h-[270px] bg-sand/35 border border-sand p-7 sm:p-8 flex flex-col justify-between relative hero-side-card">
+          <div class="flex items-start justify-between gap-4">
+            <div class="space-y-1">
+              <span class="text-xs uppercase tracking-[0.2em] text-terracotta-dark font-semibold block">Comfort · Community · Belonging</span>
+              <h3 class="font-serif text-2xl text-plum font-semibold">Living Fully Every Day.</h3>
+            </div>
+            <img
+              src="https://images.unsplash.com/photo-1490750967868-88aa4486c946?auto=format&fit=crop&w=300&q=80"
+              alt="Blooming pink cosmos flower in golden hour sunlight"
+              class="w-16 h-16 rounded-2xl object-cover border border-sand shadow-sm flex-shrink-0"
+            />
+          </div>
+
+          <!-- Live Telemetry Counters -->
+          <div class="grid grid-cols-3 gap-3 pt-4 border-t border-sand my-auto">
+            <div>
+              <p class="font-serif text-2xl sm:text-3xl font-bold text-plum"><span class="stat-counter" data-target="98">0</span>%</p>
+              <p class="text-[11px] text-charcoal/75 mt-0.5">Family Peace-of-Mind Rating</p>
+            </div>
+            <div>
+              <p class="font-serif text-2xl sm:text-3xl font-bold text-plum">1:<span class="stat-counter" data-target="5">0</span></p>
+              <p class="text-[11px] text-charcoal/75 mt-0.5">Care Partner-to-Resident Ratio</p>
+            </div>
+            <div>
+              <p class="font-serif text-2xl sm:text-3xl font-bold text-plum"><span class="stat-counter" data-target="24">0</span>/7</p>
+              <p class="text-[11px] text-charcoal/75 mt-0.5">On-Site Licensed Nursing</p>
+            </div>
+          </div>
+
+          <div class="flex items-center justify-between text-xs text-plum font-semibold pt-2">
+            <span>Audited Clinical & Hospitality Excellence</span>
+            <a href="#pinned-pillars" class="text-terracotta-dark hover:underline">Explore Our 3 Pillars ↓</a>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- =====================================================================
+       4. PINNED SCROLLTRIGGER MASTER TIMELINE: NATURE · PEOPLE · PURPOSE
+          (300vh Pinned Stage with Scrubbed Clip-Path Curtains & Telemetry)
+  ====================================================================== -->
+  <section id="pinned-pillars" class="w-full bg-plum text-cream relative overflow-hidden">
+    <div id="pillars-pin-wrap" class="w-full min-h-screen flex flex-col justify-between py-10 lg:py-14 fluid-canvas">
+      
+      <!-- Top Pinned Stage Header + Scrub Progress Indicator -->
+      <div class="w-full flex flex-wrap items-center justify-between gap-4 border-b border-white/15 pb-6">
+        <div class="flex items-center gap-4">
+          <span class="font-script text-3xl sm:text-4xl text-sand">Timeless Type. A Brighter Story.</span>
+          <span class="hidden sm:inline text-white/25">|</span>
+          <span class="text-xs uppercase tracking-[0.25em] text-sage font-semibold">The 3 Restorative Pillars of Mission Villa</span>
+        </div>
+
+        <!-- Scrub Progress Pills -->
+        <div class="flex items-center gap-3">
+          <button onclick="jumpToPillar(0)" id="pillar-indicator-1" class="px-4 py-1.5 rounded-full text-xs font-semibold bg-sand text-plum transition">01 · NATURE</button>
+          <button onclick="jumpToPillar(0.5)" id="pillar-indicator-2" class="px-4 py-1.5 rounded-full text-xs font-semibold bg-white/10 text-cream/70 transition">02 · PEOPLE</button>
+          <button onclick="jumpToPillar(0.95)" id="pillar-indicator-3" class="px-4 py-1.5 rounded-full text-xs font-semibold bg-white/10 text-cream/70 transition">03 · PURPOSE</button>
+        </div>
+      </div>
+
+      <!-- Center Pinned Asymmetric 12-Column Stage -->
+      <div class="w-full grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center my-auto py-8">
+        
+        <!-- Left 5 Columns: Layered Text Narratives (Cross-faded by GSAP Timeline) -->
+        <div class="lg:col-span-5 relative min-h-[340px] sm:min-h-[380px] flex items-center">
+          
+          <!-- Slide 1 Copy: NATURE -->
+          <div id="pillar-copy-1" class="space-y-5 w-full">
+            <span class="px-3.5 py-1 rounded-full bg-sage/25 border border-sage text-sand text-xs uppercase tracking-widest font-semibold inline-block">
+              Pillar 01 · Biophilic Sanctuary
+            </span>
+            <h2 class="font-serif section-display text-cream font-semibold">
+              Nature as Daily Medicine.
+            </h2>
+            <p class="text-cream/85 text-base sm:text-lg leading-relaxed max-w-[54ch]">
+              Clinical gerontology shows that 40 minutes of daily morning sunlight and greenery exposure reduces evening agitation (sundowning) by 42% and improves deep sleep cycles. Every corridor at Mission Villa terminates in a sunlit garden view.
+            </p>
+            <div class="grid grid-cols-2 gap-4 pt-4 border-t border-white/15">
+              <div>
+                <span class="text-xs uppercase tracking-wider text-sand block">Daylight Architecture</span>
+                <span class="font-serif text-2xl font-bold text-sage">10,000+ Lux Courtyards</span>
+              </div>
+              <div>
+                <span class="text-xs uppercase tracking-wider text-sand block">Walking Accessibility</span>
+                <span class="font-serif text-2xl font-bold text-cream">100% Zero-Threshold</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Slide 2 Copy: PEOPLE -->
+          <div id="pillar-copy-2" class="space-y-5 w-full absolute inset-0 opacity-0 pointer-events-none flex flex-col justify-center">
+            <span class="px-3.5 py-1 rounded-full bg-terracotta/30 border border-terracotta text-sand text-xs uppercase tracking-widest font-semibold inline-block self-start">
+              Pillar 02 · Relational Care
+            </span>
+            <h2 class="font-serif section-display text-cream font-semibold">
+              People Who Know Your Life Story.
+            </h2>
+            <p class="text-cream/85 text-base sm:text-lg leading-relaxed max-w-[54ch]">
+              We don’t use rotating agency staff. With a 94% care-partner retention rate and a 1:5 staffing ratio, your parent is cared for by familiar people who know their career history, favorite jazz records, and how they take their morning tea.
+            </p>
+            <div class="grid grid-cols-2 gap-4 pt-4 border-t border-white/15">
+              <div>
+                <span class="text-xs uppercase tracking-wider text-sand block">Consistent Care Team</span>
+                <span class="font-serif text-2xl font-bold text-terracotta">94% Staff Retention</span>
+              </div>
+              <div>
+                <span class="text-xs uppercase tracking-wider text-sand block">Emergency Response</span>
+                <span class="font-serif text-2xl font-bold text-cream">&lt; 90 Seconds Avg.</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Slide 3 Copy: PURPOSE -->
+          <div id="pillar-copy-3" class="space-y-5 w-full absolute inset-0 opacity-0 pointer-events-none flex flex-col justify-center">
+            <span class="px-3.5 py-1 rounded-full bg-sand/25 border border-sand text-sand text-xs uppercase tracking-widest font-semibold inline-block self-start">
+              Pillar 03 · Encore Vitality
+            </span>
+            <h2 class="font-serif section-display text-cream font-semibold">
+              Purpose That Fuels Longevity.
+            </h2>
+            <p class="text-cream/85 text-base sm:text-lg leading-relaxed max-w-[54ch]">
+              Retiring from a career shouldn’t mean retiring from meaning. Through our resident-led Encore Guilds—spanning botanical propagation, culinary heritage, fine arts, and mentoring—every day carries genuine anticipation.
+            </p>
+            <div class="grid grid-cols-2 gap-4 pt-4 border-t border-white/15">
+              <div>
+                <span class="text-xs uppercase tracking-wider text-sand block">Weekly Curated Clubs</span>
+                <span class="font-serif text-2xl font-bold text-sand">42+ Artisan Sessions</span>
+              </div>
+              <div>
+                <span class="text-xs uppercase tracking-wider text-sand block">Culinary Philosophy</span>
+                <span class="font-serif text-2xl font-bold text-cream">Scratch Farm-to-Table</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Right 7 Columns: Stacked Clip-Path Wipe Viewport with Inverted Cutout -->
+        <div class="lg:col-span-7">
+          <div class="bento-frame h-[400px] sm:h-[500px] xl:h-[560px] w-full relative bg-plum-dark border border-white/15">
+            
+            <!-- Layer 1 Image: NATURE -->
+            <div id="pillar-img-1" class="absolute inset-0 w-full h-full">
+              <img
+                src="https://images.unsplash.com/photo-1585320806297-9794b3e4eeae?auto=format&fit=crop&w=1800&q=85"
+                alt="Sunlit Mediterranean botanical courtyard garden"
+                class="w-full h-full object-cover mood-grade"
+              />
+              <div class="absolute inset-0 bg-gradient-to-t from-plum/70 via-transparent to-transparent"></div>
+            </div>
+
+            <!-- Layer 2 Image: PEOPLE (Wipes up via GSAP clipPath) -->
+            <div id="pillar-img-2" class="absolute inset-0 w-full h-full" style="clip-path: inset(100% 0% 0% 0%);">
+              <img
+                src="https://images.unsplash.com/photo-1516307365426-bea591f05011?auto=format&fit=crop&w=1800&q=85"
+                alt="Warm conversation and laughter between residents and care partners"
+                class="w-full h-full object-cover mood-grade"
+              />
+              <div class="absolute inset-0 bg-gradient-to-t from-plum/70 via-transparent to-transparent"></div>
+            </div>
+
+            <!-- Layer 3 Image: PURPOSE (Wipes up via GSAP clipPath) -->
+            <div id="pillar-img-3" class="absolute inset-0 w-full h-full" style="clip-path: inset(100% 0% 0% 0%);">
+              <img
+                src="https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=1800&q=85"
+                alt="Chef-prepared Mediterranean harvest table dining"
+                class="w-full h-full object-cover mood-grade"
+              />
+              <div class="absolute inset-0 bg-gradient-to-t from-plum/70 via-transparent to-transparent"></div>
+            </div>
+
+            <!-- Bottom-Right Inverted Cutout on Deep Plum Background -->
+            <div class="cutout-br-plum">
+              <a href="#reserve-tour" class="px-6 py-3.5 rounded-2xl bg-terracotta text-white text-xs sm:text-sm font-semibold flex items-center gap-3 hover:bg-sand hover:text-plum transition">
+                <span>See It In Person · Book a Tour</span>
+                <span>→</span>
+              </a>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Bottom Pinned Scrub Bar -->
+      <div class="w-full flex items-center justify-between gap-6 pt-4 border-t border-white/15 text-xs text-sand/80">
+        <span>SCROLL TO SCRUB THROUGH OUR PHILOSOPHY</span>
+        <div class="flex-1 max-w-md h-1.5 bg-white/10 rounded-full overflow-hidden">
+          <div id="pillar-scrub-bar" class="h-full bg-terracotta w-1/3 rounded-full"></div>
+        </div>
+        <span>CARE · A BRIGHTER TOMORROW · TOGETHER</span>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- =====================================================================
+       5. INTERACTIVE CARE FIT DIAGNOSTIC COCKPIT (FULL-WIDTH DECISION ENGINE)
+  ====================================================================== -->
+  <section id="care-cockpit" class="w-full py-20 lg:py-28 fluid-canvas grid-line-b bg-cream">
+    
+    <div class="w-full flex flex-col lg:flex-row lg:items-end justify-between gap-6 mb-12">
+      <div>
+        <span class="font-script script-display text-terracotta block">Clarity Replaces Overwhelm</span>
+        <h2 class="font-serif section-display text-plum font-semibold mt-1">
+          Interactive Care & Lifestyle Fit Diagnostic
+        </h2>
+      </div>
+      <p class="text-charcoal/80 text-base sm:text-lg max-w-[54ch]">
+        72% of families aren’t initially sure whether Independent Living, Assisted Living, or Memory Care is the safest choice. Select a profile below to watch our clinical matrix adapt in real time.
+      </p>
+    </div>
+
+    <!-- Full-Width 12-Column Interactive Cockpit -->
+    <div class="w-full grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
+      
+      <!-- Left 4 Columns: Scenario Selector & Support Telemetry Bars -->
+      <div class="lg:col-span-4 bg-cream-paper rounded-[32px] p-6 sm:p-8 border border-sand flex flex-col justify-between space-y-6">
+        <div class="space-y-3">
+          <span class="text-xs uppercase tracking-[0.2em] text-plum font-semibold block">Step 1 · Select Current Daily Reality</span>
+
+          <button onclick="switchCareCockpit('independent')" id="cockpit-btn-independent" class="w-full text-left p-4 rounded-2xl border-2 border-plum bg-plum text-cream transition-all flex items-center justify-between">
+            <div>
+              <span class="text-[11px] uppercase tracking-widest text-sand block">Autonomous & Active</span>
+              <span class="font-serif text-lg font-semibold">Independent Living</span>
+            </div>
+            <span class="text-sm font-mono">$4,250+</span>
+          </button>
+
+          <button onclick="switchCareCockpit('assisted')" id="cockpit-btn-assisted" class="w-full text-left p-4 rounded-2xl border-2 border-sand bg-cream text-plum hover:border-plum transition-all flex items-center justify-between">
+            <div>
+              <span class="text-[11px] uppercase tracking-widest text-terracotta-dark block">Daily Support & Medication</span>
+              <span class="font-serif text-lg font-semibold">Assisted Living</span>
+            </div>
+            <span class="text-sm font-mono">$5,450+</span>
+          </button>
+
+          <button onclick="switchCareCockpit('memory')" id="cockpit-btn-memory" class="w-full text-left p-4 rounded-2xl border-2 border-sand bg-cream text-plum hover:border-plum transition-all flex items-center justify-between">
+            <div>
+              <span class="text-[11px] uppercase tracking-widest text-sage-dark block">Cognitive & Sensory Security</span>
+              <span class="font-serif text-lg font-semibold">Memory & Enriched Care</span>
+            </div>
+            <span class="text-sm font-mono">$6,800+</span>
+          </button>
+        </div>
+
+        <!-- Animated GSAP Support Intensity Telemetry Bars -->
+        <div class="space-y-4 pt-6 border-t border-sand">
+          <span class="text-xs uppercase tracking-[0.2em] text-charcoal/70 font-semibold block">Live Care Allocation Matrix</span>
+
+          <div>
+            <div class="flex justify-between text-xs font-medium mb-1">
+              <span>Clinical & Nursing Oversight</span>
+              <span id="bar-label-clinical" class="font-semibold text-plum">On-Call 24/7 Backup</span>
+            </div>
+            <div class="w-full h-2.5 bg-sand/40 rounded-full overflow-hidden">
+              <div id="bar-fill-clinical" class="h-full bg-plum rounded-full" style="width: 35%;"></div>
+            </div>
+          </div>
+
+          <div>
+            <div class="flex justify-between text-xs font-medium mb-1">
+              <span>Social, Culinary & Purpose Programming</span>
+              <span id="bar-label-social" class="font-semibold text-plum">100% Full Access</span>
+            </div>
+            <div class="w-full h-2.5 bg-sand/40 rounded-full overflow-hidden">
+              <div id="bar-fill-social" class="h-full bg-sage rounded-full" style="width: 100%;"></div>
+            </div>
+          </div>
+
+          <div>
+            <div class="flex justify-between text-xs font-medium mb-1">
+              <span>Personal Care & Mobility Assistance</span>
+              <span id="bar-label-mobility" class="font-semibold text-plum">As Requested</span>
+            </div>
+            <div class="w-full h-2.5 bg-sand/40 rounded-full overflow-hidden">
+              <div id="bar-fill-mobility" class="h-full bg-terracotta rounded-full" style="width: 25%;"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="p-4 rounded-2xl bg-sage/20 border border-sage/50 text-xs text-plum leading-relaxed">
+          <strong>Couple’s Continuity Guarantee:</strong> Spouses with different care needs can live together in the same suite while receiving individualized care plans.
+        </div>
+      </div>
+
+      <!-- Right 8 Columns: Dynamic Care Neighborhood Showcase with Inverted Cutouts -->
+      <div class="lg:col-span-8 bento-frame bg-cream-paper border border-sand flex flex-col justify-between">
+        
+        <div class="h-72 sm:h-96 relative overflow-hidden">
+          <img
+            id="cockpit-img"
+            src="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?auto=format&fit=crop&w=1600&q=85"
+            alt="Sunlit Independent Living Residence at Mission Villa"
+            class="w-full h-full object-cover mood-grade"
+          />
+          <div class="absolute inset-0 bg-gradient-to-t from-plum/85 via-plum/25 to-transparent"></div>
+
+          <!-- Top-Left Inverted Cutout -->
+          <div class="cutout-tl-cream">
+            <span id="cockpit-pill" class="inline-block px-4 py-2 rounded-2xl bg-sage text-plum text-xs font-bold uppercase tracking-wider">
+              Recommended for Active Autonomy
+            </span>
+          </div>
+
+          <div class="absolute bottom-6 left-6 right-6 flex flex-wrap items-end justify-between gap-4 text-cream">
+            <div>
+              <h3 id="cockpit-title" class="font-serif text-3xl sm:text-5xl font-semibold">Independent Living</h3>
+              <p id="cockpit-subtitle" class="text-sand text-sm sm:text-base mt-1">Maintenance-free botanical suites with chef dining & vibrant social clubs</p>
+            </div>
+            <div class="bg-cream text-plum px-5 py-3 rounded-2xl text-right shadow-lg">
+              <span class="text-[10px] uppercase tracking-widest text-charcoal/70 block">All-Inclusive Monthly</span>
+              <span id="cockpit-price" class="font-serif text-2xl font-bold">$4,250 / mo</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Dynamic Clinical & Lifestyle Deliverables -->
+        <div class="p-6 sm:p-10 grid grid-cols-1 md:grid-cols-12 gap-8 items-center my-auto">
+          <div class="md:col-span-6 space-y-4">
+            <h4 class="text-xs uppercase tracking-[0.2em] text-terracotta-dark font-semibold">When Families Choose This Tier</h4>
+            <p id="cockpit-desc" class="text-charcoal/85 text-sm sm:text-base leading-relaxed">
+              Ideal when a big house has become exhausting to maintain or isolating to live in alone. Residents enjoy private sunlit apartments, three daily chef-prepared meals, chauffeured errands, and 24/7 wearable emergency response.
+            </p>
+            <div id="cockpit-tags" class="flex flex-wrap gap-2 pt-1">
+              <span class="px-3 py-1 rounded-full bg-sand/40 text-plum text-xs font-medium">Zero Home Maintenance</span>
+              <span class="px-3 py-1 rounded-full bg-sand/40 text-plum text-xs font-medium">Chef’s Harvest Table</span>
+              <span class="px-3 py-1 rounded-full bg-sand/40 text-plum text-xs font-medium">24/7 Emergency Pendant</span>
+            </div>
+          </div>
+
+          <div class="md:col-span-6 bg-cream rounded-2xl p-5 border border-sand space-y-3">
+            <h4 class="text-xs uppercase tracking-[0.2em] text-plum font-semibold">Included Clinical & Hospitality Standards</h4>
+            <ul id="cockpit-checklist" class="space-y-2 text-xs sm:text-sm text-charcoal/90">
+              <li>✓ Three scratch-prepared seasonal meals + all-day bistro</li>
+              <li>✓ Weekly housekeeping, linen laundry & suite maintenance</li>
+              <li>✓ Chauffeured town car for medical visits & cultural outings</li>
+              <li>✓ Full access to palm conservatory, art studio & olive groves</li>
+            </ul>
+            <div class="pt-3 border-t border-sand flex items-center justify-between">
+              <span class="text-xs text-charcoal/70">Want a written care assessment?</span>
+              <a href="#reserve-tour" class="text-xs font-bold text-terracotta-dark hover:text-plum transition">Book Free Nurse Consult →</a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- =====================================================================
+       6. LIVE CAD SVG FLOORPLAN & SUNLIGHT ORIENTATION STUDIO
+          (With GSAP SVG Stroke-Drawing Timeline on Scroll & Tab Click)
+  ====================================================================== -->
+  <section id="cad-suites" class="w-full py-20 lg:py-28 fluid-canvas bg-sand/25 grid-line-b">
+    
+    <div class="w-full flex flex-col xl:flex-row xl:items-end justify-between gap-6 mb-12">
+      <div>
+        <span class="font-script script-display text-terracotta block">Architectural Precision & Warmth</span>
+        <h2 class="font-serif section-display text-plum font-semibold">
+          Interactive Suite CAD Blueprints
+        </h2>
+      </div>
+
+      <!-- Suite Selector Tabs (Re-runs GSAP SVG Drawing Timeline) -->
+      <div class="inline-flex flex-wrap p-1.5 rounded-full bg-cream border border-sand shadow-sm gap-1">
+        <button onclick="selectCadSuite('studio')" id="cad-tab-studio" class="px-5 py-2.5 rounded-full text-xs sm:text-sm font-semibold bg-plum text-cream transition">
+          01 · The Olive Studio (460 sq ft)
+        </button>
+        <button onclick="selectCadSuite('onebed')" id="cad-tab-onebed" class="px-5 py-2.5 rounded-full text-xs sm:text-sm font-semibold text-plum hover:bg-sand/40 transition">
+          02 · The Sunlit 1-Bed (680 sq ft)
+        </button>
+        <button onclick="selectCadSuite('twobed')" id="cad-tab-twobed" class="px-5 py-2.5 rounded-full text-xs sm:text-sm font-semibold text-plum hover:bg-sand/40 transition">
+          03 · Courtyard 2-Bed Villa (940 sq ft)
+        </button>
+      </div>
+    </div>
+
+    <!-- Full-Width 12-Column CAD Studio -->
+    <div class="w-full grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
+      
+      <!-- Left 6 Columns: Live SVG CAD Vector Blueprint (Drawn via GSAP Timeline) -->
+      <div class="lg:col-span-6 bg-cream-paper rounded-[32px] p-6 sm:p-10 border border-sand flex flex-col justify-between">
+        <div class="flex flex-wrap items-center justify-between gap-2 border-b border-sand pb-4">
+          <div>
+            <span class="text-[11px] uppercase tracking-[0.2em] text-terracotta-dark font-semibold block">Scale 1:50 Architectural Plan</span>
+            <h3 id="cad-title" class="font-serif text-2xl sm:text-3xl font-bold text-plum">The Olive Alcove Studio</h3>
+          </div>
+          <span id="cad-dims" class="px-4 py-1.5 rounded-full bg-plum/10 text-plum font-mono text-xs font-semibold">
+            460 SQ. FT. · SOUTH GARDEN ASPECT
+          </span>
+        </div>
+
+        <!-- Interactive SVG Blueprint Canvas -->
+        <div class="my-6 bg-cream rounded-2xl border border-sand p-6 flex items-center justify-center min-h-[320px] relative">
+          <svg id="cad-blueprint-svg" viewBox="0 0 500 310" class="w-full h-auto max-h-[320px]">
+            <!-- Architectural Grid Background -->
+            <defs>
+              <pattern id="cadGrid" width="25" height="25" patternUnits="userSpaceOnUse">
+                <path d="M 25 0 L 0 0 0 25" fill="none" stroke="#D8C7A5" stroke-width="0.4"/>
+              </pattern>
+            </defs>
+            <rect width="500" height="310" fill="url(#cadGrid)" rx="12"/>
+
+            <!-- Animated CAD Stroke Paths -->
+            <rect class="cad-stroke" x="30" y="25" width="440" height="260" fill="#FCFBF7" stroke="#3B2348" stroke-width="5"/>
+            <!-- Private Sunlit Patio -->
+            <rect class="cad-stroke" x="310" y="25" width="160" height="90" fill="#E6EFE0" stroke="#8FAF78" stroke-width="2.5"/>
+            <!-- Zero-Threshold Spa Bath with Wheelchair Turning Radius -->
+            <rect class="cad-stroke" x="30" y="25" width="150" height="125" fill="#EFE7D6" stroke="#3B2348" stroke-width="3"/>
+            <circle class="cad-stroke" cx="105" cy="88" r="34" fill="none" stroke="#C98268" stroke-width="2" stroke-dasharray="5 4"/>
+            <!-- Kitchenette & Harvest Bar -->
+            <rect class="cad-stroke" x="30" y="150" width="150" height="135" fill="#F7F4ED" stroke="#3B2348" stroke-width="2.5"/>
+            <!-- Sleeping Sanctuary Zone -->
+            <rect class="cad-stroke" x="200" y="45" width="95" height="85" rx="8" fill="#D8C7A5" stroke="#3B2348" stroke-width="2"/>
+            <!-- Great Room / Sunlit Lounge -->
+            <rect class="cad-stroke" x="210" y="160" width="235" height="105" rx="10" fill="#F5E4DD" stroke="#C98268" stroke-width="2"/>
+
+            <!-- Labels -->
+            <text x="105" y="50" text-anchor="middle" fill="#3B2348" font-size="10" font-weight="600" font-family="Poppins">ZERO-STEP SPA BATH</text>
+            <text x="105" y="138" text-anchor="middle" fill="#C98268" font-size="8.5" font-weight="600" font-family="Poppins">60" Turn Radius</text>
+            <text x="105" y="220" text-anchor="middle" fill="#3B2348" font-size="10" font-weight="600" font-family="Poppins">STONE KITCHENETTE</text>
+            <text x="247" y="92" text-anchor="middle" fill="#3B2348" font-size="10" font-weight="600" font-family="Poppins">SLEEP SUITE</text>
+            <text x="390" y="68" text-anchor="middle" fill="#3B2348" font-size="10" font-weight="600" font-family="Poppins">OLIVE PATIO</text>
+            <text x="390" y="84" text-anchor="middle" fill="#64854E" font-size="9" font-family="Poppins">Morning Sun ☀️</text>
+            <text x="327" y="212" text-anchor="middle" fill="#3B2348" font-size="13" font-weight="600" font-family="Lora" id="cad-room-label">SUNLIT LIVING CONSERVATORY</text>
+          </svg>
+        </div>
+
+        <!-- Senior Ergonomic Engineering Callouts -->
+        <div class="grid grid-cols-3 gap-4 pt-2">
+          <div class="p-3.5 rounded-2xl bg-sand/30 border border-sand">
+            <span class="text-xs font-bold text-plum block">Zero-Threshold</span>
+            <span class="text-[11px] text-charcoal/75">Heated non-slip porcelain spa bath</span>
+          </div>
+          <div class="p-3.5 rounded-2xl bg-sand/30 border border-sand">
+            <span class="text-xs font-bold text-plum block">Circadian Amber LED</span>
+            <span class="text-[11px] text-charcoal/75">Motion pathway night-lighting</span>
+          </div>
+          <div class="p-3.5 rounded-2xl bg-sand/30 border border-sand">
+            <span class="text-xs font-bold text-plum block">STC-56 Acoustics</span>
+            <span class="text-[11px] text-charcoal/75">Whisper-quiet hospital-grade walls</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right 6 Columns: Sunlit Suite Visual + Inverted Corner Cutout -->
+      <div class="lg:col-span-6 bento-frame bg-plum text-cream flex flex-col justify-between min-h-[520px] relative">
+        <img
+          id="cad-photo"
+          src="https://images.unsplash.com/photo-1616594039964-ae9021a400a0?auto=format&fit=crop&w=1600&q=85"
+          alt="Sunlit Mission Villa private suite interior"
+          class="absolute inset-0 w-full h-full object-cover opacity-55 mood-grade transition-all duration-700"
+        />
+        <div class="absolute inset-0 bg-gradient-to-t from-plum via-plum/55 to-transparent"></div>
+
+        <!-- Top-Left Inverted Cutout -->
+        <div class="cutout-tl-cream">
+          <div class="px-4 py-2 rounded-2xl bg-plum text-sand text-xs font-semibold">
+            🐾 Pet-Friendly Garden Suites
+          </div>
+        </div>
+
+        <div class="relative z-10 p-8 sm:p-12 mt-auto space-y-5 max-w-2xl">
+          <span id="cad-availability" class="px-3.5 py-1 rounded-full bg-sage text-plum text-xs font-bold uppercase tracking-wider inline-block">
+            2 Garden-Level Suites Available Now
+          </span>
+          <p id="cad-desc" class="font-serif text-xl sm:text-2xl text-cream leading-relaxed">
+            “Flooded with natural southern daylight, The Olive Studio pairs a private sleeping alcove with direct level access to our rosemary and olive courtyard.”
+          </p>
+
+          <div class="flex flex-wrap items-center gap-8 pt-4 border-t border-white/20">
+            <div>
+              <span class="text-xs uppercase tracking-widest text-sand block">All-Inclusive Monthly Rate</span>
+              <span id="cad-rate" class="font-serif text-3xl font-bold text-cream">$4,250 / mo</span>
+            </div>
+            <a href="#reserve-tour" class="px-6 py-3.5 rounded-full bg-terracotta text-white text-sm font-semibold hover:bg-sand hover:text-plum transition">
+              Download Full CAD Floorplan Packet →
+            </a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- =====================================================================
+       7. PINNED HORIZONTAL SCROLL FILMSTRIP ("24 HOURS OF LIVING FULLY")
+          (Full-Bleed Ultrawide Horizontal Track + Lenis Velocity Skew)
+  ====================================================================== -->
+  <section id="horizontal-day" class="w-full bg-cream overflow-hidden grid-line-b">
+    <div id="horizontal-pin-wrap" class="w-full min-h-screen flex flex-col justify-between py-12 lg:py-16">
+      
+      <div class="fluid-canvas flex flex-wrap items-end justify-between gap-4">
+        <div>
+          <span class="font-script script-display text-terracotta block">Living Fully Every Day.</span>
+          <h2 class="font-serif section-display text-plum font-semibold">
+            A 24-Hour Rhythm of Belonging
+          </h2>
+        </div>
+        <div class="flex items-center gap-3 text-xs uppercase tracking-[0.2em] text-plum font-semibold">
+          <span>Scroll Down to Glide Across the Day</span>
+          <span class="w-8 h-8 rounded-full bg-plum text-cream flex items-center justify-center">→</span>
+        </div>
+      </div>
+
+      <!-- Horizontal Sliding Track -->
+      <div class="w-full overflow-hidden my-auto py-6">
+        <div id="horizontal-track" class="flex gap-8 pl-[var(--gutter)] pr-[var(--gutter)] w-max">
+          
+          <!-- Card 1: 8:00 AM -->
+          <article class="velo-card w-[85vw] sm:w-[460px] xl:w-[540px] bento-frame bg-cream-paper border border-sand p-7 sm:p-9 flex flex-col justify-between flex-shrink-0">
+            <div class="flex items-center justify-between">
+              <span class="px-3.5 py-1 rounded-full bg-sand/50 text-plum text-xs font-bold tracking-wider">08:00 AM · MORNING LIGHT</span>
+              <span class="font-serif italic text-terracotta">Nature</span>
+            </div>
+            <div class="my-5 h-56 rounded-2xl overflow-hidden">
+              <img src="https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=900&q=80" alt="Morning espresso in the sunlit palm conservatory" class="w-full h-full object-cover mood-grade"/>
+            </div>
+            <div class="space-y-2">
+              <h3 class="font-serif text-2xl font-semibold text-plum">Conservatory Espresso & Gentle Tai Chi</h3>
+              <p class="text-sm text-charcoal/80 leading-relaxed">
+                Start with warm almond croissants and artisan coffee beneath the indoor palms, followed by balance movement in the olive grove.
+              </p>
+            </div>
+          </article>
+
+          <!-- Card 2: 11:00 AM -->
+          <article class="velo-card w-[85vw] sm:w-[460px] xl:w-[540px] bento-frame bg-cream-paper border border-sand p-7 sm:p-9 flex flex-col justify-between flex-shrink-0">
+            <div class="flex items-center justify-between">
+              <span class="px-3.5 py-1 rounded-full bg-sage/35 text-plum text-xs font-bold tracking-wider">11:00 AM · ENCORE STUDIO</span>
+              <span class="font-serif italic text-sage-dark">Purpose</span>
+            </div>
+            <div class="my-5 h-56 rounded-2xl overflow-hidden">
+              <img src="https://images.unsplash.com/photo-1490750967868-88aa4486c946?auto=format&fit=crop&w=900&q=80" alt="Botanical flower arranging and watercolor art" class="w-full h-full object-cover mood-grade"/>
+            </div>
+            <div class="space-y-2">
+              <h3 class="font-serif text-2xl font-semibold text-plum">Botanical Artistry & Guest Lectures</h3>
+              <p class="text-sm text-charcoal/80 leading-relaxed">
+                Harvest fresh cosmos and rosemary from raised garden beds for floral arranging, or join a university historian in the library lounge.
+              </p>
+            </div>
+          </article>
+
+          <!-- Card 3: 1:00 PM -->
+          <article class="velo-card w-[85vw] sm:w-[460px] xl:w-[540px] bento-frame bg-plum text-cream p-7 sm:p-9 flex flex-col justify-between flex-shrink-0">
+            <div class="flex items-center justify-between">
+              <span class="px-3.5 py-1 rounded-full bg-terracotta text-white text-xs font-bold tracking-wider">01:00 PM · HARVEST TABLE</span>
+              <span class="font-serif italic text-sand">People</span>
+            </div>
+            <div class="my-5 h-56 rounded-2xl overflow-hidden">
+              <img src="https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=900&q=80" alt="Scratch-made Mediterranean lunch at Mission Villa" class="w-full h-full object-cover mood-grade"/>
+            </div>
+            <div class="space-y-2">
+              <h3 class="font-serif text-2xl font-semibold text-cream">Chef’s Courtyard Lunch With Friends</h3>
+              <p class="text-sm text-cream/85 leading-relaxed">
+                Gather around linen-draped tables for herb-roasted sea bass, heirloom tomato salad, and warm sourdough baked fresh every morning.
+              </p>
+            </div>
+          </article>
+
+          <!-- Card 4: 4:00 PM -->
+          <article class="velo-card w-[85vw] sm:w-[460px] xl:w-[540px] bento-frame bg-cream-paper border border-sand p-7 sm:p-9 flex flex-col justify-between flex-shrink-0">
+            <div class="flex items-center justify-between">
+              <span class="px-3.5 py-1 rounded-full bg-terracotta/20 text-terracotta-dark text-xs font-bold tracking-wider">04:00 PM · VITALITY LAB</span>
+              <span class="font-serif italic text-plum">Care</span>
+            </div>
+            <div class="my-5 h-56 rounded-2xl overflow-hidden">
+              <img src="https://images.unsplash.com/photo-1576765608535-5f04d1e3f289?auto=format&fit=crop&w=900&q=80" alt="Personalized physical wellness and care support" class="w-full h-full object-cover mood-grade"/>
+            </div>
+            <div class="space-y-2">
+              <h3 class="font-serif text-2xl font-semibold text-plum">1-on-1 Mobility & Hydro-Wellness</h3>
+              <p class="text-sm text-charcoal/80 leading-relaxed">
+                Work with our on-site physical therapists to build strength and confidence, followed by herbal tea in the sunlit solarium.
+              </p>
+            </div>
+          </article>
+
+          <!-- Card 5: 6:30 PM -->
+          <article class="velo-card w-[85vw] sm:w-[460px] xl:w-[540px] bento-frame bg-cream-paper border border-sand p-7 sm:p-9 flex flex-col justify-between flex-shrink-0">
+            <div class="flex items-center justify-between">
+              <span class="px-3.5 py-1 rounded-full bg-plum/10 text-plum text-xs font-bold tracking-wider">06:30 PM · GOLDEN HOUR</span>
+              <span class="font-serif italic text-terracotta">Belonging</span>
+            </div>
+            <div class="my-5 h-56 rounded-2xl overflow-hidden">
+              <img src="https://images.unsplash.com/photo-1516307365426-bea591f05011?auto=format&fit=crop&w=900&q=80" alt="Evening acoustic music and fireside social" class="w-full h-full object-cover mood-grade"/>
+            </div>
+            <div class="space-y-2">
+              <h3 class="font-serif text-2xl font-semibold text-plum">Fireside Acoustic Trio & Evening Stroll</h3>
+              <p class="text-sm text-charcoal/80 leading-relaxed">
+                Unwind with live cello and classical guitar by the limestone hearth before returning to a quiet, circadian-lit private suite.
+              </p>
+            </div>
+          </article>
+
+        </div>
+      </div>
+
+      <div class="fluid-canvas flex items-center justify-between text-xs text-charcoal/70">
+        <span>COMFORT · COMMUNITY · BELONGING</span>
+        <span>ALL ACTIVITIES & CHAUFFEURED OUTINGS INCLUDED</span>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- =====================================================================
+       8. TRANSPARENT FINANCIAL VALUE ENGINE (GSAP TWEENED COST CALCULATOR)
+  ====================================================================== -->
+  <section id="value-engine" class="w-full py-20 lg:py-28 fluid-canvas bg-cream grid-line-b">
+    <div class="w-full grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center">
+      
+      <!-- Left 7 Columns: Interactive Expense Sliders -->
+      <div class="lg:col-span-7 bg-cream-paper rounded-[32px] p-7 sm:p-12 border border-sand space-y-6">
+        <div class="space-y-2">
+          <span class="px-3.5 py-1 rounded-full bg-terracotta/15 text-terracotta-dark text-xs uppercase tracking-widest font-semibold">
+            Zero-Surprise Financial Clarity
+          </span>
+          <h2 class="font-serif text-3xl sm:text-4xl text-plum font-semibold">
+            Staying at Home vs. Mission Villa All-Inclusive Living
+          </h2>
+          <p class="text-sm sm:text-base text-charcoal/80 max-w-[60ch]">
+            Adjust the sliders below to reflect current monthly bills at home. Watch how fragmented home expenses compare against a single predictable monthly rate at Mission Villa.
+          </p>
+        </div>
+
+        <div class="space-y-5 pt-2">
+          <div>
+            <div class="flex justify-between text-sm font-medium mb-1.5">
+              <label for="s-housing" class="text-plum">Mortgage / Rent, Property Taxes & Home Insurance</label>
+              <span id="lbl-housing" class="font-serif font-bold text-plum">$1,900 / mo</span>
+            </div>
+            <input type="range" id="s-housing" min="500" max="4500" step="50" value="1900" oninput="runValueEngine()">
+          </div>
+
+          <div>
+            <div class="flex justify-between text-sm font-medium mb-1.5">
+              <label for="s-food" class="text-plum">Groceries, Meal Delivery & Dining</label>
+              <span id="lbl-food" class="font-serif font-bold text-plum">$800 / mo</span>
+            </div>
+            <input type="range" id="s-food" min="300" max="1800" step="50" value="800" oninput="runValueEngine()">
+          </div>
+
+          <div>
+            <div class="flex justify-between text-sm font-medium mb-1.5">
+              <label for="s-upkeep" class="text-plum">Utilities, Lawn Care, Home Repairs & Auto</label>
+              <span id="lbl-upkeep" class="font-serif font-bold text-plum">$650 / mo</span>
+            </div>
+            <input type="range" id="s-upkeep" min="200" max="1600" step="50" value="650" oninput="runValueEngine()">
+          </div>
+
+          <div>
+            <div class="flex justify-between text-sm font-medium mb-1.5">
+              <label for="s-care" class="text-plum">In-Home Care Aide (~$32/hr for 20 hrs/week)</label>
+              <span id="lbl-care" class="font-serif font-bold text-plum">$2,560 / mo</span>
+            </div>
+            <input type="range" id="s-care" min="0" max="6400" step="160" value="2560" oninput="runValueEngine()">
+          </div>
+        </div>
+      </div>
+
+      <!-- Right 5 Columns: GSAP Tweened Comparison Verdict -->
+      <div class="lg:col-span-5 bg-plum text-cream rounded-[32px] p-8 sm:p-12 space-y-6 relative overflow-hidden">
+        <div class="flex items-center justify-between border-b border-white/15 pb-5">
+          <div>
+            <span class="text-xs uppercase tracking-widest text-sand block">Current Fragmented Cost</span>
+            <span class="text-sm text-cream/80">Staying at Home Alone</span>
+          </div>
+          <span class="font-serif text-4xl font-bold text-sand">$<span id="tween-home-total">5,910</span><span class="text-sm font-normal">/mo</span></span>
+        </div>
+
+        <div class="flex items-center justify-between border-b border-white/15 pb-5">
+          <div>
+            <span class="text-xs uppercase tracking-widest text-sage block">All-Inclusive Sanctuary</span>
+            <span class="text-sm text-cream font-semibold">Mission Villa Senior Living</span>
+          </div>
+          <span class="font-serif text-4xl font-bold text-cream">$4,250<span class="text-sm font-normal">/mo*</span></span>
+        </div>
+
+        <div id="value-verdict-box" class="p-5 rounded-2xl bg-white/10 border border-sand/30 text-sm text-cream/95 leading-relaxed">
+          At Mission Villa, your family saves an estimated <strong>$1,660 every month</strong> while gaining <strong>24/7 clinical security</strong>, three daily chef meals, housekeeping, and a joyful community.
+        </div>
+
+        <a href="#reserve-tour" class="w-full py-4 px-6 rounded-full bg-terracotta text-white font-semibold text-sm sm:text-base text-center block hover:bg-sand hover:text-plum transition">
+          Get a Custom Family Financial Worksheet →
+        </a>
+        <p class="text-[11px] text-cream/60 text-center">
+          *Eligible for Long-Term Care Insurance & Veterans Aid & Attendance benefits.
+        </p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- =====================================================================
+       9. HIGH-CONVERSION CHEF'S LUNCH TOUR RESERVATION SECTION
+  ====================================================================== -->
+  <section id="reserve-tour" class="w-full py-20 lg:py-28 fluid-canvas bg-plum text-cream relative overflow-hidden">
+    <div class="w-full grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+      
+      <div class="lg:col-span-5 space-y-6">
+        <span class="font-script script-display text-sand block">A Place to Belong</span>
+        <h2 class="font-serif section-display text-cream font-semibold">
+          Experience the Sunlight & Taste the Food.
+        </h2>
+        <p class="text-cream/85 text-base sm:text-lg leading-relaxed">
+          Decisions this important are never made on a spreadsheet alone. Join us for a private walkthrough of our conservatory and olive groves, followed by a complimentary Chef’s Lunch for your family.
+        </p>
+
+        <div class="space-y-4 pt-2 border-t border-white/15">
+          <div class="flex items-center gap-3.5">
+            <span class="w-8 h-8 rounded-full bg-sage text-plum font-bold text-xs flex items-center justify-center">01</span>
+            <span class="text-sm text-cream/90">Zero high-pressure sales—meet directly with our Wellness Director</span>
+          </div>
+          <div class="flex items-center gap-3.5">
+            <span class="w-8 h-8 rounded-full bg-sage text-plum font-bold text-xs flex items-center justify-center">02</span>
+            <span class="text-sm text-cream/90">Complimentary scratch-prepared lunch in our private family dining room</span>
+          </div>
+          <div class="flex items-center gap-3.5">
+            <span class="w-8 h-8 rounded-full bg-sage text-plum font-bold text-xs flex items-center justify-center">03</span>
+            <span class="text-sm text-cream/90">Leave with transparent, itemized suite pricing & floorplans</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="lg:col-span-7">
+        <form onsubmit="submitTourBooking(event)" class="bg-cream text-charcoal rounded-[32px] p-7 sm:p-12 border border-sand space-y-5 shadow-2xl">
+          <div class="flex flex-wrap items-center justify-between gap-2 border-b border-sand pb-4">
+            <div>
+              <h3 class="font-serif text-2xl sm:text-3xl font-bold text-plum">Reserve Your Private Visit</h3>
+              <p class="text-xs text-charcoal/70">Direct confirmation within 15 minutes · Walk-ins always welcome</p>
+            </div>
+            <span class="px-3.5 py-1 rounded-full bg-sage/30 text-plum text-xs font-semibold">Complimentary Family Lunch</span>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label class="block text-xs font-semibold uppercase tracking-wider text-plum mb-1.5">Your Full Name *</label>
+              <input type="text" required placeholder="e.g., Claire Montgomery" class="w-full px-4 py-3.5 rounded-xl bg-cream-paper border border-sand focus:border-plum focus:outline-none text-sm">
+            </div>
+            <div>
+              <label class="block text-xs font-semibold uppercase tracking-wider text-plum mb-1.5">Direct Phone *</label>
+              <input type="tel" required placeholder="(555) 234-5678" class="w-full px-4 py-3.5 rounded-xl bg-cream-paper border border-sand focus:border-plum focus:outline-none text-sm">
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label class="block text-xs font-semibold uppercase tracking-wider text-plum mb-1.5">Email Address *</label>
+              <input type="email" required placeholder="claire@example.com" class="w-full px-4 py-3.5 rounded-xl bg-cream-paper border border-sand focus:border-plum focus:outline-none text-sm">
+            </div>
+            <div>
+              <label class="block text-xs font-semibold uppercase tracking-wider text-plum mb-1.5">Care Neighborhood of Interest</label>
+              <select class="w-full px-4 py-3.5 rounded-xl bg-cream-paper border border-sand focus:border-plum focus:outline-none text-sm">
+                <option>Independent Living Suites</option>
+                <option>Personalized Assisted Living</option>
+                <option>Memory & Enriched Care</option>
+                <option>Not Sure Yet — Need Guidance</option>
+              </select>
+            </div>
+          </div>
+
+          <button type="submit" class="w-full py-4 px-6 rounded-full bg-terracotta text-white font-semibold text-base hover:bg-plum transition-all duration-300 shadow-lg">
+            Confirm My Chef’s Lunch Tour & Download Pricing Packet
+          </button>
+
+          <div id="booking-confirmation" class="hidden p-4 rounded-2xl bg-sage/25 border border-sage text-plum text-sm font-medium text-center">
+            ✓ Your private tour request is confirmed! Our Family Advisor has emailed your complete Floorplan & Pricing Guide.
+          </div>
+        </form>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- =====================================================================
+       10. FULL-WIDTH ARCHITECTURAL FOOTER (MISSION VILLA & PENINSULA CO-BRAND)
+  ====================================================================== -->
+  <footer class="w-full bg-charcoal text-cream/80 py-14 fluid-canvas border-t border-white/10 text-xs sm:text-sm">
+    <div class="w-full flex flex-col md:flex-row items-start md:items-center justify-between gap-6 pb-8 border-b border-white/10">
+      <div>
+        <span class="font-serif text-2xl font-bold text-cream">MISSION VILLA SENIOR LIVING</span>
+        <span class="text-sand ml-3 italic font-serif">“The honor they deserve, the care you’ll love.”</span>
+      </div>
+      <div class="text-sand font-medium">
+        A Flagship Community of <strong>Peninsula Senior Living</strong> · (800) 555-VILLA
+      </div>
+    </div>
+    <div class="w-full pt-6 flex flex-wrap items-center justify-between gap-4 text-xs text-cream/50">
+      <span>© 2026 Mission Villa Senior Living & Peninsula Senior Living. Equal Housing Opportunity.</span>
+      <span>NATURE · PEOPLE · PURPOSE — LIVING FULLY EVERY DAY.</span>
+    </div>
+  </footer>
+
+  <!-- =====================================================================
+       GSAP TIMELINE ENGINE + LENIS SMOOTH SCROLL + INTERACTIVE CONTROLLERS
+  ====================================================================== -->
+  <script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+  <script>
+    gsap.registerPlugin(ScrollTrigger);
+
+    // 1. Initialize Lenis Smooth Scroll & Velocity Skew Reactivity
+    const lenis = new Lenis({
+      duration: 1.2,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      smoothWheel: true
+    });
+
+    const skewSetter = gsap.quickSetter('.velo-card', 'skewX', 'deg');
+    lenis.on('scroll', (e) => {
+      ScrollTrigger.update();
+      const clampedSkew = gsap.utils.clamp(-3.5, 3.5, e.velocity * -0.06);
+      skewSetter(clampedSkew);
+    });
+
+    gsap.ticker.add((time) => {
+      lenis.raf(time * 1000);
+    });
+    gsap.ticker.lagSmoothing(0);
+
+    // 2. Helper to Prep SVG Paths for Stroke-Dashoffset Drawing Timelines
+    function prepSvgPaths(selector) {
+      document.querySelectorAll(selector).forEach((path) => {
+        const len = path.getTotalLength ? path.getTotalLength() : 600;
+        path.style.strokeDasharray = len;
+        path.style.strokeDashoffset = len;
+      });
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      prepSvgPaths('.emblem-vein');
+      prepSvgPaths('.cad-stroke');
+
+      // Global Top Scroll Progress Bar
+      gsap.to('#scroll-progress', {
+        scaleX: 1,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: document.body,
+          start: 'top top',
+          end: 'bottom bottom',
+          scrub: 0.2
+        }
+      });
+
+      // ===================================================================
+      // TIMELINE 1: MASTER CHOREOGRAPHED PAGE-LOAD TIMELINE (masterIntroTL)
+      // ===================================================================
+      const masterIntroTL = gsap.timeline({ defaults: { ease: 'power4.out' } });
+
+      masterIntroTL
+        .from('.emblem-petal', {
+          scale: 0,
+          opacity: 0,
+          transformOrigin: '45% 95%',
+          duration: 0.9,
+          stagger: 0.08,
+          ease: 'back.out(1.6)'
+        }, 0.1)
+        .to('.emblem-vein', {
+          strokeDashoffset: 0,
+          duration: 1.1
+        }, 0.3)
+        .from('.hero-badge-reveal', {
+          y: 20,
+          opacity: 0,
+          duration: 0.8,
+          stagger: 0.1
+        }, 0.25)
+        .from('.hero-line', {
+          yPercent: 115,
+          rotationZ: 1.5,
+          duration: 1.15,
+          stagger: 0.14
+        }, 0.35)
+        .from('.hero-sub-reveal', {
+          y: 28,
+          opacity: 0,
+          duration: 0.9,
+          stagger: 0.12
+        }, 0.6)
+        .fromTo('#hero-portal-frame',
+          { clipPath: 'inset(10% 6% 10% 6% round 40px)', opacity: 0 },
+          { clipPath: 'inset(0% 0% 0% 0% round 32px)', opacity: 1, duration: 1.35, ease: 'expo.out' },
+          0.4
+        )
+        .from('#hero-main-img', {
+          scale: 1.22,
+          duration: 1.6,
+          ease: 'expo.out'
+        }, 0.4)
+        .from('.hero-side-card', {
+          x: 40,
+          opacity: 0,
+          duration: 1,
+          stagger: 0.16
+        }, 0.65);
+
+      // Animate Hero Telemetry Counters
+      document.querySelectorAll('.stat-counter').forEach((el) => {
+        const target = parseInt(el.getAttribute('data-target'), 10);
+        const counterObj = { val: 0 };
+        gsap.to(counterObj, {
+          val: target,
+          duration: 2,
+          delay: 0.9,
+          ease: 'power3.out',
+          onUpdate: () => { el.textContent = Math.round(counterObj.val); }
+        });
+      });
+
+      // Hero Conservatory Parallax Scrub
+      gsap.to('#hero-main-img', {
+        yPercent: 11,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: '#hero-stage',
+          start: 'top top',
+          end: 'bottom top',
+          scrub: true
+        }
+      });
+
+      // ===================================================================
+      // TIMELINE 2: PINNED 3-STAGE NATURE · PEOPLE · PURPOSE (pillarsPinTL)
+      // ===================================================================
+      const pillarsPinTL = gsap.timeline({
+        scrollTrigger: {
+          trigger: '#pinned-pillars',
+          pin: '#pillars-pin-wrap',
+          start: 'top top',
+          end: '+=240%',
+          scrub: 0.8,
+          onUpdate: (self) => {
+            const p = self.progress;
+            document.getElementById('pillar-scrub-bar').style.width = Math.max(15, p * 100) + '%';
+            updatePillarPills(p);
+          }
+        }
+      });
+
+      pillarsPinTL
+        // Transition 1 -> 2 (NATURE to PEOPLE)
+        .to('#pillar-copy-1', { opacity: 0, y: -35, duration: 1 }, 0.3)
+        .fromTo('#pillar-copy-2', { opacity: 0, y: 35 }, { opacity: 1, y: 0, duration: 1 }, 0.4)
+        .to('#pillar-img-2', { clipPath: 'inset(0% 0% 0% 0%)', duration: 1.2, ease: 'power2.inOut' }, 0.25)
+        // Transition 2 -> 3 (PEOPLE to PURPOSE)
+        .to('#pillar-copy-2', { opacity: 0, y: -35, duration: 1 }, 1.5)
+        .fromTo('#pillar-copy-3', { opacity: 0, y: 35 }, { opacity: 1, y: 0, duration: 1 }, 1.6)
+        .to('#pillar-img-3', { clipPath: 'inset(0% 0% 0% 0%)', duration: 1.2, ease: 'power2.inOut' }, 1.45);
+
+      // ===================================================================
+      // TIMELINE 3: CAD SVG BLUEPRINT STROKE DRAWING TIMELINE
+      // ===================================================================
+      ScrollTrigger.create({
+        trigger: '#cad-suites',
+        start: 'top 72%',
+        once: true,
+        onEnter: () => playCadBlueprintTimeline()
+      });
+
+      // ===================================================================
+      // TIMELINE 4: PINNED HORIZONTAL FILMSTRIP TIMELINE (horizontalDayTL)
+      // ===================================================================
+      const track = document.getElementById('horizontal-track');
+      gsap.to(track, {
+        x: () => -(track.scrollWidth - window.innerWidth + 48),
+        ease: 'none',
+        scrollTrigger: {
+          trigger: '#horizontal-day',
+          pin: '#horizontal-pin-wrap',
+          start: 'top top',
+          end: () => '+=' + (track.scrollWidth - window.innerWidth),
+          scrub: 1,
+          invalidateOnRefresh: true
+        }
+      });
+    });
+
+    function updatePillarPills(p) {
+      const b1 = document.getElementById('pillar-indicator-1');
+      const b2 = document.getElementById('pillar-indicator-2');
+      const b3 = document.getElementById('pillar-indicator-3');
+      const active = 'px-4 py-1.5 rounded-full text-xs font-semibold bg-sand text-plum transition';
+      const idle = 'px-4 py-1.5 rounded-full text-xs font-semibold bg-white/10 text-cream/70 transition';
+      b1.className = p < 0.35 ? active : idle;
+      b2.className = (p >= 0.35 && p < 0.72) ? active : idle;
+      b3.className = p >= 0.72 ? active : idle;
+    }
+
+    function playCadBlueprintTimeline() {
+      prepSvgPaths('.cad-stroke');
+      const tl = gsap.timeline();
+      tl.to('.cad-stroke', {
+        strokeDashoffset: 0,
+        duration: 1.1,
+        stagger: 0.08,
+        ease: 'power2.inOut'
+      });
+    }
+
+    // 3. Interactive Care Cockpit Controller (With GSAP Bar & Card Transitions)
+    const cockpitProfiles = {
+      independent: {
+        pill: 'Recommended for Active Autonomy',
+        title: 'Independent Living',
+        subtitle: 'Maintenance-free botanical suites with chef dining & vibrant social clubs',
+        price: '$4,250 / mo',
+        img: 'https://images.unsplash.com/photo-1586023492125-27b2c045efd7?auto=format&fit=crop&w=1600&q=85',
+        desc: 'Ideal when a big house has become exhausting to maintain or isolating to live in alone. Residents enjoy private sunlit apartments, three daily chef-prepared meals, chauffeured errands, and 24/7 wearable emergency response.',
+        clinicalW: '35%', clinicalLbl: 'On-Call 24/7 Backup',
+        socialW: '100%', socialLbl: '100% Full Access',
+        mobilityW: '25%', mobilityLbl: 'As Requested',
+        checklist: [
+          '✓ Three scratch-prepared seasonal meals + all-day bistro',
+          '✓ Weekly housekeeping, linen laundry & suite maintenance',
+          '✓ Chauffeured town car for medical visits & cultural outings',
+          '✓ Full access to palm conservatory, art studio & olive groves'
+        ]
+      },
+      assisted: {
+        pill: 'Most Popular for Family Peace of Mind',
+        title: 'Personalized Assisted Living',
+        subtitle: 'Discreet daily assistance in your private suite with 24/7 licensed nursing',
+        price: '$5,450 / mo',
+        img: 'https://images.unsplash.com/photo-1576765608535-5f04d1e3f289?auto=format&fit=crop&w=1600&q=85',
+        desc: 'Designed to preserve dignity and autonomy while removing the stress of managing complex medications, bathing safety, dressing, or mobility challenges. Delivered by a consistent 1:5 care partner team.',
+        clinicalW: '80%', clinicalLbl: '24/7 Licensed Nurse Oversight',
+        socialW: '100%', socialLbl: 'Guided Daily Engagement',
+        mobilityW: '75%', mobilityLbl: 'Daily Personal Care Included',
+        checklist: [
+          '✓ 24/7 medication management & vital sign monitoring',
+          '✓ Respectful assistance with morning & evening routines',
+          '✓ Escorts to harvest dining room & daily Encore clubs',
+          '✓ Real-time family wellness portal & monthly care conferences'
+        ]
+      },
+      memory: {
+        pill: 'Specialized Cognitive & Sensory Sanctuary',
+        title: 'Memory & Enriched Care',
+        subtitle: 'Secure sunlit garden neighborhood engineered for calm & familiarity',
+        price: '$6,800 / mo',
+        img: 'https://images.unsplash.com/photo-1518531933037-91b2f5f229cc?auto=format&fit=crop&w=1600&q=85',
+        desc: 'Our secure olive-grove neighborhood honors residents living with Alzheimer’s or dementia. Circadian lighting, sensory culinary stations, and music therapy replace anxiety with warmth and belonging.',
+        clinicalW: '100%', clinicalLbl: '24/7 Dementia-Certified Clinical Team',
+        socialW: '100%', socialLbl: 'Sensory & Music-Memory Therapy',
+        mobilityW: '95%', mobilityLbl: 'High-Touch 1:5 Partner Ratio',
+        checklist: [
+          '✓ Enclosed zero-threshold sensory courtyard & walking loop',
+          '✓ Circadian lighting engineered to reduce evening sundowning',
+          '✓ Finger-food culinary program for effortless nutrition',
+          '✓ Monthly family support group & dedicated memory navigator'
+        ]
+      }
+    };
+
+    function switchCareCockpit(key) {
+      const p = cockpitProfiles[key];
+      if (!p) return;
+
+      ['independent', 'assisted', 'memory'].forEach((k) => {
+        const btn = document.getElementById('cockpit-btn-' + k);
+        btn.className = (k === key)
+          ? 'w-full text-left p-4 rounded-2xl border-2 border-plum bg-plum text-cream transition-all flex items-center justify-between'
+          : 'w-full text-left p-4 rounded-2xl border-2 border-sand bg-cream text-plum hover:border-plum transition-all flex items-center justify-between';
+      });
+
+      // Orchestrated GSAP Timeline for Cockpit Switch
+      const tl = gsap.timeline();
+      tl.to('#bar-fill-clinical', { width: p.clinicalW, duration: 0.6, ease: 'power3.out' }, 0)
+        .to('#bar-fill-social', { width: p.socialW, duration: 0.6, ease: 'power3.out' }, 0)
+        .to('#bar-fill-mobility', { width: p.mobilityW, duration: 0.6, ease: 'power3.out' }, 0);
+
+      document.getElementById('bar-label-clinical').textContent = p.clinicalLbl;
+      document.getElementById('bar-label-social').textContent = p.socialLbl;
+      document.getElementById('bar-label-mobility').textContent = p.mobilityLbl;
+
+      document.getElementById('cockpit-pill').textContent = p.pill;
+      document.getElementById('cockpit-title').textContent = p.title;
+      document.getElementById('cockpit-subtitle').textContent = p.subtitle;
+      document.getElementById('cockpit-price').textContent = p.price;
+      document.getElementById('cockpit-img').src = p.img;
+      document.getElementById('cockpit-desc').textContent = p.desc;
+      document.getElementById('cockpit-checklist').innerHTML = p.checklist.map(i => `<li>${i}</li>`).join('');
+    }
+
+    // 4. Interactive CAD Suite Switcher (Re-triggers SVG Drawing Timeline)
+    const cadSuites = {
+      studio: {
+        title: 'The Olive Alcove Studio',
+        dims: '460 SQ. FT. · SOUTH GARDEN ASPECT',
+        roomLabel: 'SUNLIT LIVING CONSERVATORY',
+        availability: '2 Garden-Level Suites Available Now',
+        rate: '$4,250 / mo',
+        photo: 'https://images.unsplash.com/photo-1616594039964-ae9021a400a0?auto=format&fit=crop&w=1600&q=85',
+        desc: '“Flooded with natural southern daylight, The Olive Studio pairs a private sleeping alcove with direct level access to our rosemary and olive courtyard.”'
+      },
+      onebed: {
+        title: 'The Sunlit One-Bedroom Residence',
+        dims: '680 SQ. FT. · CORNER SANCTUARY',
+        roomLabel: 'SEPARATE PARLOR & DINING SALON',
+        availability: '1 South-Corner Suite Available',
+        rate: '$5,150 / mo',
+        photo: 'https://images.unsplash.com/photo-1598928506311-c55ded91a20c?auto=format&fit=crop&w=1600&q=85',
+        desc: '“Our most requested layout features a full private master bedroom, walk-in wardrobe, entertaining parlor, and a covered botanical verandah.”'
+      },
+      twobed: {
+        title: 'The Courtyard Two-Bedroom Villa',
+        dims: '940 SQ. FT. · DUAL MASTER WING',
+        roomLabel: 'WRAP-AROUND GARDEN GREAT ROOM',
+        availability: 'Priority Waitlist · Tour Model Today',
+        rate: '$6,450 / mo',
+        photo: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1600&q=85',
+        desc: '“Designed for couples or residents wanting a dedicated art studio and guest bedroom, complete with 1.5 zero-step spa baths and panoramic grove views.”'
+      }
+    };
+
+    function selectCadSuite(key) {
+      const s = cadSuites[key];
+      if (!s) return;
+
+      ['studio', 'onebed', 'twobed'].forEach((k) => {
+        const tab = document.getElementById('cad-tab-' + k);
+        tab.className = (k === key)
+          ? 'px-5 py-2.5 rounded-full text-xs sm:text-sm font-semibold bg-plum text-cream transition'
+          : 'px-5 py-2.5 rounded-full text-xs sm:text-sm font-semibold text-plum hover:bg-sand/40 transition';
+      });
+
+      document.getElementById('cad-title').textContent = s.title;
+      document.getElementById('cad-dims').textContent = s.dims;
+      document.getElementById('cad-room-label').textContent = s.roomLabel;
+      document.getElementById('cad-availability').textContent = s.availability;
+      document.getElementById('cad-rate').textContent = s.rate;
+      document.getElementById('cad-photo').src = s.photo;
+      document.getElementById('cad-desc').textContent = s.desc;
+
+      // Re-run SVG CAD Stroke Drawing Timeline
+      playCadBlueprintTimeline();
+    }
+
+    // 5. GSAP Tweened Financial Value Engine
+    let displayedTotal = 5910;
+    function runValueEngine() {
+      const h = parseInt(document.getElementById('s-housing').value, 10);
+      const f = parseInt(document.getElementById('s-food').value, 10);
+      const u = parseInt(document.getElementById('s-upkeep').value, 10);
+      const c = parseInt(document.getElementById('s-care').value, 10);
+
+      document.getElementById('lbl-housing').textContent = '$' + h.toLocaleString() + ' / mo';
+      document.getElementById('lbl-food').textContent = '$' + f.toLocaleString() + ' / mo';
+      document.getElementById('lbl-upkeep').textContent = '$' + u.toLocaleString() + ' / mo';
+      document.getElementById('lbl-care').textContent = '$' + c.toLocaleString() + ' / mo';
+
+      const newTotal = h + f + u + c;
+      const tweenObj = { val: displayedTotal };
+      gsap.to(tweenObj, {
+        val: newTotal,
+        duration: 0.45,
+        ease: 'power2.out',
+        onUpdate: () => {
+          document.getElementById('tween-home-total').textContent = Math.round(tweenObj.val).toLocaleString();
+        }
+      });
+      displayedTotal = newTotal;
+
+      const diff = newTotal - 4250;
+      const box = document.getElementById('value-verdict-box');
+      if (diff >= 0) {
+        box.innerHTML = `At Mission Villa, your family saves an estimated <strong>$${diff.toLocaleString()} every month</strong> while gaining <strong>24/7 clinical security</strong>, three daily chef meals, housekeeping, and a joyful community.`;
+      } else {
+        box.innerHTML = `For an net difference of just <strong>$${Math.abs(diff).toLocaleString()}/month</strong> over bare home bills, Mission Villa includes <strong>three daily chef meals, weekly housekeeping, all utilities, and 24/7 emergency nursing backup</strong>.`;
+      }
+    }
+
+    // 6. Senior Readability Font Scale Controller
+    function setFontScale(scale) {
+      document.documentElement.style.setProperty('--font-scale', scale);
+      [1, 1.08, 1.15].forEach((val, idx) => {
+        const btn = document.getElementById('scale-' + (idx + 1));
+        btn.className = Math.abs(val - scale) < 0.01
+          ? 'px-2.5 py-0.5 rounded-full text-xs font-semibold bg-sand text-plum transition'
+          : 'px-2.5 py-0.5 rounded-full text-xs font-semibold text-cream hover:bg-white/10 transition';
+      });
+      ScrollTrigger.refresh();
+    }
+
+    // 7. Booking Form Handler
+    function submitTourBooking(e) {
+      e.preventDefault();
+      document.getElementById('booking-confirmation').classList.remove('hidden');
+      e.target.reset();
+    }
+  </script>
+</body>
+</html>

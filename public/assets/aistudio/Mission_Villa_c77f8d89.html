@@ -1,0 +1,1510 @@
+<!DOCTYPE html>
+<html lang="en" class="lenis">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mission Villa Senior Living | A Place to Belong — The Living Heirloom</title>
+
+  <!-- Google Fonts: Lora (Primary), Poppins (Secondary), Allura (Handwritten Marginalia) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Allura&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            plum: { DEFAULT: '#3B2348', dark: '#22122B', light: '#543566' },
+            sage: { DEFAULT: '#8FAF78', light: '#E8F0E2', dark: '#5F7F49' },
+            sand: { DEFAULT: '#D8C7A5', light: '#F2ECE0', dark: '#BBA376' },
+            terracotta: { DEFAULT: '#C98268', light: '#F7E7E1', dark: '#A65D43' },
+            cream: { DEFAULT: '#F7F4ED', paper: '#FCFBF8' },
+            charcoal: { DEFAULT: '#29272B', muted: '#5D5962' }
+          },
+          fontFamily: {
+            serif: ['Lora', 'Georgia', 'serif'],
+            sans: ['Poppins', 'system-ui', 'sans-serif'],
+            script: ['Allura', 'cursive']
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    :root {
+      --plum: #3B2348;
+      --sage: #8FAF78;
+      --sand: #D8C7A5;
+      --terracotta: #C98268;
+      --cream: #F7F4ED;
+      --charcoal: #29272B;
+      /* Full-Width Fluid Editorial Margin: Scales from 24px to 128px on Ultrawide */
+      --pad-x: clamp(1.5rem, 5vw, 8rem);
+      --font-scale: 1;
+    }
+
+    html {
+      font-size: calc(16px * var(--font-scale));
+      background-color: var(--cream);
+      color: var(--charcoal);
+      overflow-x: hidden;
+    }
+
+    html.lenis, html.lenis body { height: auto; }
+    .lenis.lenis-smooth { scroll-behavior: auto !important; }
+    .lenis.lenis-stopped { overflow: hidden; }
+
+    /* Full-Width Widescreen Canvas (Zero Boxed Constraints) */
+    .atrium-canvas {
+      width: 100%;
+      padding-left: var(--pad-x);
+      padding-right: var(--pad-x);
+    }
+
+    /* Fluid Editorial Typography - Calibrated for 100vh Hero Fit & Section Symmetry */
+    .editorial-h1 {
+      font-size: clamp(2.2rem, 3.1vw + 0.5rem, 3.9rem);
+      line-height: 1.05;
+      letter-spacing: -0.02em;
+    }
+    .editorial-h2 {
+      font-size: clamp(2rem, 2.6vw + 0.4rem, 3.4rem);
+      line-height: 1.1;
+      letter-spacing: -0.015em;
+    }
+    .marginalia-script {
+      font-size: clamp(1.85rem, 2vw + 0.4rem, 2.75rem);
+      line-height: 1.05;
+    }
+
+    /* Tactile Cotton Paper Grain & Dappled Sunlight Shadow Overlay */
+    .paper-texture {
+      background-image: radial-gradient(rgba(59, 35, 72, 0.045) 1px, transparent 0);
+      background-size: 28px 28px;
+    }
+
+    /* Moving Dappled Sunlight Gobo Effect (Simulates Sun Through Olive Leaves) */
+    #dappled-sunlight {
+      pointer-events: none;
+      position: fixed;
+      inset: 0;
+      z-index: 35;
+      opacity: 0.42;
+      mix-blend-mode: multiply;
+      background:
+        radial-gradient(ellipse 380px 220px at 18% 22%, rgba(216, 199, 165, 0.35), transparent 70%),
+        radial-gradient(ellipse 460px 280px at 78% 35%, rgba(216, 199, 165, 0.28), transparent 72%),
+        radial-gradient(ellipse 340px 520px at 52% 75%, rgba(143, 175, 120, 0.14), transparent 70%);
+      will-change: transform;
+    }
+
+    /* Botanical Arch Frame Mask */
+    .arch-portal {
+      border-radius: 260px 260px 24px 24px;
+      overflow: hidden;
+      transform: translateZ(0);
+    }
+
+    /* Editorial Herbarium Frame (Asymmetric Archival Mounting) */
+    .herbarium-mount {
+      position: relative;
+      background: #FCFBF8;
+      border: 1px solid rgba(59, 35, 72, 0.14);
+      box-shadow: 0 30px 70px -20px rgba(59, 35, 72, 0.1);
+    }
+    .herbarium-mount::before {
+      content: "";
+      position: absolute;
+      inset: 10px;
+      border: 1px solid rgba(216, 199, 165, 0.55);
+      pointer-events: none;
+      z-index: 10;
+    }
+
+    /* Warm Golden Hour Image Grade */
+    .warm-editorial-img {
+      filter: sepia(11%) saturate(108%) contrast(102%);
+      will-change: transform;
+    }
+
+    /* Handwritten Underline Highlight for Dynamic Name Insertion */
+    .personalized-highlight {
+      position: relative;
+      display: inline-block;
+      color: var(--terracotta);
+      font-style: italic;
+    }
+    .personalized-highlight::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: 0.02em;
+      width: 100%;
+      height: 2px;
+      background: var(--sage);
+      opacity: 0.75;
+    }
+
+    /* Engraved Brass Suite Plaque Styling */
+    .brass-plaque {
+      background: linear-gradient(135deg, #E8D8B9 0%, #D8C7A5 45%, #C1A878 100%);
+      border: 2px solid #EFE7D6;
+      box-shadow:
+        inset 0 0 0 4px rgba(59, 35, 72, 0.15),
+        0 20px 45px -10px rgba(0, 0, 0, 0.35);
+    }
+
+    /* French Shutters Opening Animation Layer */
+    #shutter-left, #shutter-right {
+      will-change: transform;
+    }
+
+    /* Split Line Masks */
+    .line-clip {
+      overflow: hidden;
+      display: block;
+      padding-bottom: 0.06em;
+    }
+    .line-word {
+      display: block;
+      will-change: transform;
+    }
+  </style>
+</head>
+
+<body class="font-sans antialiased paper-texture selection:bg-plum selection:text-cream">
+
+  <!-- =====================================================================
+       01. LIVING DAPPLED SUNLIGHT OVERLAY (MOVES WITH LENIS SCROLL)
+  ====================================================================== -->
+  <div id="dappled-sunlight" aria-hidden="true"></div>
+
+  <!-- =====================================================================
+       02. OPENING FRENCH CONSERVATORY SHUTTERS (PARTS ON PAGE LOAD)
+  ====================================================================== -->
+  <div id="conservatory-shutters" class="fixed inset-0 z-[100] pointer-events-none flex">
+    <div id="shutter-left" class="w-1/2 h-full bg-plum-dark border-r border-sand/25 flex flex-col justify-between p-8 sm:p-14">
+      <span class="font-script text-3xl sm:text-4xl text-sand shutter-fade">A Place to Belong</span>
+      <div class="my-auto text-right pr-4 sm:pr-10 shutter-fade">
+        <span class="text-xs uppercase tracking-[0.3em] text-sage block mb-2">Mission Villa</span>
+        <span class="font-serif text-3xl sm:text-5xl text-cream italic">“The honor they deserve,”</span>
+      </div>
+      <span class="text-[11px] uppercase tracking-[0.25em] text-cream/50 shutter-fade">Nature · People · Purpose</span>
+    </div>
+
+    <div id="shutter-right" class="w-1/2 h-full bg-plum-dark flex flex-col justify-between p-8 sm:p-14">
+      <span class="text-xs uppercase tracking-[0.25em] text-sand text-right shutter-fade">Peninsula Senior Living</span>
+      <div class="my-auto pl-4 sm:pl-10 shutter-fade">
+        <span class="text-xs uppercase tracking-[0.3em] text-terracotta block mb-2">Senior Living</span>
+        <span class="font-serif text-3xl sm:text-5xl text-sand italic">“the care you’ll love.”</span>
+      </div>
+      <span class="text-[11px] uppercase tracking-[0.25em] text-cream/50 text-right shutter-fade">Living Fully Every Day.</span>
+    </div>
+  </div>
+
+  <!-- =====================================================================
+       03. FULL-WIDTH CIRCADIAN SUN-DIAL & ACCESSIBILITY TOP RIBBON (36px)
+  ====================================================================== -->
+  <div class="w-full bg-plum text-cream text-xs h-9 flex items-center atrium-canvas border-b border-white/10 relative z-40">
+    <div class="w-full flex flex-wrap items-center justify-between gap-4">
+      
+      <!-- Live Scroll-Linked Circadian Sun-Dial Status -->
+      <div class="flex items-center gap-2.5">
+        <span id="circadian-icon" class="text-sm">☀️</span>
+        <span class="text-sand font-medium tracking-wide text-[11px]" id="circadian-reading">
+          SANCTUARY ATMOSPHERE: 08:30 AM · CONSERVATORY MORNING LIGHT
+        </span>
+        <span class="hidden xl:inline text-white/25">|</span>
+        <span class="hidden xl:inline text-cream/75 text-[11px]">Flagship Sanctuary of <strong>Peninsula Senior Living</strong></span>
+      </div>
+
+      <!-- Senior Reading Comfort & Direct Nurse Line -->
+      <div class="flex items-center gap-5 ml-auto">
+        <div class="flex items-center gap-1 bg-white/10 rounded-full px-2.5 py-0.5" role="group" aria-label="Reading Comfort Scale">
+          <span class="text-sand text-[10px] mr-1 hidden sm:inline">Text Comfort:</span>
+          <button onclick="setReadingScale(1)" id="rscale-1" class="px-2 py-0.2 rounded-full text-[10px] font-bold bg-sand text-plum transition">A</button>
+          <button onclick="setReadingScale(1.08)" id="rscale-2" class="px-2 py-0.2 rounded-full text-[10px] font-bold text-cream hover:bg-white/10 transition">A+</button>
+          <button onclick="setReadingScale(1.15)" id="rscale-3" class="px-2 py-0.2 rounded-full text-[10px] font-bold text-cream hover:bg-white/10 transition">A++</button>
+        </div>
+
+        <a href="tel:18005558455" class="hidden sm:inline-flex items-center gap-2 font-medium text-[11px] text-cream hover:text-sand transition">
+          <span class="w-2 h-2 rounded-full bg-terracotta animate-ping"></span>
+          <span>24/7 Registered Nurse & Family Desk: <strong>(800) 555-VILLA</strong></span>
+        </a>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- =====================================================================
+       04. FULL-WIDTH EDITORIAL MONOGRAPH HEADER (68px Desktop)
+  ====================================================================== -->
+  <header class="sticky top-0 z-40 w-full bg-cream/95 backdrop-blur-md border-b border-plum/10 atrium-canvas">
+    <div class="w-full h-[68px] flex items-center justify-between gap-6">
+      
+      <!-- Brand Emblem & Lockup -->
+      <a href="#" class="flex items-center gap-3.5 group">
+        <div class="w-10 h-10 sm:w-11 sm:h-11 flex-shrink-0 transition-transform duration-500 group-hover:scale-105">
+          <svg viewBox="0 0 120 110" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-full h-full">
+            <defs>
+              <linearGradient id="pLeaf" x1="10" y1="10" x2="60" y2="95" gradientUnits="userSpaceOnUse">
+                <stop offset="0%" stop-color="#5B3270"/>
+                <stop offset="55%" stop-color="#3B2348"/>
+                <stop offset="100%" stop-color="#22122B"/>
+              </linearGradient>
+              <linearGradient id="sLeaf" x1="35" y1="8" x2="65" y2="100" gradientUnits="userSpaceOnUse">
+                <stop offset="0%" stop-color="#C5DFB0"/>
+                <stop offset="50%" stop-color="#8FAF78"/>
+                <stop offset="100%" stop-color="#3D682E"/>
+              </linearGradient>
+              <linearGradient id="tLeaf" x1="115" y1="30" x2="48" y2="102" gradientUnits="userSpaceOnUse">
+                <stop offset="0%" stop-color="#E57B52"/>
+                <stop offset="50%" stop-color="#C98268"/>
+                <stop offset="100%" stop-color="#9A482B"/>
+              </linearGradient>
+              <linearGradient id="wLeaf" x1="25" y1="70" x2="52" y2="102" gradientUnits="userSpaceOnUse">
+                <stop offset="0%" stop-color="#F5E6C8"/>
+                <stop offset="100%" stop-color="#D8C7A5"/>
+              </linearGradient>
+            </defs>
+            <path d="M26 74C34 80 45 84 48 104C36 93 29 84 26 74Z" fill="url(#wLeaf)" />
+            <path d="M28 6C5 34 4 68 32 80C42 84 47 92 48 104C49 85 40 66 32 48C25 32 24 18 28 6Z" fill="url(#pLeaf)" />
+            <path d="M28 6C26 26 36 46 47 64C55 77 54 92 48 104C66 86 72 60 56 38C44 22 33 16 28 6Z" fill="url(#sLeaf)" />
+            <path d="M114 34C82 42 64 58 64 78C64 89 56 97 48 104C76 94 96 76 114 34Z" fill="url(#tLeaf)" />
+            <path d="M28 6C26 32 46 66 48 104" stroke="#F7F4ED" stroke-width="1.75" stroke-linecap="round"/>
+            <path d="M114 34C86 56 68 78 48 104" stroke="#F7F4ED" stroke-width="1.75" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <div>
+          <span class="block font-serif text-lg sm:text-xl font-bold tracking-tight text-plum leading-none">MISSION VILLA</span>
+          <span class="block font-sans text-[10px] tracking-[0.28em] uppercase text-charcoal/75 font-medium mt-1">Senior Living</span>
+        </div>
+      </a>
+
+      <!-- Center Editorial Chapter Navigation -->
+      <nav class="hidden xl:flex items-center gap-8 text-xs font-medium text-charcoal">
+        <a href="#life-story-builder" class="hover:text-plum transition">I. Their Story</a>
+        <a href="#triptych-stage" class="hover:text-plum transition">II. Nature · People · Purpose</a>
+        <a href="#chronicle-scroll" class="hover:text-plum transition">III. A Tuesday in the Sun</a>
+        <a href="#kitchen-table-ledger" class="hover:text-plum transition">IV. The Kitchen Table Ledger</a>
+        <a href="#sanctuary-suites" class="hover:text-plum transition">V. Sunlit Residences</a>
+      </nav>
+
+      <!-- Right Conversion CTA -->
+      <div class="flex items-center gap-4">
+        <div class="hidden lg:block text-right">
+          <span class="block text-[9px] uppercase tracking-[0.2em] text-terracotta-dark font-semibold">Personalizing For</span>
+          <span class="font-serif text-xs font-bold text-plum loved-one-label">Your Loved One</span>
+        </div>
+        <a href="#charter-reservation" class="inline-flex items-center gap-2.5 px-5 py-2.5 rounded-full bg-plum text-cream font-medium text-xs hover:bg-terracotta transition-all duration-300 shadow-md">
+          <span>Engrave Suite Plaque & Book Lunch</span>
+          <span>→</span>
+        </a>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- =====================================================================
+       05. CHAPTER I: THE SUNLIT ATRIUM & LIVE "LIFE STORY PERSONALIZER"
+           (Calibrated to fit 100% Desktop Viewport Height without scrolling)
+  ====================================================================== -->
+  <section id="life-story-builder" class="w-full py-6 lg:py-5 lg:h-[calc(100vh-104px)] lg:min-h-[610px] lg:max-h-[900px] flex items-center atrium-canvas border-b border-plum/15 relative overflow-hidden">
+    
+    <div class="w-full h-full grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-stretch">
+      
+      <!-- Left 5 Columns: Editorial Monograph Intro & Live Personalization Journal -->
+      <div class="lg:col-span-5 flex flex-col justify-between py-1 z-10 space-y-4 lg:space-y-0">
+        
+        <div class="space-y-2.5">
+          <div>
+            <span class="font-script marginalia-script text-terracotta block hero-fade">A Place to Belong</span>
+            <span class="text-[10px] uppercase tracking-[0.24em] text-plum/80 font-semibold block hero-fade">
+              Timeless Type · A Brighter Story
+            </span>
+          </div>
+
+          <h1 class="font-serif editorial-h1 text-plum font-semibold">
+            <span class="line-clip"><span class="line-word hero-line">The honor</span></span>
+            <span class="line-clip"><span class="line-word hero-line">they deserve,</span></span>
+            <span class="line-clip"><span class="line-word hero-line italic font-normal text-terracotta">the care you’ll love.</span></span>
+          </h1>
+
+          <p class="text-charcoal/85 text-xs sm:text-sm xl:text-[15px] leading-relaxed max-w-[54ch] hero-fade pt-0.5">
+            Your parent isn’t a medical chart or a suite number—they are a lifetime of stories, routines, and quiet dignities. Tell us who you are holding in your heart today, and watch this sanctuary adapt to honor their life.
+          </p>
+        </div>
+
+        <!-- THE SIGNATURE PERSONALIZATION JOURNAL BOX -->
+        <div class="herbarium-mount p-4 sm:p-5 xl:p-6 rounded-2xl space-y-3.5 hero-fade">
+          <div class="flex items-center justify-between border-b border-sand pb-2">
+            <div>
+              <span class="text-[10px] uppercase tracking-[0.22em] text-terracotta-dark font-bold block">Interactive Life-Story Edition</span>
+              <h2 class="font-serif text-base xl:text-lg font-semibold text-plum">Write Their Name Into Mission Villa</h2>
+            </div>
+            <span class="font-script text-xl text-sage-dark">Chapter I</span>
+          </div>
+
+          <!-- Input 1: First Name of Loved One -->
+          <div>
+            <label for="loved-one-input" class="block text-[11px] font-semibold uppercase tracking-wider text-plum mb-1">
+              First Name of Your Parent, Spouse, or Yourself:
+            </label>
+            <div class="flex gap-2">
+              <input
+                id="loved-one-input"
+                type="text"
+                placeholder="e.g., Eleanor, Arthur, or Mom..."
+                oninput="personalizeExperience(this.value)"
+                class="w-full px-3.5 py-2 rounded-xl bg-cream border border-sand focus:border-plum focus:outline-none font-serif text-sm text-plum"
+              />
+              <button onclick="personalizeExperience('Eleanor')" class="px-3 py-2 rounded-xl bg-sand/35 text-plum text-[11px] font-semibold hover:bg-sand transition whitespace-nowrap">
+                Try “Eleanor”
+              </button>
+            </div>
+          </div>
+
+          <!-- Input 2: Select Their Lifelong Passions -->
+          <div>
+            <span class="block text-[11px] font-semibold uppercase tracking-wider text-plum mb-1.5">
+              What Brings <span class="loved-one-label underline decoration-terracotta">Your Loved One</span> Morning Joy?
+            </span>
+            <div class="grid grid-cols-2 gap-1.5">
+              <button onclick="selectPassion('gardening')" id="passion-gardening" class="px-2.5 py-1.5 rounded-full text-[11px] font-semibold bg-plum text-cream transition truncate text-left">
+                🌿 Olive & Rose Gardening
+              </button>
+              <button onclick="selectPassion('culinary')" id="passion-culinary" class="px-2.5 py-1.5 rounded-full text-[11px] font-semibold bg-cream border border-sand text-plum hover:border-plum transition truncate text-left">
+                🍷 Mediterranean Cooking
+              </button>
+              <button onclick="selectPassion('literature')" id="passion-literature" class="px-2.5 py-1.5 rounded-full text-[11px] font-semibold bg-cream border border-sand text-plum hover:border-plum transition truncate text-left">
+                📚 History, Art & Books
+              </button>
+              <button onclick="selectPassion('music')" id="passion-music" class="px-2.5 py-1.5 rounded-full text-[11px] font-semibold bg-cream border border-sand text-plum hover:border-plum transition truncate text-left">
+                🎻 Classical & Jazz Nights
+              </button>
+            </div>
+          </div>
+
+          <p id="personal-live-preview" class="text-[11px] text-charcoal/80 italic bg-sage/15 px-3 py-2 rounded-xl border border-sage/40">
+            ✨ Scroll down to see <strong class="loved-one-label text-plum">Your Loved One</strong>’s morning light, harvest table, and suite come alive.
+          </p>
+        </div>
+
+      </div>
+
+      <!-- Right 7 Columns: Monumental Botanical Arch Conservatory & Floating Herbarium Specimens -->
+      <div class="lg:col-span-7 relative flex items-center justify-center h-full py-1">
+        
+        <!-- Center Archway Portal (Dynamically matches 100vh column height) -->
+        <div id="hero-arch-portal" class="arch-portal w-full lg:w-[90%] h-[440px] sm:h-[520px] lg:h-full max-h-[760px] relative shadow-2xl border-4 border-cream-paper">
+          <img
+            id="hero-arch-img"
+            src="https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=2000&q=85"
+            alt="Sunlit Mission Villa Conservatory with lush indoor palms and warm morning light"
+            class="w-full h-[118%] object-cover object-center warm-editorial-img -mt-[6%]"
+          />
+          <div class="absolute inset-0 bg-gradient-to-t from-plum/85 via-transparent to-plum/10"></div>
+
+          <!-- Archival Caption Inside Conservatory -->
+          <div class="absolute bottom-5 left-6 right-6 text-cream flex flex-col sm:flex-row sm:items-end justify-between gap-4">
+            <div class="max-w-md">
+              <span class="text-[10px] uppercase tracking-[0.24em] text-sand font-semibold block mb-1">
+                Plate 01 · The Palm Conservatory Atrium
+              </span>
+              <p class="font-serif text-base sm:text-lg xl:text-xl italic leading-snug">
+                “Where <span class="loved-one-label text-sand underline decoration-sage">Your Loved One</span>’s morning begins with natural sunlight, never a fluorescent corridor.”
+              </p>
+            </div>
+            <div class="bg-cream/95 text-plum px-4 py-2.5 rounded-2xl text-right shadow-lg flex-shrink-0">
+              <span class="text-[9px] uppercase tracking-widest text-charcoal/70 block">Staffing Commitment</span>
+              <span class="font-serif text-lg xl:text-xl font-bold">1 : 5 Care Ratio</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Floating Specimen 1: Olive Branch Herbarium Card (Top Left Overlap) -->
+        <div id="floating-specimen-olive" class="hidden sm:block herbarium-mount p-3.5 w-48 rounded-2xl absolute left-0 top-6 z-20 -rotate-3">
+          <div class="h-24 rounded-xl overflow-hidden mb-2">
+            <img src="https://images.unsplash.com/photo-1509316975850-ff9c5deb0cd9?auto=format&fit=crop&w=500&q=80" alt="Sunlit olive branch specimen" class="w-full h-full object-cover warm-editorial-img"/>
+          </div>
+          <span class="text-[9px] font-mono uppercase tracking-widest text-sage-dark block">Specimen No. 04 · Olea</span>
+          <p class="font-serif text-[11px] font-semibold text-plum mt-0.5">2.4 Acres of Level Olive Groves</p>
+        </div>
+
+        <!-- Floating Specimen 2: Blooming Pink Cosmos Card (Bottom Right Overlap) -->
+        <div id="floating-specimen-cosmos" class="hidden sm:block herbarium-mount p-3.5 w-52 rounded-2xl absolute right-0 bottom-24 z-20 rotate-3">
+          <div class="flex items-center gap-2.5">
+            <img src="https://images.unsplash.com/photo-1490750967868-88aa4486c946?auto=format&fit=crop&w=300&q=80" alt="Pink cosmos flower in golden hour light" class="w-12 h-12 rounded-xl object-cover flex-shrink-0"/>
+            <div>
+              <span class="text-[9px] font-mono uppercase tracking-widest text-terracotta-dark block">Vitality · Bloom</span>
+              <p class="font-serif text-[11px] font-semibold text-plum">98.4% Family Peace-of-Mind Score</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- =====================================================================
+       06. CHAPTER II: THE UNFOLDING ARCHITECTURAL TRIPTYCH
+           (Pinned Full-Width Widescreen Accordion: NATURE · PEOPLE · PURPOSE)
+  ====================================================================== -->
+  <section id="triptych-stage" class="w-full bg-plum text-cream relative overflow-hidden">
+    <div id="triptych-pin-wrap" class="w-full min-h-screen flex flex-col justify-between py-10 lg:py-14 atrium-canvas">
+      
+      <!-- Top Monograph Header -->
+      <div class="w-full flex flex-wrap items-end justify-between gap-4 pb-6 border-b border-white/15">
+        <div>
+          <span class="font-script marginalia-script text-sand block">Inspired by Nature. Designed for a Brighter Tomorrow.</span>
+          <h2 class="font-serif text-2xl sm:text-4xl font-semibold text-cream">
+            The Three Sanctuary Pillars Encircling <span class="loved-one-label text-sand italic">Your Loved One</span>
+          </h2>
+        </div>
+        <span class="text-xs font-mono uppercase tracking-[0.22em] text-sage">
+          SCROLL TO UNFOLD THE ARCHITECTURAL TRIPTYCH
+        </span>
+      </div>
+
+      <!-- Full-Width 3-Panel Folding Screen -->
+      <div class="w-full grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8 my-auto py-8 items-stretch">
+        
+        <!-- PANEL I: NATURE -->
+        <article id="triptych-panel-1" class="rounded-3xl bg-plum-dark border border-white/15 overflow-hidden flex flex-col justify-between min-h-[460px] xl:min-h-[520px] relative group">
+          <div class="h-60 sm:h-64 relative overflow-hidden">
+            <img src="https://images.unsplash.com/photo-1585320806297-9794b3e4eeae?auto=format&fit=crop&w=1200&q=85" alt="Mediterranean olive garden courtyard" class="w-full h-full object-cover warm-editorial-img group-hover:scale-105 transition-transform duration-700"/>
+            <div class="absolute inset-0 bg-gradient-to-t from-plum-dark via-transparent to-transparent"></div>
+            <span class="absolute top-4 left-4 px-3.5 py-1 rounded-full bg-sage text-plum text-xs font-bold uppercase tracking-widest">
+              I · Nature
+            </span>
+          </div>
+          <div class="p-7 sm:p-8 space-y-4 my-auto">
+            <h3 class="font-serif text-2xl sm:text-3xl font-semibold text-cream">
+              Sunlit Courtyards & Biophilic Calm
+            </h3>
+            <p class="text-sm text-cream/80 leading-relaxed">
+              Every hallway ends in a garden view. Daily exposure to our 10,000-lux palm conservatory and level olive paths lowers evening agitation by 42% and restores deep, natural rest.
+            </p>
+            <div class="pt-4 border-t border-white/10 flex items-center justify-between text-xs text-sand font-mono">
+              <span>ZERO-THRESHOLD PATHS</span>
+              <span>100% GROUND ACCESS</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- PANEL II: PEOPLE -->
+        <article id="triptych-panel-2" class="rounded-3xl bg-[#2E1B39] border border-sand/30 overflow-hidden flex flex-col justify-between min-h-[460px] xl:min-h-[520px] relative group">
+          <div class="h-60 sm:h-64 relative overflow-hidden">
+            <img src="https://images.unsplash.com/photo-1516307365426-bea591f05011?auto=format&fit=crop&w=1200&q=85" alt="Warm companionship and laughter" class="w-full h-full object-cover warm-editorial-img group-hover:scale-105 transition-transform duration-700"/>
+            <div class="absolute inset-0 bg-gradient-to-t from-[#2E1B39] via-transparent to-transparent"></div>
+            <span class="absolute top-4 left-4 px-3.5 py-1 rounded-full bg-terracotta text-white text-xs font-bold uppercase tracking-widest">
+              II · People
+            </span>
+          </div>
+          <div class="p-7 sm:p-8 space-y-4 my-auto">
+            <h3 class="font-serif text-2xl sm:text-3xl font-semibold text-cream">
+              Known by Name, Honored by History
+            </h3>
+            <p class="text-sm text-cream/80 leading-relaxed">
+              We never use rotating agency strangers. With a 94% staff retention rate and a 1:5 care ratio, <span class="loved-one-label text-sand font-semibold">Your Loved One</span> is cared for by familiar faces who know their life story by heart.
+            </p>
+            <div class="pt-4 border-t border-white/10 flex items-center justify-between text-xs text-sand font-mono">
+              <span>94% STAFF RETENTION</span>
+              <span>&lt; 90 SEC RESPONSE</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- PANEL III: PURPOSE -->
+        <article id="triptych-panel-3" class="rounded-3xl bg-[#3A222F] border border-terracotta/40 overflow-hidden flex flex-col justify-between min-h-[460px] xl:min-h-[520px] relative group">
+          <div class="h-60 sm:h-64 relative overflow-hidden">
+            <img src="https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=1200&q=85" alt="Chef-prepared harvest table dining" class="w-full h-full object-cover warm-editorial-img group-hover:scale-105 transition-transform duration-700"/>
+            <div class="absolute inset-0 bg-gradient-to-t from-[#3A222F] via-transparent to-transparent"></div>
+            <span class="absolute top-4 left-4 px-3.5 py-1 rounded-full bg-sand text-plum text-xs font-bold uppercase tracking-widest">
+              III · Purpose
+            </span>
+          </div>
+          <div class="p-7 sm:p-8 space-y-4 my-auto">
+            <h3 class="font-serif text-2xl sm:text-3xl font-semibold text-cream">
+              A Reason to Rise With Anticipation
+            </h3>
+            <p class="text-sm text-cream/80 leading-relaxed">
+              Retiring from work should never mean retiring from purpose. From resident-led Encore Guilds to scratch-prepared Mediterranean harvest dinners, every day invites contribution.
+            </p>
+            <div class="pt-4 border-t border-white/10 flex items-center justify-between text-xs text-sand font-mono">
+              <span>42+ WEEKLY ARTISAN CLUBS</span>
+              <span>ALL-DAY BISTRO</span>
+            </div>
+          </div>
+        </article>
+
+      </div>
+
+      <!-- Bottom Monograph Ribbon -->
+      <div class="w-full flex items-center justify-between text-xs text-sand/80 pt-4 border-t border-white/15">
+        <span>CARE · A BRIGHTER TOMORROW · TOGETHER</span>
+        <span>COMFORT · COMMUNITY · BELONGING</span>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- =====================================================================
+       07. CHAPTER III: "HOW A TUESDAY UNFOLDS" — WINDING BOTANICAL VINE CHRONICLE
+  ====================================================================== -->
+  <section id="chronicle-scroll" class="w-full py-24 lg:py-32 atrium-canvas bg-cream border-b border-plum/15 relative overflow-hidden">
+    
+    <!-- Continuous SVG Winding Olive Vine Drawn Down the Center on Scroll -->
+    <svg class="hidden lg:block absolute left-1/2 top-0 bottom-0 -translate-x-1/2 w-24 h-full pointer-events-none z-0" viewBox="0 0 100 1200" preserveAspectRatio="none">
+      <path id="scroll-vine-path" d="M50 0 C85 200, 15 400, 50 600 C85 800, 15 1000, 50 1200" fill="none" stroke="#8FAF78" stroke-width="2.5" stroke-dasharray="6 6"/>
+    </svg>
+
+    <div class="w-full max-w-4xl mx-auto text-center space-y-3 mb-20 relative z-10">
+      <span class="font-script marginalia-script text-terracotta block">Living Fully Every Day.</span>
+      <h2 class="font-serif editorial-h2 text-plum font-semibold">
+        How <span class="loved-one-label personalized-highlight">Your Loved One</span>’s Tuesday Unfolds in the Sun
+      </h2>
+      <p class="text-charcoal/80 text-base sm:text-lg max-w-2xl mx-auto">
+        No institutional loudspeakers or rigid routines—only warm invitations tailored around <span id="passion-summary-text" class="font-semibold text-plum">heirloom gardening, sunlit dining, and unhurried companionship</span>.
+      </p>
+    </div>
+
+    <!-- Full-Width Alternating Editorial Story Chapters -->
+    <div class="w-full space-y-16 lg:space-y-24 relative z-10">
+      
+      <!-- 08:30 AM -->
+      <div class="w-full grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-14 items-center chronicle-item">
+        <div class="lg:col-span-5 lg:text-right space-y-3">
+          <span class="px-3.5 py-1 rounded-full bg-sand/50 text-plum text-xs font-bold tracking-widest inline-block">
+            08:30 AM · SUNRISE CONSERVATORY
+          </span>
+          <h3 class="font-serif text-2xl sm:text-3xl xl:text-4xl text-plum font-semibold">
+            Warm Pastries & Morning Light Under the Palms
+          </h3>
+          <p class="text-charcoal/80 text-sm sm:text-base leading-relaxed">
+            <span class="loved-one-label font-semibold text-plum">Your Loved One</span> steps out of their suite at their own pace. In the grand conservatory, our barista already knows their morning coffee order before they sit down by the sunlit palms.
+          </p>
+        </div>
+        <div class="lg:col-span-2 hidden lg:flex justify-center">
+          <div class="w-12 h-12 rounded-full bg-plum text-sand font-serif font-bold flex items-center justify-center shadow-lg border-4 border-cream">
+            I
+          </div>
+        </div>
+        <div class="lg:col-span-5">
+          <div class="herbarium-mount p-3 rounded-3xl">
+            <img src="https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=1000&q=80" alt="Morning conservatory sunlight" class="w-full h-64 sm:h-72 object-cover rounded-2xl warm-editorial-img"/>
+          </div>
+        </div>
+      </div>
+
+      <!-- 11:00 AM (Dynamically Adapts to Selected Passion!) -->
+      <div class="w-full grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-14 items-center chronicle-item">
+        <div class="lg:col-span-5 order-2 lg:order-1">
+          <div class="herbarium-mount p-3 rounded-3xl">
+            <img id="dynamic-passion-img" src="https://images.unsplash.com/photo-1490750967868-88aa4486c946?auto=format&fit=crop&w=1000&q=80" alt="Personalized Encore Guild Session" class="w-full h-64 sm:h-72 object-cover rounded-2xl warm-editorial-img"/>
+          </div>
+        </div>
+        <div class="lg:col-span-2 hidden lg:flex justify-center order-2">
+          <div class="w-12 h-12 rounded-full bg-sage text-plum font-serif font-bold flex items-center justify-center shadow-lg border-4 border-cream">
+            II
+          </div>
+        </div>
+        <div class="lg:col-span-5 space-y-3 order-1 lg:order-3">
+          <span class="px-3.5 py-1 rounded-full bg-sage/35 text-plum text-xs font-bold tracking-widest inline-block">
+            11:00 AM · PERSONALIZED ENCORE GUILD
+          </span>
+          <h3 id="dynamic-passion-title" class="font-serif text-2xl sm:text-3xl xl:text-4xl text-plum font-semibold">
+            Tending Heirloom Olive & Cosmos Beds in the Courtyard
+          </h3>
+          <p id="dynamic-passion-desc" class="text-charcoal/80 text-sm sm:text-base leading-relaxed">
+            In our raised zero-bend cedar planters, residents harvest fresh rosemary, lavender, and pink cosmos blooms—sharing decades of gardening wisdom with fellow enthusiasts.
+          </p>
+        </div>
+      </div>
+
+      <!-- 01:00 PM & 06:30 PM -->
+      <div class="w-full grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-14 items-center chronicle-item">
+        <div class="lg:col-span-5 lg:text-right space-y-3">
+          <span class="px-3.5 py-1 rounded-full bg-terracotta/25 text-terracotta-dark text-xs font-bold tracking-widest inline-block">
+            01:00 PM & GOLDEN HOUR · HARVEST TABLE
+          </span>
+          <h3 class="font-serif text-2xl sm:text-3xl xl:text-4xl text-plum font-semibold">
+            Linen-Draped Dining & Fireside Acoustic Strings
+          </h3>
+          <p class="text-charcoal/80 text-sm sm:text-base leading-relaxed">
+            No one ever eats a frozen meal alone in front of a television here. <span class="loved-one-label font-semibold text-plum">Your Loved One</span> shares scratch-prepared herb salmon with five close friends, followed by live cello by the limestone fireplace.
+          </p>
+        </div>
+        <div class="lg:col-span-2 hidden lg:flex justify-center">
+          <div class="w-12 h-12 rounded-full bg-terracotta text-cream font-serif font-bold flex items-center justify-center shadow-lg border-4 border-cream">
+            III
+          </div>
+        </div>
+        <div class="lg:col-span-5">
+          <div class="herbarium-mount p-3 rounded-3xl">
+            <img src="https://images.unsplash.com/photo-1516307365426-bea591f05011?auto=format&fit=crop&w=1000&q=80" alt="Warm dinner conversation and friendship" class="w-full h-64 sm:h-72 object-cover rounded-2xl warm-editorial-img"/>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- =====================================================================
+       08. CHAPTER IV: "THE KITCHEN TABLE CONVERSATION"
+           (Fixed: 100% Symmetrical Equal-Height Left & Right Columns)
+  ====================================================================== -->
+  <section id="kitchen-table-ledger" class="w-full py-20 lg:py-28 atrium-canvas bg-sand/25 border-b border-plum/15">
+    
+    <div class="w-full grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-stretch">
+      
+      <!-- Left 5 Columns: Empathetic "Spoken Truths" Selector (Stretched to match Right Ledger) -->
+      <div class="lg:col-span-5 flex flex-col justify-between space-y-6 lg:space-y-0">
+        
+        <div class="space-y-3">
+          <span class="font-script marginalia-script text-terracotta block">An Honest Conversation Over Tea</span>
+          <h2 class="font-serif text-2xl sm:text-3xl xl:text-[2.5rem] leading-[1.12] text-plum font-semibold">
+            Which Sentence Sounds Most Like Your Family Right Now?
+          </h2>
+          <p class="text-charcoal/80 text-sm sm:text-base leading-relaxed">
+            Instead of clinical jargon, click the honest thought below that mirrors your kitchen-table conversations. Our Care & Financial Ledger on the right will immediately adapt for <span class="loved-one-label font-semibold text-plum">Your Loved One</span>.
+          </p>
+        </div>
+
+        <!-- 3 Conversational Truth Cards Anchored Flush to Bottom -->
+        <div class="space-y-3.5 pt-4">
+          
+          <button onclick="selectKitchenTruth('independent')" id="truth-btn-independent" class="w-full text-left p-5 rounded-2xl border-2 border-plum bg-plum text-cream shadow-xl transition-all space-y-1.5">
+            <div class="flex items-center justify-between text-[11px] uppercase tracking-widest text-sand font-semibold">
+              <span>Voice 01 · The Independent Spirit</span>
+              <span>Independent Living</span>
+            </div>
+            <p class="font-serif text-sm sm:text-base italic leading-snug">
+              “They are still sharp and independent—just tired of maintaining a big house, climbing stairs, and eating dinner alone.”
+            </p>
+          </button>
+
+          <button onclick="selectKitchenTruth('assisted')" id="truth-btn-assisted" class="w-full text-left p-5 rounded-2xl border-2 border-sand bg-cream-paper text-plum hover:border-plum transition-all space-y-1.5">
+            <div class="flex items-center justify-between text-[11px] uppercase tracking-widest text-terracotta-dark font-semibold">
+              <span>Voice 02 · The Protective Daughter / Son</span>
+              <span>Assisted Living</span>
+            </div>
+            <p class="font-serif text-sm sm:text-base italic leading-snug">
+              “I wake up at 3 AM worrying if they’ve fallen or mixed up prescriptions. I want to go back to being their child, not their stressed caregiver.”
+            </p>
+          </button>
+
+          <button onclick="selectKitchenTruth('memory')" id="truth-btn-memory" class="w-full text-left p-5 rounded-2xl border-2 border-sand bg-cream-paper text-plum hover:border-plum transition-all space-y-1.5">
+            <div class="flex items-center justify-between text-[11px] uppercase tracking-widest text-sage-dark font-semibold">
+              <span>Voice 03 · Navigating Memory Changes</span>
+              <span>Memory & Enriched Care</span>
+            </div>
+            <p class="font-serif text-sm sm:text-base italic leading-snug">
+              “Memory loss and evening confusion are making home unsafe. We need a secure, sunlit sanctuary where they are treated with total grace.”
+            </p>
+          </button>
+
+        </div>
+      </div>
+
+      <!-- Right 7 Columns: The Heirloom Family Ledger (h-full flex-col justify-between for exact symmetry) -->
+      <div class="lg:col-span-7 herbarium-mount rounded-3xl p-7 sm:p-10 xl:p-11 h-full flex flex-col justify-between space-y-6">
+        
+        <div class="flex flex-wrap items-start justify-between gap-4 border-b border-sand pb-5">
+          <div>
+            <span class="text-xs uppercase tracking-[0.22em] text-terracotta-dark font-bold block">
+              Prepared Specifically For <span class="loved-one-label">Your Loved One</span>
+            </span>
+            <h3 id="ledger-care-title" class="font-serif text-2xl sm:text-3xl xl:text-4xl font-bold text-plum mt-1">
+              Independent Sanctuary Living
+            </h3>
+          </div>
+          <div class="bg-plum text-cream px-5 py-3 rounded-2xl text-right">
+            <span class="text-[10px] uppercase tracking-widest text-sand block">All-Inclusive Monthly</span>
+            <span id="ledger-rate" class="font-serif text-2xl font-bold">$4,250 / mo</span>
+          </div>
+        </div>
+
+        <!-- Clinical & Lifestyle Prescription -->
+        <div class="space-y-2">
+          <h4 class="text-xs uppercase tracking-[0.2em] text-plum font-bold">How We Restore Your Family’s Peace of Mind</h4>
+          <p id="ledger-narrative" class="text-charcoal/85 text-sm sm:text-base leading-relaxed">
+            We trade home repairs, property tax bills, and grocery errands for a sunlit private suite, three daily scratch-made chef meals, weekly housekeeping, and 24/7 wearable emergency nurse backup.
+          </p>
+        </div>
+
+        <!-- Side-by-Side Written Financial Ledger (Home vs Mission Villa) -->
+        <div class="bg-cream rounded-2xl p-5 sm:p-6 border border-sand space-y-3 my-auto">
+          <div class="flex items-center justify-between border-b border-sand pb-2.5">
+            <span class="text-xs uppercase tracking-[0.2em] text-plum font-bold">Side-by-Side Monthly Reality Ledger</span>
+            <span class="text-xs text-sage-dark font-semibold">Zero Hidden Fees · Rate-Lock Charter</span>
+          </div>
+
+          <div class="grid grid-cols-12 text-xs sm:text-sm py-2 border-b border-sand/50 items-center">
+            <span class="col-span-6 font-medium text-charcoal">Property Upkeep, Taxes, Insurance & Utilities</span>
+            <span class="col-span-3 text-right text-charcoal/70 font-mono">$2,450/mo</span>
+            <span class="col-span-3 text-right font-semibold text-sage-dark">Included ✓</span>
+          </div>
+
+          <div class="grid grid-cols-12 text-xs sm:text-sm py-2 border-b border-sand/50 items-center">
+            <span class="col-span-6 font-medium text-charcoal">3 Daily Chef Meals, Bistro & Special Diets</span>
+            <span class="col-span-3 text-right text-charcoal/70 font-mono">$850/mo</span>
+            <span class="col-span-3 text-right font-semibold text-sage-dark">Included ✓</span>
+          </div>
+
+          <div class="grid grid-cols-12 text-xs sm:text-sm py-2 border-b border-sand/50 items-center">
+            <span id="ledger-care-line-label" class="col-span-6 font-medium text-charcoal">Part-Time Home Companion / Care Aide (20 hrs/wk)</span>
+            <span id="ledger-care-line-cost" class="col-span-3 text-right text-charcoal/70 font-mono">$2,560/mo</span>
+            <span class="col-span-3 text-right font-semibold text-sage-dark">24/7 Team ✓</span>
+          </div>
+
+          <div class="grid grid-cols-12 text-xs sm:text-sm py-2 items-center pt-2.5">
+            <span class="col-span-6 font-serif font-bold text-base text-plum">Total Monthly Comparison</span>
+            <span id="ledger-home-total" class="col-span-3 text-right font-serif font-bold text-base text-terracotta-dark line-through">$5,860/mo</span>
+            <span id="ledger-mv-total" class="col-span-3 text-right font-serif font-bold text-lg text-plum">$4,250/mo</span>
+          </div>
+        </div>
+
+        <div class="flex flex-wrap items-center justify-between gap-4 pt-2 border-t border-sand/60">
+          <p class="text-xs text-charcoal/75">
+            *Veterans Aid & Attendance and Long-Term Care Insurance accepted.
+          </p>
+          <a href="#charter-reservation" class="px-6 py-3 rounded-full bg-terracotta text-white text-xs sm:text-sm font-semibold hover:bg-plum transition shadow-md">
+            Lock In This Care Plan for <span class="loved-one-label">Your Loved One</span> →
+          </a>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- =====================================================================
+       09. CHAPTER V: SUNLIT SANCTUARY SUITES & ARCHITECTURAL BLUEPRINTS
+  ====================================================================== -->
+  <section id="sanctuary-suites" class="w-full py-24 lg:py-32 atrium-canvas bg-cream border-b border-plum/15">
+    <div class="w-full flex flex-col lg:flex-row lg:items-end justify-between gap-6 mb-14">
+      <div>
+        <span class="font-script marginalia-script text-terracotta block">Timeless Comfort, Thoughtfully Scaled</span>
+        <h2 class="font-serif editorial-h2 text-plum font-semibold">
+          Sunlit Private Suites Designed for Heirloom Furniture
+        </h2>
+      </div>
+      <div class="inline-flex flex-wrap p-1.5 rounded-full bg-cream-paper border border-sand gap-1">
+        <button onclick="switchHeirloomSuite('studio')" id="hsuite-studio" class="px-5 py-2.5 rounded-full text-xs sm:text-sm font-semibold bg-plum text-cream transition">
+          The Olive Alcove Studio (460 sq ft)
+        </button>
+        <button onclick="switchHeirloomSuite('onebed')" id="hsuite-onebed" class="px-5 py-2.5 rounded-full text-xs sm:text-sm font-semibold text-plum hover:bg-sand/30 transition">
+          The Sunlit 1-Bedroom (680 sq ft)
+        </button>
+        <button onclick="switchHeirloomSuite('twobed')" id="hsuite-twobed" class="px-5 py-2.5 rounded-full text-xs sm:text-sm font-semibold text-plum hover:bg-sand/30 transition">
+          Courtyard 2-Bedroom Villa (940 sq ft)
+        </button>
+      </div>
+    </div>
+
+    <div class="w-full grid grid-cols-1 lg:grid-cols-12 gap-10 items-stretch">
+      
+      <!-- Left 7 Columns: Sunlit Suite Interior -->
+      <div class="lg:col-span-7 herbarium-mount p-4 rounded-3xl flex flex-col justify-between">
+        <div class="h-80 sm:h-[420px] rounded-2xl overflow-hidden relative">
+          <img id="hsuite-img" src="https://images.unsplash.com/photo-1616594039964-ae9021a400a0?auto=format&fit=crop&w=1600&q=85" alt="Sunlit private suite at Mission Villa" class="w-full h-full object-cover warm-editorial-img transition-all duration-700"/>
+          <div class="absolute top-4 left-4 bg-cream/95 text-plum px-4 py-1.5 rounded-full text-xs font-bold shadow">
+            🐾 Small Pets Warmly Welcomed
+          </div>
+        </div>
+        <div class="p-4 sm:p-6 flex flex-wrap items-center justify-between gap-4">
+          <div>
+            <h3 id="hsuite-title" class="font-serif text-2xl sm:text-3xl font-bold text-plum">The Olive Alcove Studio</h3>
+            <p id="hsuite-desc" class="text-sm text-charcoal/80 mt-1 max-w-xl">
+              Features oversized south-facing bay windows, a defined sleeping sanctuary, stone kitchenette, and zero-step heated porcelain spa bath.
+            </p>
+          </div>
+          <span id="hsuite-badge" class="px-4 py-2 rounded-xl bg-sage/25 text-plum font-mono text-xs font-bold">
+            2 GARDEN SUITES OPEN
+          </span>
+        </div>
+      </div>
+
+      <!-- Right 5 Columns: Architectural Blueprint & Safety Details -->
+      <div class="lg:col-span-5 herbarium-mount p-6 sm:p-9 rounded-3xl flex flex-col justify-between space-y-6">
+        <div class="border-b border-sand pb-4 flex items-center justify-between">
+          <span class="text-xs uppercase tracking-[0.2em] text-terracotta-dark font-bold">Architectural Monograph Plan</span>
+          <span id="hsuite-sqft" class="font-mono text-xs text-plum font-bold">460 SQ. FT.</span>
+        </div>
+
+        <div class="bg-cream rounded-2xl border border-sand p-5 flex items-center justify-center my-auto">
+          <svg viewBox="0 0 420 260" class="w-full h-auto max-h-56">
+            <rect x="20" y="20" width="380" height="220" fill="#FCFBF8" stroke="#3B2348" stroke-width="4"/>
+            <rect x="275" y="20" width="125" height="75" fill="#E8F0E2" stroke="#8FAF78" stroke-width="2" stroke-dasharray="4 2"/>
+            <text x="337" y="60" text-anchor="middle" fill="#3B2348" font-size="9" font-weight="600" font-family="Poppins">PRIVATE PATIO</text>
+            <rect x="20" y="20" width="130" height="105" fill="#F2ECE0" stroke="#3B2348" stroke-width="2.5"/>
+            <circle cx="85" cy="72" r="26" fill="none" stroke="#C98268" stroke-width="1.5" stroke-dasharray="3 3"/>
+            <text x="85" y="112" text-anchor="middle" fill="#3B2348" font-size="8.5" font-weight="600" font-family="Poppins">ZERO-STEP SPA BATH</text>
+            <rect x="20" y="125" width="130" height="115" fill="#F7F4ED" stroke="#3B2348" stroke-width="2"/>
+            <text x="85" y="185" text-anchor="middle" fill="#3B2348" font-size="8.5" font-weight="600" font-family="Poppins">KITCHENETTE</text>
+            <rect x="175" y="135" width="205" height="85" rx="8" fill="#F7E7E1" stroke="#C98268" stroke-width="1.5"/>
+            <text x="277" y="182" text-anchor="middle" fill="#3B2348" font-size="11" font-weight="600" font-family="Lora" id="hsuite-plan-label">SUNLIT LIVING SALON</text>
+          </svg>
+        </div>
+
+        <div class="space-y-2.5 text-xs sm:text-sm text-charcoal/85 pt-2 border-t border-sand">
+          <p>✓ <strong>Flush Zero-Threshold Doors:</strong> Effortless walker & wheelchair navigation</p>
+          <p>✓ <strong>Circadian Amber Nightlights:</strong> Gentle motion-guided path to the bath</p>
+          <p>✓ <strong>STC-56 Acoustic Walls:</strong> Complete quiet and privacy for restful sleep</p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- =====================================================================
+       10. CHAPTER VI: THE ENGRAVED BRASS SUITE PLAQUE & CHEF'S LUNCH CHARTER
+           (Fixed: 100% Symmetrical Equal-Height Left & Right Columns)
+  ====================================================================== -->
+  <section id="charter-reservation" class="w-full py-20 lg:py-28 atrium-canvas bg-plum text-cream relative overflow-hidden">
+    <div class="w-full grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-stretch">
+      
+      <!-- Left 5 Columns: Live Engraved Brass Suite Plaque & Personal Welcome (Stretched to match Right Form) -->
+      <div class="lg:col-span-5 flex flex-col justify-between space-y-6 lg:space-y-0">
+        
+        <div class="space-y-4">
+          <span class="font-script marginalia-script text-sand block">A Place to Belong</span>
+          <h2 class="font-serif text-2xl sm:text-3xl xl:text-[2.6rem] leading-[1.12] text-cream font-semibold">
+            A Table & Suite Held in Honor of <span class="loved-one-label text-sand italic">Your Loved One</span>.
+          </h2>
+          <p class="text-cream/85 text-sm sm:text-base leading-relaxed">
+            When you visit Mission Villa for your complimentary Chef’s Lunch Tour, you won’t be handed a generic folder. Our culinary and wellness team will greet your family with a personalized sanctuary walkthrough.
+          </p>
+        </div>
+
+        <!-- LIVE ENGRAVED BRASS DOOR PLAQUE PREVIEW (Anchored flush to bottom edge) -->
+        <div class="brass-plaque p-6 sm:p-8 rounded-2xl text-plum space-y-3.5 relative mt-auto">
+          <div class="flex items-center justify-between text-[10px] font-mono uppercase tracking-[0.22em] text-plum/75">
+            <span>⊕ MISSION VILLA SANCTUARY CHARTER</span>
+            <span>SUITE NO. 108 · SOUTH GROVE ⊕</span>
+          </div>
+          <div class="py-4 border-y border-plum/20 text-center space-y-1">
+            <span class="text-xs uppercase tracking-[0.25em] text-plum/75 block">Prepared in Honor of</span>
+            <p class="font-serif text-3xl sm:text-4xl font-bold text-plum tracking-tight loved-one-label">
+              Your Loved One
+            </p>
+            <p id="plaque-passion-sub" class="font-script text-2xl text-terracotta-dark">
+              Encore Member · Olive & Rose Conservatory Guild
+            </p>
+          </div>
+          <div class="flex items-center justify-between text-[11px] font-medium text-plum/80">
+            <span>Includes Private Family Harvest Table Lunch</span>
+            <span>Peninsula Senior Living</span>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Right 7 Columns: Reservation Charter Form (h-full flex-col justify-between for exact symmetry) -->
+      <div class="lg:col-span-7 flex">
+        <form onsubmit="submitCharterForm(event)" class="herbarium-mount bg-cream text-charcoal rounded-3xl p-7 sm:p-10 xl:p-11 w-full h-full flex flex-col justify-between space-y-5">
+          
+          <div class="flex flex-wrap items-center justify-between gap-2 border-b border-sand pb-4">
+            <div>
+              <h3 class="font-serif text-2xl sm:text-3xl font-bold text-plum">
+                Reserve Your Family’s Chef’s Lunch Tour
+              </h3>
+              <p class="text-xs text-charcoal/70">We respond within 15 minutes · Zero high-pressure sales</p>
+            </div>
+            <span class="px-3.5 py-1.5 rounded-full bg-sage/30 text-plum text-xs font-bold">Complimentary Lunch for Two</span>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label class="block text-xs font-semibold uppercase tracking-wider text-plum mb-1.5">Your Full Name *</label>
+              <input type="text" required placeholder="e.g., Claire Montgomery" class="w-full px-4 py-3 rounded-xl bg-cream-paper border border-sand focus:border-plum focus:outline-none text-sm">
+            </div>
+            <div>
+              <label class="block text-xs font-semibold uppercase tracking-wider text-plum mb-1.5">Loved One’s First Name</label>
+              <input type="text" id="form-loved-name" oninput="personalizeExperience(this.value)" placeholder="e.g., Eleanor" class="w-full px-4 py-3 rounded-xl bg-cream-paper border border-sand focus:border-plum focus:outline-none text-sm font-serif">
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label class="block text-xs font-semibold uppercase tracking-wider text-plum mb-1.5">Direct Phone Number *</label>
+              <input type="tel" required placeholder="(555) 234-5678" class="w-full px-4 py-3 rounded-xl bg-cream-paper border border-sand focus:border-plum focus:outline-none text-sm">
+            </div>
+            <div>
+              <label class="block text-xs font-semibold uppercase tracking-wider text-plum mb-1.5">Email for Pricing Ledger *</label>
+              <input type="email" required placeholder="claire@example.com" class="w-full px-4 py-3 rounded-xl bg-cream-paper border border-sand focus:border-plum focus:outline-none text-sm">
+            </div>
+          </div>
+
+          <!-- Added Tour Preference & Hospitality Row so Form Symmetrically Matches Left Column Height -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-1">
+            <div>
+              <label class="block text-xs font-semibold uppercase tracking-wider text-plum mb-1.5">Preferred Visit Window</label>
+              <select class="w-full px-4 py-3 rounded-xl bg-cream-paper border border-sand focus:border-plum focus:outline-none text-sm text-charcoal">
+                <option>Morning Conservatory & Lunch (11:30 AM)</option>
+                <option>Afternoon Olive Grove Walk & Tea (2:30 PM)</option>
+                <option>Private Weekend Family Sanctuary Tour</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-xs font-semibold uppercase tracking-wider text-plum mb-1.5">Chef’s Table Dietary Note</label>
+              <input type="text" placeholder="e.g., Low-sodium, Mediterranean fish..." class="w-full px-4 py-3 rounded-xl bg-cream-paper border border-sand focus:border-plum focus:outline-none text-sm">
+            </div>
+          </div>
+
+          <div class="pt-2 space-y-3">
+            <button type="submit" class="w-full py-4 px-6 rounded-full bg-terracotta text-white font-semibold text-sm sm:text-base hover:bg-plum transition-all duration-300 shadow-lg">
+              Reserve Our Chef’s Lunch & Download Personalized Pricing Charter
+            </button>
+
+            <div class="flex flex-wrap items-center justify-between text-[11px] text-charcoal/70 px-1">
+              <span>✓ Complimentary Door-to-Door Town Car Available</span>
+              <span>✓ Printed Suite Monograph Held at Reception</span>
+            </div>
+
+            <div id="charter-success" class="hidden p-4 rounded-2xl bg-sage/25 border border-sage text-plum text-sm font-medium text-center">
+              ✓ Your family’s Chef’s Lunch Tour is reserved! We have emailed your custom Care & Financial Ledger and prepared your welcome table.
+            </div>
+          </div>
+
+        </form>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- =====================================================================
+       11. ARCHITECTURAL "LIVING HEIRLOOM" MONOGRAPH FOOTER
+           (Replaces the minimal footer with a flagship multi-tiered design)
+  ====================================================================== -->
+  <footer class="w-full bg-plum-dark text-cream relative overflow-hidden border-t border-sand/20">
+    
+    <!-- Subtle Top Architectural Gold/Sand Hairline & Ambient Glow -->
+    <div class="absolute inset-0 pointer-events-none opacity-20" style="background: radial-gradient(circle at 80% 20%, rgba(201, 130, 104, 0.35), transparent 55%), radial-gradient(circle at 15% 80%, rgba(143, 175, 120, 0.25), transparent 55%);"></div>
+
+    <!-- TIER 1: Direct Family Concierge & Immediate Assistance Ribbon -->
+    <div class="w-full border-b border-white/10 atrium-canvas py-10 relative z-10">
+      <div class="w-full rounded-3xl bg-white/[0.04] border border-sand/20 p-6 sm:p-9 flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6">
+        <div class="space-y-1.5 max-w-2xl">
+          <span class="text-[11px] font-mono uppercase tracking-[0.25em] text-sage block">
+            24/7 Senior Care Navigator & Registered Nurse Desk
+          </span>
+          <h3 class="font-serif text-2xl sm:text-3xl text-cream font-semibold">
+            Have an urgent question about <span class="loved-one-label text-sand italic">Your Loved One</span>’s transition?
+          </h3>
+          <p class="text-xs sm:text-sm text-cream/75">
+            Speak directly with our on-site Director of Nursing or Senior Family Advisor—never an off-site call center.
+          </p>
+        </div>
+
+        <div class="flex flex-wrap items-center gap-3.5 flex-shrink-0">
+          <a href="tel:18005558455" class="inline-flex items-center gap-3 px-6 py-3.5 rounded-full bg-sand text-plum font-semibold text-xs sm:text-sm hover:bg-cream transition shadow-lg">
+            <span class="w-2.5 h-2.5 rounded-full bg-terracotta animate-ping"></span>
+            <span>Call Direct: (800) 555-VILLA</span>
+          </a>
+          <a href="#kitchen-table-ledger" class="inline-flex items-center gap-2 px-5 py-3.5 rounded-full border border-sand/40 text-sand font-medium text-xs sm:text-sm hover:bg-white/10 transition">
+            <span>Review Monthly Ledger</span>
+            <span>↑</span>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- TIER 2: Main 12-Column Monograph Directory & Gazette Dispatch -->
+    <div class="w-full atrium-canvas py-16 lg:py-20 relative z-10">
+      <div class="w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-12 lg:gap-8">
+        
+        <!-- Cols 1-4: Brand Emblem, Sanctuary Manifesto & Physical Coordinates -->
+        <div class="lg:col-span-4 space-y-6 pr-0 lg:pr-6">
+          <a href="#" class="flex items-center gap-3.5 group">
+            <div class="w-12 h-12 flex-shrink-0">
+              <svg viewBox="0 0 120 110" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-full h-full">
+                <path d="M26 74C34 80 45 84 48 104C36 93 29 84 26 74Z" fill="#D8C7A5" />
+                <path d="M28 6C5 34 4 68 32 80C42 84 47 92 48 104C49 85 40 66 32 48C25 32 24 18 28 6Z" fill="#5B3270" />
+                <path d="M28 6C26 26 36 46 47 64C55 77 54 92 48 104C66 86 72 60 56 38C44 22 33 16 28 6Z" fill="#8FAF78" />
+                <path d="M114 34C82 42 64 58 64 78C64 89 56 97 48 104C76 94 96 76 114 34Z" fill="#C98268" />
+                <path d="M28 6C26 32 46 66 48 104" stroke="#F7F4ED" stroke-width="1.75" stroke-linecap="round"/>
+                <path d="M114 34C86 56 68 78 48 104" stroke="#F7F4ED" stroke-width="1.75" stroke-linecap="round"/>
+              </svg>
+            </div>
+            <div>
+              <span class="block font-serif text-xl font-bold tracking-tight text-cream leading-none">MISSION VILLA</span>
+              <span class="block font-sans text-[10px] tracking-[0.28em] uppercase text-sand font-medium mt-1">Peninsula Senior Living</span>
+            </div>
+          </a>
+
+          <p class="font-serif italic text-base text-sand/90 leading-relaxed">
+            “The honor they deserve, the care you’ll love. Designed around sunlit olive groves, scratch-made harvest tables, and unhurried human grace.”
+          </p>
+
+          <div class="pt-2 space-y-2 text-xs text-cream/75 border-t border-white/10">
+            <p class="font-semibold text-cream">Sanctuary Grounds & Conservatory:</p>
+            <p>1080 Olive Grove Promenade, Peninsula Sanctuary District, CA 94010</p>
+            <p class="text-sand">Daily Family Visiting Hours: Open 24/7 · Chef’s Bistro: 7:00 AM – 8:00 PM</p>
+          </div>
+        </div>
+
+        <!-- Cols 5-6: Monograph Chapters Navigation -->
+        <div class="lg:col-span-2 space-y-4">
+          <span class="text-xs font-mono uppercase tracking-[0.22em] text-sand block border-b border-white/10 pb-2.5">
+            Monograph Chapters
+          </span>
+          <ul class="space-y-2.5 text-xs sm:text-sm text-cream/80">
+            <li><a href="#life-story-builder" class="hover:text-sand transition flex items-center justify-between"><span>I. Their Life Story</span><span class="text-sand/50">01</span></a></li>
+            <li><a href="#triptych-stage" class="hover:text-sand transition flex items-center justify-between"><span>II. Nature · People · Purpose</span><span class="text-sand/50">02</span></a></li>
+            <li><a href="#chronicle-scroll" class="hover:text-sand transition flex items-center justify-between"><span>III. A Tuesday in the Sun</span><span class="text-sand/50">03</span></a></li>
+            <li><a href="#kitchen-table-ledger" class="hover:text-sand transition flex items-center justify-between"><span>IV. Kitchen Table Ledger</span><span class="text-sand/50">04</span></a></li>
+            <li><a href="#sanctuary-suites" class="hover:text-sand transition flex items-center justify-between"><span>V. Sunlit Residences</span><span class="text-sand/50">05</span></a></li>
+            <li><a href="#charter-reservation" class="hover:text-sand transition flex items-center justify-between"><span>VI. Chef’s Lunch Charter</span><span class="text-sand/50">06</span></a></li>
+          </ul>
+        </div>
+
+        <!-- Cols 7-8: Sanctuary Care Continuum & Guilds -->
+        <div class="lg:col-span-3 space-y-4">
+          <span class="text-xs font-mono uppercase tracking-[0.22em] text-sand block border-b border-white/10 pb-2.5">
+            Care & Clinical Charter
+          </span>
+          <ul class="space-y-2.5 text-xs sm:text-sm text-cream/80">
+            <li>
+              <a href="#kitchen-table-ledger" onclick="selectKitchenTruth('independent')" class="hover:text-sand transition block">
+                <strong class="text-cream font-medium">Independent Sanctuary Living</strong>
+                <span class="block text-[11px] text-cream/55">Maintenance-free suites & Encore Guilds</span>
+              </a>
+            </li>
+            <li>
+              <a href="#kitchen-table-ledger" onclick="selectKitchenTruth('assisted')" class="hover:text-sand transition block">
+                <strong class="text-cream font-medium">Personalized Assisted Living</strong>
+                <span class="block text-[11px] text-cream/55">Dedicated 1:5 ratio & 24/7 RN oversight</span>
+              </a>
+            </li>
+            <li>
+              <a href="#kitchen-table-ledger" onclick="selectKitchenTruth('memory')" class="hover:text-sand transition block">
+                <strong class="text-cream font-medium">Enriched Botanical Memory Care</strong>
+                <span class="block text-[11px] text-cream/55">Circadian light therapy & sensory dining</span>
+              </a>
+            </li>
+            <li>
+              <a href="#charter-reservation" class="hover:text-sand transition block">
+                <strong class="text-cream font-medium">Short-Term Respite & Recovery Stays</strong>
+                <span class="block text-[11px] text-cream/55">Furnished 14-to-60 day restorative suites</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Cols 9-12: Request Printed Linen-Bound Monograph by Mail -->
+        <div class="lg:col-span-3">
+          <div class="rounded-2xl bg-plum border border-sand/25 p-6 space-y-4 shadow-xl">
+            <div class="flex items-center justify-between">
+              <span class="text-[10px] font-mono uppercase tracking-[0.2em] text-sage font-bold">Complimentary Print Edition</span>
+              <span class="font-script text-xl text-sand">48 Pages</span>
+            </div>
+            <h4 class="font-serif text-lg font-semibold text-cream leading-snug">
+              Receive Our Linen-Bound Family Monograph & Seasonal Menu
+            </h4>
+            <p class="text-xs text-cream/75 leading-relaxed">
+              Prefer reading over afternoon tea? We will mail our tactile floorplan book and Chef’s Harvest Menu directly to your home.
+            </p>
+            <form onsubmit="event.preventDefault(); document.getElementById('footer-mail-confirm').classList.remove('hidden');" class="space-y-2.5">
+              <input
+                type="email"
+                required
+                placeholder="Enter your email address..."
+                class="w-full px-3.5 py-2.5 rounded-xl bg-plum-dark border border-sand/30 text-xs text-cream placeholder:text-cream/40 focus:border-sand focus:outline-none"
+              />
+              <button type="submit" class="w-full py-2.5 px-4 rounded-xl bg-terracotta text-white text-xs font-semibold hover:bg-sand hover:text-plum transition">
+                Send Digital & Print Monograph →
+              </button>
+              <p id="footer-mail-confirm" class="hidden text-[11px] text-sage font-medium text-center pt-1">
+                ✓ Dispatched! Check your inbox for the immediate PDF edition.
+              </p>
+            </form>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- TIER 3: Clinical Accreditations, Regulatory Seals & Archival Colophon -->
+    <div class="w-full border-t border-white/10 bg-black/20 atrium-canvas py-6 relative z-10">
+      <div class="w-full flex flex-col lg:flex-row items-start lg:items-center justify-between gap-4 text-[11px] text-cream/60">
+        
+        <div class="flex flex-wrap items-center gap-x-6 gap-y-2">
+          <span class="text-sand font-semibold">🏠 Equal Housing Opportunity</span>
+          <span>•</span>
+          <span>CA DSS RCFE License #415600982</span>
+          <span>•</span>
+          <span>zero-Deficiency State Clinical Audit (2024–2026)</span>
+          <span>•</span>
+          <span>ADA & WCAG AAA Senior-Accessible Sanctuary</span>
+        </div>
+
+        <div class="flex items-center gap-6">
+          <a href="#life-story-builder" class="hover:text-sand transition">Privacy & Family Data Charter</a>
+          <a href="#kitchen-table-ledger" class="hover:text-sand transition">Resident Bill of Rights</a>
+          <span class="text-cream/80">© 2026 Mission Villa & Peninsula Senior Living</span>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Monumental Subtle Editorial Watermark Across Very Bottom -->
+    <div class="w-full overflow-hidden select-none pointer-events-none pt-2 pb-1 text-center opacity-[0.04]">
+      <span class="font-serif font-bold tracking-tighter text-[11vw] leading-none text-sand whitespace-nowrap">
+        MISSION VILLA SANCTUARY
+      </span>
+    </div>
+
+  </footer>
+
+  <!-- =====================================================================
+       LENIS SMOOTH SCROLL + GSAP TIMELINES + PERSONALIZATION ENGINE
+  ====================================================================== -->
+  <script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+  <script>
+    gsap.registerPlugin(ScrollTrigger);
+
+    // 1. Initialize Lenis Smooth Scroll & Dappled Sunlight Scroll Shift
+    const lenis = new Lenis({
+      duration: 1.25,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      smoothWheel: true
+    });
+
+    const sunlightLayer = document.getElementById('dappled-sunlight');
+    lenis.on('scroll', (e) => {
+      ScrollTrigger.update();
+      const shiftY = Math.sin(e.scroll * 0.002) * 18;
+      const shiftX = Math.cos(e.scroll * 0.0015) * 14;
+      sunlightLayer.style.transform = `translate3d(${shiftX}px, ${shiftY}px, 0)`;
+
+      // Update Top Circadian Sun-Dial Reading based on scroll progress
+      const p = e.progress || 0;
+      const reading = document.getElementById('circadian-reading');
+      const icon = document.getElementById('circadian-icon');
+      if (p < 0.28) {
+        icon.textContent = '☀️';
+        reading.textContent = 'SANCTUARY ATMOSPHERE: 08:30 AM · CONSERVATORY MORNING LIGHT';
+      } else if (p < 0.62) {
+        icon.textContent = '🌿';
+        reading.textContent = 'SANCTUARY ATMOSPHERE: 01:00 PM · OLIVE GROVE & HARVEST TABLE';
+      } else {
+        icon.textContent = '🕯️';
+        reading.textContent = 'SANCTUARY ATMOSPHERE: 06:30 PM · FIRESIDE GOLDEN HOUR';
+      }
+    });
+
+    gsap.ticker.add((time) => {
+      lenis.raf(time * 1000);
+    });
+    gsap.ticker.lagSmoothing(0);
+
+    // =====================================================================
+    // 2. MASTER GSAP TIMELINES
+    // =====================================================================
+    window.addEventListener('DOMContentLoaded', () => {
+      
+      // TIMELINE 1: French Conservatory Shutters Parting -> Archway Reveal
+      const openingTL = gsap.timeline({ defaults: { ease: 'expo.inOut' } });
+
+      openingTL
+        .to('.shutter-fade', { opacity: 0, y: -12, duration: 0.45, delay: 0.5 })
+        .to('#shutter-left', { xPercent: -100, duration: 1.25 }, 0.85)
+        .to('#shutter-right', { xPercent: 100, duration: 1.25 }, 0.85)
+        .from('.hero-line', {
+          yPercent: 115,
+          rotateZ: 2,
+          duration: 1.15,
+          stagger: 0.12,
+          ease: 'power4.out'
+        }, 1.2)
+        .from('.hero-fade', {
+          y: 22,
+          opacity: 0,
+          duration: 0.9,
+          stagger: 0.1,
+          ease: 'power3.out'
+        }, 1.35)
+        .from('#hero-arch-portal', {
+          scale: 0.9,
+          opacity: 0,
+          duration: 1.4,
+          ease: 'expo.out'
+        }, 1.15)
+        .from('#floating-specimen-olive, #floating-specimen-cosmos', {
+          y: 40,
+          opacity: 0,
+          duration: 1,
+          stagger: 0.18,
+          ease: 'back.out(1.4)'
+        }, 1.55);
+
+      // Conservatory Arch Parallax & Floating Herbarium Specimens
+      gsap.to('#hero-arch-img', {
+        yPercent: 12,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: '#life-story-builder',
+          start: 'top top',
+          end: 'bottom top',
+          scrub: true
+        }
+      });
+
+      gsap.to('#floating-specimen-olive', {
+        y: -45,
+        rotation: -6,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: '#life-story-builder',
+          start: 'top top',
+          end: 'bottom top',
+          scrub: true
+        }
+      });
+
+      gsap.to('#floating-specimen-cosmos', {
+        y: -65,
+        rotation: 6,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: '#life-story-builder',
+          start: 'top top',
+          end: 'bottom top',
+          scrub: true
+        }
+      });
+
+      // TIMELINE 2: Pinned Unfolding Triptych (Nature · People · Purpose)
+      const triptychTL = gsap.timeline({
+        scrollTrigger: {
+          trigger: '#triptych-stage',
+          start: 'top 75%',
+          end: 'bottom 20%',
+          toggleActions: 'play none none reverse'
+        }
+      });
+
+      triptychTL.from('#triptych-panel-1, #triptych-panel-2, #triptych-panel-3', {
+        y: 60,
+        opacity: 0,
+        rotateY: -12,
+        duration: 1,
+        stagger: 0.18,
+        ease: 'power3.out'
+      });
+
+      // TIMELINE 3: Chronicle Items Reveal
+      gsap.utils.toArray('.chronicle-item').forEach((item) => {
+        gsap.from(item, {
+          y: 48,
+          opacity: 0,
+          duration: 1,
+          ease: 'power3.out',
+          scrollTrigger: {
+            trigger: item,
+            start: 'top 82%'
+          }
+        });
+      });
+    });
+
+    // =====================================================================
+    // 3. THE LIVE "LIFE STORY PERSONALIZER" ENGINE
+    // =====================================================================
+    function personalizeExperience(rawName) {
+      const clean = (rawName || '').trim();
+      const display = clean.length > 0 ? clean : 'Your Loved One';
+
+      document.querySelectorAll('.loved-one-label').forEach((el) => {
+        el.textContent = display;
+      });
+
+      const heroInput = document.getElementById('loved-one-input');
+      const formInput = document.getElementById('form-loved-name');
+      if (heroInput && document.activeElement !== heroInput) heroInput.value = clean;
+      if (formInput && document.activeElement !== formInput) formInput.value = clean;
+    }
+
+    const passionProfiles = {
+      gardening: {
+        summary: 'heirloom olive & rose gardening, sunlit dining, and unhurried companionship',
+        title: 'Tending Heirloom Olive & Cosmos Beds in the Courtyard',
+        desc: 'In our raised zero-bend cedar planters, residents harvest fresh rosemary, lavender, and pink cosmos blooms—sharing decades of gardening wisdom with fellow enthusiasts.',
+        img: 'https://images.unsplash.com/photo-1490750967868-88aa4486c946?auto=format&fit=crop&w=1000&q=80',
+        plaque: 'Encore Member · Olive & Rose Conservatory Guild'
+      },
+      culinary: {
+        summary: 'Mediterranean culinary arts, chef tastings, and warm harvest table gatherings',
+        title: 'Chef’s Harvest Table & Mediterranean Herb Tasting',
+        desc: 'Alongside our Executive Chef, residents sample cold-pressed olive oils, bake warm rosemary focaccia, and share treasured family recipes in our sunlit exhibition kitchen.',
+        img: 'https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=1000&q=80',
+        plaque: 'Encore Member · Executive Chef’s Harvest Table Society'
+      },
+      literature: {
+        summary: 'morning book salons, visiting historians, and watercolor studio sessions',
+        title: 'The Conservatory Book Salon & Visiting Historian Series',
+        desc: 'Gather in our north-lit library lounge with university guest lecturers, biography discussions, and botanical watercolor painting over afternoon Darjeeling tea.',
+        img: 'https://images.unsplash.com/photo-1586023492125-27b2c045efd7?auto=format&fit=crop&w=1000&q=80',
+        plaque: 'Encore Member · Conservatory Literature & Arts Salon'
+      },
+      music: {
+        summary: 'classical string recitals, vintage vinyl afternoons, and fireside acoustics',
+        title: 'Afternoon Vinyl Salon & Conservatory Chamber Strings',
+        desc: 'Experience live acoustic cello and classical guitar in our acoustically tuned timber conservatory, where residents curate evening playlists from their favorite eras.',
+        img: 'https://images.unsplash.com/photo-1516307365426-bea591f05011?auto=format&fit=crop&w=1000&q=80',
+        plaque: 'Encore Member · Conservatory Classical & Jazz Guild'
+      }
+    };
+
+    function selectPassion(key) {
+      const p = passionProfiles[key];
+      if (!p) return;
+
+      ['gardening', 'culinary', 'literature', 'music'].forEach((k) => {
+        const btn = document.getElementById('passion-' + k);
+        btn.className = (k === key)
+          ? 'px-2.5 py-1.5 rounded-full text-[11px] font-semibold bg-plum text-cream transition truncate text-left'
+          : 'px-2.5 py-1.5 rounded-full text-[11px] font-semibold bg-cream border border-sand text-plum hover:border-plum transition truncate text-left';
+      });
+
+      document.getElementById('passion-summary-text').textContent = p.summary;
+      document.getElementById('dynamic-passion-title').textContent = p.title;
+      document.getElementById('dynamic-passion-desc').textContent = p.desc;
+      document.getElementById('dynamic-passion-img').src = p.img;
+      document.getElementById('plaque-passion-sub').textContent = p.plaque;
+
+      gsap.fromTo('#dynamic-passion-title, #dynamic-passion-desc', { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 0.4 });
+    }
+
+    // =====================================================================
+    // 4. "THE KITCHEN TABLE CONVERSATION" LEDGER CONTROLLER
+    // =====================================================================
+    const ledgerData = {
+      independent: {
+        title: 'Independent Sanctuary Living',
+        rate: '$4,250 / mo',
+        narrative: 'We trade home repairs, property tax bills, and solitary meals for a sunlit private suite, three daily scratch-made chef meals, weekly housekeeping, and 24/7 wearable emergency nurse backup.',
+        careLabel: 'Part-Time Home Companion / Errand Help (20 hrs/wk)',
+        careCost: '$2,560/mo',
+        homeTotal: '$5,860/mo',
+        mvTotal: '$4,250/mo'
+      },
+      assisted: {
+        title: 'Personalized Assisted Living',
+        rate: '$5,450 / mo',
+        narrative: 'Designed so you can go back to being a loving daughter or son instead of an exhausted caregiver. Our consistent 1:5 care team handles 24/7 medication timing, morning dressing, bathing safety, and escorting to meals with total grace.',
+        careLabel: 'Daily Licensed Home Care Aide (45 hrs/wk)',
+        careCost: '$5,760/mo',
+        homeTotal: '$9,060/mo',
+        mvTotal: '$5,450/mo'
+      },
+      memory: {
+        title: 'Memory & Enriched Botanical Care',
+        rate: '$6,800 / mo',
+        narrative: 'Our secure sunlit olive-grove neighborhood replaces evening confusion with calm belonging. Features circadian lighting to reduce sundowning, sensory dining, music-memory therapy, and 24/7 dementia-certified nursing.',
+        careLabel: 'Around-the-Clock Home Safety Supervision',
+        careCost: '$11,200/mo',
+        homeTotal: '$14,500/mo',
+        mvTotal: '$6,800/mo'
+      }
+    };
+
+    function selectKitchenTruth(key) {
+      const d = ledgerData[key];
+      if (!d) return;
+
+      ['independent', 'assisted', 'memory'].forEach((k) => {
+        const btn = document.getElementById('truth-btn-' + k);
+        btn.className = (k === key)
+          ? 'w-full text-left p-5 rounded-2xl border-2 border-plum bg-plum text-cream shadow-xl transition-all space-y-1.5'
+          : 'w-full text-left p-5 rounded-2xl border-2 border-sand bg-cream-paper text-plum hover:border-plum transition-all space-y-1.5';
+      });
+
+      document.getElementById('ledger-care-title').textContent = d.title;
+      document.getElementById('ledger-rate').textContent = d.rate;
+      document.getElementById('ledger-narrative').textContent = d.narrative;
+      document.getElementById('ledger-care-line-label').textContent = d.careLabel;
+      document.getElementById('ledger-care-line-cost').textContent = d.careCost;
+      document.getElementById('ledger-home-total').textContent = d.homeTotal;
+      document.getElementById('ledger-mv-total').textContent = d.mvTotal;
+
+      gsap.fromTo('#ledger-care-title, #ledger-narrative', { opacity: 0, y: 8 }, { opacity: 1, y: 0, duration: 0.4 });
+    }
+
+    // =====================================================================
+    // 5. SUITE SWITCHER & ACCESSIBILITY CONTROLLERS
+    // =====================================================================
+    const heirloomSuites = {
+      studio: {
+        title: 'The Olive Alcove Studio',
+        desc: 'Features oversized south-facing bay windows, a defined sleeping sanctuary, stone kitchenette, and zero-step heated porcelain spa bath.',
+        badge: '2 GARDEN SUITES OPEN',
+        sqft: '460 SQ. FT.',
+        planLabel: 'SUNLIT LIVING SALON',
+        img: 'https://images.unsplash.com/photo-1616594039964-ae9021a400a0?auto=format&fit=crop&w=1600&q=85'
+      },
+      onebed: {
+        title: 'The Sunlit One-Bedroom Residence',
+        desc: 'Our most requested layout with a full separate master bedroom, walk-in wardrobe, entertaining parlor, and direct walk-out patio to the olive grove.',
+        badge: '1 SOUTH-CORNER OPEN',
+        sqft: '680 SQ. FT.',
+        planLabel: 'PRIVATE PARLOR & VERANDAH',
+        img: 'https://images.unsplash.com/photo-1598928506311-c55ded91a20c?auto=format&fit=crop&w=1600&q=85'
+      },
+      twobed: {
+        title: 'The Courtyard Two-Bedroom Villa',
+        desc: 'Expansive corner sanctuary ideal for couples or a dedicated art & reading study, featuring 1.5 zero-step spa baths and wrap-around garden views.',
+        badge: 'PRIORITY TOUR WAITLIST',
+        sqft: '940 SQ. FT.',
+        planLabel: 'WRAP-AROUND GREAT ROOM',
+        img: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1600&q=85'
+      }
+    };
+
+    function switchHeirloomSuite(key) {
+      const s = heirloomSuites[key];
+      if (!s) return;
+
+      ['studio', 'onebed', 'twobed'].forEach((k) => {
+        const btn = document.getElementById('hsuite-' + k);
+        btn.className = (k === key)
+          ? 'px-5 py-2.5 rounded-full text-xs sm:text-sm font-semibold bg-plum text-cream transition'
+          : 'px-5 py-2.5 rounded-full text-xs sm:text-sm font-semibold text-plum hover:bg-sand/30 transition';
+      });
+
+      document.getElementById('hsuite-title').textContent = s.title;
+      document.getElementById('hsuite-desc').textContent = s.desc;
+      document.getElementById('hsuite-badge').textContent = s.badge;
+      document.getElementById('hsuite-sqft').textContent = s.sqft;
+      document.getElementById('hsuite-plan-label').textContent = s.planLabel;
+      document.getElementById('hsuite-img').src = s.img;
+    }
+
+    function setReadingScale(scale) {
+      document.documentElement.style.setProperty('--font-scale', scale);
+      [1, 1.08, 1.15].forEach((val, idx) => {
+        const btn = document.getElementById('rscale-' + (idx + 1));
+        btn.className = Math.abs(val - scale) < 0.01
+          ? 'px-2 py-0.2 rounded-full text-[10px] font-bold bg-sand text-plum transition'
+          : 'px-2 py-0.2 rounded-full text-[10px] font-bold text-cream hover:bg-white/10 transition';
+      });
+      ScrollTrigger.refresh();
+    }
+
+    function submitCharterForm(e) {
+      e.preventDefault();
+      document.getElementById('charter-success').classList.remove('hidden');
+    }
+  </script>
+</body>
+</html>
