@@ -12,6 +12,7 @@ import VisitAndFooterSection from '@/components/VisitAndFooterSection';
 export default function MissionVillaHomePage() {
   const [fontScale, setFontScale] = useState<number>(1);
   const [replayCounter, setReplayCounter] = useState<number>(0);
+  const [lovedOneName, setLovedOneName] = useState<string>('');
   const [presetCareOption, setPresetCareOption] = useState<
     'Memory Care' | 'Respite Care' | null
   >(null);
@@ -44,21 +45,27 @@ export default function MissionVillaHomePage() {
 
   return (
     <div className="min-h-screen w-full flex flex-col bg-[#F7F4ED] text-[#29272B]">
-      {/* Non-Negotiable #2: Signature First-Load French Conservatory Shutter Opening */}
+      {/* Signature Two-Panel French Conservatory Shutter Opening */}
       <ConservatoryShutters replayCounter={replayCounter} />
 
-      {/* Top Utility Bar & Sticky Full-Width Navigation */}
+      {/* Top Utility Bar (36px) & Sticky Full-Width Navigation (68px) */}
       <HeaderAndUtilityBar
         fontScale={fontScale}
         onChangeFontScale={handleFontScaleChange}
         onReplayIntro={handleReplayIntro}
+        lovedOneName={lovedOneName}
         onNavigateToSection={handleNavigateToSection}
       />
 
       {/* Main Edge-to-Edge Full-Width Editorial Canvas */}
       <main className="w-full flex-1">
-        {/* 1 & 2. Full-Width Hero Stage + Quick Trust & Identity Strip */}
-        <HeroStage onNavigateToSection={handleNavigateToSection} />
+        {/* 1 & 2. Integrated First-Fold Hero Stage + Verified Identity Ribbon */}
+        <HeroStage
+          lovedOneName={lovedOneName}
+          onChangeLovedOneName={setLovedOneName}
+          onReplayIntro={handleReplayIntro}
+          onNavigateToSection={handleNavigateToSection}
+        />
 
         {/* 3. The Two Real Care Options (Memory Care & Respite Care) + Family Reflection Guide */}
         <CareOptionsSection onNavigateToSection={handleNavigateToSection} />

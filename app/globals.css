@@ -50,205 +50,240 @@ html {
   overflow-x: hidden;
 }
 
-/* True Full-Width Edge-to-Edge Fluid Canvas (Zero Boxed Constraint) */
-.fluid-canvas {
-  width: 100%;
-  padding-inline: var(--gutter);
+/* French Conservatory Shutters Performance Layer */
+#shutter-left,
+#shutter-right {
+  will-change: transform;
 }
 
-/* Fluid Editorial Typography Scales */
-.hero-display {
-  font-size: clamp(2.4rem, 3.8vw + 0.65rem, 5.4rem);
-  line-height: 1.05;
-  letter-spacing: -0.022em;
-}
+@layer components {
+  /* True Full-Width Edge-to-Edge Fluid Canvas (Zero Boxed Constraint) */
+  .fluid-canvas {
+    width: 100%;
+    padding-inline: var(--gutter);
+  }
 
-.section-display {
-  font-size: clamp(2rem, 2.8vw + 0.5rem, 4.1rem);
-  line-height: 1.09;
-  letter-spacing: -0.018em;
-}
+  /* Fluid Editorial Typography Scales — Calibrated for 100svh First-Fold Stage */
+  .editorial-h1 {
+    font-size: clamp(2.1rem, 2.75vw + 0.45rem, 3.65rem);
+    line-height: 1.04;
+    letter-spacing: -0.022em;
+  }
 
-.script-display {
-  font-size: clamp(1.95rem, 2.1vw + 0.5rem, 3.1rem);
-  line-height: 1.05;
-}
+  .hero-display {
+    font-size: clamp(2.1rem, 2.85vw + 0.5rem, 3.8rem);
+    line-height: 1.05;
+    letter-spacing: -0.022em;
+  }
 
-/* Tactile Cotton Paper Grain & Architectural Grid Hairlines */
-.paper-texture {
-  background-image: radial-gradient(rgba(59, 35, 72, 0.04) 1px, transparent 0);
-  background-size: 28px 28px;
-}
+  .section-display {
+    font-size: clamp(2rem, 2.6vw + 0.45rem, 3.75rem);
+    line-height: 1.09;
+    letter-spacing: -0.018em;
+  }
 
-.grid-line-b {
-  border-bottom: 1px solid rgba(59, 35, 72, 0.12);
-}
+  .script-display {
+    font-size: clamp(1.8rem, 1.9vw + 0.4rem, 2.75rem);
+    line-height: 1.05;
+  }
 
-.grid-line-t {
-  border-top: 1px solid rgba(59, 35, 72, 0.12);
-}
+  /* Split-Line Choreographed Reveal Masks (Reference A) */
+  .line-clip {
+    overflow: hidden;
+    display: block;
+    padding-bottom: 0.07em;
+  }
 
-/* Botanical Arch Frame Mask (from Reference A) */
-.arch-portal {
-  border-radius: 260px 260px 28px 28px;
-  overflow: hidden;
-  transform: translateZ(0);
-}
+  .line-word {
+    display: block;
+    will-change: transform;
+  }
 
-/* Editorial Herbarium Archival Frame (from Reference A) */
-.herbarium-mount {
-  position: relative;
-  background: #FCFBF8;
-  border: 1px solid rgba(59, 35, 72, 0.14);
-  box-shadow: 0 24px 60px -20px rgba(59, 35, 72, 0.09);
-}
+  /* Tactile Cotton Paper Grain & Architectural Grid Hairlines */
+  .paper-texture {
+    background-image: radial-gradient(rgba(59, 35, 72, 0.042) 1px, transparent 0);
+    background-size: 28px 28px;
+  }
 
-.herbarium-mount::before {
-  content: "";
-  position: absolute;
-  inset: 10px;
-  border: 1px solid rgba(216, 199, 165, 0.5);
-  pointer-events: none;
-  border-radius: inherit;
-  z-index: 10;
-}
+  /* Subtle Dappled Conservatory Sunlight Overlay */
+  .dappled-sunlight {
+    pointer-events: none;
+    background:
+      radial-gradient(ellipse 380px 220px at 18% 22%, rgba(216, 199, 165, 0.32), transparent 70%),
+      radial-gradient(ellipse 460px 280px at 78% 35%, rgba(216, 199, 165, 0.26), transparent 72%),
+      radial-gradient(ellipse 340px 520px at 52% 75%, rgba(143, 175, 120, 0.12), transparent 70%);
+  }
 
-/* Warm Daylight Image Grading */
-.mood-grade {
-  filter: sepia(9%) saturate(106%) contrast(101%);
-}
+  .grid-line-b {
+    border-bottom: 1px solid rgba(59, 35, 72, 0.12);
+  }
 
-/* =====================================================================
-   SURGICAL INVERTED-RADIUS CORNER CUTOUT SYSTEM (from Reference B)
-====================================================================== */
-.bento-frame {
-  position: relative;
-  border-radius: var(--curve-r);
-  overflow: hidden;
-}
+  .grid-line-t {
+    border-top: 1px solid rgba(59, 35, 72, 0.12);
+  }
 
-/* 1. Top-Left Cutout on Soft Cream (#F7F4ED) */
-.cutout-tl-cream {
-  position: absolute;
-  top: 0;
-  left: 0;
-  background-color: var(--cream);
-  border-bottom-right-radius: var(--curve-r);
-  padding: 0 14px 14px 0;
-  z-index: 25;
-}
-.cutout-tl-cream::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  right: calc(var(--curve-r) * -1);
-  width: var(--curve-r);
-  height: var(--curve-r);
-  border-top-left-radius: var(--curve-r);
-  box-shadow: -14px -14px 0 0 var(--cream);
-  pointer-events: none;
-}
-.cutout-tl-cream::after {
-  content: "";
-  position: absolute;
-  bottom: calc(var(--curve-r) * -1);
-  left: 0;
-  width: var(--curve-r);
-  height: var(--curve-r);
-  border-top-left-radius: var(--curve-r);
-  box-shadow: -14px -14px 0 0 var(--cream);
-  pointer-events: none;
-}
+  /* Botanical Arch Frame Mask (from Living Heirloom Reference) */
+  .arch-portal {
+    border-radius: 260px 260px 24px 24px;
+    overflow: hidden;
+    transform: translateZ(0);
+  }
 
-/* 2. Bottom-Right Cutout on Soft Cream (#F7F4ED) */
-.cutout-br-cream {
-  position: absolute;
-  bottom: 0;
-  right: 0;
-  background-color: var(--cream);
-  border-top-left-radius: var(--curve-r);
-  padding: 14px 0 0 14px;
-  z-index: 25;
-}
-.cutout-br-cream::before {
-  content: "";
-  position: absolute;
-  top: calc(var(--curve-r) * -1);
-  right: 0;
-  width: var(--curve-r);
-  height: var(--curve-r);
-  border-bottom-right-radius: var(--curve-r);
-  box-shadow: 14px 14px 0 0 var(--cream);
-  pointer-events: none;
-}
-.cutout-br-cream::after {
-  content: "";
-  position: absolute;
-  bottom: 0;
-  left: calc(var(--curve-r) * -1);
-  width: var(--curve-r);
-  height: var(--curve-r);
-  border-bottom-right-radius: var(--curve-r);
-  box-shadow: 14px 14px 0 0 var(--cream);
-  pointer-events: none;
-}
+  /* Editorial Herbarium Archival Frame (from Living Heirloom Reference) */
+  .herbarium-mount {
+    position: relative;
+    background: #FCFBF8;
+    border: 1px solid rgba(59, 35, 72, 0.14);
+    box-shadow: 0 24px 60px -20px rgba(59, 35, 72, 0.12);
+  }
 
-/* 3. Bottom-Right Cutout on Deep Plum (#3B2348) */
-.cutout-br-plum {
-  position: absolute;
-  bottom: 0;
-  right: 0;
-  background-color: var(--plum);
-  border-top-left-radius: var(--curve-r);
-  padding: 14px 0 0 14px;
-  z-index: 25;
-}
-.cutout-br-plum::before,
-.cutout-br-plum::after {
-  content: "";
-  position: absolute;
-  width: var(--curve-r);
-  height: var(--curve-r);
-  border-bottom-right-radius: var(--curve-r);
-  box-shadow: 14px 14px 0 0 var(--plum);
-  pointer-events: none;
-}
-.cutout-br-plum::before {
-  top: calc(var(--curve-r) * -1);
-  right: 0;
-}
-.cutout-br-plum::after {
-  bottom: 0;
-  left: calc(var(--curve-r) * -1);
-}
+  .herbarium-mount::before {
+    content: "";
+    position: absolute;
+    inset: 8px;
+    border: 1px solid rgba(216, 199, 165, 0.55);
+    pointer-events: none;
+    border-radius: inherit;
+    z-index: 10;
+  }
 
-/* 4. Bottom-Left Cutout on Soft Sand/Cream */
-.cutout-bl-cream {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  background-color: var(--cream);
-  border-top-right-radius: var(--curve-r);
-  padding: 14px 14px 0 0;
-  z-index: 25;
-}
-.cutout-bl-cream::before,
-.cutout-bl-cream::after {
-  content: "";
-  position: absolute;
-  width: var(--curve-r);
-  height: var(--curve-r);
-  border-bottom-left-radius: var(--curve-r);
-  box-shadow: -14px 14px 0 0 var(--cream);
-  pointer-events: none;
-}
-.cutout-bl-cream::before {
-  top: calc(var(--curve-r) * -1);
-  left: 0;
-}
-.cutout-bl-cream::after {
-  bottom: 0;
-  right: calc(var(--curve-r) * -1);
+  /* Warm Daylight Image Grading */
+  .mood-grade {
+    filter: sepia(10%) saturate(108%) contrast(102%);
+  }
+
+  /* =====================================================================
+     SURGICAL INVERTED-RADIUS CORNER CUTOUT SYSTEM (from Reference B)
+  ====================================================================== */
+  .bento-frame {
+    position: relative;
+    border-radius: var(--curve-r);
+    overflow: hidden;
+  }
+
+  /* 1. Top-Left Cutout on Soft Cream (#F7F4ED) */
+  .cutout-tl-cream {
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: var(--cream);
+    border-bottom-right-radius: var(--curve-r);
+    padding: 0 14px 14px 0;
+    z-index: 25;
+  }
+  .cutout-tl-cream::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: calc(var(--curve-r) * -1);
+    width: var(--curve-r);
+    height: var(--curve-r);
+    border-top-left-radius: var(--curve-r);
+    box-shadow: -14px -14px 0 14px var(--cream);
+    pointer-events: none;
+  }
+  .cutout-tl-cream::after {
+    content: "";
+    position: absolute;
+    bottom: calc(var(--curve-r) * -1);
+    left: 0;
+    width: var(--curve-r);
+    height: var(--curve-r);
+    border-top-left-radius: var(--curve-r);
+    box-shadow: -14px -14px 0 14px var(--cream);
+    pointer-events: none;
+  }
+
+  /* 2. Bottom-Right Cutout on Soft Cream (#F7F4ED) */
+  .cutout-br-cream {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    background-color: var(--cream);
+    border-top-left-radius: var(--curve-r);
+    padding: 14px 0 0 14px;
+    z-index: 25;
+  }
+  .cutout-br-cream::before {
+    content: "";
+    position: absolute;
+    top: calc(var(--curve-r) * -1);
+    right: 0;
+    width: var(--curve-r);
+    height: var(--curve-r);
+    border-bottom-right-radius: var(--curve-r);
+    box-shadow: 14px 14px 0 14px var(--cream);
+    pointer-events: none;
+  }
+  .cutout-br-cream::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: calc(var(--curve-r) * -1);
+    width: var(--curve-r);
+    height: var(--curve-r);
+    border-bottom-right-radius: var(--curve-r);
+    box-shadow: 14px 14px 0 14px var(--cream);
+    pointer-events: none;
+  }
+
+  /* 3. Bottom-Right Cutout on Deep Plum (#3B2348) */
+  .cutout-br-plum {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    background-color: var(--plum);
+    border-top-left-radius: var(--curve-r);
+    padding: 14px 0 0 14px;
+    z-index: 25;
+  }
+  .cutout-br-plum::before,
+  .cutout-br-plum::after {
+    content: "";
+    position: absolute;
+    width: var(--curve-r);
+    height: var(--curve-r);
+    border-bottom-right-radius: var(--curve-r);
+    box-shadow: 14px 14px 0 14px var(--plum);
+    pointer-events: none;
+  }
+  .cutout-br-plum::before {
+    top: calc(var(--curve-r) * -1);
+    right: 0;
+  }
+  .cutout-br-plum::after {
+    bottom: 0;
+    left: calc(var(--curve-r) * -1);
+  }
+
+  /* 4. Bottom-Left Cutout on Soft Sand/Cream */
+  .cutout-bl-cream {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    background-color: var(--cream);
+    border-top-right-radius: var(--curve-r);
+    padding: 14px 14px 0 0;
+    z-index: 25;
+  }
+  .cutout-bl-cream::before,
+  .cutout-bl-cream::after {
+    content: "";
+    position: absolute;
+    width: var(--curve-r);
+    height: var(--curve-r);
+    border-bottom-left-radius: var(--curve-r);
+    box-shadow: -14px 14px 0 14px var(--cream);
+    pointer-events: none;
+  }
+  .cutout-bl-cream::before {
+    top: calc(var(--curve-r) * -1);
+    left: 0;
+  }
+  .cutout-bl-cream::after {
+    bottom: 0;
+    right: calc(var(--curve-r) * -1);
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
