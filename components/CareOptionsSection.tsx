@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
+import Link from 'next/link';
 import { ArrowUpRight, Check, Phone, MessageSquareHeart, HelpCircle } from 'lucide-react';
 import {
   CARE_PROGRAMS,
@@ -136,23 +137,40 @@ export default function CareOptionsSection({
 
                 {/* Action Footer */}
                 <div className="pt-5 border-t border-[#D8C7A5] flex flex-wrap items-center justify-between gap-4">
-                  <button
-                    type="button"
-                    onClick={() =>
-                      onNavigateToSection(
-                        'schedule-visit',
-                        idx === 0 ? 'Memory Care' : 'Respite Care'
-                      )
-                    }
-                    className={`px-6 py-3.5 rounded-full text-xs sm:text-sm font-semibold inline-flex items-center gap-2 transition-colors cursor-pointer ${
-                      isMemoryCare
-                        ? 'bg-[#3B2348] text-[#F7F4ED] hover:bg-[#C98268]'
-                        : 'bg-[#C98268] text-white hover:bg-[#3B2348]'
-                    }`}
-                  >
-                    <span>{program.ctaLabel}</span>
-                    <ArrowUpRight className="w-4 h-4" aria-hidden="true" />
-                  </button>
+                  <div className="flex flex-wrap items-center gap-2.5">
+                    {isMemoryCare ? (
+                      <>
+                        <Link
+                          href="/memory-care"
+                          className="px-6 py-3.5 rounded-full text-xs sm:text-sm font-semibold inline-flex items-center gap-2 transition-colors bg-[#3B2348] text-[#F7F4ED] hover:bg-[#C98268]"
+                        >
+                          <span>Explore Memory Care Page</span>
+                          <ArrowUpRight className="w-4 h-4" aria-hidden="true" />
+                        </Link>
+                        <button
+                          type="button"
+                          onClick={() => onNavigateToSection('schedule-visit', 'Memory Care')}
+                          className="px-4 py-3.5 rounded-full text-xs sm:text-sm font-semibold border border-[#3B2348]/30 text-[#3B2348] hover:border-[#3B2348] transition-colors cursor-pointer"
+                        >
+                          Request Info
+                        </button>
+                      </>
+                    ) : (
+                      <button
+                        type="button"
+                        onClick={() =>
+                          onNavigateToSection(
+                            'schedule-visit',
+                            idx === 0 ? 'Memory Care' : 'Respite Care'
+                          )
+                        }
+                        className="px-6 py-3.5 rounded-full text-xs sm:text-sm font-semibold inline-flex items-center gap-2 transition-colors cursor-pointer bg-[#C98268] text-white hover:bg-[#3B2348]"
+                      >
+                        <span>{program.ctaLabel}</span>
+                        <ArrowUpRight className="w-4 h-4" aria-hidden="true" />
+                      </button>
+                    )}
+                  </div>
 
                   <a
                     href={MISSION_VILLA_FACTS.phone.href}

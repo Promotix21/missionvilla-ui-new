@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
+import Link from 'next/link';
 import {
   Phone,
   Mail,
@@ -172,7 +173,7 @@ export default function VisitAndFooterSection({
               </div>
 
               {demoSubmittedData ? (
-                /* EXPLICIT VISUAL DEMO STATE (Honest Prototype Feedback — Backend Not Connected) */
+                /* EXPLICIT VISUAL DEMO STATE (Honest Prototype Feedback — Demo only — no inquiry sent) */
                 <div
                   role="status"
                   aria-live="polite"
@@ -182,7 +183,7 @@ export default function VisitAndFooterSection({
                     <div className="flex items-center gap-2.5 text-[#3B2348]">
                       <CheckCircle2 className="w-6 h-6 text-[#5F7F49] shrink-0" aria-hidden="true" />
                       <h4 className="font-serif text-xl sm:text-2xl font-bold">
-                        Demo — Backend Not Connected
+                        Demo only — no inquiry sent
                       </h4>
                     </div>
                     <span className="px-3 py-1 rounded-full bg-[#C98268]/20 text-[#A65D43] text-xs font-bold uppercase tracking-wider">
@@ -191,7 +192,7 @@ export default function VisitAndFooterSection({
                   </div>
 
                   <p className="text-sm text-[#29272B]/90 leading-relaxed">
-                    This homepage is a visual design prototype, so form entries are not yet transmitted to a live CRM or email server. Below is a preview of the inquiry payload captured for future developer integration:
+                    This site is currently in its frontend design prototype stage, so form entries are validated locally and not transmitted to a live CRM or email server. Below is a preview of the inquiry payload captured for future developer integration:
                   </p>
 
                   <dl className="grid grid-cols-1 sm:grid-cols-2 gap-3 p-4 rounded-xl bg-[#F7F4ED] border border-[#D8C7A5] text-xs sm:text-sm">
@@ -454,13 +455,13 @@ export default function VisitAndFooterSection({
                       className="w-full py-4 px-6 rounded-full bg-[#C98268] text-white font-semibold text-sm sm:text-base hover:bg-[#3B2348] transition-colors shadow-lg cursor-pointer inline-flex items-center justify-center gap-2"
                     >
                       <Calendar className="w-4 h-4" aria-hidden="true" />
-                      <span>Submit Inquiry (Visual Prototype Demo)</span>
+                      <span>Submit Inquiry (Demo only — no inquiry sent)</span>
                     </button>
 
                     <p className="text-[11px] text-[#29272B]/70 flex items-center justify-center gap-1.5 text-center">
                       <Info className="w-3.5 h-3.5 text-[#3B2348] shrink-0" aria-hidden="true" />
                       <span>
-                        Design prototype preview — submitting displays the demo state without sending live data.
+                        Demo only — no inquiry sent. Submitting previews validation without sending live data.
                       </span>
                     </p>
                   </div>
@@ -541,13 +542,12 @@ export default function VisitAndFooterSection({
               </span>
               <ul className="space-y-2.5 text-xs sm:text-sm text-[#F7F4ED]/80">
                 <li>
-                  <button
-                    type="button"
-                    onClick={() => onNavigateToSection('care-options', 'Memory Care')}
-                    className="hover:text-[#D8C7A5] transition text-left cursor-pointer"
+                  <Link
+                    href="/memory-care"
+                    className="hover:text-[#D8C7A5] transition text-left inline-block"
                   >
                     Memory Care (Legacies™ Program)
-                  </button>
+                  </Link>
                 </li>
                 <li>
                   <button
@@ -582,26 +582,24 @@ export default function VisitAndFooterSection({
             {/* Columns 8–9: Page Navigation */}
             <div className="lg:col-span-2 space-y-4">
               <span className="text-xs uppercase tracking-[0.2em] text-[#D8C7A5] font-semibold block border-b border-white/10 pb-2.5">
-                Explore Homepage
+                Site Navigation
               </span>
               <ul className="space-y-2.5 text-xs sm:text-sm text-[#F7F4ED]/80">
                 <li>
-                  <button
-                    type="button"
-                    onClick={() => onNavigateToSection('top')}
-                    className="hover:text-[#D8C7A5] transition cursor-pointer"
+                  <Link
+                    href="/"
+                    className="hover:text-[#D8C7A5] transition inline-block"
                   >
-                    Overview
-                  </button>
+                    Home Overview
+                  </Link>
                 </li>
                 <li>
-                  <button
-                    type="button"
-                    onClick={() => onNavigateToSection('our-approach')}
-                    className="hover:text-[#D8C7A5] transition cursor-pointer"
+                  <Link
+                    href="/memory-care"
+                    className="hover:text-[#D8C7A5] transition inline-block"
                   >
-                    Our Approach
-                  </button>
+                    Memory Care Page
+                  </Link>
                 </li>
                 <li>
                   <button

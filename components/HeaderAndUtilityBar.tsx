@@ -1,13 +1,24 @@
 'use client';
 
-import React, { useState } from 'react';
-import { Phone, MapPin, Menu, X, Calendar, RotateCcw } from 'lucide-react';
+import React, { useState, useRef, useEffect } from 'react';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
+import {
+  Phone,
+  MapPin,
+  Menu,
+  X,
+  Calendar,
+  RotateCcw,
+  ChevronDown,
+  ArrowUpRight,
+} from 'lucide-react';
 import { MISSION_VILLA_FACTS } from '@/lib/mission-villa-data';
 
 interface HeaderAndUtilityBarProps {
   fontScale: number;
   onChangeFontScale: (scale: number) => void;
-  onReplayIntro: () => void;
+  onReplayIntro?: () => void;
   lovedOneName?: string;
   onNavigateToSection: (sectionId: string, presetCare?: 'Memory Care' | 'Respite Care') => void;
 }
@@ -19,19 +30,28 @@ export default function HeaderAndUtilityBar({
   lovedOneName,
   onNavigateToSection,
 }: HeaderAndUtilityBarProps) {
+  const pathname = usePathname() || '/';
+  const isHome = pathname === '/';
+  const isMemoryCare = pathname === '/memory-care';
+
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [livingDropdownOpen, setLivingDropdownOpen] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
 
-  const navItems = [
-    { label: 'Care Options', id: 'care-options' },
-    { label: 'Our Approach', id: 'our-approach' },
-    { label: 'Life at Mission Villa', id: 'daily-life' },
-    { label: 'Suites & Spaces', id: 'suites-preview' },
-    { label: 'For Families', id: 'family-reassurance' },
-  ];
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
+        setLivingDropdownOpen(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
 
-  const handleNavClick = (id: string) => {
+  const handleNavClick = (id: string, presetCare?: 'Memory Care' | 'Respite Care') => {
     setMobileMenuOpen(false);
-    onNavigateToSection(id);
+    setLivingDropdownOpen(false);
+    onNavigateToSection(id, presetCare);
   };
 
   const cleanLovedOne = (lovedOneName || '').trim();
@@ -55,19 +75,28 @@ export default function HeaderAndUtilityBar({
             </span>
           </div>
 
-          {/* Right: Always-Accessible Replay Intro, Reading Comfort Scale & Direct Phone */}
+          {/* Right: Homepage Replay Intro (on /), Reading Comfort Scale & Direct Phone */}
           <div className="flex items-center gap-2.5 sm:gap-4 ml-auto">
-            <button
-              id="replay-intro-btn"
-              type="button"
-              onClick={onReplayIntro}
-              aria-label="Replay Intro"
-              className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-white/15 hover:bg-[#D8C7A5] text-[#D8C7A5] hover:text-[#3B2348] text-[11px] font-semibold transition cursor-pointer whitespace-nowrap"
-              title="Replay the French conservatory shutter intro animation"
-            >
-              <RotateCcw className="w-3 h-3" aria-hidden="true" />
-              <span>Replay Intro</span>
-            </button>
+            {onReplayIntro ? (
+              <button
+                id="replay-intro-btn"
+                type="button"
+                onClick={onReplayIntro}
+                aria-label="Replay Intro"
+                className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-white/15 hover:bg-[#D8C7A5] text-[#D8C7A5] hover:text-[#3B2348] text-[11px] font-semibold transition cursor-pointer whitespace-nowrap"
+                title="Replay the French conservatory shutter intro animation"
+              >
+                <RotateCcw className="w-3 h-3" aria-hidden="true" />
+                <span>Replay Intro</span>
+              </button>
+            ) : (
+              <Link
+                href="/"
+                className="inline-flex items-center gap-1.5 text-[#D8C7A5] hover:text-white text-[11px] font-medium transition whitespace-nowrap"
+              >
+                <span>← Home Overview</span>
+              </Link>
+            )}
 
             {/* Senior Reading Scale Selector */}
             <div
@@ -116,14 +145,14 @@ export default function HeaderAndUtilityBar({
 
       {/* 2. Sticky Full-Width Editorial Monograph Header (68px Desktop — Total Top Height = 104px) */}
       <header className="sticky top-0 z-40 w-full bg-[#F7F4ED]/95 backdrop-blur-md grid-line-b fluid-canvas">
-        <div className="w-full h-16 lg:h-[68px] flex items-center justify-between gap-4 sm:gap-8">
+        <div className="w-full h-16 lg:h-[68px] flex items-center justify-between gap-2 sm:gap-6">
           {/* Zone 1: Brand Identity Lockup */}
-          <a
-            href="#top"
-            className="flex items-center gap-3 group shrink-0 focus-visible:outline-2 focus-visible:outline-[#3B2348] rounded-lg"
+          <Link
+            href="/"
+            className="flex items-center gap-2.5 sm:gap-3 group shrink-0 focus-visible:outline-2 focus-visible:outline-[#3B2348] rounded-lg"
           >
             <div
-              className="w-9 h-9 sm:w-10 sm:h-10 shrink-0 transition-transform duration-300 group-hover:scale-105"
+              className="w-8 h-8 sm:w-10 sm:h-10 shrink-0 transition-transform duration-300 group-hover:scale-105"
               aria-hidden="true"
             >
               <svg
@@ -181,34 +210,191 @@ export default function HeaderAndUtilityBar({
               </svg>
             </div>
             <div>
-              <span className="block font-serif text-base sm:text-xl font-bold tracking-tight text-[#3B2348] leading-none whitespace-nowrap">
+              <span className="block font-serif text-sm sm:text-xl font-bold tracking-tight text-[#3B2348] leading-none whitespace-nowrap">
                 MISSION VILLA
               </span>
-              <span className="block font-sans text-[9px] sm:text-[10px] tracking-[0.22em] sm:tracking-[0.28em] uppercase text-[#29272B]/75 font-medium mt-1 whitespace-nowrap">
+              <span className="block font-sans text-[8.5px] sm:text-[10px] tracking-[0.18em] sm:tracking-[0.28em] uppercase text-[#29272B]/75 font-medium mt-1 whitespace-nowrap">
                 Senior Living · Daly City
               </span>
             </div>
-          </a>
+          </Link>
 
           {/* Zone 2: Center Editorial Navigation Links */}
           <nav
             aria-label="Primary Navigation"
-            className="hidden xl:flex items-center gap-7 text-xs font-medium text-[#29272B]"
+            className="hidden xl:flex items-center gap-6 text-xs font-medium text-[#29272B]"
           >
-            {navItems.map((item) => (
+            <Link
+              href="/"
+              className={`py-1.5 transition-colors whitespace-nowrap shrink-0 relative after:content-[''] after:absolute after:left-0 after:bottom-0.5 after:h-[1.5px] after:bg-[#C98268] after:transition-all ${
+                isHome
+                  ? 'text-[#3B2348] font-semibold after:w-full'
+                  : 'hover:text-[#3B2348] after:w-0 hover:after:w-full'
+              }`}
+            >
+              Home
+            </Link>
+
+            {/* Accessible Living Options Dropdown */}
+            <div
+              ref={dropdownRef}
+              className="relative"
+              onMouseEnter={() => setLivingDropdownOpen(true)}
+              onMouseLeave={() => setLivingDropdownOpen(false)}
+            >
               <button
-                key={item.id}
                 type="button"
-                onClick={() => handleNavClick(item.id)}
-                className="hover:text-[#3B2348] py-1.5 transition-colors whitespace-nowrap shrink-0 cursor-pointer relative after:content-[''] after:absolute after:left-0 after:bottom-0.5 after:w-0 after:h-[1.5px] after:bg-[#C98268] hover:after:w-full after:transition-all"
+                aria-expanded={livingDropdownOpen}
+                aria-haspopup="true"
+                onClick={() => setLivingDropdownOpen((prev) => !prev)}
+                className={`inline-flex items-center gap-1 py-1.5 transition-colors whitespace-nowrap shrink-0 cursor-pointer relative after:content-[''] after:absolute after:left-0 after:bottom-0.5 after:h-[1.5px] after:bg-[#C98268] after:transition-all ${
+                  isMemoryCare
+                    ? 'text-[#3B2348] font-semibold after:w-full'
+                    : 'hover:text-[#3B2348] after:w-0 hover:after:w-full'
+                }`}
               >
-                {item.label}
+                <span>Living Options</span>
+                <ChevronDown
+                  className={`w-3.5 h-3.5 transition-transform duration-200 ${
+                    livingDropdownOpen ? 'rotate-180' : ''
+                  }`}
+                  aria-hidden="true"
+                />
               </button>
-            ))}
+
+              {livingDropdownOpen && (
+                <div
+                  role="menu"
+                  aria-label="Living Options submenu"
+                  className="absolute left-0 top-full pt-2 w-72 z-50"
+                >
+                  <div className="rounded-2xl bg-[#FCFBF8] border border-[#D8C7A5] shadow-xl p-2 space-y-1">
+                    <Link
+                      href="/memory-care"
+                      role="menuitem"
+                      onClick={() => setLivingDropdownOpen(false)}
+                      className={`flex items-start justify-between gap-2 p-3 rounded-xl transition ${
+                        isMemoryCare
+                          ? 'bg-[#3B2348] text-[#F7F4ED]'
+                          : 'hover:bg-[#D8C7A5]/35 text-[#3B2348]'
+                      }`}
+                    >
+                      <div>
+                        <span className="font-serif text-sm font-semibold block">
+                          Memory Care
+                        </span>
+                        <span
+                          className={`text-[11px] block mt-0.5 ${
+                            isMemoryCare ? 'text-[#D8C7A5]' : 'text-[#29272B]/75'
+                          }`}
+                        >
+                          Legacies™ Alzheimer’s &amp; dementia support
+                        </span>
+                      </div>
+                      <ArrowUpRight className="w-4 h-4 shrink-0 mt-0.5" aria-hidden="true" />
+                    </Link>
+
+                    {isHome ? (
+                      <button
+                        type="button"
+                        role="menuitem"
+                        onClick={() => handleNavClick('care-options', 'Respite Care')}
+                        className="w-full text-left flex items-start justify-between gap-2 p-3 rounded-xl hover:bg-[#D8C7A5]/35 text-[#3B2348] transition cursor-pointer"
+                      >
+                        <div>
+                          <span className="font-serif text-sm font-semibold block">
+                            Respite Care
+                          </span>
+                          <span className="text-[11px] text-[#29272B]/75 block mt-0.5">
+                            Short-term stays &amp; caregiver relief (Home section)
+                          </span>
+                        </div>
+                      </button>
+                    ) : (
+                      <Link
+                        href="/#care-options"
+                        role="menuitem"
+                        onClick={() => setLivingDropdownOpen(false)}
+                        className="flex items-start justify-between gap-2 p-3 rounded-xl hover:bg-[#D8C7A5]/35 text-[#3B2348] transition"
+                      >
+                        <div>
+                          <span className="font-serif text-sm font-semibold block">
+                            Respite Care
+                          </span>
+                          <span className="text-[11px] text-[#29272B]/75 block mt-0.5">
+                            Short-term stays &amp; caregiver relief (Home section)
+                          </span>
+                        </div>
+                      </Link>
+                    )}
+
+                    <button
+                      type="button"
+                      role="menuitem"
+                      onClick={() =>
+                        handleNavClick(isMemoryCare ? 'memory-care-environment' : 'suites-preview')
+                      }
+                      className="w-full text-left flex items-start justify-between gap-2 p-3 rounded-xl hover:bg-[#D8C7A5]/35 text-[#3B2348] transition cursor-pointer"
+                    >
+                      <div>
+                        <span className="font-serif text-sm font-semibold block">
+                          Suites &amp; Floor Plan Formats
+                        </span>
+                        <span className="text-[11px] text-[#29272B]/75 block mt-0.5">
+                          Private, Companion &amp; Jack &amp; Jill suites
+                        </span>
+                      </div>
+                    </button>
+                  </div>
+                </div>
+              )}
+            </div>
+
+            <Link
+              href="/memory-care"
+              aria-current={isMemoryCare ? 'page' : undefined}
+              className={`py-1.5 transition-colors whitespace-nowrap shrink-0 relative after:content-[''] after:absolute after:left-0 after:bottom-0.5 after:h-[1.5px] after:bg-[#C98268] after:transition-all ${
+                isMemoryCare
+                  ? 'text-[#3B2348] font-semibold after:w-full'
+                  : 'hover:text-[#3B2348] after:w-0 hover:after:w-full'
+              }`}
+            >
+              Memory Care
+            </Link>
+
+            <button
+              type="button"
+              onClick={() =>
+                handleNavClick(isMemoryCare ? 'legacies-program' : 'our-approach')
+              }
+              className="hover:text-[#3B2348] py-1.5 transition-colors whitespace-nowrap shrink-0 cursor-pointer relative after:content-[''] after:absolute after:left-0 after:bottom-0.5 after:w-0 after:h-[1.5px] after:bg-[#C98268] hover:after:w-full after:transition-all"
+            >
+              {isMemoryCare ? 'Legacies™ Program' : 'Our Approach'}
+            </button>
+
+            <button
+              type="button"
+              onClick={() =>
+                handleNavClick(isMemoryCare ? 'day-with-purpose' : 'daily-life')
+              }
+              className="hover:text-[#3B2348] py-1.5 transition-colors whitespace-nowrap shrink-0 cursor-pointer relative after:content-[''] after:absolute after:left-0 after:bottom-0.5 after:w-0 after:h-[1.5px] after:bg-[#C98268] hover:after:w-full after:transition-all"
+            >
+              Life at Mission Villa
+            </button>
+
+            <button
+              type="button"
+              onClick={() =>
+                handleNavClick(isMemoryCare ? 'family-questions' : 'family-reassurance')
+              }
+              className="hover:text-[#3B2348] py-1.5 transition-colors whitespace-nowrap shrink-0 cursor-pointer relative after:content-[''] after:absolute after:left-0 after:bottom-0.5 after:w-0 after:h-[1.5px] after:bg-[#C98268] hover:after:w-full after:transition-all"
+            >
+              For Families
+            </button>
           </nav>
 
           {/* Zone 3: Right Conversion CTA */}
-          <div className="flex items-center gap-3 shrink-0">
+          <div className="flex items-center gap-2 sm:gap-3 shrink-0">
             {cleanLovedOne && (
               <div className="hidden lg:block text-right">
                 <span className="block text-[9px] uppercase tracking-[0.2em] text-[#A65D43] font-semibold">
@@ -223,11 +409,13 @@ export default function HeaderAndUtilityBar({
             <button
               type="button"
               onClick={() => handleNavClick('schedule-visit')}
-              className="inline-flex items-center gap-2 px-4 sm:px-5 py-2.5 rounded-full bg-[#3B2348] text-[#F7F4ED] font-medium text-xs hover:bg-[#C98268] transition-all duration-300 shadow-md cursor-pointer whitespace-nowrap"
+              className="inline-flex items-center gap-1.5 sm:gap-2 px-3 sm:px-5 py-2 sm:py-2.5 rounded-full bg-[#3B2348] text-[#F7F4ED] font-medium text-[11px] sm:text-xs hover:bg-[#C98268] transition-all duration-300 shadow-md cursor-pointer whitespace-nowrap"
             >
               <Calendar className="w-3.5 h-3.5 shrink-0" aria-hidden="true" />
               <span>{MISSION_VILLA_FACTS.primaryCtas.scheduleVisit}</span>
-              <span aria-hidden="true">→</span>
+              <span className="hidden sm:inline" aria-hidden="true">
+                →
+              </span>
             </button>
 
             {/* Mobile Hamburger Button */}
@@ -236,7 +424,7 @@ export default function HeaderAndUtilityBar({
               onClick={() => setMobileMenuOpen((prev) => !prev)}
               aria-expanded={mobileMenuOpen}
               aria-label={mobileMenuOpen ? 'Close navigation menu' : 'Open navigation menu'}
-              className="xl:hidden p-2 rounded-xl border border-[#3B2348]/20 text-[#3B2348] hover:bg-[#D8C7A5]/30 transition cursor-pointer"
+              className="xl:hidden p-2 rounded-xl border border-[#3B2348]/20 text-[#3B2348] hover:bg-[#D8C7A5]/30 transition cursor-pointer shrink-0"
             >
               {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
             </button>
@@ -247,16 +435,67 @@ export default function HeaderAndUtilityBar({
         {mobileMenuOpen && (
           <div className="xl:hidden py-4 border-t border-[#3B2348]/15 space-y-4">
             <nav className="flex flex-col space-y-1.5" aria-label="Mobile Navigation">
-              {navItems.map((item) => (
-                <button
-                  key={item.id}
-                  type="button"
-                  onClick={() => handleNavClick(item.id)}
-                  className="text-left px-3 py-2 rounded-xl text-base font-serif font-medium text-[#3B2348] hover:bg-[#D8C7A5]/35 transition cursor-pointer"
-                >
-                  {item.label}
-                </button>
-              ))}
+              <Link
+                href="/"
+                onClick={() => setMobileMenuOpen(false)}
+                className={`text-left px-3 py-2 rounded-xl text-base font-serif font-medium transition ${
+                  isHome
+                    ? 'bg-[#3B2348] text-[#F7F4ED]'
+                    : 'text-[#3B2348] hover:bg-[#D8C7A5]/35'
+                }`}
+              >
+                Home Overview
+              </Link>
+              <Link
+                href="/memory-care"
+                onClick={() => setMobileMenuOpen(false)}
+                className={`text-left px-3 py-2 rounded-xl text-base font-serif font-medium transition flex items-center justify-between ${
+                  isMemoryCare
+                    ? 'bg-[#3B2348] text-[#F7F4ED]'
+                    : 'text-[#3B2348] hover:bg-[#D8C7A5]/35'
+                }`}
+              >
+                <span>Memory Care (Legacies™ Program)</span>
+                <span className="text-xs font-sans uppercase tracking-wider opacity-80">
+                  Page 01
+                </span>
+              </Link>
+              <button
+                type="button"
+                onClick={() =>
+                  handleNavClick(isMemoryCare ? 'legacies-program' : 'our-approach')
+                }
+                className="text-left px-3 py-2 rounded-xl text-base font-serif font-medium text-[#3B2348] hover:bg-[#D8C7A5]/35 transition cursor-pointer"
+              >
+                {isMemoryCare ? 'Legacies™ Approach' : 'Our Approach'}
+              </button>
+              <button
+                type="button"
+                onClick={() =>
+                  handleNavClick(isMemoryCare ? 'day-with-purpose' : 'daily-life')
+                }
+                className="text-left px-3 py-2 rounded-xl text-base font-serif font-medium text-[#3B2348] hover:bg-[#D8C7A5]/35 transition cursor-pointer"
+              >
+                Life at Mission Villa
+              </button>
+              <button
+                type="button"
+                onClick={() =>
+                  handleNavClick(isMemoryCare ? 'memory-care-environment' : 'suites-preview')
+                }
+                className="text-left px-3 py-2 rounded-xl text-base font-serif font-medium text-[#3B2348] hover:bg-[#D8C7A5]/35 transition cursor-pointer"
+              >
+                Suites &amp; Spaces
+              </button>
+              <button
+                type="button"
+                onClick={() =>
+                  handleNavClick(isMemoryCare ? 'family-questions' : 'family-reassurance')
+                }
+                className="text-left px-3 py-2 rounded-xl text-base font-serif font-medium text-[#3B2348] hover:bg-[#D8C7A5]/35 transition cursor-pointer"
+              >
+                For Families &amp; FAQ
+              </button>
             </nav>
 
             <div className="pt-3 border-t border-[#3B2348]/15 flex flex-col sm:flex-row gap-2.5">
@@ -281,3 +520,4 @@ export default function HeaderAndUtilityBar({
     </>
   );
 }
+

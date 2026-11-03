@@ -6,6 +6,11 @@ import {
   CARE_GUIDANCE_SCENARIOS,
   APPROACH_PILLARS,
   LIVING_SPACE_OPTIONS,
+  LEGACIES_TOUCHPOINTS,
+  MEMORY_CARE_STORYBOARD,
+  MEMORY_CARE_SUPPORT_COMMITMENTS,
+  MEMORY_CARE_SUITE_FORMATS,
+  MEMORY_CARE_FAQS,
   validateVisitInquiry,
 } from './mission-villa-data';
 
@@ -35,6 +40,11 @@ test('care offerings strictly center Memory Care and Respite Care without fabric
     CARE_GUIDANCE_SCENARIOS,
     APPROACH_PILLARS,
     LIVING_SPACE_OPTIONS,
+    LEGACIES_TOUCHPOINTS,
+    MEMORY_CARE_STORYBOARD,
+    MEMORY_CARE_SUPPORT_COMMITMENTS,
+    MEMORY_CARE_SUITE_FORMATS,
+    MEMORY_CARE_FAQS,
   });
   assert.equal(serialized.includes('$4,250'), false);
   assert.equal(serialized.includes('$5,450'), false);
@@ -42,6 +52,30 @@ test('care offerings strictly center Memory Care and Respite Care without fabric
   assert.equal(serialized.includes('1:5'), false);
   assert.equal(serialized.includes('1080 Olive Grove'), false);
   assert.equal(serialized.includes('555-VILLA'), false);
+  assert.equal(serialized.includes('98.4%'), false);
+  assert.equal(serialized.includes('42%'), false);
+});
+
+test('Memory Care page data includes Legacies touchpoints, 3-scene storyboard, and named suite formats', () => {
+  assert.equal(LEGACIES_TOUCHPOINTS.length, 4);
+  assert.equal(MEMORY_CARE_STORYBOARD.length, 3);
+  assert.equal(MEMORY_CARE_SUPPORT_COMMITMENTS.length, 3);
+  assert.deepEqual(
+    MEMORY_CARE_SUITE_FORMATS.map((s) => s.id),
+    ['companion-unit', 'jack-and-jill', 'private-suite']
+  );
+  assert.ok(MEMORY_CARE_FAQS.length >= 6);
+
+  // Every placeholder image in Memory Care data must be marked ILLUSTRATIVE — REPLACE BEFORE LAUNCH
+  for (const tp of LEGACIES_TOUCHPOINTS) {
+    assert.equal(tp.placeholderImage.status, 'ILLUSTRATIVE — REPLACE BEFORE LAUNCH');
+  }
+  for (const scene of MEMORY_CARE_STORYBOARD) {
+    assert.equal(scene.placeholderImage.status, 'ILLUSTRATIVE — REPLACE BEFORE LAUNCH');
+  }
+  for (const suite of MEMORY_CARE_SUITE_FORMATS) {
+    assert.equal(suite.placeholderImage.status, 'ILLUSTRATIVE — REPLACE BEFORE LAUNCH');
+  }
 });
 
 test('validateVisitInquiry rejects incomplete inputs and sanitizes valid submissions', () => {
@@ -72,3 +106,4 @@ test('validateVisitInquiry rejects incomplete inputs and sanitizes valid submiss
   assert.equal(validResult.sanitized?.email, 'elena@example.com');
   assert.equal(validResult.sanitized?.notes, 'Looking to tour next week');
 });
+
