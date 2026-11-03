@@ -156,19 +156,22 @@ export default function CareOptionsSection({
                         </button>
                       </>
                     ) : (
-                      <button
-                        type="button"
-                        onClick={() =>
-                          onNavigateToSection(
-                            'schedule-visit',
-                            idx === 0 ? 'Memory Care' : 'Respite Care'
-                          )
-                        }
-                        className="px-6 py-3.5 rounded-full text-xs sm:text-sm font-semibold inline-flex items-center gap-2 transition-colors cursor-pointer bg-[#C98268] text-white hover:bg-[#3B2348]"
-                      >
-                        <span>{program.ctaLabel}</span>
-                        <ArrowUpRight className="w-4 h-4" aria-hidden="true" />
-                      </button>
+                      <>
+                        <Link
+                          href="/respite-care"
+                          className="px-6 py-3.5 rounded-full text-xs sm:text-sm font-semibold inline-flex items-center gap-2 transition-colors bg-[#C98268] text-white hover:bg-[#3B2348]"
+                        >
+                          <span>Explore Respite Care Page</span>
+                          <ArrowUpRight className="w-4 h-4" aria-hidden="true" />
+                        </Link>
+                        <button
+                          type="button"
+                          onClick={() => onNavigateToSection('schedule-visit', 'Respite Care')}
+                          className="px-4 py-3.5 rounded-full text-xs sm:text-sm font-semibold border border-[#3B2348]/30 text-[#3B2348] hover:border-[#3B2348] transition-colors cursor-pointer"
+                        >
+                          Request Info
+                        </button>
+                      </>
                     )}
                   </div>
 

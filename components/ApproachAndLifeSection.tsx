@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
+import Link from 'next/link';
 import { ArrowUpRight, Check, Sparkles, Utensils, Users, Sun } from 'lucide-react';
 import {
   APPROACH_PILLARS,
@@ -298,10 +299,17 @@ export default function ApproachAndLifeSection({
           </div>
 
           <div className="flex flex-wrap items-center gap-3 shrink-0">
+            <Link
+              href="/life-at-mission-villa"
+              className="px-5 py-3.5 rounded-full bg-[#F7F4ED] border border-[#D8C7A5] text-[#3B2348] text-xs sm:text-sm font-semibold hover:border-[#3B2348] transition-colors inline-flex items-center gap-2 whitespace-nowrap"
+            >
+              <span>Explore Life at Mission Villa</span>
+              <ArrowUpRight className="w-4 h-4" aria-hidden="true" />
+            </Link>
             <button
               type="button"
               onClick={() => onNavigateToSection('schedule-visit')}
-              className="px-6 py-3.5 rounded-full bg-[#3B2348] text-[#F7F4ED] text-xs sm:text-sm font-semibold hover:bg-[#C98268] transition-colors cursor-pointer inline-flex items-center gap-2"
+              className="px-6 py-3.5 rounded-full bg-[#3B2348] text-[#F7F4ED] text-xs sm:text-sm font-semibold hover:bg-[#C98268] transition-colors cursor-pointer inline-flex items-center gap-2 whitespace-nowrap"
             >
               <span>{MISSION_VILLA_FACTS.primaryCtas.scheduleVisit}</span>
               <ArrowUpRight className="w-4 h-4" aria-hidden="true" />
@@ -312,3 +320,4 @@ export default function ApproachAndLifeSection({
     </>
   );
 }
+

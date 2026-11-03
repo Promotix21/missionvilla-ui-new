@@ -20,21 +20,23 @@ import {
 
 interface VisitAndFooterSectionProps {
   presetCareOption?: 'Memory Care' | 'Respite Care' | null;
+  prefilledNotes?: string;
   onNavigateToSection: (sectionId: string, presetCare?: 'Memory Care' | 'Respite Care') => void;
 }
 
 export default function VisitAndFooterSection({
   presetCareOption,
+  prefilledNotes,
   onNavigateToSection,
 }: VisitAndFooterSectionProps) {
   const [formState, setFormState] = useState<VisitInquiryInput>({
     fullName: '',
     phone: '',
     email: '',
-    careInterest: 'Memory Care',
+    careInterest: presetCareOption || 'Memory Care',
     suitePreference: 'Private Suite',
     inquiryType: 'Schedule a Visit',
-    notes: '',
+    notes: prefilledNotes || '',
   });
 
   const [errors, setErrors] = useState<Partial<Record<keyof VisitInquiryInput, string>>>({});
@@ -49,6 +51,15 @@ export default function VisitAndFooterSection({
       }));
     }
   }, [presetCareOption]);
+
+  useEffect(() => {
+    if (typeof prefilledNotes === 'string' && prefilledNotes.trim().length > 0) {
+      setFormState((prev) => ({
+        ...prev,
+        notes: prefilledNotes,
+      }));
+    }
+  }, [prefilledNotes]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -550,13 +561,12 @@ export default function VisitAndFooterSection({
                   </Link>
                 </li>
                 <li>
-                  <button
-                    type="button"
-                    onClick={() => onNavigateToSection('care-options', 'Respite Care')}
-                    className="hover:text-[#D8C7A5] transition text-left cursor-pointer"
+                  <Link
+                    href="/respite-care"
+                    className="hover:text-[#D8C7A5] transition text-left inline-block"
                   >
                     Short-Term Respite Care
-                  </button>
+                  </Link>
                 </li>
                 <li>
                   <button
@@ -568,13 +578,20 @@ export default function VisitAndFooterSection({
                   </button>
                 </li>
                 <li>
-                  <button
-                    type="button"
-                    onClick={() => onNavigateToSection('daily-life')}
-                    className="hover:text-[#D8C7A5] transition text-left cursor-pointer"
+                  <Link
+                    href="/life-at-mission-villa"
+                    className="hover:text-[#D8C7A5] transition text-left inline-block"
                   >
                     Chef-Prepared Dining &amp; Engaging Activities
-                  </button>
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href="/services-and-amenities"
+                    className="hover:text-[#D8C7A5] transition text-left inline-block"
+                  >
+                    Community Services &amp; Amenities
+                  </Link>
                 </li>
               </ul>
             </div>
@@ -602,13 +619,28 @@ export default function VisitAndFooterSection({
                   </Link>
                 </li>
                 <li>
-                  <button
-                    type="button"
-                    onClick={() => onNavigateToSection('family-reassurance')}
-                    className="hover:text-[#D8C7A5] transition cursor-pointer"
+                  <Link
+                    href="/respite-care"
+                    className="hover:text-[#D8C7A5] transition inline-block"
                   >
-                    For Families &amp; FAQ
-                  </button>
+                    Respite Care Page
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href="/life-at-mission-villa"
+                    className="hover:text-[#D8C7A5] transition inline-block"
+                  >
+                    Life at Mission Villa
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href="/services-and-amenities"
+                    className="hover:text-[#D8C7A5] transition inline-block"
+                  >
+                    Services &amp; Amenities
+                  </Link>
                 </li>
                 <li>
                   <button

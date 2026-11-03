@@ -966,7 +966,7 @@ export default function MemoryCarePage() {
                   </button>
 
                   <Link
-                    href="/#care-options"
+                    href="/respite-care"
                     className="py-3.5 px-4 rounded-full border border-[#3B2348]/30 text-[#3B2348] text-xs font-semibold hover:border-[#3B2348] transition-colors"
                   >
                     Compare Respite Care

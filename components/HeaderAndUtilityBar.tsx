@@ -33,15 +33,23 @@ export default function HeaderAndUtilityBar({
   const pathname = usePathname() || '/';
   const isHome = pathname === '/';
   const isMemoryCare = pathname === '/memory-care';
+  const isRespiteCare = pathname === '/respite-care';
+  const isLifeAtMissionVilla = pathname === '/life-at-mission-villa';
+  const isServicesAndAmenities = pathname === '/services-and-amenities';
 
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [livingDropdownOpen, setLivingDropdownOpen] = useState(false);
+  const [lifeDropdownOpen, setLifeDropdownOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
+  const lifeDropdownRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
       if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
         setLivingDropdownOpen(false);
+      }
+      if (lifeDropdownRef.current && !lifeDropdownRef.current.contains(e.target as Node)) {
+        setLifeDropdownOpen(false);
       }
     };
     document.addEventListener('mousedown', handleClickOutside);
@@ -51,6 +59,7 @@ export default function HeaderAndUtilityBar({
   const handleNavClick = (id: string, presetCare?: 'Memory Care' | 'Respite Care') => {
     setMobileMenuOpen(false);
     setLivingDropdownOpen(false);
+    setLifeDropdownOpen(false);
     onNavigateToSection(id, presetCare);
   };
 
@@ -222,7 +231,7 @@ export default function HeaderAndUtilityBar({
           {/* Zone 2: Center Editorial Navigation Links */}
           <nav
             aria-label="Primary Navigation"
-            className="hidden xl:flex items-center gap-6 text-xs font-medium text-[#29272B]"
+            className="hidden xl:flex items-center gap-5 text-xs font-medium text-[#29272B]"
           >
             <Link
               href="/"
@@ -248,7 +257,7 @@ export default function HeaderAndUtilityBar({
                 aria-haspopup="true"
                 onClick={() => setLivingDropdownOpen((prev) => !prev)}
                 className={`inline-flex items-center gap-1 py-1.5 transition-colors whitespace-nowrap shrink-0 cursor-pointer relative after:content-[''] after:absolute after:left-0 after:bottom-0.5 after:h-[1.5px] after:bg-[#C98268] after:transition-all ${
-                  isMemoryCare
+                  isMemoryCare || isRespiteCare
                     ? 'text-[#3B2348] font-semibold after:w-full'
                     : 'hover:text-[#3B2348] after:w-0 hover:after:w-full'
                 }`}
@@ -294,45 +303,46 @@ export default function HeaderAndUtilityBar({
                       <ArrowUpRight className="w-4 h-4 shrink-0 mt-0.5" aria-hidden="true" />
                     </Link>
 
-                    {isHome ? (
-                      <button
-                        type="button"
-                        role="menuitem"
-                        onClick={() => handleNavClick('care-options', 'Respite Care')}
-                        className="w-full text-left flex items-start justify-between gap-2 p-3 rounded-xl hover:bg-[#D8C7A5]/35 text-[#3B2348] transition cursor-pointer"
-                      >
-                        <div>
-                          <span className="font-serif text-sm font-semibold block">
-                            Respite Care
-                          </span>
-                          <span className="text-[11px] text-[#29272B]/75 block mt-0.5">
-                            Short-term stays &amp; caregiver relief (Home section)
-                          </span>
-                        </div>
-                      </button>
-                    ) : (
-                      <Link
-                        href="/#care-options"
-                        role="menuitem"
-                        onClick={() => setLivingDropdownOpen(false)}
-                        className="flex items-start justify-between gap-2 p-3 rounded-xl hover:bg-[#D8C7A5]/35 text-[#3B2348] transition"
-                      >
-                        <div>
-                          <span className="font-serif text-sm font-semibold block">
-                            Respite Care
-                          </span>
-                          <span className="text-[11px] text-[#29272B]/75 block mt-0.5">
-                            Short-term stays &amp; caregiver relief (Home section)
-                          </span>
-                        </div>
-                      </Link>
-                    )}
+                    <Link
+                      href="/respite-care"
+                      role="menuitem"
+                      onClick={() => setLivingDropdownOpen(false)}
+                      className={`flex items-start justify-between gap-2 p-3 rounded-xl transition ${
+                        isRespiteCare
+                          ? 'bg-[#3B2348] text-[#F7F4ED]'
+                          : 'hover:bg-[#D8C7A5]/35 text-[#3B2348]'
+                      }`}
+                    >
+                      <div>
+                        <span className="font-serif text-sm font-semibold block">
+                          Respite Care
+                        </span>
+                        <span
+                          className={`text-[11px] block mt-0.5 ${
+                            isRespiteCare ? 'text-[#D8C7A5]' : 'text-[#29272B]/75'
+                          }`}
+                        >
+                          Short-term stays &amp; caregiver relief
+                        </span>
+                      </div>
+                      <ArrowUpRight className="w-4 h-4 shrink-0 mt-0.5" aria-hidden="true" />
+                    </Link>
 
                     <button
                       type="button"
                       role="menuitem"
                       onClick={() =>
-                        handleNavClick(isMemoryCare ? 'memory-care-environment' : 'suites-preview')
+                        handleNavClick(
+                          isMemoryCare
+                            ? 'memory-care-environment'
+                            : isRespiteCare
+                            ? 'respite-accommodations'
+                            : isLifeAtMissionVilla
+                            ? 'chapter-spaces'
+                            : isServicesAndAmenities
+                            ? 'care-programs-bridge'
+                            : 'suites-preview'
+                        )
                       }
                       className="w-full text-left flex items-start justify-between gap-2 p-3 rounded-xl hover:bg-[#D8C7A5]/35 text-[#3B2348] transition cursor-pointer"
                     >
@@ -362,30 +372,132 @@ export default function HeaderAndUtilityBar({
               Memory Care
             </Link>
 
-            <button
-              type="button"
-              onClick={() =>
-                handleNavClick(isMemoryCare ? 'legacies-program' : 'our-approach')
-              }
-              className="hover:text-[#3B2348] py-1.5 transition-colors whitespace-nowrap shrink-0 cursor-pointer relative after:content-[''] after:absolute after:left-0 after:bottom-0.5 after:w-0 after:h-[1.5px] after:bg-[#C98268] hover:after:w-full after:transition-all"
+            <Link
+              href="/respite-care"
+              aria-current={isRespiteCare ? 'page' : undefined}
+              className={`py-1.5 transition-colors whitespace-nowrap shrink-0 relative after:content-[''] after:absolute after:left-0 after:bottom-0.5 after:h-[1.5px] after:bg-[#C98268] after:transition-all ${
+                isRespiteCare
+                  ? 'text-[#3B2348] font-semibold after:w-full'
+                  : 'hover:text-[#3B2348] after:w-0 hover:after:w-full'
+              }`}
             >
-              {isMemoryCare ? 'Legacies™ Program' : 'Our Approach'}
-            </button>
+              Respite Care
+            </Link>
+
+            {/* Accessible Life at Mission Villa Dropdown */}
+            <div
+              ref={lifeDropdownRef}
+              className="relative"
+              onMouseEnter={() => setLifeDropdownOpen(true)}
+              onMouseLeave={() => setLifeDropdownOpen(false)}
+            >
+              <button
+                type="button"
+                aria-expanded={lifeDropdownOpen}
+                aria-haspopup="true"
+                onClick={() => setLifeDropdownOpen((prev) => !prev)}
+                className={`inline-flex items-center gap-1 py-1.5 transition-colors whitespace-nowrap shrink-0 cursor-pointer relative after:content-[''] after:absolute after:left-0 after:bottom-0.5 after:h-[1.5px] after:bg-[#C98268] after:transition-all ${
+                  isLifeAtMissionVilla || isServicesAndAmenities
+                    ? 'text-[#3B2348] font-semibold after:w-full'
+                    : 'hover:text-[#3B2348] after:w-0 hover:after:w-full'
+                }`}
+              >
+                <span>Life at Mission Villa</span>
+                <ChevronDown
+                  className={`w-3.5 h-3.5 transition-transform duration-200 ${
+                    lifeDropdownOpen ? 'rotate-180' : ''
+                  }`}
+                  aria-hidden="true"
+                />
+              </button>
+
+              {lifeDropdownOpen && (
+                <div
+                  role="menu"
+                  aria-label="Life at Mission Villa submenu"
+                  className="absolute left-0 top-full pt-2 w-72 z-50"
+                >
+                  <div className="rounded-2xl bg-[#FCFBF8] border border-[#D8C7A5] shadow-xl p-2 space-y-1">
+                    <Link
+                      href="/life-at-mission-villa"
+                      role="menuitem"
+                      onClick={() => setLifeDropdownOpen(false)}
+                      className={`flex items-start justify-between gap-2 p-3 rounded-xl transition ${
+                        isLifeAtMissionVilla
+                          ? 'bg-[#3B2348] text-[#F7F4ED]'
+                          : 'hover:bg-[#D8C7A5]/35 text-[#3B2348]'
+                      }`}
+                    >
+                      <div>
+                        <span className="font-serif text-sm font-semibold block">
+                          Life at Mission Villa Overview
+                        </span>
+                        <span
+                          className={`text-[11px] block mt-0.5 ${
+                            isLifeAtMissionVilla ? 'text-[#D8C7A5]' : 'text-[#29272B]/75'
+                          }`}
+                        >
+                          Daily culture, dining, activities &amp; belonging
+                        </span>
+                      </div>
+                      <ArrowUpRight className="w-4 h-4 shrink-0 mt-0.5" aria-hidden="true" />
+                    </Link>
+
+                    <Link
+                      href="/services-and-amenities"
+                      role="menuitem"
+                      onClick={() => setLifeDropdownOpen(false)}
+                      className={`flex items-start justify-between gap-2 p-3 rounded-xl transition ${
+                        isServicesAndAmenities
+                          ? 'bg-[#3B2348] text-[#F7F4ED]'
+                          : 'hover:bg-[#D8C7A5]/35 text-[#3B2348]'
+                      }`}
+                    >
+                      <div>
+                        <span className="font-serif text-sm font-semibold block">
+                          Services &amp; Amenities
+                        </span>
+                        <span
+                          className={`text-[11px] block mt-0.5 ${
+                            isServicesAndAmenities ? 'text-[#D8C7A5]' : 'text-[#29272B]/75'
+                          }`}
+                        >
+                          24-hour staff, dining, spaces &amp; convenience
+                        </span>
+                      </div>
+                      <ArrowUpRight className="w-4 h-4 shrink-0 mt-0.5" aria-hidden="true" />
+                    </Link>
+                  </div>
+                </div>
+              )}
+            </div>
+
+            <Link
+              href="/services-and-amenities"
+              aria-current={isServicesAndAmenities ? 'page' : undefined}
+              className={`py-1.5 transition-colors whitespace-nowrap shrink-0 relative after:content-[''] after:absolute after:left-0 after:bottom-0.5 after:h-[1.5px] after:bg-[#C98268] after:transition-all ${
+                isServicesAndAmenities
+                  ? 'text-[#3B2348] font-semibold after:w-full'
+                  : 'hover:text-[#3B2348] after:w-0 hover:after:w-full'
+              }`}
+            >
+              Services &amp; Amenities
+            </Link>
 
             <button
               type="button"
               onClick={() =>
-                handleNavClick(isMemoryCare ? 'day-with-purpose' : 'daily-life')
-              }
-              className="hover:text-[#3B2348] py-1.5 transition-colors whitespace-nowrap shrink-0 cursor-pointer relative after:content-[''] after:absolute after:left-0 after:bottom-0.5 after:w-0 after:h-[1.5px] after:bg-[#C98268] hover:after:w-full after:transition-all"
-            >
-              Life at Mission Villa
-            </button>
-
-            <button
-              type="button"
-              onClick={() =>
-                handleNavClick(isMemoryCare ? 'family-questions' : 'family-reassurance')
+                handleNavClick(
+                  isMemoryCare
+                    ? 'family-questions'
+                    : isRespiteCare
+                    ? 'respite-faqs'
+                    : isLifeAtMissionVilla
+                    ? 'chapter-family-connection'
+                    : isServicesAndAmenities
+                    ? 'ask-us-about'
+                    : 'family-reassurance'
+                )
               }
               className="hover:text-[#3B2348] py-1.5 transition-colors whitespace-nowrap shrink-0 cursor-pointer relative after:content-[''] after:absolute after:left-0 after:bottom-0.5 after:w-0 after:h-[1.5px] after:bg-[#C98268] hover:after:w-full after:transition-all"
             >
@@ -394,7 +506,7 @@ export default function HeaderAndUtilityBar({
           </nav>
 
           {/* Zone 3: Right Conversion CTA */}
-          <div className="flex items-center gap-2 sm:gap-3 shrink-0">
+          <div className="flex items-center gap-1.5 sm:gap-3 shrink-0">
             {cleanLovedOne && (
               <div className="hidden lg:block text-right">
                 <span className="block text-[9px] uppercase tracking-[0.2em] text-[#A65D43] font-semibold">
@@ -409,7 +521,7 @@ export default function HeaderAndUtilityBar({
             <button
               type="button"
               onClick={() => handleNavClick('schedule-visit')}
-              className="inline-flex items-center gap-1.5 sm:gap-2 px-3 sm:px-5 py-2 sm:py-2.5 rounded-full bg-[#3B2348] text-[#F7F4ED] font-medium text-[11px] sm:text-xs hover:bg-[#C98268] transition-all duration-300 shadow-md cursor-pointer whitespace-nowrap"
+              className="inline-flex items-center gap-1.5 sm:gap-2 px-2.5 sm:px-5 py-2 sm:py-2.5 rounded-full bg-[#3B2348] text-[#F7F4ED] font-medium text-[11px] sm:text-xs hover:bg-[#C98268] transition-all duration-300 shadow-md cursor-pointer whitespace-nowrap"
             >
               <Calendar className="w-3.5 h-3.5 shrink-0" aria-hidden="true" />
               <span>{MISSION_VILLA_FACTS.primaryCtas.scheduleVisit}</span>
@@ -460,41 +572,95 @@ export default function HeaderAndUtilityBar({
                   Page 01
                 </span>
               </Link>
+              <Link
+                href="/respite-care"
+                onClick={() => setMobileMenuOpen(false)}
+                className={`text-left px-3 py-2 rounded-xl text-base font-serif font-medium transition flex items-center justify-between ${
+                  isRespiteCare
+                    ? 'bg-[#3B2348] text-[#F7F4ED]'
+                    : 'text-[#3B2348] hover:bg-[#D8C7A5]/35'
+                }`}
+              >
+                <span>Respite Care (Short-Term Stays)</span>
+                <span className="text-xs font-sans uppercase tracking-wider opacity-80">
+                  Page 02
+                </span>
+              </Link>
+              <Link
+                href="/life-at-mission-villa"
+                onClick={() => setMobileMenuOpen(false)}
+                className={`text-left px-3 py-2 rounded-xl text-base font-serif font-medium transition flex items-center justify-between ${
+                  isLifeAtMissionVilla
+                    ? 'bg-[#3B2348] text-[#F7F4ED]'
+                    : 'text-[#3B2348] hover:bg-[#D8C7A5]/35'
+                }`}
+              >
+                <span>Life at Mission Villa (Daily Culture)</span>
+                <span className="text-xs font-sans uppercase tracking-wider opacity-80">
+                  Page 03
+                </span>
+              </Link>
+              <Link
+                href="/services-and-amenities"
+                onClick={() => setMobileMenuOpen(false)}
+                className={`text-left px-3 py-2 rounded-xl text-base font-serif font-medium transition flex items-center justify-between ${
+                  isServicesAndAmenities
+                    ? 'bg-[#3B2348] text-[#F7F4ED]'
+                    : 'text-[#3B2348] hover:bg-[#D8C7A5]/35'
+                }`}
+              >
+                <span>Services &amp; Amenities</span>
+                <span className="text-xs font-sans uppercase tracking-wider opacity-80">
+                  Page 04
+                </span>
+              </Link>
               <button
                 type="button"
                 onClick={() =>
-                  handleNavClick(isMemoryCare ? 'legacies-program' : 'our-approach')
+                  handleNavClick(
+                    isMemoryCare
+                      ? 'legacies-program'
+                      : isRespiteCare
+                      ? 'stay-timeline'
+                      : isLifeAtMissionVilla
+                      ? 'day-in-the-life'
+                      : isServicesAndAmenities
+                      ? 'services-explorer'
+                      : 'our-approach'
+                  )
                 }
                 className="text-left px-3 py-2 rounded-xl text-base font-serif font-medium text-[#3B2348] hover:bg-[#D8C7A5]/35 transition cursor-pointer"
               >
-                {isMemoryCare ? 'Legacies™ Approach' : 'Our Approach'}
+                {isMemoryCare
+                  ? 'Legacies™ Approach'
+                  : isRespiteCare
+                  ? 'How a Respite Stay Works'
+                  : isLifeAtMissionVilla
+                  ? 'Curated Day-in-the-Life'
+                  : isServicesAndAmenities
+                  ? 'Interactive Category & Search Directory'
+                  : 'Our Approach'}
               </button>
               <button
                 type="button"
                 onClick={() =>
-                  handleNavClick(isMemoryCare ? 'day-with-purpose' : 'daily-life')
+                  handleNavClick(
+                    isMemoryCare
+                      ? 'family-questions'
+                      : isRespiteCare
+                      ? 'respite-faqs'
+                      : isLifeAtMissionVilla
+                      ? 'chapter-family-connection'
+                      : isServicesAndAmenities
+                      ? 'ask-us-about'
+                      : 'family-reassurance'
+                  )
                 }
                 className="text-left px-3 py-2 rounded-xl text-base font-serif font-medium text-[#3B2348] hover:bg-[#D8C7A5]/35 transition cursor-pointer"
               >
-                Life at Mission Villa
-              </button>
-              <button
-                type="button"
-                onClick={() =>
-                  handleNavClick(isMemoryCare ? 'memory-care-environment' : 'suites-preview')
-                }
-                className="text-left px-3 py-2 rounded-xl text-base font-serif font-medium text-[#3B2348] hover:bg-[#D8C7A5]/35 transition cursor-pointer"
-              >
-                Suites &amp; Spaces
-              </button>
-              <button
-                type="button"
-                onClick={() =>
-                  handleNavClick(isMemoryCare ? 'family-questions' : 'family-reassurance')
-                }
-                className="text-left px-3 py-2 rounded-xl text-base font-serif font-medium text-[#3B2348] hover:bg-[#D8C7A5]/35 transition cursor-pointer"
-              >
-                For Families &amp; FAQ
+                {isServicesAndAmenities
+                  ? 'Ask Us About Eligibility & Availability'
+                  : 'For Families & Connection'}
               </button>
             </nav>
 
