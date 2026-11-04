@@ -42,6 +42,7 @@ export default function HeaderAndUtilityBar({
   const isFinancialPlanning = pathname === '/financial-planning';
   const isForFamilies = pathname === '/for-families';
   const isContact = pathname === '/contact';
+  const isLivingOptions = pathname === '/living-options';
 
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [livingDropdownOpen, setLivingDropdownOpen] = useState(false);
@@ -263,6 +264,7 @@ export default function HeaderAndUtilityBar({
                 aria-haspopup="true"
                 onClick={() => setLivingDropdownOpen((prev) => !prev)}
                 className={`inline-flex items-center gap-1 py-1.5 transition-colors whitespace-nowrap shrink-0 cursor-pointer relative after:content-[''] after:absolute after:left-0 after:bottom-0.5 after:h-[1.5px] after:bg-[#C98268] after:transition-all ${
+                  isLivingOptions ||
                   isMemoryCare ||
                   isRespiteCare ||
                   isSuitesAndFloorPlans ||
@@ -288,6 +290,31 @@ export default function HeaderAndUtilityBar({
                   className="absolute left-0 top-full pt-2 w-72 z-50"
                 >
                   <div className="rounded-2xl bg-[#FCFBF8] border border-[#D8C7A5] shadow-xl p-2 space-y-1">
+                    <Link
+                      href="/living-options"
+                      role="menuitem"
+                      onClick={() => setLivingDropdownOpen(false)}
+                      className={`flex items-start justify-between gap-2 p-3 rounded-xl transition ${
+                        isLivingOptions
+                          ? 'bg-[#3B2348] text-[#F7F4ED]'
+                          : 'hover:bg-[#D8C7A5]/35 text-[#3B2348]'
+                      }`}
+                    >
+                      <div>
+                        <span className="font-serif text-sm font-semibold block">
+                          Living Options Overview
+                        </span>
+                        <span
+                          className={`text-[11px] block mt-0.5 ${
+                            isLivingOptions ? 'text-[#D8C7A5]' : 'text-[#29272B]/75'
+                          }`}
+                        >
+                          Compare Memory Care vs. Respite Care &amp; suites
+                        </span>
+                      </div>
+                      <ArrowUpRight className="w-4 h-4 shrink-0 mt-0.5" aria-hidden="true" />
+                    </Link>
+
                     <Link
                       href="/memory-care"
                       role="menuitem"
@@ -796,6 +823,20 @@ export default function HeaderAndUtilityBar({
                   Page 10
                 </span>
               </Link>
+              <Link
+                href="/living-options"
+                onClick={() => setMobileMenuOpen(false)}
+                className={`text-left px-3 py-2 rounded-xl text-base font-serif font-medium transition flex items-center justify-between ${
+                  isLivingOptions
+                    ? 'bg-[#3B2348] text-[#F7F4ED]'
+                    : 'text-[#3B2348] hover:bg-[#D8C7A5]/35'
+                }`}
+              >
+                <span>Living Options Overview (Compare Care)</span>
+                <span className="text-xs font-sans uppercase tracking-wider opacity-80">
+                  Page 11
+                </span>
+              </Link>
               <button
                 type="button"
                 onClick={() =>
@@ -820,6 +861,8 @@ export default function HeaderAndUtilityBar({
                       ? 'family-decision-guide'
                       : isContact
                       ? 'map-and-directions'
+                      : isLivingOptions
+                      ? 'care-distinction-studio'
                       : 'our-approach'
                   )
                 }
@@ -845,6 +888,8 @@ export default function HeaderAndUtilityBar({
                   ? 'Memory Care vs. Respite Decision Guide'
                   : isContact
                   ? 'Grounded Map & Peninsula Directions'
+                  : isLivingOptions
+                  ? 'Memory Care vs. Respite Care Ledger'
                   : 'Our Approach'}
               </button>
               <button
@@ -871,6 +916,8 @@ export default function HeaderAndUtilityBar({
                       ? 'grouped-family-faqs'
                       : isContact
                       ? 'what-happens-next'
+                      : isLivingOptions
+                      ? 'accommodation-highlights'
                       : 'family-reassurance'
                   )
                 }
@@ -890,6 +937,8 @@ export default function HeaderAndUtilityBar({
                   ? 'Grouped FAQs (Care, Suites, Cost, Visits)'
                   : isContact
                   ? 'What Happens After Submitting & FAQs'
+                  : isLivingOptions
+                  ? 'Accommodation Highlights & FAQs'
                   : 'For Families & Connection'}
               </button>
             </nav>

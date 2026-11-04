@@ -5684,6 +5684,540 @@ export function filterContactFaqs(
   });
 }
 
+// ============================================================================
+// PAGE 11: LIVING OPTIONS OVERVIEW (/living-options) — SOURCE-GROUNDED DATA & LOGIC
+// ============================================================================
+// Grounded in https://missionvillaseniorliving.com/living-options/ and §5 Page 11.
+// Strictly compares the two actual advertised care offerings:
+// 1. Memory Care (featuring the Legacies™ Memory Care Program)
+// 2. Respite Care (short-term stays & family caregiver relief)
+// Do NOT introduce Independent Living or Assisted Living as separate programs.
+
+export type LivingOptionComparisonCategory =
+  | 'All Dimensions'
+  | 'Duration & Purpose'
+  | 'Care & Daily Rhythm'
+  | 'Suites & Furnishings'
+  | 'Dining & Life Enrichment'
+  | 'Planning & Assessment';
+
+export interface LivingOptionComparisonRow {
+  id: string;
+  code: string;
+  category: Exclude<LivingOptionComparisonCategory, 'All Dimensions'>;
+  dimensionTitle: string;
+  memoryCareDetail: string;
+  respiteCareDetail: string;
+  sharedFoundation: string;
+  isKeyDistinction: boolean;
+  confirmationNote?: string;
+}
+
+export const LIVING_OPTIONS_COMPARISON_CATEGORIES: LivingOptionComparisonCategory[] = [
+  'All Dimensions',
+  'Duration & Purpose',
+  'Care & Daily Rhythm',
+  'Suites & Furnishings',
+  'Dining & Life Enrichment',
+  'Planning & Assessment',
+];
+
+export const LIVING_OPTIONS_COMPARISON_ROWS: LivingOptionComparisonRow[] = [
+  {
+    id: 'lo-comp-duration-purpose',
+    code: 'DIM 01',
+    category: 'Duration & Purpose',
+    dimensionTitle: 'Primary Purpose & Typical Length of Stay',
+    memoryCareDetail:
+      'Ongoing, long-term residential support for older adults living with Alzheimer’s disease or other forms of dementia who benefit from steady daily routines and a nurturing, homelike community.',
+    respiteCareDetail:
+      'Short-term, temporary stays—ranging from a few days to several weeks—designed to give family caregivers time to rest, travel, or manage commitments, or to support recovery after illness or rehabilitation.',
+    sharedFoundation:
+      'Both programs take place within our welcoming Daly City community at 995 East Market Street under CA RCFE License #415601046.',
+    isKeyDistinction: true,
+    confirmationNote:
+      'CLIENT CONFIRMATION REQUIRED: Confirm current Respite Care minimum stay requirements and date-specific suite availability with the Mission Villa team.',
+  },
+  {
+    id: 'lo-comp-who-it-supports',
+    code: 'DIM 02',
+    category: 'Duration & Purpose',
+    dimensionTitle: 'Who Each Living Option Is Designed to Support',
+    memoryCareDetail:
+      'Seniors living with memory loss who need a secure, compassionate setting where their life story, personal dignity, and familiar habits are honored every day.',
+    respiteCareDetail:
+      'Seniors cared for at home whose primary family caregivers need dependable temporary relief, or families wishing to experience Mission Villa’s warmth before deciding on a longer-term transition.',
+    sharedFoundation:
+      'Mission Villa focuses exclusively on Memory Care and Respite Care rather than dividing attention across unrelated independent apartment tiers.',
+    isKeyDistinction: true,
+  },
+  {
+    id: 'lo-comp-care-philosophy',
+    code: 'DIM 03',
+    category: 'Care & Daily Rhythm',
+    dimensionTitle: 'Signature Care Approach & 24-Hour Staff Support',
+    memoryCareDetail:
+      'Guided by our signature Legacies™ Memory Care program—learning each resident’s personal history, vocation, and preferences to shape daily assistance with bathing, dressing, grooming, and escorting.',
+    respiteCareDetail:
+      'Tailored daily assistance with personal care, grooming, mobility/escort support, and routines adapted to keep short-term guests comfortable, oriented, and included from day one.',
+    sharedFoundation:
+      '24-hour on-site staff presence, emergency alert systems, housekeeping, personal laundry, and unhurried human connection.',
+    isKeyDistinction: false,
+  },
+  {
+    id: 'lo-comp-suites-furnishings',
+    code: 'DIM 04',
+    category: 'Suites & Furnishings',
+    dimensionTitle: 'Suite Formats, Bathrooms & Personalization',
+    memoryCareDetail:
+      'Choice of Private Suites, Companion Units (shared suites), and Jack & Jill formats—each with a private bathroom. Families personalize the suite with familiar furniture, framed photos, and keepsakes.',
+    respiteCareDetail:
+      'Comfortable, ready-to-welcome suite accommodations with private bathroom access so short-term guests can settle in without moving heavy furniture, while bringing favorite photos and personal comforts.',
+    sharedFoundation:
+      'Every residential suite format at Mission Villa includes private bathroom access, individual thermostat controls, utilities, housekeeping, and linen service.',
+    isKeyDistinction: true,
+    confirmationNote:
+      'CLIENT CONFIRMATION REQUIRED: Confirm current furnished Respite Care suite availability and per-unit feature details during your tour.',
+  },
+  {
+    id: 'lo-comp-dining-activities',
+    code: 'DIM 05',
+    category: 'Dining & Life Enrichment',
+    dimensionTitle: 'Chef-Prepared Dining, Activities & Community Spaces',
+    memoryCareDetail:
+      'Full daily participation in Legacies™ life-enrichment programming—music, reminiscence, art, gentle fitness, scenic drives, and three chef-prepared meals daily in our communal dining room.',
+    respiteCareDetail:
+      'Respite Care guests are welcomed into the exact same chef-prepared meals, social activities, sunlit lounges, library nook, and enclosed courtyard/patio as full-time residents.',
+    sharedFoundation:
+      'Restaurant-style table service, nutritious meals and snacks, activity director programming, and open areas for family visits.',
+    isKeyDistinction: false,
+  },
+  {
+    id: 'lo-comp-planning-assessment',
+    code: 'DIM 06',
+    category: 'Planning & Assessment',
+    dimensionTitle: 'Assessment, Pricing Structure & Future Flexibility',
+    memoryCareDetail:
+      'Assessment-informed monthly pricing tailored to your loved one’s care needs and chosen suite format (Private, Companion Unit, or Jack & Jill), with routine re-assessments as needs evolve.',
+    respiteCareDetail:
+      'Short-term stay rates based on length of stay, suite availability, and care assessment—with a familiar bridge if a family later decides to transition into full-time Memory Care.',
+    sharedFoundation:
+      'Personal pre-admission conversation and care assessment with our Daly City team; transparent explanation of inclusions before any commitment.',
+    isKeyDistinction: true,
+  },
+];
+
+export interface LivingOptionOverviewCard {
+  id: 'memory-care' | 'respite-care';
+  numberBadge: string;
+  programTag: string;
+  title: string;
+  signatureHeadline: string;
+  editorialLead: string;
+  coreDistinction: string;
+  idealForList: string[];
+  includedPillars: string[];
+  suiteSummary: string;
+  routeHref: '/memory-care' | '/respite-care';
+  routeLabel: string;
+  presetCareOption: 'Memory Care' | 'Respite Care';
+  presetInquiryNote: string;
+  placeholderImage: {
+    src: string;
+    alt: string;
+    caption: string;
+    status: 'ILLUSTRATIVE — REPLACE BEFORE LAUNCH';
+  };
+}
+
+export const LIVING_OPTIONS_OVERVIEW_CARDS: LivingOptionOverviewCard[] = [
+  {
+    id: 'memory-care',
+    numberBadge: 'Living Option 01',
+    programTag: 'Long-Term Residential Care · Legacies™ Program',
+    title: 'Memory Care',
+    signatureHeadline: 'Person-Centered Support for Alzheimer’s & Dementia',
+    editorialLead:
+      'At Mission Villa, Memory Care is not a side wing—it is the heart of our community. Through our Legacies™ Memory Care program, we honor each resident’s life story, daily rhythms, and personal dignity in a calm, homelike environment.',
+    coreDistinction:
+      'Best suited for older adults seeking an ongoing, supportive home where 24-hour staff know their personal history and provide steady daily assistance.',
+    idealForList: [
+      'Older adults living with Alzheimer’s disease or other forms of dementia',
+      'Families seeking a safe, nurturing residential setting with predictable daily rhythms',
+      'Residents who thrive with story-driven engagement, chef-prepared dining, and attentive personal care',
+    ],
+    includedPillars: [
+      'Signature Legacies™ Memory Care life-story approach',
+      '24-hour on-site staff support, routine assessments, and escort/transfer help',
+      'Private Suites, Companion Units, and Jack & Jill suite formats with private baths',
+      'Three chef-prepared meals daily, housekeeping, laundry, and life-enrichment activities',
+    ],
+    suiteSummary: 'Private Suite, Companion Unit, and Jack & Jill formats — personalizable with family furnishings.',
+    routeHref: '/memory-care',
+    routeLabel: 'Explore the Full Memory Care Page',
+    presetCareOption: 'Memory Care',
+    presetInquiryNote:
+      'Exploring Living Options Overview: Interested in learning more about full-time Legacies™ Memory Care and touring available suites.',
+    placeholderImage: {
+      src: 'https://images.unsplash.com/photo-1586023492125-27b2c045efd7?auto=format&fit=crop&w=1400&q=85',
+      alt: 'Illustrative placeholder: Warm, sunlit homelike living room designed for calm Memory Care routines',
+      caption: 'Legacies™ Memory Care honors personal history, familiar routines, and family connection',
+      status: 'ILLUSTRATIVE — REPLACE BEFORE LAUNCH',
+    },
+  },
+  {
+    id: 'respite-care',
+    numberBadge: 'Living Option 02',
+    programTag: 'Short-Term Stays · Family Caregiver Relief',
+    title: 'Respite Care',
+    signatureHeadline: 'Welcoming Short-Term Stays & Caregiver Peace of Mind',
+    editorialLead:
+      'Caring for a loved one at home takes deep devotion. Our Respite Care program offers short-term stays of a few days to several weeks—welcoming guests into the full warmth, dining, and attentive support of Mission Villa while family caregivers rest, travel, or recharge.',
+    coreDistinction:
+      'Best suited for temporary stays when a family caregiver needs dependable relief, during post-rehabilitation transitions, or as a gentle introduction to community life.',
+    idealForList: [
+      'Primary family caregivers needing time to rest, travel, or attend to personal obligations',
+      'Older adults transitioning after an illness or rehabilitation stay who benefit from temporary 24-hour support',
+      'Families considering Memory Care who want their loved one to experience Mission Villa firsthand',
+    ],
+    includedPillars: [
+      'Comfortable short-term suite accommodations with private bathroom access',
+      'Tailored daily assistance with personal care, routines, and mobility',
+      'Full access to chef-prepared meals, communal lounges, courtyard, and daily activities',
+      'Direct communication with family members throughout the stay',
+    ],
+    suiteSummary: 'Furnished short-term suite accommodations with private bathroom access (confirm availability).',
+    routeHref: '/respite-care',
+    routeLabel: 'Explore the Full Respite Care Page',
+    presetCareOption: 'Respite Care',
+    presetInquiryNote:
+      'Exploring Living Options Overview: Interested in short-term Respite Care stay availability, dates, and assessment steps.',
+    placeholderImage: {
+      src: 'https://images.unsplash.com/photo-1576765608535-5f04d1e3f289?auto=format&fit=crop&w=1400&q=85',
+      alt: 'Illustrative placeholder: Attentive, warm conversation with a senior guest in a bright residential setting',
+      caption: 'Short-term Respite Care stays that support both older adults and dedicated family caregivers',
+      status: 'ILLUSTRATIVE — REPLACE BEFORE LAUNCH',
+    },
+  },
+];
+
+export interface LivingOptionAccommodationHighlight {
+  id: 'private-suite' | 'companion-unit' | 'jack-and-jill';
+  code: string;
+  title: string;
+  badge: string;
+  applicablePrograms: ('Memory Care' | 'Respite Care')[];
+  summary: string;
+  bathroomDetail: string;
+  whoItSuitsBest: string;
+  suiteFeatures: string[];
+  floorPlanNotice: string;
+  inquirySuiteValue: VisitInquiryInput['suitePreference'];
+  placeholderImage: {
+    src: string;
+    alt: string;
+    caption: string;
+    status: 'ILLUSTRATIVE — REPLACE BEFORE LAUNCH';
+  };
+}
+
+export const LIVING_OPTIONS_ACCOMMODATION_HIGHLIGHTS: LivingOptionAccommodationHighlight[] = [
+  {
+    id: 'private-suite',
+    code: 'FORMAT 01',
+    title: 'Private Suite with Private Bathroom',
+    badge: 'Individual Sanctuary · Memory Care & Respite Care',
+    applicablePrograms: ['Memory Care', 'Respite Care'],
+    summary:
+      'A peaceful, individual residential suite offering dedicated sleeping and sitting space alongside an attached private bathroom—ideal for residents who value personal quiet and familiar surroundings from home.',
+    bathroomDetail: 'Dedicated en-suite private bathroom designed for accessibility and comfort.',
+    whoItSuitsBest:
+      'Older adults who prefer a private personal retreat while enjoying shared dining, lounges, and daily activities steps outside their door.',
+    suiteFeatures: [
+      'Private living and sleeping quarters with natural light',
+      'Attached private bathroom with supportive fixtures',
+      'Individual thermostat control, utilities, housekeeping, and laundry included',
+      'Emergency alert system and 24-hour staff availability',
+    ],
+    floorPlanNotice:
+      'Awaiting official floor plan — ask our Daly City team to walk you through available Private Suites during your visit.',
+    inquirySuiteValue: 'Private Suite',
+    placeholderImage: {
+      src: 'https://images.unsplash.com/photo-1616594039964-ae9021a400a0?auto=format&fit=crop&w=1400&q=85',
+      alt: 'Illustrative placeholder: Peaceful, sunlit private bedroom suite with residential furnishings',
+      caption: 'Private Suites offer quiet sanctuary ready for treasured family photographs and keepsakes',
+      status: 'ILLUSTRATIVE — REPLACE BEFORE LAUNCH',
+    },
+  },
+  {
+    id: 'companion-unit',
+    code: 'FORMAT 02',
+    title: 'Companion Unit (Shared Suite)',
+    badge: 'Named Floor-Plan Format · Memory Care & Respite Care',
+    applicablePrograms: ['Memory Care', 'Respite Care'],
+    summary:
+      'Referenced on Mission Villa’s Living Options and Memory Care pages, the Companion Unit pairs two residents in a thoughtfully arranged shared suite with a private bathroom—fostering companionship and reassurance.',
+    bathroomDetail: 'Private en-suite bathroom shared only between the two suite companions.',
+    whoItSuitsBest:
+      'Seniors who feel most at ease with friendly company nearby and families looking for a warm, socially connected suite option.',
+    suiteFeatures: [
+      'Distinct personal sleeping areas within a welcoming shared suite',
+      'Space for each resident’s favorite bedding, photos, and personal mementos',
+      'Private bathroom shared exclusively within the suite',
+      'Full housekeeping, linen service, utilities, and emergency alert features',
+    ],
+    floorPlanNotice:
+      'Awaiting official floor plan — ask our team about companion matching and current Companion Unit openings.',
+    inquirySuiteValue: 'Shared Suite',
+    placeholderImage: {
+      src: 'https://images.unsplash.com/photo-1598928506311-c55ded91a20c?auto=format&fit=crop&w=1400&q=85',
+      alt: 'Illustrative placeholder: Inviting shared residential living space with warm natural daylight',
+      caption: 'Companion Units balance friendly camaraderie with personal dignity and comfort',
+      status: 'ILLUSTRATIVE — REPLACE BEFORE LAUNCH',
+    },
+  },
+  {
+    id: 'jack-and-jill',
+    code: 'FORMAT 03',
+    title: 'Jack & Jill Suite Format',
+    badge: 'Named Floor-Plan Format · Adjoining Private Bath',
+    applicablePrograms: ['Memory Care'],
+    summary:
+      'Highlighted in Mission Villa’s floor-plan offerings, the Jack & Jill configuration provides separate individual sleeping alcoves connected by a shared adjoining private bathroom—combining personal privacy with homelike convenience.',
+    bathroomDetail: 'Adjoining private bathroom connecting two individual sleeping quarters.',
+    whoItSuitsBest:
+      'Residents who want their own defined sleeping room while sharing an adjoining residential bathroom.',
+    suiteFeatures: [
+      'Individual sleeping quarters connected by an adjoining private bathroom',
+      'Room to personalize walls, nightstands, and seating with familiar items from home',
+      'Individual comfort controls, utilities, housekeeping, and personal laundry',
+      'Easy access to dining, lounges, and enclosed courtyard spaces',
+    ],
+    floorPlanNotice:
+      'Awaiting official floor plan — view Jack & Jill suite layouts in person at 995 East Market Street.',
+    inquirySuiteValue: 'Shared Suite',
+    placeholderImage: {
+      src: 'https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=1400&q=85',
+      alt: 'Illustrative placeholder: Bright residential suite interior with comfortable seating and warm finishes',
+      caption: 'Jack & Jill suites offer defined personal sleeping quarters with an adjoining private bath',
+      status: 'ILLUSTRATIVE — REPLACE BEFORE LAUNCH',
+    },
+  },
+];
+
+export interface LivingOptionsRouteDestination {
+  id: string;
+  index: string;
+  kicker: string;
+  title: string;
+  description: string;
+  highlights: string[];
+  href: string;
+  ctaLabel: string;
+}
+
+export const LIVING_OPTIONS_ROUTE_DESTINATIONS: LivingOptionsRouteDestination[] = [
+  {
+    id: 'dest-memory-care',
+    index: '01',
+    kicker: 'Primary Care Program',
+    title: 'Memory Care (Legacies™ Program)',
+    description:
+      'Explore how our person-centered Legacies™ approach supports older adults living with Alzheimer’s or dementia through life-story connection, 24-hour staff, and calm daily rhythms.',
+    highlights: ['Legacies™ 4-touchpoint approach', '3-scene daily storyboard', 'Memory Care FAQs'],
+    href: '/memory-care',
+    ctaLabel: 'Visit Memory Care Page',
+  },
+  {
+    id: 'dest-respite-care',
+    index: '02',
+    kicker: 'Short-Term Stays',
+    title: 'Respite Care & Caregiver Relief',
+    description:
+      'See how temporary stays of a few days to several weeks give family caregivers peace of mind while welcoming guests into full dining, activities, and suite comfort.',
+    highlights: ['4 caregiver relief scenarios', 'Stay inclusions & timeline', 'Respite Care FAQs'],
+    href: '/respite-care',
+    ctaLabel: 'Visit Respite Care Page',
+  },
+  {
+    id: 'dest-suites-floor-plans',
+    index: '03',
+    kicker: 'Accommodations',
+    title: 'Suites & Floor Plans',
+    description:
+      'Compare Private Suites, Companion Units, and Jack & Jill formats in detail, review apartment inclusions, and read our family guide to personalizing a suite.',
+    highlights: ['Interactive format viewer', 'Suite inclusions ledger', 'Personalization guide'],
+    href: '/suites-and-floor-plans',
+    ctaLabel: 'Explore Suites & Floor Plans',
+  },
+  {
+    id: 'dest-services-amenities',
+    index: '04',
+    kicker: 'Daily Support & Spaces',
+    title: 'Services & Amenities',
+    description:
+      'Browse our categorized directory of 24-hour staff support, restaurant-style dining, concierge, transportation, courtyard spaces, and the "Ask Us About..." checklist.',
+    highlights: ['5-category service switcher', '18 site-grounded offerings', 'Ask Us About builder'],
+    href: '/services-and-amenities',
+    ctaLabel: 'Explore Services & Amenities',
+  },
+  {
+    id: 'dest-financial-planning',
+    index: '05',
+    kicker: 'Cost Clarity',
+    title: 'Financial Planning & Inclusions',
+    description:
+      'Understand the 4 factors that shape care costs, see what is typically included in monthly rates, and use our blank Paper-Ledger Worksheet to compare home expenses.',
+    highlights: ['4-factor cost explainer', 'Editable paper-ledger worksheet', 'Ways to plan & LTCI'],
+    href: '/financial-planning',
+    ctaLabel: 'Explore Financial Planning',
+  },
+  {
+    id: 'dest-for-families',
+    index: '06',
+    kicker: 'Family Guidance',
+    title: 'For Families & FAQs',
+    description:
+      'Walk through our non-clinical Family Decision Guide, select questions to bring on your Daly City tour, and search 12 grouped FAQs across Care, Suites, Cost, and Visits.',
+    highlights: ['4-pathway decision guide', 'Tour question notebook', '12 grouped FAQs'],
+    href: '/for-families',
+    ctaLabel: 'Explore Family Guidance',
+  },
+];
+
+export type LivingOptionsFaqCategory =
+  | 'All Topics'
+  | 'Care Offerings'
+  | 'Suites & Bathrooms'
+  | 'Transitions & Stays'
+  | 'Pricing & Visits';
+
+export interface LivingOptionsFaqItem {
+  id: string;
+  code: string;
+  category: Exclude<LivingOptionsFaqCategory, 'All Topics'>;
+  question: string;
+  answer: string;
+  relatedHref: string;
+  relatedLabel: string;
+  confirmationNote?: string;
+}
+
+export const LIVING_OPTIONS_FAQS: LivingOptionsFaqItem[] = [
+  {
+    id: 'lo-faq-two-programs',
+    code: 'CARE 01',
+    category: 'Care Offerings',
+    question: 'What living options and care programs does Mission Villa Senior Living offer in Daly City?',
+    answer:
+      'Mission Villa Senior Living focuses dedicatedly on two core care offerings at 995 East Market Street in Daly City: full-time Memory Care (featuring our signature Legacies™ Memory Care program for older adults living with Alzheimer’s disease or other forms of dementia) and short-term Respite Care stays. We do not operate separate standalone Independent Living or Assisted Living apartment tiers, allowing our entire community and 24-hour staff to focus on compassionate memory and respite support.',
+    relatedHref: '/memory-care',
+    relatedLabel: 'Explore Legacies™ Memory Care',
+  },
+  {
+    id: 'lo-faq-mc-vs-respite',
+    code: 'CARE 02',
+    category: 'Care Offerings',
+    question: 'How do families decide between Memory Care and short-term Respite Care?',
+    answer:
+      'Memory Care is designed for older adults who need an ongoing, nurturing residential home with 24-hour support, predictable daily rhythms, and life-story programming. Respite Care is ideal when a primary family caregiver needs temporary relief for a few days to several weeks (for rest, travel, or family commitments), after an illness or rehabilitation stay, or when a family wants to experience Mission Villa before committing to a long-term move.',
+    relatedHref: '/for-families',
+    relatedLabel: 'Use the Family Decision Guide',
+    confirmationNote:
+      'CLIENT CONFIRMATION REQUIRED: Confirm current short-term Respite Care stay duration minimums and suite availability.',
+  },
+  {
+    id: 'lo-faq-suite-formats',
+    code: 'SUITES 01',
+    category: 'Suites & Bathrooms',
+    question: 'What suite layouts are available, and do both private and shared suites have private bathrooms?',
+    answer:
+      'Yes. Mission Villa offers Private Suites as well as shared options—including Companion Units and Jack & Jill suite configurations—and every suite includes a private en-suite or adjoining bathroom. Suites also feature individual thermostat controls, utilities, housekeeping, linen/laundry service, and an emergency alert system.',
+    relatedHref: '/suites-and-floor-plans',
+    relatedLabel: 'Compare Suites & Floor Plans',
+  },
+  {
+    id: 'lo-faq-respite-to-memory-transition',
+    code: 'STAY 01',
+    category: 'Transitions & Stays',
+    question: 'Can a short-term Respite Care stay transition into full-time Memory Care if our family’s needs change?',
+    answer:
+      'Many families find that a short-term Respite Care stay is a comforting way for a loved one to become familiar with our staff, chef-prepared dining, and daily activities. If you later decide to explore full-time Memory Care, our team can guide you through suite availability, care assessment updates, and a seamless transition.',
+    relatedHref: '/respite-care',
+    relatedLabel: 'Learn About Respite Care Stays',
+  },
+  {
+    id: 'lo-faq-services-included',
+    code: 'CARE 03',
+    category: 'Transitions & Stays',
+    question: 'Do Respite Care guests enjoy the same dining, activities, and community spaces as full-time Memory Care residents?',
+    answer:
+      'Yes. Whether a resident lives with us full-time in Memory Care or joins us for a short-term Respite Care stay, they are welcomed into our communal dining room for chef-prepared meals, participate in daily life-enrichment activities, and enjoy our lounges, library nook, and enclosed courtyard/patio.',
+    relatedHref: '/services-and-amenities',
+    relatedLabel: 'Browse All Services & Amenities',
+  },
+  {
+    id: 'lo-faq-pricing-and-tour',
+    code: 'VISIT 01',
+    category: 'Pricing & Visits',
+    question: 'How can we get personalized pricing and see the living options in person?',
+    answer:
+      'Because care support and suite formats (Private Suite, Companion Unit, or Jack & Jill) vary by individual need, pricing is shared personally after a conversation and assessment with our team. Call us at (650) 756-1995 or schedule a visit at 995 East Market Street, Daly City, CA 94014 to tour our suites and common areas without pressure.',
+    relatedHref: '/financial-planning',
+    relatedLabel: 'Explore Financial Planning Guide',
+  },
+];
+
+export function filterLivingOptionsComparisonRows(
+  rows: LivingOptionComparisonRow[],
+  category: LivingOptionComparisonCategory,
+  onlyKeyDistinctions: boolean = false
+): LivingOptionComparisonRow[] {
+  return rows.filter((row) => {
+    const matchesCategory = category === 'All Dimensions' || row.category === category;
+    if (!matchesCategory) {
+      return false;
+    }
+    if (onlyKeyDistinctions && !row.isKeyDistinction) {
+      return false;
+    }
+    return true;
+  });
+}
+
+export function filterLivingOptionsAccommodations(
+  accommodations: LivingOptionAccommodationHighlight[],
+  programFilter: 'All Programs' | 'Memory Care' | 'Respite Care'
+): LivingOptionAccommodationHighlight[] {
+  if (programFilter === 'All Programs') {
+    return accommodations;
+  }
+  return accommodations.filter((item) => item.applicablePrograms.includes(programFilter));
+}
+
+export function filterLivingOptionsFaqs(
+  faqs: LivingOptionsFaqItem[],
+  category: LivingOptionsFaqCategory,
+  searchQuery: string
+): LivingOptionsFaqItem[] {
+  const normalizedQuery = (searchQuery || '').trim().toLowerCase();
+
+  return faqs.filter((item) => {
+    const matchesCategory = category === 'All Topics' || item.category === category;
+    if (!matchesCategory) {
+      return false;
+    }
+    if (!normalizedQuery) {
+      return true;
+    }
+    const haystack = `${item.code} ${item.category} ${item.question} ${item.answer} ${
+      item.confirmationNote || ''
+    }`.toLowerCase();
+    return haystack.includes(normalizedQuery);
+  });
+}
+
+
 
 
 

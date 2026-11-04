@@ -67,6 +67,15 @@ import {
   validateContactPageInquiry,
   filterContactArrivalCorridors,
   filterContactFaqs,
+  LIVING_OPTIONS_COMPARISON_CATEGORIES,
+  LIVING_OPTIONS_COMPARISON_ROWS,
+  LIVING_OPTIONS_OVERVIEW_CARDS,
+  LIVING_OPTIONS_ACCOMMODATION_HIGHLIGHTS,
+  LIVING_OPTIONS_ROUTE_DESTINATIONS,
+  LIVING_OPTIONS_FAQS,
+  filterLivingOptionsComparisonRows,
+  filterLivingOptionsAccommodations,
+  filterLivingOptionsFaqs,
 } from './mission-villa-data';
 
 test('MISSION_VILLA_FACTS preserves verified business identity and contact details', () => {
@@ -560,6 +569,76 @@ test('Page 10 Contact / Schedule a Visit data and pure validation/filtering help
   assert.equal(validPhoneOnly.sanitized?.preferredVisitTiming, 'Thursday afternoon');
   assert.equal(validPhoneOnly.sanitized?.message, 'Looking to tour with my sister.');
 });
+
+test('Page 11 Living Options Overview data and pure helpers strictly compare Memory Care vs. Respite Care', () => {
+  // Strictly two care offerings
+  assert.equal(LIVING_OPTIONS_OVERVIEW_CARDS.length, 2);
+  assert.deepEqual(
+    LIVING_OPTIONS_OVERVIEW_CARDS.map((c) => c.id),
+    ['memory-care', 'respite-care']
+  );
+
+  // Verify placeholder images are marked ILLUSTRATIVE — REPLACE BEFORE LAUNCH
+  for (const card of LIVING_OPTIONS_OVERVIEW_CARDS) {
+    assert.equal(card.placeholderImage.status, 'ILLUSTRATIVE — REPLACE BEFORE LAUNCH');
+  }
+
+  // Verify comparison categories and rows
+  assert.equal(LIVING_OPTIONS_COMPARISON_CATEGORIES.length, 6);
+  assert.equal(LIVING_OPTIONS_COMPARISON_ROWS.length, 6);
+  assert.equal(
+    filterLivingOptionsComparisonRows(LIVING_OPTIONS_COMPARISON_ROWS, 'All Dimensions', false)
+      .length,
+    6
+  );
+  assert.equal(
+    filterLivingOptionsComparisonRows(LIVING_OPTIONS_COMPARISON_ROWS, 'All Dimensions', true)
+      .length,
+    4
+  );
+  assert.equal(
+    filterLivingOptionsComparisonRows(LIVING_OPTIONS_COMPARISON_ROWS, 'Duration & Purpose', false)
+      .length,
+    2
+  );
+
+  // Verify 3 accommodation highlights (Private Suite, Companion Unit, Jack & Jill)
+  assert.equal(LIVING_OPTIONS_ACCOMMODATION_HIGHLIGHTS.length, 3);
+  for (const acc of LIVING_OPTIONS_ACCOMMODATION_HIGHLIGHTS) {
+    assert.equal(acc.placeholderImage.status, 'ILLUSTRATIVE — REPLACE BEFORE LAUNCH');
+    assert.ok(acc.floorPlanNotice.includes('Awaiting official floor plan'));
+  }
+  assert.equal(
+    filterLivingOptionsAccommodations(LIVING_OPTIONS_ACCOMMODATION_HIGHLIGHTS, 'All Programs')
+      .length,
+    3
+  );
+  assert.equal(
+    filterLivingOptionsAccommodations(LIVING_OPTIONS_ACCOMMODATION_HIGHLIGHTS, 'Memory Care')
+      .length,
+    3
+  );
+  assert.equal(
+    filterLivingOptionsAccommodations(LIVING_OPTIONS_ACCOMMODATION_HIGHLIGHTS, 'Respite Care')
+      .length,
+    2
+  );
+
+  // Verify route destinations and FAQs
+  assert.equal(LIVING_OPTIONS_ROUTE_DESTINATIONS.length, 6);
+  assert.equal(LIVING_OPTIONS_FAQS.length, 6);
+  assert.equal(filterLivingOptionsFaqs(LIVING_OPTIONS_FAQS, 'All Topics', '').length, 6);
+  assert.equal(filterLivingOptionsFaqs(LIVING_OPTIONS_FAQS, 'Care Offerings', '').length, 2);
+  assert.equal(
+    filterLivingOptionsFaqs(LIVING_OPTIONS_FAQS, 'All Topics', 'Jack & Jill').length,
+    2
+  );
+  assert.equal(
+    filterLivingOptionsFaqs(LIVING_OPTIONS_FAQS, 'Suites & Bathrooms', 'Jack & Jill').length,
+    1
+  );
+});
+
 
 
 

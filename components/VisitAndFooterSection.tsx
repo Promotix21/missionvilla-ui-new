@@ -569,6 +569,14 @@ export default function VisitAndFooterSection({
               <ul className="space-y-2.5 text-xs sm:text-sm text-[#F7F4ED]/80">
                 <li>
                   <Link
+                    href="/living-options"
+                    className="hover:text-[#D8C7A5] transition text-left inline-block"
+                  >
+                    Living Options Overview (Compare Offerings)
+                  </Link>
+                </li>
+                <li>
+                  <Link
                     href="/memory-care"
                     className="hover:text-[#D8C7A5] transition text-left inline-block"
                   >
@@ -622,6 +630,14 @@ export default function VisitAndFooterSection({
                     className="hover:text-[#D8C7A5] transition inline-block"
                   >
                     Home Overview
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href="/living-options"
+                    className="hover:text-[#D8C7A5] transition inline-block"
+                  >
+                    Living Options Overview
                   </Link>
                 </li>
                 <li>
