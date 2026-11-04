@@ -926,9 +926,45 @@ export default function LifeAtMissionVillaPage() {
             </div>
           </div>
 
+          {/* Horizontal Browse Affordance & Prev/Next Plate Controls */}
+          <div className="w-full flex flex-wrap items-center justify-between gap-3 mb-4 text-xs text-[#D8C7A5]">
+            <span className="inline-flex items-center gap-2 font-medium">
+              <Sparkles className="w-3.5 h-3.5 text-[#8FAF78]" aria-hidden="true" />
+              <span>Swipe horizontally or use arrows to browse all {filteredGalleryPlates.length} plates →</span>
+            </span>
+            <div className="flex items-center gap-2">
+              <button
+                type="button"
+                onClick={() => {
+                  const idx = filteredGalleryPlates.findIndex((p) => p.id === activeGalleryPlate.id);
+                  const prevIdx = idx <= 0 ? filteredGalleryPlates.length - 1 : idx - 1;
+                  if (filteredGalleryPlates[prevIdx]) {
+                    setSelectedPlateId(filteredGalleryPlates[prevIdx].id);
+                  }
+                }}
+                className="px-3.5 py-1.5 rounded-full bg-white/10 hover:bg-[#D8C7A5] text-[#F7F4ED] hover:text-[#3B2348] font-semibold transition cursor-pointer"
+              >
+                ← Prev Plate
+              </button>
+              <button
+                type="button"
+                onClick={() => {
+                  const idx = filteredGalleryPlates.findIndex((p) => p.id === activeGalleryPlate.id);
+                  const nextIdx = idx >= filteredGalleryPlates.length - 1 ? 0 : idx + 1;
+                  if (filteredGalleryPlates[nextIdx]) {
+                    setSelectedPlateId(filteredGalleryPlates[nextIdx].id);
+                  }
+                }}
+                className="px-3.5 py-1.5 rounded-full bg-white/10 hover:bg-[#D8C7A5] text-[#F7F4ED] hover:text-[#3B2348] font-semibold transition cursor-pointer"
+              >
+                Next Plate →
+              </button>
+            </div>
+          </div>
+
           {/* Horizontal Editorial Gallery Band — Scrollable / Interactive Filmstrip */}
           <div
-            className="w-full flex flex-col lg:flex-row gap-5 overflow-x-auto pb-4 mb-10 snap-x"
+            className="w-full flex flex-row gap-4 sm:gap-5 overflow-x-auto pb-4 mb-10 snap-x snap-mandatory"
             role="region"
             aria-label="Horizontal editorial gallery filmstrip"
           >
@@ -939,13 +975,13 @@ export default function LifeAtMissionVillaPage() {
                   key={plate.id}
                   type="button"
                   onClick={() => setSelectedPlateId(plate.id)}
-                  className={`text-left group rounded-[28px] overflow-hidden border transition-all cursor-pointer shrink-0 w-full lg:w-[360px] xl:w-[400px] snap-start flex flex-col justify-between ${
+                  className={`text-left group rounded-[28px] overflow-hidden border transition-all cursor-pointer shrink-0 w-[82vw] sm:w-[330px] lg:w-[360px] xl:w-[400px] snap-start flex flex-col justify-between ${
                     isSelected
                       ? 'bg-[#22122B] border-[#D8C7A5] ring-2 ring-[#D8C7A5]/60 shadow-2xl'
                       : 'bg-[#22122B]/70 border-white/15 hover:border-[#D8C7A5]/60'
                   }`}
                 >
-                  <div className="h-56 sm:h-64 w-full relative overflow-hidden bg-[#22122B]">
+                  <div className="h-52 sm:h-64 w-full relative overflow-hidden bg-[#22122B]">
                     <img
                       src={plate.placeholderImage.src}
                       alt={plate.placeholderImage.alt}

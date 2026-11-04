@@ -138,10 +138,7 @@ export default function LivingOptionsOverviewPage() {
   };
 
   return (
-    <div
-      className="min-h-screen w-full bg-[#F7F4ED] text-[#29272B] selection:bg-[#3B2348] selection:text-[#F7F4ED]"
-      style={{ zoom: fontScale }}
-    >
+    <div className="min-h-screen w-full bg-[#F7F4ED] text-[#29272B] selection:bg-[#3B2348] selection:text-[#F7F4ED]">
       {/* Shared Utility Ribbon & Sticky Editorial Header */}
       <HeaderAndUtilityBar
         fontScale={fontScale}
@@ -189,7 +186,7 @@ export default function LivingOptionsOverviewPage() {
             <div className="lg:col-span-6 flex flex-col justify-between space-y-5">
               <div className="space-y-3">
                 <div className="flex flex-wrap items-center gap-2 text-xs uppercase tracking-[0.2em] text-[#A65D43] font-semibold">
-                  <span>Page 11 · Living Options Monograph</span>
+                  <span>Living Options Overview &amp; Routing Hub</span>
                   <span aria-hidden="true">·</span>
                   <span>Memory Care &amp; Respite Care</span>
                 </div>

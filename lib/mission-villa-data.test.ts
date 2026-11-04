@@ -76,6 +76,15 @@ import {
   filterLivingOptionsComparisonRows,
   filterLivingOptionsAccommodations,
   filterLivingOptionsFaqs,
+  RESOURCE_LIBRARY_CATEGORIES,
+  RESOURCE_LIBRARY_ITEMS,
+  BROCHURE_PACKET_ITEMS,
+  BLOG_INVENTORY_STAGES,
+  VERIFIED_BLOG_ALTERNATIVE_BRIDGES,
+  RESOURCES_PAGE_FAQS,
+  filterResourceLibraryItems,
+  buildResourcePacketInquiryNote,
+  filterResourcesFaqs,
 } from './mission-villa-data';
 
 test('MISSION_VILLA_FACTS preserves verified business identity and contact details', () => {
@@ -639,7 +648,76 @@ test('Page 11 Living Options Overview data and pure helpers strictly compare Mem
   );
 });
 
+test('Page 12 Resources Overview data and pure helpers enforce blog & brochure guardrails', () => {
+  assert.equal(RESOURCE_LIBRARY_CATEGORIES.length, 5);
+  assert.equal(RESOURCE_LIBRARY_ITEMS.length, 6);
+  assert.equal(BROCHURE_PACKET_ITEMS.length, 5);
+  assert.equal(BLOG_INVENTORY_STAGES.length, 4);
+  assert.equal(VERIFIED_BLOG_ALTERNATIVE_BRIDGES.length, 4);
+  assert.equal(RESOURCES_PAGE_FAQS.length, 6);
 
+  // Every resource library item placeholder image must be marked ILLUSTRATIVE — REPLACE BEFORE LAUNCH
+  for (const item of RESOURCE_LIBRARY_ITEMS) {
+    assert.equal(item.placeholderImage.status, 'ILLUSTRATIVE — REPLACE BEFORE LAUNCH');
+  }
 
+  // Verify core Page 12 brief items exist: Financial Planning, Family FAQs, Brochure placeholder, and Blog inventory status
+  const financialItem = RESOURCE_LIBRARY_ITEMS.find(
+    (item) => item.id === 'resource-financial-planning'
+  );
+  const familiesItem = RESOURCE_LIBRARY_ITEMS.find(
+    (item) => item.id === 'resource-family-faqs-guidance'
+  );
+  const brochureItem = RESOURCE_LIBRARY_ITEMS.find(
+    (item) => item.id === 'resource-community-brochure'
+  );
+  const blogItem = RESOURCE_LIBRARY_ITEMS.find(
+    (item) => item.id === 'resource-blog-inventory-status'
+  );
 
+  assert.ok(financialItem);
+  assert.equal(financialItem.primaryHref, '/financial-planning');
+  assert.ok(familiesItem);
+  assert.equal(familiesItem.primaryHref, '/for-families');
+  assert.ok(brochureItem);
+  assert.equal(brochureItem.statusBadge, 'Placeholder — Asset Pending');
+  assert.ok(blogItem);
+  assert.equal(blogItem.statusBadge, 'Inventory Pending');
 
+  // Pure filtering of Resource Library items
+  assert.equal(
+    filterResourceLibraryItems(RESOURCE_LIBRARY_ITEMS, 'All Resources', '').length,
+    6
+  );
+  assert.equal(
+    filterResourceLibraryItems(RESOURCE_LIBRARY_ITEMS, 'Brochure & Blog Status', '').length,
+    2
+  );
+  assert.equal(
+    filterResourceLibraryItems(RESOURCE_LIBRARY_ITEMS, 'All Resources', 'Paper-Ledger').length,
+    1
+  );
+
+  // Brochure packet inquiry note builder
+  const emptyPacketNote = buildResourcePacketInquiryNote(BROCHURE_PACKET_ITEMS, []);
+  assert.ok(emptyPacketNote.includes('Exploring Resources Overview (/resources)'));
+
+  const selectedPacketNote = buildResourcePacketInquiryNote(BROCHURE_PACKET_ITEMS, [
+    'packet-community-brochure',
+    'packet-suite-floor-plans',
+  ]);
+  assert.ok(selectedPacketNote.includes('Requesting 2 family resource packet item(s)'));
+  assert.ok(selectedPacketNote.includes('(DOC 01)'));
+  assert.ok(selectedPacketNote.includes('(DOC 03)'));
+
+  // Resources FAQ filtering
+  assert.equal(filterResourcesFaqs(RESOURCES_PAGE_FAQS, 'All Questions', '').length, 6);
+  assert.equal(
+    filterResourcesFaqs(RESOURCES_PAGE_FAQS, 'Blog & Editorial Status', '').length,
+    1
+  );
+  assert.equal(
+    filterResourcesFaqs(RESOURCES_PAGE_FAQS, 'All Questions', 'Inventory Pending').length,
+    1
+  );
+});

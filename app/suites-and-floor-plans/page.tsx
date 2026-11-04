@@ -127,10 +127,7 @@ export default function SuitesAndFloorPlansPage() {
       : null;
 
   return (
-    <div
-      style={{ zoom: fontScale }}
-      className="min-h-screen w-full bg-[#F7F4ED] text-[#29272B] flex flex-col selection:bg-[#3B2348] selection:text-[#F7F4ED]"
-    >
+    <div className="min-h-screen w-full bg-[#F7F4ED] text-[#29272B] flex flex-col selection:bg-[#3B2348] selection:text-[#F7F4ED]">
       {/* Shared Utility Ribbon & Sticky Editorial Header */}
       <HeaderAndUtilityBar
         fontScale={fontScale}
@@ -166,7 +163,7 @@ export default function SuitesAndFloorPlansPage() {
 
             <div className="flex flex-wrap items-center gap-2 sm:gap-3">
               <span className="px-3 py-1 rounded-md bg-[#3B2348]/10 text-[#3B2348] font-semibold tracking-wider uppercase text-[10px]">
-                Page 05 · Residential Monograph
+                Residential Monograph · Suite Formats
               </span>
               <span className="hidden sm:inline text-[#29272B]/65 text-[11px]">
                 Private &amp; Shared Suites with Private Bathrooms · Daly City, CA

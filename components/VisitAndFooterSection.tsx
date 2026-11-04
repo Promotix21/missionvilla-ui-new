@@ -49,28 +49,34 @@ export default function VisitAndFooterSection({
 
   useEffect(() => {
     if (presetCareOption) {
-      setFormState((prev) => ({
-        ...prev,
-        careInterest: presetCareOption,
-      }));
+      queueMicrotask(() => {
+        setFormState((prev) => ({
+          ...prev,
+          careInterest: presetCareOption,
+        }));
+      });
     }
   }, [presetCareOption]);
 
   useEffect(() => {
     if (presetSuitePreference) {
-      setFormState((prev) => ({
-        ...prev,
-        suitePreference: presetSuitePreference,
-      }));
+      queueMicrotask(() => {
+        setFormState((prev) => ({
+          ...prev,
+          suitePreference: presetSuitePreference,
+        }));
+      });
     }
   }, [presetSuitePreference]);
 
   useEffect(() => {
     if (typeof prefilledNotes === 'string' && prefilledNotes.trim().length > 0) {
-      setFormState((prev) => ({
-        ...prev,
-        notes: prefilledNotes,
-      }));
+      queueMicrotask(() => {
+        setFormState((prev) => ({
+          ...prev,
+          notes: prefilledNotes,
+        }));
+      });
     }
   }, [prefilledNotes]);
 
@@ -710,6 +716,14 @@ export default function VisitAndFooterSection({
                     className="hover:text-[#D8C7A5] transition inline-block"
                   >
                     For Families &amp; FAQs
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href="/resources"
+                    className="hover:text-[#D8C7A5] transition inline-block"
+                  >
+                    Resources Overview &amp; Blog Status
                   </Link>
                 </li>
                 <li>

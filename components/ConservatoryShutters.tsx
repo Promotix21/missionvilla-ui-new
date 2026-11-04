@@ -64,7 +64,9 @@ export default function ConservatoryShutters({
       ).matches;
 
       if (prefersReducedMotion || params.get('skipIntro') === '1') {
-        finishIntroImmediately();
+        queueMicrotask(() => {
+          finishIntroImmediately();
+        });
         return;
       }
     }
@@ -91,8 +93,10 @@ export default function ConservatoryShutters({
       '#floating-specimen-cosmos',
     ]);
 
-    setIsShuttersActive(true);
-    setShutterPhase('closed');
+    queueMicrotask(() => {
+      setIsShuttersActive(true);
+      setShutterPhase('closed');
+    });
 
     // 1. Lock both conservatory shutters together at the center seam (xPercent: 0)
     gsap.set(leftEl, { xPercent: 0 });

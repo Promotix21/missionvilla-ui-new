@@ -43,12 +43,15 @@ export default function HeaderAndUtilityBar({
   const isForFamilies = pathname === '/for-families';
   const isContact = pathname === '/contact';
   const isLivingOptions = pathname === '/living-options';
+  const isResources = pathname === '/resources';
 
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [livingDropdownOpen, setLivingDropdownOpen] = useState(false);
   const [lifeDropdownOpen, setLifeDropdownOpen] = useState(false);
+  const [resourcesDropdownOpen, setResourcesDropdownOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
   const lifeDropdownRef = useRef<HTMLDivElement>(null);
+  const resourcesDropdownRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
@@ -58,15 +61,29 @@ export default function HeaderAndUtilityBar({
       if (lifeDropdownRef.current && !lifeDropdownRef.current.contains(e.target as Node)) {
         setLifeDropdownOpen(false);
       }
+      if (
+        resourcesDropdownRef.current &&
+        !resourcesDropdownRef.current.contains(e.target as Node)
+      ) {
+        setResourcesDropdownOpen(false);
+      }
     };
     document.addEventListener('mousedown', handleClickOutside);
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
+  // Synchronize root --font-scale custom property across all routes
+  useEffect(() => {
+    if (typeof document !== 'undefined') {
+      document.documentElement.style.setProperty('--font-scale', String(fontScale));
+    }
+  }, [fontScale]);
+
   const handleNavClick = (id: string, presetCare?: 'Memory Care' | 'Respite Care') => {
     setMobileMenuOpen(false);
     setLivingDropdownOpen(false);
     setLifeDropdownOpen(false);
+    setResourcesDropdownOpen(false);
     onNavigateToSection(id, presetCare);
   };
 
@@ -593,17 +610,152 @@ export default function HeaderAndUtilityBar({
               About Us
             </Link>
 
-            <Link
-              href="/financial-planning"
-              aria-current={isFinancialPlanning ? 'page' : undefined}
-              className={`py-1.5 transition-colors whitespace-nowrap shrink-0 relative after:content-[''] after:absolute after:left-0 after:bottom-0.5 after:h-[1.5px] after:bg-[#C98268] after:transition-all ${
-                isFinancialPlanning
-                  ? 'text-[#3B2348] font-semibold after:w-full'
-                  : 'hover:text-[#3B2348] after:w-0 hover:after:w-full'
-              }`}
+            {/* Accessible Resources Dropdown (Blueprint §4: Overview, Financial Planning, Family FAQs, Brochure, Blog Status) */}
+            <div
+              ref={resourcesDropdownRef}
+              className="relative"
+              onMouseEnter={() => setResourcesDropdownOpen(true)}
+              onMouseLeave={() => setResourcesDropdownOpen(false)}
             >
-              Financial Planning
-            </Link>
+              <button
+                type="button"
+                aria-expanded={resourcesDropdownOpen}
+                aria-haspopup="true"
+                onClick={() => setResourcesDropdownOpen((prev) => !prev)}
+                className={`inline-flex items-center gap-1 py-1.5 transition-colors whitespace-nowrap shrink-0 cursor-pointer relative after:content-[''] after:absolute after:left-0 after:bottom-0.5 after:h-[1.5px] after:bg-[#C98268] after:transition-all ${
+                  isResources || isFinancialPlanning || isForFamilies
+                    ? 'text-[#3B2348] font-semibold after:w-full'
+                    : 'hover:text-[#3B2348] after:w-0 hover:after:w-full'
+                }`}
+              >
+                <span>Resources</span>
+                <ChevronDown
+                  className={`w-3.5 h-3.5 transition-transform duration-200 ${
+                    resourcesDropdownOpen ? 'rotate-180' : ''
+                  }`}
+                  aria-hidden="true"
+                />
+              </button>
+
+              {resourcesDropdownOpen && (
+                <div
+                  role="menu"
+                  aria-label="Resources submenu"
+                  className="absolute right-0 top-full pt-2 w-72 z-50"
+                >
+                  <div className="rounded-2xl bg-[#FCFBF8] border border-[#D8C7A5] shadow-xl p-2 space-y-1">
+                    <Link
+                      href="/resources"
+                      role="menuitem"
+                      onClick={() => setResourcesDropdownOpen(false)}
+                      className={`flex items-start justify-between gap-2 p-3 rounded-xl transition ${
+                        isResources
+                          ? 'bg-[#3B2348] text-[#F7F4ED]'
+                          : 'hover:bg-[#D8C7A5]/35 text-[#3B2348]'
+                      }`}
+                    >
+                      <div>
+                        <span className="font-serif text-sm font-semibold block">
+                          Resources Overview
+                        </span>
+                        <span
+                          className={`text-[11px] block mt-0.5 ${
+                            isResources ? 'text-[#D8C7A5]' : 'text-[#29272B]/75'
+                          }`}
+                        >
+                          Planning guides, brochure packet &amp; blog status
+                        </span>
+                      </div>
+                      <ArrowUpRight className="w-4 h-4 shrink-0 mt-0.5" aria-hidden="true" />
+                    </Link>
+
+                    <Link
+                      href="/financial-planning"
+                      role="menuitem"
+                      onClick={() => setResourcesDropdownOpen(false)}
+                      className={`flex items-start justify-between gap-2 p-3 rounded-xl transition ${
+                        isFinancialPlanning
+                          ? 'bg-[#3B2348] text-[#F7F4ED]'
+                          : 'hover:bg-[#D8C7A5]/35 text-[#3B2348]'
+                      }`}
+                    >
+                      <div>
+                        <span className="font-serif text-sm font-semibold block">
+                          Financial Planning
+                        </span>
+                        <span
+                          className={`text-[11px] block mt-0.5 ${
+                            isFinancialPlanning ? 'text-[#D8C7A5]' : 'text-[#29272B]/75'
+                          }`}
+                        >
+                          Cost factors, inclusions &amp; paper-ledger worksheet
+                        </span>
+                      </div>
+                      <ArrowUpRight className="w-4 h-4 shrink-0 mt-0.5" aria-hidden="true" />
+                    </Link>
+
+                    <Link
+                      href="/for-families"
+                      role="menuitem"
+                      onClick={() => setResourcesDropdownOpen(false)}
+                      className={`flex items-start justify-between gap-2 p-3 rounded-xl transition ${
+                        isForFamilies
+                          ? 'bg-[#3B2348] text-[#F7F4ED]'
+                          : 'hover:bg-[#D8C7A5]/35 text-[#3B2348]'
+                      }`}
+                    >
+                      <div>
+                        <span className="font-serif text-sm font-semibold block">
+                          For Families &amp; FAQs
+                        </span>
+                        <span
+                          className={`text-[11px] block mt-0.5 ${
+                            isForFamilies ? 'text-[#D8C7A5]' : 'text-[#29272B]/75'
+                          }`}
+                        >
+                          Decision guide, visit questions &amp; grouped FAQs
+                        </span>
+                      </div>
+                      <ArrowUpRight className="w-4 h-4 shrink-0 mt-0.5" aria-hidden="true" />
+                    </Link>
+
+                    <Link
+                      href="/resources#brochure-and-packet"
+                      role="menuitem"
+                      onClick={() => setResourcesDropdownOpen(false)}
+                      className="flex items-start justify-between gap-2 p-3 rounded-xl hover:bg-[#D8C7A5]/35 text-[#3B2348] transition"
+                    >
+                      <div>
+                        <span className="font-serif text-sm font-semibold block">
+                          Brochure &amp; Tour Packet
+                        </span>
+                        <span className="text-[11px] block mt-0.5 text-[#29272B]/75">
+                          Brochure placeholder &amp; visit packet builder
+                        </span>
+                      </div>
+                      <ArrowUpRight className="w-4 h-4 shrink-0 mt-0.5" aria-hidden="true" />
+                    </Link>
+
+                    <Link
+                      href="/resources#blog-inventory-status"
+                      role="menuitem"
+                      onClick={() => setResourcesDropdownOpen(false)}
+                      className="flex items-start justify-between gap-2 p-3 rounded-xl hover:bg-[#D8C7A5]/35 text-[#3B2348] transition"
+                    >
+                      <div>
+                        <span className="font-serif text-sm font-semibold block">
+                          Blog (Inventory Pending)
+                        </span>
+                        <span className="text-[11px] block mt-0.5 text-[#29272B]/75">
+                          Editorial archive audit — zero fabricated posts
+                        </span>
+                      </div>
+                      <ArrowUpRight className="w-4 h-4 shrink-0 mt-0.5" aria-hidden="true" />
+                    </Link>
+                  </div>
+                </div>
+              )}
+            </div>
 
             <Link
               href="/for-families"
@@ -694,7 +846,7 @@ export default function HeaderAndUtilityBar({
               >
                 <span>Memory Care (Legacies™ Program)</span>
                 <span className="text-xs font-sans uppercase tracking-wider opacity-80">
-                  Page 01
+                  Full-Time Care
                 </span>
               </Link>
               <Link
@@ -708,7 +860,7 @@ export default function HeaderAndUtilityBar({
               >
                 <span>Respite Care (Short-Term Stays)</span>
                 <span className="text-xs font-sans uppercase tracking-wider opacity-80">
-                  Page 02
+                  Flexible Stays
                 </span>
               </Link>
               <Link
@@ -722,7 +874,7 @@ export default function HeaderAndUtilityBar({
               >
                 <span>Life at Mission Villa (Daily Culture)</span>
                 <span className="text-xs font-sans uppercase tracking-wider opacity-80">
-                  Page 03
+                  Daily Rhythm
                 </span>
               </Link>
               <Link
@@ -736,7 +888,7 @@ export default function HeaderAndUtilityBar({
               >
                 <span>Services &amp; Amenities</span>
                 <span className="text-xs font-sans uppercase tracking-wider opacity-80">
-                  Page 04
+                  24-Hr Support
                 </span>
               </Link>
               <Link
@@ -750,7 +902,7 @@ export default function HeaderAndUtilityBar({
               >
                 <span>Suites &amp; Floor Plans</span>
                 <span className="text-xs font-sans uppercase tracking-wider opacity-80">
-                  Page 05
+                  3 Suite Formats
                 </span>
               </Link>
               <Link
@@ -764,7 +916,7 @@ export default function HeaderAndUtilityBar({
               >
                 <span>Gallery &amp; Virtual Tour</span>
                 <span className="text-xs font-sans uppercase tracking-wider opacity-80">
-                  Page 06
+                  Photos &amp; Tour
                 </span>
               </Link>
               <Link
@@ -778,7 +930,7 @@ export default function HeaderAndUtilityBar({
               >
                 <span>About Us (Philosophy &amp; Location)</span>
                 <span className="text-xs font-sans uppercase tracking-wider opacity-80">
-                  Page 07
+                  Daly City Home
                 </span>
               </Link>
               <Link
@@ -792,7 +944,7 @@ export default function HeaderAndUtilityBar({
               >
                 <span>Financial Planning (Paper-Ledger Guide)</span>
                 <span className="text-xs font-sans uppercase tracking-wider opacity-80">
-                  Page 08
+                  Cost Worksheet
                 </span>
               </Link>
               <Link
@@ -806,7 +958,7 @@ export default function HeaderAndUtilityBar({
               >
                 <span>For Families &amp; FAQs (Decision Guide)</span>
                 <span className="text-xs font-sans uppercase tracking-wider opacity-80">
-                  Page 09
+                  Tour Checklist
                 </span>
               </Link>
               <Link
@@ -820,7 +972,7 @@ export default function HeaderAndUtilityBar({
               >
                 <span>Contact &amp; Schedule a Visit</span>
                 <span className="text-xs font-sans uppercase tracking-wider opacity-80">
-                  Page 10
+                  Phone &amp; Map
                 </span>
               </Link>
               <Link
@@ -834,7 +986,21 @@ export default function HeaderAndUtilityBar({
               >
                 <span>Living Options Overview (Compare Care)</span>
                 <span className="text-xs font-sans uppercase tracking-wider opacity-80">
-                  Page 11
+                  Compare Care
+                </span>
+              </Link>
+              <Link
+                href="/resources"
+                onClick={() => setMobileMenuOpen(false)}
+                className={`text-left px-3 py-2 rounded-xl text-base font-serif font-medium transition flex items-center justify-between ${
+                  isResources
+                    ? 'bg-[#3B2348] text-[#F7F4ED]'
+                    : 'text-[#3B2348] hover:bg-[#D8C7A5]/35'
+                }`}
+              >
+                <span>Resources Overview (Guides &amp; Blog Status)</span>
+                <span className="text-xs font-sans uppercase tracking-wider opacity-80">
+                  Family Library
                 </span>
               </Link>
               <button
@@ -863,6 +1029,8 @@ export default function HeaderAndUtilityBar({
                       ? 'map-and-directions'
                       : isLivingOptions
                       ? 'care-distinction-studio'
+                      : isResources
+                      ? 'brochure-and-packet'
                       : 'our-approach'
                   )
                 }
@@ -890,6 +1058,8 @@ export default function HeaderAndUtilityBar({
                   ? 'Grounded Map & Peninsula Directions'
                   : isLivingOptions
                   ? 'Memory Care vs. Respite Care Ledger'
+                  : isResources
+                  ? 'Brochure Status & Tour Packet Builder'
                   : 'Our Approach'}
               </button>
               <button
@@ -918,6 +1088,8 @@ export default function HeaderAndUtilityBar({
                       ? 'what-happens-next'
                       : isLivingOptions
                       ? 'accommodation-highlights'
+                      : isResources
+                      ? 'blog-inventory-status'
                       : 'family-reassurance'
                   )
                 }
@@ -939,6 +1111,8 @@ export default function HeaderAndUtilityBar({
                   ? 'What Happens After Submitting & FAQs'
                   : isLivingOptions
                   ? 'Accommodation Highlights & FAQs'
+                  : isResources
+                  ? 'Blog Inventory Status & Verified Guides'
                   : 'For Families & Connection'}
               </button>
             </nav>

@@ -173,10 +173,7 @@ export default function FinancialPlanningPage() {
   };
 
   return (
-    <div
-      style={{ zoom: fontScale }}
-      className="min-h-screen w-full bg-[#F7F4ED] text-[#29272B] flex flex-col selection:bg-[#3B2348] selection:text-[#F7F4ED]"
-    >
+    <div className="min-h-screen w-full bg-[#F7F4ED] text-[#29272B] flex flex-col selection:bg-[#3B2348] selection:text-[#F7F4ED]">
       {/* Shared Utility Ribbon & Sticky Editorial Header */}
       <HeaderAndUtilityBar
         fontScale={fontScale}
@@ -218,7 +215,7 @@ export default function FinancialPlanningPage() {
 
             <div className="flex flex-wrap items-center gap-2 sm:gap-3 text-[11px] text-[#29272B]/75">
               <span className="font-semibold uppercase tracking-[0.18em] text-[#3B2348]">
-                Page 08 · Assessment-Informed Planning &amp; Paper-Ledger Checklist
+                Financial Monograph · Assessment-Informed Planning &amp; Paper-Ledger Checklist
               </span>
               <span className="hidden sm:inline" aria-hidden="true">
                 ·
@@ -347,94 +344,97 @@ export default function FinancialPlanningPage() {
               </div>
             </div>
 
-            {/* Right 6 Columns: Archival Paper-Ledger Folio & Consultation Plate */}
+            {/* Right 6 Columns: Ruled Archival Paper-Ledger Preview Folio */}
             <div className="lg:col-span-6 flex">
-              <div className="herbarium-mount w-full rounded-[28px] bg-[#FCFBF8] border border-[#D8C7A5] p-5 sm:p-6 shadow-xl flex flex-col justify-between gap-4">
-                {/* Top Ledger Folio Header */}
-                <div className="flex flex-wrap items-center justify-between gap-2 pb-3 border-b border-[#D8C7A5]">
+              <div className="w-full rounded-[28px] bg-[#22122B] text-[#F7F4ED] border border-[#D8C7A5]/35 p-5 sm:p-6 shadow-xl flex flex-col justify-between gap-4">
+                {/* Top Dark-Plum Ledger Header */}
+                <div className="flex flex-wrap items-center justify-between gap-2 pb-3 border-b border-white/15">
                   <div>
-                    <span className="text-[10px] uppercase tracking-[0.2em] text-[#A65D43] font-semibold block">
-                      Family Planning Folio · 995 East Market Street
+                    <span className="text-[10px] uppercase tracking-[0.2em] text-[#8FAF78] font-semibold block">
+                      Archival Paper-Ledger Folio · Zero Pre-Filled Numbers
                     </span>
-                    <h2 className="font-serif text-lg sm:text-xl font-bold text-[#3B2348]">
-                      How Families Reason About Care Costs
+                    <h2 className="font-serif text-lg sm:text-xl font-bold text-[#F7F4ED]">
+                      Side-by-Side Household vs. Community Ledger
                     </h2>
                   </div>
-                  <span className="text-[11px] font-medium text-[#29272B]/70 tabular-nums">
-                    4 Guided Chapters
+                  <span className="px-3 py-1 rounded-full bg-white/10 text-[#D8C7A5] text-[11px] font-mono tabular-nums">
+                    7 Ruled Lines
                   </span>
                 </div>
 
-                {/* Editorial Consultation Image Plate (Clearly Labeled Illustrative) */}
-                <div className="relative rounded-2xl overflow-hidden bg-[#22122B] h-44 sm:h-52 border border-[#D8C7A5]/60">
-                  <img
-                    src="https://images.unsplash.com/photo-1576765608535-5f04d1e3f289?auto=format&fit=crop&w=1400&q=85"
-                    alt="Illustrative placeholder: Warm, unhurried family conversation in a sunlit residential lounge"
-                    referrerPolicy="no-referrer"
-                    className="w-full h-full object-cover"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#22122B]/90 via-[#22122B]/40 to-transparent" />
-                  <div className="absolute bottom-3.5 left-4 right-4 text-[#F7F4ED] space-y-1">
-                    <span className="text-[10px] uppercase tracking-[0.18em] text-[#D8C7A5] font-semibold block">
-                      ILLUSTRATIVE — REPLACE BEFORE LAUNCH
-                    </span>
-                    <p className="font-serif text-sm sm:text-base font-medium leading-snug">
-                      Every cost conversation begins with listening to your loved one’s story, daily routine, and suite preference.
-                    </p>
+                {/* Asymmetric Split Inside Folio: Left Botanical Arch Image + Right Blank Ledger Preview */}
+                <div className="grid grid-cols-1 sm:grid-cols-12 gap-4 items-stretch my-auto">
+                  <div className="sm:col-span-5 relative arch-portal overflow-hidden bg-[#3B2348] min-h-[190px] border border-[#D8C7A5]/40">
+                    <img
+                      src="https://images.unsplash.com/photo-1576765608535-5f04d1e3f289?auto=format&fit=crop&w=1400&q=85"
+                      alt="Illustrative placeholder: Warm, unhurried family conversation in a sunlit residential lounge"
+                      referrerPolicy="no-referrer"
+                      className="w-full h-full object-cover mood-grade"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#22122B]/90 via-[#22122B]/25 to-transparent" />
+                    <div className="absolute bottom-3 left-3 right-3 text-[#F7F4ED]">
+                      <span className="text-[9px] uppercase tracking-[0.16em] text-[#D8C7A5] font-semibold block">
+                        ILLUSTRATIVE — REPLACE BEFORE LAUNCH
+                      </span>
+                      <p className="font-serif italic text-xs leading-snug mt-0.5">
+                        Personal assessment &amp; suite format guide every conversation.
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* Ruled Paper-Ledger Preview Sheet */}
+                  <div className="sm:col-span-7 rounded-2xl bg-[#FCFBF8] text-[#29272B] border border-[#D8C7A5] p-4 flex flex-col justify-between space-y-3">
+                    <div className="flex items-center justify-between border-b border-[#D8C7A5] pb-2 text-[10px] font-mono uppercase tracking-wider text-[#A65D43]">
+                      <span>Household Expense Line</span>
+                      <span>Your Blank Figure</span>
+                    </div>
+                    <div className="divide-y divide-[#D8C7A5]/70 text-xs">
+                      {[
+                        { line: '01', label: 'Mortgage, Rent or Property Tax', status: '$ ______ /mo' },
+                        { line: '02', label: 'Groceries & 3 Daily Prepared Meals', status: '$ ______ /mo' },
+                        { line: '03', label: 'In-Home Caregiver & Night Supervision', status: '$ ______ /mo' },
+                      ].map((row) => (
+                        <div key={row.line} className="py-2 flex items-center justify-between gap-2">
+                          <span className="font-serif font-semibold text-[#3B2348] truncate">
+                            {row.line}. {row.label}
+                          </span>
+                          <span className="font-mono text-[11px] text-[#A65D43] shrink-0">
+                            {row.status}
+                          </span>
+                        </div>
+                      ))}
+                    </div>
+                    <button
+                      type="button"
+                      onClick={() => handleNavigateToSection('paper-ledger-worksheet')}
+                      className="w-full py-2 px-3 rounded-xl bg-[#3B2348] text-[#F7F4ED] text-xs font-semibold hover:bg-[#C98268] transition cursor-pointer inline-flex items-center justify-between"
+                    >
+                      <span>Fill In Your Own Figures in Section 4 ↓</span>
+                      <ArrowUpRight className="w-3.5 h-3.5" aria-hidden="true" />
+                    </button>
                   </div>
                 </div>
 
-                {/* Quick Jump Ledger Index Rows */}
-                <div className="divide-y divide-[#D8C7A5]/70 border-t border-b border-[#D8C7A5]">
+                {/* Compact 4-Section Chapter Strip */}
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 pt-2 border-t border-white/15">
                   {[
-                    {
-                      code: 'I',
-                      title: '4 Factors That Shape Memory Care & Respite Costs',
-                      meta: 'Care Assessment · Suite Format · Stay Horizon',
-                      targetId: 'cost-factors',
-                    },
-                    {
-                      code: 'II',
-                      title: 'Clearly Grouped “What May Be Included” Checklist',
-                      meta: 'Housing · Chef Dining · 24-Hr Staff · Activities',
-                      targetId: 'what-may-be-included',
-                    },
-                    {
-                      code: 'III',
-                      title: 'Interactive Paper-Ledger Expense Comparison',
-                      meta: 'Editable Blank Fields · Zero Pre-Filled Numbers',
-                      targetId: 'paper-ledger-worksheet',
-                    },
-                    {
-                      code: 'IV',
-                      title: 'Ways to Plan, Long-Term Care Insurance & Questions',
-                      meta: 'LTC Policies · Referral & State Program Confirmations',
-                      targetId: 'ways-to-plan',
-                    },
+                    { code: 'I', title: '4 Cost Drivers', targetId: 'cost-factors' },
+                    { code: 'II', title: 'Monthly Inclusions', targetId: 'what-may-be-included' },
+                    { code: 'III', title: 'Blank Paper Ledger', targetId: 'paper-ledger-worksheet' },
+                    { code: 'IV', title: 'Ways to Plan', targetId: 'ways-to-plan' },
                   ].map((item) => (
                     <button
                       key={item.code}
                       type="button"
                       onClick={() => handleNavigateToSection(item.targetId)}
-                      className="w-full py-2.5 px-2 flex items-center justify-between gap-3 text-left hover:bg-[#F7F4ED] transition group cursor-pointer"
+                      className="p-2.5 rounded-xl bg-white/5 hover:bg-white/15 border border-white/10 text-left transition cursor-pointer"
                     >
-                      <div className="flex items-baseline gap-3 min-w-0">
-                        <span className="font-serif text-xs font-bold text-[#A65D43] w-5 shrink-0">
-                          {item.code}.
-                        </span>
-                        <div className="min-w-0">
-                          <span className="font-serif text-sm font-semibold text-[#3B2348] group-hover:text-[#C98268] transition block truncate">
-                            {item.title}
-                          </span>
-                          <span className="text-[11px] text-[#29272B]/70 block truncate">
-                            {item.meta}
-                          </span>
-                        </div>
-                      </div>
-                      <ArrowUpRight
-                        className="w-4 h-4 text-[#3B2348]/60 group-hover:text-[#C98268] shrink-0 transition"
-                        aria-hidden="true"
-                      />
+                      <span className="font-mono text-[10px] text-[#D8C7A5] block">
+                        Chapter {item.code}
+                      </span>
+                      <span className="font-serif text-xs font-semibold text-[#F7F4ED] block truncate mt-0.5">
+                        {item.title} →
+                      </span>
                     </button>
                   ))}
                 </div>

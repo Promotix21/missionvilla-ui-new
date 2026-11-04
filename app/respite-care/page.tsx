@@ -444,9 +444,30 @@ export default function RespiteCarePage() {
               </div>
 
               <div className="pt-4 border-t border-[#D8C7A5] flex flex-wrap items-center justify-between gap-4">
-                <span className="text-xs text-[#29272B]/75">
-                  Stay lengths and availability are confirmed directly with our Daly City team.
-                </span>
+                <div className="flex items-center gap-2">
+                  <button
+                    type="button"
+                    onClick={() => {
+                      const idx = RESPITE_SCENARIOS.findIndex((s) => s.id === activeScenario.id);
+                      const prevIdx = idx <= 0 ? RESPITE_SCENARIOS.length - 1 : idx - 1;
+                      setActiveScenarioId(RESPITE_SCENARIOS[prevIdx].id);
+                    }}
+                    className="px-3.5 py-2 rounded-full border border-[#3B2348]/30 text-[#3B2348] text-xs font-semibold hover:bg-[#D8C7A5]/35 transition cursor-pointer"
+                  >
+                    ← Prev Scenario
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      const idx = RESPITE_SCENARIOS.findIndex((s) => s.id === activeScenario.id);
+                      const nextIdx = idx >= RESPITE_SCENARIOS.length - 1 ? 0 : idx + 1;
+                      setActiveScenarioId(RESPITE_SCENARIOS[nextIdx].id);
+                    }}
+                    className="px-3.5 py-2 rounded-full border border-[#3B2348]/30 text-[#3B2348] text-xs font-semibold hover:bg-[#D8C7A5]/35 transition cursor-pointer"
+                  >
+                    Next Scenario →
+                  </button>
+                </div>
                 <button
                   type="button"
                   onClick={() => handleNavigateToSection('schedule-visit')}
@@ -807,7 +828,7 @@ export default function RespiteCarePage() {
           {/* Fluid Horizontal Timeline Track (5 Connected Nodes) */}
           <div className="w-full mb-10">
             <div
-              className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3 relative"
+              className="flex sm:grid sm:grid-cols-2 lg:grid-cols-5 gap-3 overflow-x-auto pb-2 sm:pb-0 snap-x snap-mandatory relative"
               role="tablist"
               aria-label="Respite Care example workflow timeline"
             >
@@ -821,7 +842,7 @@ export default function RespiteCarePage() {
                     role="tab"
                     aria-selected={isSelected}
                     onClick={() => setActiveTimelineId(step.id)}
-                    className={`text-left p-5 rounded-2xl border transition-all cursor-pointer flex flex-col justify-between space-y-3 relative ${
+                    className={`text-left p-5 rounded-2xl border transition-all cursor-pointer shrink-0 w-[76vw] sm:w-auto snap-start flex flex-col justify-between space-y-3 relative ${
                       isSelected
                         ? 'bg-[#3B2348] text-[#F7F4ED] border-[#3B2348] shadow-lg'
                         : isPast

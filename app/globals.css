@@ -123,7 +123,8 @@ html {
   }
 
   /* Botanical Arch Frame Mask (from Living Heirloom Reference) */
-  .arch-portal {
+  .arch-portal,
+  .botanical-arch {
     border-radius: 260px 260px 24px 24px;
     overflow: hidden;
     transform: translateZ(0);

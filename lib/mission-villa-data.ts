@@ -6217,7 +6217,517 @@ export function filterLivingOptionsFaqs(
   });
 }
 
+// ============================================================================
+// PAGE 12: RESOURCES OVERVIEW (/resources) — SOURCE-GROUNDED DATA & LOGIC
+// ============================================================================
+// Grounded in https://missionvillaseniorliving.com/ and Blueprint §4 & §5 Page 12.
+// Strictly links to Financial Planning (/financial-planning), Family FAQs &
+// Guidance (/for-families), Community Brochure placeholder, and Blog inventory
+// status WITHOUT fabricating published blog posts, authors, or publication dates.
 
+export type ResourcePillarCategory =
+  | 'All Resources'
+  | 'Financial & Cost Planning'
+  | 'Family FAQs & Tour Prep'
+  | 'Care & Suite Guides'
+  | 'Brochure & Blog Status';
 
+export interface ResourceLibraryItem {
+  id: string;
+  folioCode: string;
+  category: Exclude<ResourcePillarCategory, 'All Resources'>;
+  statusBadge: 'Live Interactive Guide' | 'Placeholder — Asset Pending' | 'Inventory Pending';
+  title: string;
+  subtitle: string;
+  summary: string;
+  keyTakeaways: string[];
+  primaryHref: string;
+  primaryCtaLabel: string;
+  secondaryHref?: string;
+  secondaryCtaLabel?: string;
+  verificationNote?: string;
+  placeholderImage: {
+    src: string;
+    alt: string;
+    caption: string;
+    status: 'ILLUSTRATIVE — REPLACE BEFORE LAUNCH';
+  };
+}
 
+export const RESOURCE_LIBRARY_CATEGORIES: ResourcePillarCategory[] = [
+  'All Resources',
+  'Financial & Cost Planning',
+  'Family FAQs & Tour Prep',
+  'Care & Suite Guides',
+  'Brochure & Blog Status',
+];
 
+export const RESOURCE_LIBRARY_ITEMS: ResourceLibraryItem[] = [
+  {
+    id: 'resource-financial-planning',
+    folioCode: 'FOLIO 01',
+    category: 'Financial & Cost Planning',
+    statusBadge: 'Live Interactive Guide',
+    title: 'Financial Planning & Paper-Ledger Comparison Guide',
+    subtitle: 'Assessment-informed pricing factors, monthly inclusions & editable blank home-cost worksheet',
+    summary:
+      'Designed to help families reason clearly about senior care costs without publishing fictitious rates or deceptive calculators. Explore the four factors that shape Memory Care and Respite Care pricing, review what is typically included in monthly support, and use our blank Paper-Ledger Worksheet to compare current home expenses at your own pace.',
+    keyTakeaways: [
+      '4-factor explainer covering personal care assessment, suite format, stay duration, and daily inclusions',
+      'Interactive Paper-Ledger Worksheet with blank editable fields (zero pre-filled fake numbers)',
+      'Overview of Long-Term Care Insurance and legacy site referral/state program confirmation notes',
+    ],
+    primaryHref: '/financial-planning',
+    primaryCtaLabel: 'Open Financial Planning Guide',
+    secondaryHref: '/financial-planning#paper-ledger-worksheet',
+    secondaryCtaLabel: 'Jump to Blank Paper-Ledger Worksheet',
+    verificationNote:
+      'CLIENT CONFIRMATION REQUIRED: Reconfirm legacy referral credit and state assistance mentions with Mission Villa leadership before launch.',
+    placeholderImage: {
+      src: 'https://images.unsplash.com/photo-1586023492125-27b2c045efd7?auto=format&fit=crop&w=1400&q=85',
+      alt: 'Illustrative placeholder: Calm residential sitting area suitable for unhurried family planning conversations',
+      caption: 'Transparent, assessment-informed financial planning without high-pressure sales',
+      status: 'ILLUSTRATIVE — REPLACE BEFORE LAUNCH',
+    },
+  },
+  {
+    id: 'resource-family-faqs-guidance',
+    folioCode: 'FOLIO 02',
+    category: 'Family FAQs & Tour Prep',
+    statusBadge: 'Live Interactive Guide',
+    title: 'For Families: Decision Guide, Visit Notebook & Grouped FAQs',
+    subtitle: 'Non-clinical Memory Care vs. Respite Care reflection, tour questions & 12 categorized FAQs',
+    summary:
+      'Our comprehensive companion for spouses, adult children, and relatives navigating a care transition. Compare Memory Care and short-term Respite Care across five practical dimensions, build a printable or attachable list of questions to bring on your Daly City tour, and search answers grouped by Care, Suites, Cost, and Visits.',
+    keyTakeaways: [
+      '4-pathway non-clinical Family Decision Guide (zero medical diagnosis or risk scoring)',
+      'Interactive 8-item "Questions to Bring to a Visit" notebook with 1-click inquiry form attachment',
+      '12 searchable FAQs organized across Care, Suites, Cost, and Visits',
+    ],
+    primaryHref: '/for-families',
+    primaryCtaLabel: 'Open Family FAQs & Guidance',
+    secondaryHref: '/for-families#grouped-family-faqs',
+    secondaryCtaLabel: 'Search All 12 Grouped FAQs',
+    placeholderImage: {
+      src: 'https://images.unsplash.com/photo-1576765608535-5f04d1e3f289?auto=format&fit=crop&w=1400&q=85',
+      alt: 'Illustrative placeholder: Warm, reassuring conversation between family and care staff',
+      caption: 'Practical questions, tour preparation, and compassionate guidance for relatives',
+      status: 'ILLUSTRATIVE — REPLACE BEFORE LAUNCH',
+    },
+  },
+  {
+    id: 'resource-community-brochure',
+    folioCode: 'FOLIO 03',
+    category: 'Brochure & Blog Status',
+    statusBadge: 'Placeholder — Asset Pending',
+    title: 'Community Brochure & Printed Tour Collateral',
+    subtitle: 'Official downloadable brochure placeholder & custom in-person visit packet request',
+    summary:
+      'Until Mission Villa’s updated print brochure PDF and official architectural floor-plan inserts are finalized for download, this section provides an honest asset placeholder alongside our interactive Visit Packet Builder—allowing you to request printed program guides, sample menus, and suite information for your tour at 995 East Market Street.',
+    keyTakeaways: [
+      'Explicitly marked Awaiting Official Brochure PDF Asset (no broken download links or invented specs)',
+      'Interactive Family Packet Builder below lets you select specific printed materials for your visit',
+      'Direct phone (650-756-1995) and email access to request current community materials from our team',
+    ],
+    primaryHref: '#brochure-and-packet',
+    primaryCtaLabel: 'Build Tour Resource Packet ↓',
+    secondaryHref: '/suites-and-floor-plans',
+    secondaryCtaLabel: 'View Suites & Floor Plans Status',
+    verificationNote:
+      'CLIENT CONFIRMATION & ASSET REQUIRED: Supply final approved Mission Villa PDF brochure and floor-plan inserts before production launch.',
+    placeholderImage: {
+      src: 'https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=1400&q=85',
+      alt: 'Illustrative placeholder: Sunlit communal reading lounge and archival table setting',
+      caption: 'Request printed program guides and sample calendars for your Daly City visit',
+      status: 'ILLUSTRATIVE — REPLACE BEFORE LAUNCH',
+    },
+  },
+  {
+    id: 'resource-blog-inventory-status',
+    folioCode: 'FOLIO 04',
+    category: 'Brochure & Blog Status',
+    statusBadge: 'Inventory Pending',
+    title: 'Mission Villa Blog & Editorial Archive Status',
+    subtitle: 'Preserving original site articles strictly after audit — zero fabricated posts, authors, or dates',
+    summary:
+      'The original Mission Villa website includes a Blog navigation item. In accordance with our strict accuracy guardrails, we never generate synthetic blog posts, fictional staff authors, or invented publication dates. The dedicated /blog archive is held in Inventory Pending status while original articles are inventoried and client-verified.',
+    keyTakeaways: [
+      'Zero fabricated articles, synthetic dementia advice, fake author bios, or invented timestamps',
+      '4-stage editorial verification and migration ledger documented transparently below',
+      'Direct topic routing to verified live pages (/memory-care, /respite-care, /life-at-mission-villa)',
+    ],
+    primaryHref: '#blog-inventory-status',
+    primaryCtaLabel: 'Inspect Blog Inventory Status ↓',
+    secondaryHref: '/about',
+    secondaryCtaLabel: 'Read Our Care Philosophy on About Us',
+    verificationNote:
+      'CLIENT CONFIRMATION REQUIRED: Inventory and approve extant articles from https://missionvillaseniorliving.com/ prior to activating /blog.',
+    placeholderImage: {
+      src: 'https://images.unsplash.com/photo-1490750967868-88aa4486c946?auto=format&fit=crop&w=1400&q=85',
+      alt: 'Illustrative placeholder: Botanical study representing careful archival curation',
+      caption: 'Every published resource is grounded in verified community offerings, never filler copy',
+      status: 'ILLUSTRATIVE — REPLACE BEFORE LAUNCH',
+    },
+  },
+  {
+    id: 'resource-living-options-monograph',
+    folioCode: 'FOLIO 05',
+    category: 'Care & Suite Guides',
+    statusBadge: 'Live Interactive Guide',
+    title: 'Living Options Overview: Memory Care vs. Respite Care',
+    subtitle: 'Side-by-side comparison of Mission Villa’s two focused care programs & suite formats',
+    summary:
+      'Mission Villa focuses exclusively on full-time Legacies™ Memory Care and short-term Respite Care (without separate standalone Independent or Assisted Living tiers). Use our Living Options Monograph to compare stay durations, daily rhythms, and Private, Companion Unit, and Jack & Jill suite accommodations.',
+    keyTakeaways: [
+      '6-dimension comparison ledger contrasting full-time Memory Care and short-term Respite Care',
+      'Interactive spotlight on Private Suites, Companion Units, and Jack & Jill suites with private baths',
+      'Direct links to deep-dive pages for Memory Care (/memory-care) and Respite Care (/respite-care)',
+    ],
+    primaryHref: '/living-options',
+    primaryCtaLabel: 'Open Living Options Overview',
+    secondaryHref: '/memory-care',
+    secondaryCtaLabel: 'Explore Legacies™ Memory Care',
+    placeholderImage: {
+      src: 'https://images.unsplash.com/photo-1616594039964-ae9021a400a0?auto=format&fit=crop&w=1400&q=85',
+      alt: 'Illustrative placeholder: Peaceful residential suite interior with warm natural light',
+      caption: 'Clear comparison of our two dedicated care offerings and suite layouts',
+      status: 'ILLUSTRATIVE — REPLACE BEFORE LAUNCH',
+    },
+  },
+  {
+    id: 'resource-services-and-lifestyle',
+    folioCode: 'FOLIO 06',
+    category: 'Care & Suite Guides',
+    statusBadge: 'Live Interactive Guide',
+    title: 'Services, Amenities & Daily Life Guides',
+    subtitle: '18 site-grounded offerings, "Ask Us About..." builder & curated day-in-the-life rhythm',
+    summary:
+      'Explore practical day-to-day offerings across Support, Dining, Lifestyle, Community Spaces, and Convenience—including 24-hour staff, restaurant-style full-table dining, activity director programming, enclosed courtyard/patio spaces, and personal laundry service.',
+    keyTakeaways: [
+      'Searchable 18-item Services & Amenities directory with "Ask Us About..." tour disclosure builder',
+      '4 photo-led lifestyle chapters and curated day-in-the-life illustration on /life-at-mission-villa',
+      'Category-based photo masonry and Virtual Tour stage on /gallery',
+    ],
+    primaryHref: '/services-and-amenities',
+    primaryCtaLabel: 'Open Services & Amenities Guide',
+    secondaryHref: '/life-at-mission-villa',
+    secondaryCtaLabel: 'Explore Life at Mission Villa',
+    placeholderImage: {
+      src: 'https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=1400&q=85',
+      alt: 'Illustrative placeholder: Freshly prepared meal served in a welcoming community dining room',
+      caption: 'Practical everyday services and welcoming spaces in Daly City',
+      status: 'ILLUSTRATIVE — REPLACE BEFORE LAUNCH',
+    },
+  },
+];
+
+export interface BrochurePacketItem {
+  id: string;
+  code: string;
+  title: string;
+  category: 'Program Overview' | 'Suites & Floor Plans' | 'Financial Worksheet' | 'Daily Life & Dining';
+  description: string;
+  availabilityStatus: string;
+  defaultSelected: boolean;
+}
+
+export const BROCHURE_PACKET_ITEMS: BrochurePacketItem[] = [
+  {
+    id: 'packet-community-brochure',
+    code: 'DOC 01',
+    title: 'Mission Villa Community Overview & Legacies™ Memory Care Brochure',
+    category: 'Program Overview',
+    description:
+      'Printed community introduction covering our Daly City location (995 East Market Street), Legacies™ Memory Care approach, and 24-hour staff support.',
+    availabilityStatus: 'Digital PDF placeholder in prototype — request printed copy or email packet from our team',
+    defaultSelected: true,
+  },
+  {
+    id: 'packet-respite-stay-guide',
+    code: 'DOC 02',
+    title: 'Short-Term Respite Care & Caregiver Relief Information Sheet',
+    category: 'Program Overview',
+    description:
+      'Overview of short-term stays (a few days to several weeks), furnished suite accommodations, meal/activity inclusions, and pre-stay assessment steps.',
+    availabilityStatus: 'CLIENT CONFIRMATION REQUIRED: Confirm current stay minimums & date availability with team',
+    defaultSelected: false,
+  },
+  {
+    id: 'packet-suite-floor-plans',
+    code: 'DOC 03',
+    title: 'Suite Formats Insert (Private Suite, Companion Unit & Jack & Jill)',
+    category: 'Suites & Floor Plans',
+    description:
+      'Reference sheet comparing our Private Suites, Companion Units, and Jack & Jill configurations—each equipped with a private bathroom.',
+    availabilityStatus: 'Awaiting official floor plan diagrams — inspect suites in person during your tour',
+    defaultSelected: true,
+  },
+  {
+    id: 'packet-financial-worksheet',
+    code: 'DOC 04',
+    title: 'Paper-Ledger Monthly Expense Comparison Worksheet',
+    category: 'Financial Worksheet',
+    description:
+      'Printable version of our blank home-vs.-community expense comparison ledger and checklist of questions for your financial consultation.',
+    availabilityStatus: 'Interactive version live at /financial-planning#paper-ledger-worksheet',
+    defaultSelected: false,
+  },
+  {
+    id: 'packet-activity-dining-sample',
+    code: 'DOC 05',
+    title: 'Sample Monthly Activity Calendar & Chef-Prepared Dining Menu',
+    category: 'Daily Life & Dining',
+    description:
+      'Representative examples of our activity director’s daily programming, scenic drives, live entertainment, and full-table restaurant dining.',
+    availabilityStatus: 'Request current month’s Daly City calendar and seasonal menu during your visit',
+    defaultSelected: false,
+  },
+];
+
+export interface BlogInventoryStage {
+  id: string;
+  stepNumber: string;
+  stageTitle: string;
+  statusLabel: 'Completed' | 'In Progress — Client Inventory' | 'Pending Approval' | 'Held Until Verified';
+  summary: string;
+  guardrailDetail: string;
+  deliverableNote: string;
+}
+
+export const BLOG_INVENTORY_STAGES: BlogInventoryStage[] = [
+  {
+    id: 'blog-stage-01-navigation-audit',
+    stepNumber: 'Stage 01',
+    stageTitle: 'Original Site Navigation & Sitemap Recognition',
+    statusLabel: 'Completed',
+    summary:
+      'Identified the Blog destination in the original Mission Villa Senior Living primary navigation (https://missionvillaseniorliving.com/) and reserved the /blog route in the multi-page architecture.',
+    guardrailDetail:
+      'Per Blueprint §4 & §5 Page 12, /resources acts as the organized hub while /blog remains unlinked as a standalone page until real article inventory is verified.',
+    deliverableNote: 'Sitemap reservation and transparent status manifest active.',
+  },
+  {
+    id: 'blog-stage-02-article-inventory',
+    stepNumber: 'Stage 02',
+    stageTitle: 'Extant Article Inventory & Source Export',
+    statusLabel: 'In Progress — Client Inventory',
+    summary:
+      'Cataloging actual published articles from the legacy WordPress/public site so that only authentic, client-authored or client-approved posts are considered for migration.',
+    guardrailDetail:
+      'Strict zero-fabrication policy: no AI-generated filler posts, no invented author names, no backdated timestamps, and no fictional resident case studies.',
+    deliverableNote: 'Awaiting client export/selection of extant blog posts to carry forward.',
+  },
+  {
+    id: 'blog-stage-03-factual-audit',
+    stepNumber: 'Stage 03',
+    stageTitle: 'Business-Fact & Clinical Guardrail Review',
+    statusLabel: 'Pending Approval',
+    summary:
+      'Each historical blog article selected for migration will be reviewed to ensure it does not promote outdated care tiers (such as standalone Independent or Assisted Living) or unverified clinical claims.',
+    guardrailDetail:
+      'Ensures every migrated article aligns with Mission Villa’s verified Daly City offerings: Legacies™ Memory Care and short-term Respite Care under CA License #415601046.',
+    deliverableNote: 'Editorial alignment check prior to publishing on /blog.',
+  },
+  {
+    id: 'blog-stage-04-route-activation',
+    stepNumber: 'Stage 04',
+    stageTitle: 'Dedicated /blog Archive Activation',
+    statusLabel: 'Held Until Verified',
+    summary:
+      'Once the article inventory is approved by the client, the /blog index and individual article views will be activated using the V3 editorial monograph typography and reading comfort scale.',
+    guardrailDetail:
+      'Until Stage 02 and Stage 03 are signed off, families are routed directly to our verified live guides on /for-families, /financial-planning, /memory-care, and /respite-care.',
+    deliverableNote: 'Route /blog tracked in MISSION_VILLA_PAGE_STATUS.md as inventory pending.',
+  },
+];
+
+export interface VerifiedTopicBridge {
+  id: string;
+  topicTag: string;
+  commonFamilyQuestion: string;
+  verifiedDestinationTitle: string;
+  whatYouWillFind: string;
+  href: string;
+  ctaLabel: string;
+}
+
+export const VERIFIED_BLOG_ALTERNATIVE_BRIDGES: VerifiedTopicBridge[] = [
+  {
+    id: 'bridge-memory-care-signs',
+    topicTag: 'Alzheimer’s & Dementia Support',
+    commonFamilyQuestion: 'How does person-centered Memory Care support daily dignity and familiar routines?',
+    verifiedDestinationTitle: 'Page 01 · Memory Care & Legacies™ Program',
+    whatYouWillFind:
+      'Explore our 4 Legacies™ life-story touchpoints, 3-scene daily storyboard, 24-hour staff commitments, and suite formats.',
+    href: '/memory-care',
+    ctaLabel: 'Read the Memory Care Guide',
+  },
+  {
+    id: 'bridge-caregiver-relief',
+    topicTag: 'Family Caregiver Rest',
+    commonFamilyQuestion: 'How do short-term Respite Care stays work when a family caregiver needs time to rest or travel?',
+    verifiedDestinationTitle: 'Page 02 · Short-Term Respite Care',
+    whatYouWillFind:
+      'Review 4 common family scenarios, 6 included hospitality services, and our 5-step example stay workflow.',
+    href: '/respite-care',
+    ctaLabel: 'Read the Respite Care Guide',
+  },
+  {
+    id: 'bridge-comparing-costs',
+    topicTag: 'Senior Care Costs & Budgeting',
+    commonFamilyQuestion: 'How can our family compare the cost of living at home with Memory Care in Daly City?',
+    verifiedDestinationTitle: 'Page 08 · Financial Planning & Paper-Ledger Worksheet',
+    whatYouWillFind:
+      'Use our editable blank Paper-Ledger Worksheet, 4-factor cost explainer, and 10-item monthly inclusion checklist.',
+    href: '/financial-planning',
+    ctaLabel: 'Open Financial Planning',
+  },
+  {
+    id: 'bridge-tour-questions',
+    topicTag: 'Preparing for a First Visit',
+    commonFamilyQuestion: 'What questions should we bring when touring a Memory Care community for the first time?',
+    verifiedDestinationTitle: 'Page 09 · For Families & FAQs',
+    whatYouWillFind:
+      'Use our interactive 8-question Visit Notebook, non-clinical Family Decision Guide, and 12 grouped FAQs.',
+    href: '/for-families',
+    ctaLabel: 'Open Family FAQs & Visit Notebook',
+  },
+];
+
+export type ResourcesFaqCategory =
+  | 'All Questions'
+  | 'Planning Guides'
+  | 'Brochure & Print Packet'
+  | 'Blog & Editorial Status';
+
+export interface ResourcesFaqItem {
+  id: string;
+  code: string;
+  category: Exclude<ResourcesFaqCategory, 'All Questions'>;
+  question: string;
+  answer: string;
+  relatedHref: string;
+  relatedLabel: string;
+  confirmationNote?: string;
+}
+
+export const RESOURCES_PAGE_FAQS: ResourcesFaqItem[] = [
+  {
+    id: 'res-faq-where-to-start',
+    code: 'GUIDE 01',
+    category: 'Planning Guides',
+    question: 'Which resource should our family read first if we are just beginning to explore care in Daly City?',
+    answer:
+      'If you are deciding whether full-time Memory Care or a short-term Respite Care stay best fits your family’s current situation, we recommend starting with For Families & FAQs (/for-families) or the Living Options Overview (/living-options). Both guides offer calm, non-clinical comparisons and practical questions to bring on a tour.',
+    relatedHref: '/for-families',
+    relatedLabel: 'Start With For Families & FAQs',
+  },
+  {
+    id: 'res-faq-financial-worksheet',
+    code: 'GUIDE 02',
+    category: 'Planning Guides',
+    question: 'Does the Financial Planning resource include a cost comparison worksheet we can fill out ourselves?',
+    answer:
+      'Yes. Our Financial Planning page (/financial-planning) features an interactive Paper-Ledger Expense Comparison Worksheet with blank editable fields—plus a text-only checklist toggle—so your family can tally current monthly home expenses alongside typical Mission Villa inclusions without pre-filled fake numbers or sales pressure.',
+    relatedHref: '/financial-planning#paper-ledger-worksheet',
+    relatedLabel: 'Open Paper-Ledger Worksheet',
+  },
+  {
+    id: 'res-faq-brochure-request',
+    code: 'PRINT 01',
+    category: 'Brochure & Print Packet',
+    question: 'How can we get a copy of the Mission Villa community brochure, floor plans, or sample activity calendar?',
+    answer:
+      'While official downloadable PDF brochure and architectural floor-plan files are being finalized for this website (`Awaiting official brochure PDF / floor plan assets`), you can use the Family Resource Packet Builder on this page to select the exact materials you would like prepared for your in-person visit at 995 East Market Street, or call our team directly at 650-756-1995.',
+    relatedHref: '#brochure-and-packet',
+    relatedLabel: 'Use the Tour Packet Builder',
+    confirmationNote:
+      'CLIENT CONFIRMATION & ASSET REQUIRED: Confirm final downloadable brochure PDF and floor-plan insert files before production launch.',
+  },
+  {
+    id: 'res-faq-why-blog-pending',
+    code: 'BLOG 01',
+    category: 'Blog & Editorial Status',
+    question: 'Why is the Mission Villa Blog marked "Inventory Pending" instead of showing sample articles?',
+    answer:
+      'Because families rely on senior living resources during deeply important life decisions, we never publish AI-generated placeholder articles, fictional staff authors, or invented publication dates. We are conducting a careful inventory of extant articles from the original Mission Villa website (https://missionvillaseniorliving.com/) so that only verified, client-approved articles are migrated.',
+    relatedHref: '#blog-inventory-status',
+    relatedLabel: 'View Blog Migration Ledger',
+  },
+  {
+    id: 'res-faq-resident-portal-note',
+    code: 'GUIDE 03',
+    category: 'Planning Guides',
+    question: 'What if I am a current family member looking for community updates, activity calendars, or administrative assistance?',
+    answer:
+      'Current relatives and visitors are always welcome to reach our concierge and care team directly at 650-756-1995 or mktg.missionvilla@missionvillaseniorliving.com for current monthly activity calendars, private dining coordination, or family questions.',
+    relatedHref: '/contact',
+    relatedLabel: 'Go to Contact & Directions',
+  },
+  {
+    id: 'res-faq-personal-consultation',
+    code: 'PRINT 02',
+    category: 'Brochure & Print Packet',
+    question: 'Can we talk through these financial and care guides in person with the Mission Villa team?',
+    answer:
+      'Absolutely. Written guides are a helpful starting point, but nothing replaces walking through our suites, dining room, and courtyard in person and asking questions at your own pace. Call 650-756-1995 or use the form below to schedule an unhurried visit at 995 East Market Street, Daly City, CA 94014.',
+    relatedHref: '#schedule-visit',
+    relatedLabel: 'Schedule a Personal Visit',
+  },
+];
+
+export function filterResourceLibraryItems(
+  items: ResourceLibraryItem[],
+  category: ResourcePillarCategory,
+  searchQuery: string
+): ResourceLibraryItem[] {
+  const normalizedQuery = (searchQuery || '').trim().toLowerCase();
+
+  return items.filter((item) => {
+    const matchesCategory = category === 'All Resources' || item.category === category;
+    if (!matchesCategory) {
+      return false;
+    }
+    if (!normalizedQuery) {
+      return true;
+    }
+    const haystack = `${item.folioCode} ${item.category} ${item.statusBadge} ${item.title} ${
+      item.subtitle
+    } ${item.summary} ${item.keyTakeaways.join(' ')}`.toLowerCase();
+    return haystack.includes(normalizedQuery);
+  });
+}
+
+export function buildResourcePacketInquiryNote(
+  items: BrochurePacketItem[],
+  selectedIds: string[]
+): string {
+  const chosen = items.filter((item) => selectedIds.includes(item.id));
+  if (chosen.length === 0) {
+    return 'Exploring Resources Overview (/resources): Would like to request community brochure materials and discuss care options with the Daly City team.';
+  }
+  const labels = chosen.map((item) => `(${item.code}) ${item.title}`).join('; ');
+  return `Requesting ${chosen.length} family resource packet item(s) from /resources: ${labels}.`;
+}
+
+export function filterResourcesFaqs(
+  faqs: ResourcesFaqItem[],
+  category: ResourcesFaqCategory,
+  searchQuery: string
+): ResourcesFaqItem[] {
+  const normalizedQuery = (searchQuery || '').trim().toLowerCase();
+
+  return faqs.filter((item) => {
+    const matchesCategory = category === 'All Questions' || item.category === category;
+    if (!matchesCategory) {
+      return false;
+    }
+    if (!normalizedQuery) {
+      return true;
+    }
+    const haystack = `${item.code} ${item.category} ${item.question} ${item.answer} ${
+      item.confirmationNote || ''
+    }`.toLowerCase();
+    return haystack.includes(normalizedQuery);
+  });
+}

@@ -115,10 +115,7 @@ export default function AboutUsPage() {
   };
 
   return (
-    <div
-      style={{ zoom: fontScale }}
-      className="min-h-screen w-full bg-[#F7F4ED] text-[#29272B] flex flex-col selection:bg-[#3B2348] selection:text-[#F7F4ED]"
-    >
+    <div className="min-h-screen w-full bg-[#F7F4ED] text-[#29272B] flex flex-col selection:bg-[#3B2348] selection:text-[#F7F4ED]">
       {/* Shared Utility Ribbon & Sticky Editorial Header */}
       <HeaderAndUtilityBar
         fontScale={fontScale}
@@ -160,7 +157,7 @@ export default function AboutUsPage() {
 
             <div className="flex flex-wrap items-center gap-2 sm:gap-3 text-[11px] text-[#29272B]/75">
               <span className="font-semibold uppercase tracking-[0.18em] text-[#3B2348]">
-                Page 07 · Philosophy, Location &amp; Community Trust
+                Community Monograph · Philosophy, Location &amp; Stewardship
               </span>
               <span className="hidden sm:inline" aria-hidden="true">
                 ·

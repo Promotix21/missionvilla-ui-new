@@ -992,9 +992,30 @@ export default function MemoryCarePage() {
           id="family-questions"
           className="w-full py-20 lg:py-28 fluid-canvas bg-[#F7F4ED] grid-line-b paper-texture"
         >
+          {/* Mobile Quick-Jump Strip Between Tour Guide & FAQ Accordion */}
+          <div className="lg:hidden flex items-center gap-2 mb-6">
+            <button
+              type="button"
+              onClick={() => handleNavigateToSection('mc-tour-guide')}
+              className="flex-1 py-2.5 px-3 rounded-full bg-[#3B2348] text-[#F7F4ED] text-xs font-semibold text-center cursor-pointer"
+            >
+              Tour Questions Guide ↓
+            </button>
+            <button
+              type="button"
+              onClick={() => handleNavigateToSection('mc-faq-accordion')}
+              className="flex-1 py-2.5 px-3 rounded-full bg-[#FCFBF8] border border-[#D8C7A5] text-[#3B2348] text-xs font-semibold text-center cursor-pointer"
+            >
+              Skip to Memory Care FAQs ↓
+            </button>
+          </div>
+
           <div className="w-full grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-stretch">
             {/* Left 5 Columns: Empathetic Family Decision & Tour Guide */}
-            <div className="lg:col-span-5 herbarium-mount rounded-[32px] p-7 sm:p-10 flex flex-col justify-between space-y-6">
+            <div
+              id="mc-tour-guide"
+              className="lg:col-span-5 herbarium-mount rounded-[32px] p-7 sm:p-10 flex flex-col justify-between space-y-6"
+            >
               <div className="space-y-4">
                 <span className="font-script script-display text-[#C98268] block">
                   Guidance for Families
@@ -1056,7 +1077,10 @@ export default function MemoryCarePage() {
             </div>
 
             {/* Right 7 Columns: Accessible Memory Care FAQ Accordion with Category Filter */}
-            <div className="lg:col-span-7 flex flex-col justify-between space-y-6">
+            <div
+              id="mc-faq-accordion"
+              className="lg:col-span-7 flex flex-col justify-between space-y-6"
+            >
               <div className="space-y-4">
                 <div className="flex flex-wrap items-end justify-between gap-4">
                   <div>
