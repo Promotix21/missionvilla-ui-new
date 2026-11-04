@@ -260,7 +260,14 @@ export default function SuitesAndFamilySection({
                 Common Questions From Families Evaluating Care
               </h3>
               <p className="text-sm text-[#29272B]/80">
-                Select a topic below or call our Daly City team directly at{' '}
+                Select a topic below, explore our{' '}
+                <Link
+                  href="/for-families"
+                  className="font-semibold text-[#3B2348] underline decoration-[#C98268] underline-offset-4 hover:text-[#C98268] transition"
+                >
+                  Family Decision Guide &amp; FAQs
+                </Link>
+                , or call our Daly City team directly at{' '}
                 <a
                   href={MISSION_VILLA_FACTS.phone.href}
                   className="font-semibold text-[#3B2348] underline"

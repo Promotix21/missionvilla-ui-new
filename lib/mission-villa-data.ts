@@ -3999,4 +3999,1691 @@ export function filterGeographyLandmarks(
   return landmarks.filter((item) => item.category === category);
 }
 
+// ============================================================================
+// PAGE 08: FINANCIAL PLANNING (/financial-planning) — SOURCE-GROUNDED DATA
+// ============================================================================
+// Grounded in https://missionvillaseniorliving.com/living-options/financial-planning/
+// Topics: Assessment-informed personalized pricing; typical cost inclusions
+// (housing, meals, care services, housekeeping, activities); comparison categories
+// for home-based care; long-term care insurance; referral credit and state
+// assistance participation mentioned on old site MUST BE RECONFIRMED BEFORE LAUNCH.
+// Guardrails: Zero pre-filled fake numbers, no counterfeit savings calculator,
+// no exact pricing, no plan lock-ins, no claims of "no hidden fees".
+
+export interface FinancialCostFactor {
+  id:
+    | 'care-assessment'
+    | 'suite-selection'
+    | 'stay-horizon'
+    | 'optional-services';
+  index: string;
+  kicker: string;
+  title: string;
+  subtitle: string;
+  explanation: string;
+  whatWeReviewTogether: string[];
+  questionsForYourVisit: string;
+  relatedRouteHref: string;
+  relatedRouteLabel: string;
+}
+
+export type FinancialInclusionGroup =
+  | 'All Categories'
+  | 'Housing & Suite Comfort'
+  | 'Chef-Prepared Dining'
+  | '24-Hour Support & Care'
+  | 'Housekeeping & Daily Living'
+  | 'Life Enrichment & Community';
+
+export interface FinancialInclusionItem {
+  id: string;
+  code: string;
+  group: Exclude<FinancialInclusionGroup, 'All Categories'>;
+  title: string;
+  summary: string;
+  howItHelpsFamilies: string;
+  confirmationStatus: 'Standard Community Offering' | 'CLIENT CONFIRMATION REQUIRED';
+  verificationNote: string;
+}
+
+export interface PaperLedgerComparisonRow {
+  id: string;
+  lineNumber: string;
+  categoryGroup:
+    | 'Housing & Residence'
+    | 'Utilities & Household'
+    | 'Food & Nourishment'
+    | 'Personal Care & Support'
+    | 'Daily Living & Upkeep'
+    | 'Engagement & Mobility';
+  expenseLabel: string;
+  homeLivingPrompt: string;
+  // Strictly empty string by default — never pre-fill fake numbers
+  defaultMonthlyInput: '';
+  missionVillaConsolidatedContext: string;
+  questionToVerifyOnTour: string;
+}
+
+export interface FinancialPlanningPathway {
+  id:
+    | 'personal-assessment-consultation'
+    | 'long-term-care-insurance'
+    | 'family-and-benefit-planning'
+    | 'legacy-site-referral-and-state-programs';
+  index: string;
+  badge: string;
+  title: string;
+  subtitle: string;
+  description: string;
+  questionsToAsk: string[];
+  verificationStatus: 'Standard Planning Guidance' | 'CLIENT CONFIRMATION REQUIRED';
+  disclaimerNote: string;
+  inquiryPresetNote: string;
+}
+
+export interface FinancialPlanningFaqItem {
+  id: string;
+  category:
+    | 'How Pricing Works'
+    | 'Inclusions & Suites'
+    | 'Insurance & Assistance'
+    | 'Short-Term Stays';
+  question: string;
+  answer: string;
+}
+
+export const FINANCIAL_COST_FACTORS: FinancialCostFactor[] = [
+  {
+    id: 'care-assessment',
+    index: 'Factor 01',
+    kicker: 'Individualized Support Level',
+    title: 'Assessment-Informed Personal Care Needs',
+    subtitle: 'Tailored around the daily support your loved one actually needs',
+    explanation:
+      'No two residents experience Alzheimer’s disease or dementia in the exact same way. Rather than publishing a one-size-fits-all rate online, Mission Villa conducts a thoughtful care assessment to understand your loved one’s daily routines, personal care needs, mobility, and Legacies™ Memory Care preferences.',
+    whatWeReviewTogether: [
+      'Level of daily assistance with bathing, dressing, grooming, and hygiene',
+      'Escort and transfer support to the dining room, courtyard, and daily activities',
+      'Routine reassessments over time so care plans remain aligned as needs evolve',
+    ],
+    questionsForYourVisit:
+      'How does the initial care assessment work, and how are families notified if care needs change over time?',
+    relatedRouteHref: '/memory-care',
+    relatedRouteLabel: 'Explore Legacies™ Memory Care',
+  },
+  {
+    id: 'suite-selection',
+    index: 'Factor 02',
+    kicker: 'Accommodation Format',
+    title: 'Suite Layout & Shared vs. Private Living',
+    subtitle: 'Private Suite, Companion Unit, or Jack & Jill floor-plan formats',
+    explanation:
+      'Accommodation costs vary depending on the suite format your family selects. Some families prefer the quiet sanctuary of an individual Private Suite, while others value the shared camaraderie and cost structure of a Companion Unit or Jack & Jill arrangement—each featuring an attached private bathroom.',
+    whatWeReviewTogether: [
+      'Private Suite with dedicated sleeping/living area and attached private bathroom',
+      'Companion Unit (Shared Suite) designed for comforting companionship and shared value',
+      'Jack & Jill format connecting distinct sleeping quarters with an adjoining private bath',
+    ],
+    questionsForYourVisit:
+      'May we compare current availability and monthly rates across Private, Companion, and Jack & Jill suites?',
+    relatedRouteHref: '/suites-and-floor-plans',
+    relatedRouteLabel: 'Compare Suites & Floor Plans',
+  },
+  {
+    id: 'stay-horizon',
+    index: 'Factor 03',
+    kicker: 'Program & Stay Duration',
+    title: 'Long-Term Memory Care vs. Short-Term Respite Stays',
+    subtitle: 'Ongoing residential living or temporary caregiver relief',
+    explanation:
+      'Financial planning looks different when preparing for a permanent move into Memory Care versus arranging a short-term Respite Care stay of a few days to several weeks while a primary family caregiver rests, travels, or recovers.',
+    whatWeReviewTogether: [
+      'Monthly residential planning for ongoing Legacies™ Memory Care',
+      'Short-term Respite Care stay structure, furnished suite availability, and minimum stay lengths',
+      'How a temporary Respite Care stay can serve as a gentle introduction to Mission Villa',
+    ],
+    questionsForYourVisit:
+      'How is short-term Respite Care billed compared with full-time Memory Care residency?',
+    relatedRouteHref: '/respite-care',
+    relatedRouteLabel: 'Learn About Respite Care Stays',
+  },
+  {
+    id: 'optional-services',
+    index: 'Factor 04',
+    kicker: 'Clarity on Everyday vs. Optional Items',
+    title: 'Included Community Living vs. Personal Add-Ons',
+    subtitle: 'Understanding what is part of base care versus optional conveniences',
+    explanation:
+      'A clear financial conversation separates everyday community inclusions—such as housing, three daily chef-prepared meals, housekeeping, laundry, and daily activities—from optional personal services or specialized requests that may carry separate charges.',
+    whatWeReviewTogether: [
+      'Core residential inclusions (suite, utilities, dining, housekeeping, laundry, activities)',
+      'Individual care support tiers determined during your loved one’s assessment',
+      'Confirming which conveniences (such as on-site salon/spa appointments or specialized transport) involve separate fees',
+    ],
+    questionsForYourVisit:
+      'Can you walk us through a sample resident agreement so we see which services are base inclusions versus optional?',
+    relatedRouteHref: '/services-and-amenities',
+    relatedRouteLabel: 'Review Services & Amenities',
+  },
+];
+
+export const FINANCIAL_INCLUSION_GROUPS: FinancialInclusionGroup[] = [
+  'All Categories',
+  'Housing & Suite Comfort',
+  'Chef-Prepared Dining',
+  '24-Hour Support & Care',
+  'Housekeeping & Daily Living',
+  'Life Enrichment & Community',
+];
+
+export const FINANCIAL_INCLUSION_ITEMS: FinancialInclusionItem[] = [
+  {
+    id: 'inc-suite-residence',
+    code: 'INC 01',
+    group: 'Housing & Suite Comfort',
+    title: 'Private or Shared Suite With Private Bathroom',
+    summary:
+      'Residential accommodation in your chosen Private Suite, Companion Unit, or Jack & Jill layout, each with an attached private bathroom.',
+    howItHelpsFamilies:
+      'Consolidates rent or mortgage obligations into a supportive residential setting designed for seniors living with memory loss.',
+    confirmationStatus: 'Standard Community Offering',
+    verificationNote:
+      'Rates vary by suite format and current availability at 995 East Market Street.',
+  },
+  {
+    id: 'inc-utilities-comfort',
+    code: 'INC 02',
+    group: 'Housing & Suite Comfort',
+    title: 'Household Utilities, Comfort Controls & Wi-Fi in Common Spaces',
+    summary:
+      'Everyday utilities, individual suite thermostat comfort (confirm per-unit configuration), and Wi-Fi access in common areas as listed on the original site.',
+    howItHelpsFamilies:
+      'Eliminates separate monthly electric, gas, water, trash, and building maintenance bills.',
+    confirmationStatus: 'CLIENT CONFIRMATION REQUIRED',
+    verificationNote:
+      'Confirm specific utility inclusions and in-suite Wi-Fi/cable options with the Daly City team during your visit.',
+  },
+  {
+    id: 'inc-chef-dining',
+    code: 'INC 03',
+    group: 'Chef-Prepared Dining',
+    title: 'Three Daily Chef-Prepared Meals & Nutritious Snacks',
+    summary:
+      'Freshly prepared breakfast, lunch, and dinner served with full-table hospitality in our welcoming community dining room, plus daily refreshments.',
+    howItHelpsFamilies:
+      'Replaces the weekly cost and daily labor of grocery shopping, cooking, and dishwashing at home.',
+    confirmationStatus: 'Standard Community Offering',
+    verificationNote:
+      'Ask our team about specific dietary options and private family dining reservations.',
+  },
+  {
+    id: 'inc-24hr-staff-presence',
+    code: 'INC 04',
+    group: '24-Hour Support & Care',
+    title: '24-Hour On-Site Staff & Emergency Alert Support',
+    summary:
+      'Around-the-clock on-site care staff availability, emergency alert system features, and routine wellness check-ins day and night.',
+    howItHelpsFamilies:
+      'Provides continuous day-and-night presence that is often prohibitively expensive to arrange through hourly in-home care agencies.',
+    confirmationStatus: 'Standard Community Offering',
+    verificationNote:
+      'Discuss how day and overnight supervision aligns with your loved one’s assessment.',
+  },
+  {
+    id: 'inc-personalized-care-assistance',
+    code: 'INC 05',
+    group: '24-Hour Support & Care',
+    title: 'Personalized Assistance With Daily Living & Routine Assessments',
+    summary:
+      'Respectful help with bathing, dressing, grooming, and escort/transfer support, guided by routine assessments as needs change.',
+    howItHelpsFamilies:
+      'Tailors daily support around your loved one’s Legacies™ care plan rather than charging unpredictability per task at home.',
+    confirmationStatus: 'CLIENT CONFIRMATION REQUIRED',
+    verificationNote:
+      'Individual care support levels are determined through a personal assessment prior to move-in.',
+  },
+  {
+    id: 'inc-housekeeping-laundry',
+    code: 'INC 06',
+    group: 'Housekeeping & Daily Living',
+    title: 'Routine Housekeeping, Personal Laundry & Linen Service',
+    summary:
+      'Regular suite cleaning, bed linen changes, and personal clothing laundry handled by our housekeeping staff.',
+    howItHelpsFamilies:
+      'Removes the physical strain of household chores so family visits focus on connection rather than housework.',
+    confirmationStatus: 'Standard Community Offering',
+    verificationNote:
+      'Confirm housekeeping frequency and personal laundry labeling guidelines on tour.',
+  },
+  {
+    id: 'inc-legacies-activities',
+    code: 'INC 07',
+    group: 'Life Enrichment & Community',
+    title: 'Legacies™ Memory Care Programming & Daily Activities',
+    summary:
+      'Daily social, creative, musical, and recreational activities led by our Activity Director—including games, art, gentle fitness, and live entertainment.',
+    howItHelpsFamilies:
+      'Provides structured daily engagement and social belonging without separate adult day-program fees.',
+    confirmationStatus: 'Standard Community Offering',
+    verificationNote:
+      'Request a current monthly activity calendar when you visit Mission Villa.',
+  },
+  {
+    id: 'inc-courtyard-common-areas',
+    code: 'INC 08',
+    group: 'Life Enrichment & Community',
+    title: 'Access to Garden Courtyard, Patio, Library & Communal Lounges',
+    summary:
+      'Full enjoyment of our enclosed outdoor courtyard, sunlit patio, quiet library nook, and homelike sitting rooms for residents and visiting relatives.',
+    howItHelpsFamilies:
+      'Gives families welcoming indoor and outdoor spaces in Daly City to gather comfortably.',
+    confirmationStatus: 'Standard Community Offering',
+    verificationNote:
+      'On-site community parking is available for visiting family members.',
+  },
+  {
+    id: 'inc-transportation-concierge',
+    code: 'INC 09',
+    group: 'Housekeeping & Daily Living',
+    title: 'Concierge Coordination, Scenic Drives & Scheduled Transportation',
+    summary:
+      'Front-desk concierge assistance for families, community scenic drives, and scheduled transportation as described on Mission Villa’s original site.',
+    howItHelpsFamilies:
+      'Helps coordinate everyday logistics and community outings along the Peninsula.',
+    confirmationStatus: 'CLIENT CONFIRMATION REQUIRED',
+    verificationNote:
+      'Confirm current scheduled transportation routes, appointment escort availability, and any applicable fees.',
+  },
+  {
+    id: 'inc-salon-and-specialty',
+    code: 'INC 10',
+    group: 'Housekeeping & Daily Living',
+    title: 'On-Site Salon / Spa & Optional Personal Conveniences',
+    summary:
+      'Access to our on-site beauty salon/barber space and personalized convenience support right inside the community.',
+    howItHelpsFamilies:
+      'Allows residents to enjoy grooming and self-care without needing outside trips.',
+    confirmationStatus: 'CLIENT CONFIRMATION REQUIRED',
+    verificationNote:
+      'Salon/spa services and personal care supplies may be billed separately; confirm current fee schedule with our team.',
+  },
+];
+
+export const PAPER_LEDGER_COMPARISON_ROWS: PaperLedgerComparisonRow[] = [
+  {
+    id: 'ledger-housing-property',
+    lineNumber: '01',
+    categoryGroup: 'Housing & Residence',
+    expenseLabel: 'Mortgage, Rent, Property Taxes & Homeowner Insurance',
+    homeLivingPrompt: 'Current monthly mortgage/rent + prorated property tax & home insurance',
+    defaultMonthlyInput: '',
+    missionVillaConsolidatedContext:
+      'At Mission Villa, residential accommodation in a Private Suite, Companion Unit, or Jack & Jill suite with a private bathroom is part of the monthly residence agreement.',
+    questionToVerifyOnTour:
+      'What are the current monthly rates for Private vs. Companion suites?',
+  },
+  {
+    id: 'ledger-utilities-upkeep',
+    lineNumber: '02',
+    categoryGroup: 'Utilities & Household',
+    expenseLabel: 'Electricity, Gas, Water, Trash & Common-Area Wi-Fi',
+    homeLivingPrompt: 'Current monthly PG&E, water, garbage, heating & internet bills',
+    defaultMonthlyInput: '',
+    missionVillaConsolidatedContext:
+      'Everyday community utilities, climate comfort, and Wi-Fi in common spaces are consolidated into community living (confirm per-suite utility details).',
+    questionToVerifyOnTour:
+      'Are all utilities included in the base monthly rate, or are any billed separately?',
+  },
+  {
+    id: 'ledger-home-maintenance',
+    lineNumber: '03',
+    categoryGroup: 'Utilities & Household',
+    expenseLabel: 'Home Repairs, Yard Care & Accessibility Modifications',
+    homeLivingPrompt: 'Average monthly upkeep, plumbing/roof reserves, lawn care & safety retrofits',
+    defaultMonthlyInput: '',
+    missionVillaConsolidatedContext:
+      'Building maintenance, groundskeeping for our courtyard and patio, and emergency alert features are maintained by Mission Villa.',
+    questionToVerifyOnTour:
+      'How are suite maintenance requests and safety features handled for residents?',
+  },
+  {
+    id: 'ledger-groceries-dining',
+    lineNumber: '04',
+    categoryGroup: 'Food & Nourishment',
+    expenseLabel: 'Groceries, Meal Preparation & Special Dietary Shopping',
+    homeLivingPrompt: 'Monthly grocery bills, meal delivery services & kitchen staples',
+    defaultMonthlyInput: '',
+    missionVillaConsolidatedContext:
+      'Three chef-prepared meals daily with full-table service plus nutritious snacks and refreshments are part of daily life at Mission Villa.',
+    questionToVerifyOnTour:
+      'How are special dietary options and family guest meals accommodated?',
+  },
+  {
+    id: 'ledger-inhome-care',
+    lineNumber: '05',
+    categoryGroup: 'Personal Care & Support',
+    expenseLabel: 'In-Home Caregiver Hours, Overnight Supervision & Agency Fees',
+    homeLivingPrompt: 'Current or projected monthly cost for private or agency home-care aides',
+    defaultMonthlyInput: '',
+    missionVillaConsolidatedContext:
+      '24-hour on-site staff availability and assessment-informed assistance with bathing, dressing, grooming, and transfers are provided in our nurturing setting.',
+    questionToVerifyOnTour:
+      'How does Mission Villa structure care levels following a resident assessment?',
+  },
+  {
+    id: 'ledger-housekeeping-laundry',
+    lineNumber: '06',
+    categoryGroup: 'Daily Living & Upkeep',
+    expenseLabel: 'Housekeeping, Linen Service & Personal Laundry',
+    homeLivingPrompt: 'Monthly home cleaning service, laundry supplies & dry cleaning',
+    defaultMonthlyInput: '',
+    missionVillaConsolidatedContext:
+      'Routine suite housekeeping, bed linen service, and personal laundry are handled by our community staff.',
+    questionToVerifyOnTour:
+      'How often are suites cleaned and personal laundry washed each week?',
+  },
+  {
+    id: 'ledger-activities-social',
+    lineNumber: '07',
+    categoryGroup: 'Engagement & Mobility',
+    expenseLabel: 'Adult Day Programs, Social Activities & Life Enrichment',
+    homeLivingPrompt: 'Monthly adult day-care tuition, classes, hobbies & companion outings',
+    defaultMonthlyInput: '',
+    missionVillaConsolidatedContext:
+      'Legacies™ Memory Care programming, daily group and one-on-one activities, games, art, fitness, and live entertainment are included daily.',
+    questionToVerifyOnTour:
+      'How does the Activity Director tailor daily engagement to my loved one’s interests?',
+  },
+  {
+    id: 'ledger-transportation',
+    lineNumber: '08',
+    categoryGroup: 'Engagement & Mobility',
+    expenseLabel: 'Transportation, Errands & Escort Coordination',
+    homeLivingPrompt: 'Monthly vehicle upkeep, gas, insurance, rideshares or medical transport',
+    defaultMonthlyInput: '',
+    missionVillaConsolidatedContext:
+      'Mission Villa offers scheduled transportation, scenic drives, and concierge coordination (confirm current routing and eligibility with our team).',
+    questionToVerifyOnTour:
+      'What scheduled transportation is included, and when do separate transport fees apply?',
+  },
+];
+
+export const FINANCIAL_PLANNING_PATHWAYS: FinancialPlanningPathway[] = [
+  {
+    id: 'personal-assessment-consultation',
+    index: '01',
+    badge: 'Recommended First Step',
+    title: 'Personalized Care Assessment & Written Cost Overview',
+    subtitle: 'Clear, one-on-one guidance with our Daly City team',
+    description:
+      'Because Memory Care and Respite Care costs depend on your loved one’s specific daily support needs and suite selection, the most accurate way to plan is a conversation with our team at 995 East Market Street. We review available suites, explain how our assessment works, and outline costs clearly before you make any commitment.',
+    questionsToAsk: [
+      'What suite formats (Private, Companion Unit, Jack & Jill) are currently available?',
+      'How does the care assessment determine my loved one’s personalized support plan?',
+      'What one-time community or move-in fees apply, and how are monthly statements structured?',
+    ],
+    verificationStatus: 'Standard Planning Guidance',
+    disclaimerNote:
+      'Mission Villa provides individualized pricing information directly to families following a consultation.',
+    inquiryPresetNote:
+      'Would like to schedule a financial planning conversation and learn how a care assessment shapes monthly pricing.',
+  },
+  {
+    id: 'long-term-care-insurance',
+    index: '02',
+    badge: 'Original-Site Planning Topic',
+    title: 'Long-Term Care Insurance Policies',
+    subtitle: 'Reviewing policy benefits for Memory Care or Respite Care',
+    description:
+      'As highlighted on Mission Villa’s original Financial Planning page, many families use Long-Term Care (LTC) insurance policies to help offset qualified senior care and Memory Care expenses. Because every policy has its own elimination period, daily/monthly benefit cap, and care-trigger definitions, we encourage families to review their policy documents early.',
+    questionsToAsk: [
+      'Does my loved one’s Long-Term Care policy cover licensed RCFE Memory Care (#415601046) or short-term Respite Care?',
+      'What documentation or care plans can Mission Villa provide to support our insurance claim submissions?',
+      'What is our policy’s elimination (waiting) period before reimbursements begin?',
+    ],
+    verificationStatus: 'Standard Planning Guidance',
+    disclaimerNote:
+      'Coverage and reimbursement depend on your specific insurance contract; verify policy benefits directly with your insurer.',
+    inquiryPresetNote:
+      'Our family has a Long-Term Care insurance policy and would like to ask how Mission Villa supports documentation.',
+  },
+  {
+    id: 'family-and-benefit-planning',
+    index: '03',
+    badge: 'Family Financial Coordination',
+    title: 'Home Equity, Family Contributions & Companion Suite Value',
+    subtitle: 'Practical ways families structure ongoing care budgets',
+    description:
+      'Families often combine retirement income, Social Security, savings, or proceeds from downsizing a family home to fund Memory Care. Selecting a shared Companion Unit or Jack & Jill suite format is also a meaningful way many families balance warm daily companionship with a more approachable monthly accommodation cost.',
+    questionsToAsk: [
+      'How does the monthly rate of a Companion Unit or Jack & Jill suite compare with a Private Suite?',
+      'Can a short-term Respite Care stay help us evaluate fit while we finalize longer-term family planning?',
+      'Who on the Mission Villa team can answer billing questions for adult children or fiduciaries?',
+    ],
+    verificationStatus: 'Standard Planning Guidance',
+    disclaimerNote:
+      'We recommend consulting your family’s financial or elder-law advisor when evaluating tax, estate, or benefit strategies.',
+    inquiryPresetNote:
+      'Interested in comparing Private Suite vs. Companion Unit / Jack & Jill pricing options for our family budget.',
+  },
+  {
+    id: 'legacy-site-referral-and-state-programs',
+    index: '04',
+    badge: 'Reconfirm Current Eligibility on Tour',
+    title: 'Referral Credits & State Assistance Participation',
+    subtitle: 'Original-website references that require fresh confirmation',
+    description:
+      'Mission Villa’s legacy public website referenced a resident referral credit as well as participation in state assistance programs. Because promotional credits, program participation, and regulatory eligibility criteria can change over time, families should reconfirm current availability and qualification rules directly with Mission Villa leadership.',
+    questionsToAsk: [
+      'Is a resident or family referral credit currently offered, and what terms apply?',
+      'Does Mission Villa currently participate in any California state assistance or waiver programs, and what are the eligibility requirements?',
+      'Are there any current seasonal or move-in planning considerations we should know about?',
+    ],
+    verificationStatus: 'CLIENT CONFIRMATION REQUIRED',
+    disclaimerNote:
+      'CLIENT CONFIRMATION REQUIRED: Referral credit offers and state assistance participation mentioned on the legacy website must be verified directly with Mission Villa prior to relying on them.',
+    inquiryPresetNote:
+      'Would like to confirm current policies regarding referral credits or state assistance participation mentioned on the website.',
+  },
+];
+
+export const FINANCIAL_PLANNING_FAQS: FinancialPlanningFaqItem[] = [
+  {
+    id: 'fp-faq-why-no-online-price',
+    category: 'How Pricing Works',
+    question: 'Why doesn’t Mission Villa list fixed monthly prices or an automated calculator online?',
+    answer:
+      'Every resident living with Alzheimer’s or dementia has distinct daily care needs, routines, and suite preferences. Online calculators that display pre-filled estimates or promised “savings” often mislead families. Instead, our Daly City team provides straightforward, personalized pricing information after learning about your loved one and discussing available Private, Companion, or Jack & Jill suites.',
+  },
+  {
+    id: 'fp-faq-assessment-role',
+    category: 'How Pricing Works',
+    question: 'How does the care assessment influence Memory Care costs?',
+    answer:
+      'Before move-in—and periodically thereafter—our team conducts a thoughtful assessment to understand the level of daily assistance your loved one needs with bathing, dressing, grooming, transfers, and daily engagement. This ensures your family’s care plan is tailored appropriately to your loved one’s current support needs.',
+  },
+  {
+    id: 'fp-faq-what-is-included',
+    category: 'Inclusions & Suites',
+    question: 'What is typically included in monthly Memory Care living at Mission Villa?',
+    answer:
+      'Monthly living typically brings together your loved one’s private or shared suite (with a private bathroom), three chef-prepared meals and snacks daily, 24-hour staff availability, emergency alert features, housekeeping, personal laundry and linen service, and daily Legacies™ Memory Care activities. During your visit, our team will review the exact inclusion list and note any optional services that carry separate fees.',
+  },
+  {
+    id: 'fp-faq-companion-vs-private',
+    category: 'Inclusions & Suites',
+    question: 'How do Companion Units and Jack & Jill suites help families planning a budget?',
+    answer:
+      'For many families, our Companion Unit (shared suite) and Jack & Jill suite formats offer two benefits at once: they provide a more approachable accommodation rate than a solo Private Suite while giving residents comforting daily camaraderie and a shared private bathroom.',
+  },
+  {
+    id: 'fp-faq-ltc-insurance',
+    category: 'Insurance & Assistance',
+    question: 'Can we use Long-Term Care Insurance, referral credits, or state assistance programs?',
+    answer:
+      'Many families draw on Long-Term Care (LTC) insurance benefits to help pay for Memory Care or Respite Care; our team can share licensing information (CA RCFE #415601046) and care documentation to assist with your insurer’s claim process. Because referral credits and state assistance participation mentioned on our historical website are subject to change and specific eligibility rules, please ask our team to confirm current program status directly.',
+  },
+  {
+    id: 'fp-faq-respite-rates',
+    category: 'Short-Term Stays',
+    question: 'How does pricing work for a short-term Respite Care stay?',
+    answer:
+      'Short-term Respite Care stays—ranging from a few days to several weeks, subject to availability—are arranged based on stay length, furnished suite availability, and your loved one’s daily care needs. Call our team at (650) 756-1995 for current Respite Care availability and rate details.',
+  },
+];
+
+export function filterFinancialInclusions(
+  items: FinancialInclusionItem[],
+  group: FinancialInclusionGroup
+): FinancialInclusionItem[] {
+  if (group === 'All Categories') {
+    return items;
+  }
+  return items.filter((item) => item.group === group);
+}
+
+export function parseBlankLedgerAmount(rawInput: string): number | null {
+  const cleaned = (rawInput || '').replace(/[$,\s]/g, '').trim();
+  if (!cleaned) {
+    return null;
+  }
+  const parsed = Number(cleaned);
+  if (!Number.isFinite(parsed) || parsed < 0) {
+    return null;
+  }
+  return Math.round(parsed * 100) / 100;
+}
+
+export interface PaperLedgerSummary {
+  checkedCount: number;
+  enteredAmountCount: number;
+  familyEnteredHomeTotal: number | null;
+  checkedLabels: string[];
+  inquiryNoteSummary: string;
+}
+
+export function summarizePaperLedger(
+  rows: PaperLedgerComparisonRow[],
+  checkedIds: string[],
+  userAmounts: Record<string, string>
+): PaperLedgerSummary {
+  const checkedSet = new Set(checkedIds);
+  const checkedRows = rows.filter((r) => checkedSet.has(r.id));
+
+  let enteredAmountCount = 0;
+  let runningTotal = 0;
+
+  for (const row of rows) {
+    const val = parseBlankLedgerAmount(userAmounts[row.id] || '');
+    if (val !== null) {
+      enteredAmountCount += 1;
+      runningTotal += val;
+    }
+  }
+
+  const familyEnteredHomeTotal =
+    enteredAmountCount > 0 ? Math.round(runningTotal * 100) / 100 : null;
+  const checkedLabels = checkedRows.map((r) => r.expenseLabel);
+
+  const parts: string[] = [
+    'Requesting a personalized Financial Planning discussion.',
+  ];
+  if (checkedLabels.length > 0) {
+    parts.push(
+      `Comparing ${checkedLabels.length} expense categories (${checkedLabels
+        .slice(0, 3)
+        .join('; ')}${checkedLabels.length > 3 ? '...' : ''}).`
+    );
+  }
+  if (familyEnteredHomeTotal !== null) {
+    parts.push(
+      `Self-entered home comparison worksheet subtotal: $${familyEnteredHomeTotal.toLocaleString(
+        'en-US'
+      )}/mo across ${enteredAmountCount} item(s).`
+    );
+  }
+
+  return {
+    checkedCount: checkedRows.length,
+    enteredAmountCount,
+    familyEnteredHomeTotal,
+    checkedLabels,
+    inquiryNoteSummary: parts.join(' '),
+  };
+}
+
+// ============================================================================
+// PAGE 09: FOR FAMILIES / FAQs (/for-families) — SOURCE-GROUNDED DATA & LOGIC
+// ============================================================================
+// Grounded in:
+// - https://missionvillaseniorliving.com/living-options/
+// - https://missionvillaseniorliving.com/living-options/memory-care/
+// - https://missionvillaseniorliving.com/living-options/respite-care/
+// - Current homepage FAQs & blueprint §5 Page 09
+// Guardrails: Elegant family-decision guide & grouped accordion (Care, Suites,
+// Cost, Visits). Strictly NO diagnosis tool, NO risk scoring, and NO implied
+// medical advice. All images marked ILLUSTRATIVE — REPLACE BEFORE LAUNCH.
+
+export interface FamilyDecisionPathway {
+  id:
+    | 'ongoing-memory-support'
+    | 'short-term-caregiver-relief'
+    | 'transitional-recovery-stay'
+    | 'planning-ahead-together';
+  index: string;
+  kicker: string;
+  title: string;
+  familySituation: string;
+  primaryOption: 'Memory Care (Legacies™ Program)' | 'Short-Term Respite Care' | 'Comparing Both Programs';
+  recommendedRouteHref: '/memory-care' | '/respite-care' | '/suites-and-floor-plans';
+  recommendedRouteLabel: string;
+  howToThinkAboutIt: string;
+  keySignsOfFit: string[];
+  howBothProgramsConnect: string;
+  suggestedFirstQuestion: string;
+  presetCareOption: 'Memory Care' | 'Respite Care';
+}
+
+export interface CareVsRespiteComparisonDimension {
+  id: string;
+  dimension: string;
+  memoryCareApproach: string;
+  respiteCareApproach: string;
+  familyTakeaway: string;
+}
+
+export type VisitQuestionTheme =
+  | 'All Themes'
+  | 'Daily Care & Legacies™'
+  | 'Suites & Personalization'
+  | 'Dining & Community Life'
+  | 'Cost, Assessment & Timing';
+
+export interface VisitChecklistQuestion {
+  id: string;
+  code: string;
+  theme: Exclude<VisitQuestionTheme, 'All Themes'>;
+  question: string;
+  whyItMatters: string;
+  whatToListenFor: string;
+}
+
+export interface FamilyInvolvementChapter {
+  id: 'first-conversations' | 'personalizing-the-suite' | 'staying-connected' | 'evolving-partnership';
+  stepNumber: string;
+  kicker: string;
+  title: string;
+  subtitle: string;
+  narrative: string;
+  practicalWaysToParticipate: string[];
+  reassuranceNote: string;
+  placeholderImage: {
+    src: string;
+    alt: string;
+    caption: string;
+    status: 'ILLUSTRATIVE — REPLACE BEFORE LAUNCH';
+  };
+}
+
+export type FamilyFaqCategory = 'All Topics' | 'Care' | 'Suites' | 'Cost' | 'Visits';
+
+export interface FamilyFaqItem {
+  id: string;
+  code: string;
+  category: Exclude<FamilyFaqCategory, 'All Topics'>;
+  question: string;
+  answer: string;
+  relatedRouteHref: string;
+  relatedRouteLabel: string;
+  confirmationNote?: string;
+}
+
+export const FAMILY_DECISION_PATHWAYS: FamilyDecisionPathway[] = [
+  {
+    id: 'ongoing-memory-support',
+    index: 'Pathway 01',
+    kicker: 'Ongoing Daily Living & Memory Support',
+    title: 'When Daily Routines & Memory Changes Call for Steady Community Support',
+    familySituation:
+      '“My parent or spouse is living with Alzheimer’s disease or dementia, and our family wants a calm, nurturing community where they are known personally and supported around the clock.”',
+    primaryOption: 'Memory Care (Legacies™ Program)',
+    recommendedRouteHref: '/memory-care',
+    recommendedRouteLabel: 'Explore Legacies™ Memory Care',
+    howToThinkAboutIt:
+      'Full-time Memory Care at Mission Villa is designed for older adults who benefit from consistent daily rhythms, 24-hour on-site staff presence, and person-centered support rooted in their personal life story.',
+    keySignsOfFit: [
+      'Your loved one benefits from predictable morning, mealtime, and evening routines in a homelike environment',
+      'Hands-on daily assistance with bathing, dressing, grooming, or escorting would improve everyday comfort and dignity',
+      'Social connection, chef-prepared dining, and tailored Legacies™ activities would reduce isolation at home',
+      'Family caregivers want to shift from round-the-clock care coordination back to meaningful visits as spouse, son, or daughter',
+    ],
+    howBothProgramsConnect:
+      'Some families begin with a personal walkthrough of Memory Care suites right away, while others arrange a short-term Respite Care stay first so their loved one can experience our dining room and daily rhythm firsthand.',
+    suggestedFirstQuestion:
+      'How does the Legacies™ Memory Care team learn my loved one’s personal history and help them settle into the first few weeks?',
+    presetCareOption: 'Memory Care',
+  },
+  {
+    id: 'short-term-caregiver-relief',
+    index: 'Pathway 02',
+    kicker: 'Caregiver Rest, Travel or Family Obligations',
+    title: 'When a Primary Family Caregiver Needs Dependable Time to Rest or Travel',
+    familySituation:
+      '“I care for my loved one at home and want them welcomed into a safe, compassionate community for a few days or several weeks while I recharge, travel, or handle family commitments.”',
+    primaryOption: 'Short-Term Respite Care',
+    recommendedRouteHref: '/respite-care',
+    recommendedRouteLabel: 'Explore Short-Term Respite Care',
+    howToThinkAboutIt:
+      'Respite Care offers a temporary, furnished stay (subject to current availability) with the same attentive staff support, chef-prepared meals, and engaging daily activities enjoyed by full-time residents.',
+    keySignsOfFit: [
+      'You have upcoming travel, work obligations, or family events and want dependable 24-hour support for your loved one',
+      'As a dedicated family caregiver, you need intentional time to rest and protect your own wellbeing',
+      'Your loved one would enjoy sociable meals, activities, and a comfortable suite with a private bathroom during your time away',
+      'You want direct communication with our Daly City team while you are away',
+    ],
+    howBothProgramsConnect:
+      'Many families use Respite Care periodically throughout the year for caregiver rest, and find it provides natural familiarity if full-time Memory Care is ever needed later.',
+    suggestedFirstQuestion:
+      'What short-term stay lengths and furnished suite accommodations are currently available for Respite Care?',
+    presetCareOption: 'Respite Care',
+  },
+  {
+    id: 'transitional-recovery-stay',
+    index: 'Pathway 03',
+    kicker: 'Bridge Support After Illness or Rehabilitation',
+    title: 'When Returning Straight Home Feels Too Soon After a Health Change',
+    familySituation:
+      '“After an illness, hospital stay, or rehabilitation period, our family wants a supportive environment where daily meals, personal care, and routines are looked after before deciding next steps.”',
+    primaryOption: 'Short-Term Respite Care',
+    recommendedRouteHref: '/respite-care',
+    recommendedRouteLabel: 'Review Respite Care Transitions',
+    howToThinkAboutIt:
+      'As noted on Mission Villa’s Respite Care page, a short-term stay can offer extra daily support after illness or rehabilitation—giving your loved one attentive daily assistance, regular meals, and unhurried recovery time.',
+    keySignsOfFit: [
+      'Your family needs time to prepare the home or evaluate whether returning home is practical',
+      'Consistent daily meals, housekeeping, laundry, and personal care assistance would ease the transition',
+      'Routine assessments help clarify what level of ongoing daily support feels most comfortable',
+      'You want an unhurried window to observe how your loved one responds to community life',
+    ],
+    howBothProgramsConnect:
+      'If a guest thrives in the community rhythm during a transitional Respite Care stay, our team can discuss long-term Memory Care suite options without any high-pressure obligation.',
+    suggestedFirstQuestion:
+      'How does your pre-stay assessment coordinate with our family when planning a transitional Respite Care stay?',
+    presetCareOption: 'Respite Care',
+  },
+  {
+    id: 'planning-ahead-together',
+    index: 'Pathway 04',
+    kicker: 'Early Exploration & Suite Comparison',
+    title: 'When Your Family Is Gathering Information Before an Urgent Crisis',
+    familySituation:
+      '“We are beginning first conversations as a family and want to understand Memory Care vs. Respite Care, compare Private and Companion suites, and learn how costs work without sales pressure.”',
+    primaryOption: 'Comparing Both Programs',
+    recommendedRouteHref: '/suites-and-floor-plans',
+    recommendedRouteLabel: 'Compare Suites & Floor Plans',
+    howToThinkAboutIt:
+      'Visiting before an urgent need allows siblings, spouses, and relatives to walk through our Daly City community calmly, meet staff, see suites in person, and align on financial planning at a comfortable pace.',
+    keySignsOfFit: [
+      'Multiple family members are sharing the decision and want clear, consistent facts to discuss together',
+      'You want to see the difference between a Private Suite, a Companion Unit, and a Jack & Jill layout in person',
+      'You want to understand how assessment-informed pricing and home-expense comparisons work early on',
+      'You value a pressure-free conversation where questions are welcomed',
+    ],
+    howBothProgramsConnect:
+      'An early visit lets your family learn about both ongoing Legacies™ Memory Care and short-term Respite Care so you know every option available at 995 East Market Street.',
+    suggestedFirstQuestion:
+      'May our family schedule an informational walkthrough to see suites, dining spaces, and review how pricing is structured?',
+    presetCareOption: 'Memory Care',
+  },
+];
+
+export const CARE_VS_RESPITE_COMPARISON: CareVsRespiteComparisonDimension[] = [
+  {
+    id: 'comp-purpose',
+    dimension: 'Primary Purpose & Focus',
+    memoryCareApproach:
+      'Ongoing, residential support for seniors living with Alzheimer’s disease or other forms of dementia through our signature Legacies™ Memory Care program.',
+    respiteCareApproach:
+      'Temporary, short-term stays that provide attentive care for a senior guest while giving primary family caregivers time to rest, travel, or manage obligations.',
+    familyTakeaway:
+      'Both programs share the same compassionate staff, homelike Daly City setting, and respect for personal dignity.',
+  },
+  {
+    id: 'comp-duration',
+    dimension: 'Typical Time Horizon',
+    memoryCareApproach:
+      'Long-term community residency shaped around familiar, unhurried daily rhythms and evolving personal care plans.',
+    respiteCareApproach:
+      'Short-term stays ranging from a few days to several weeks (confirm current stay duration terms and availability with our team).',
+    familyTakeaway:
+      'A short-term Respite stay can also serve as a gentle introduction before deciding on longer-term residency.',
+  },
+  {
+    id: 'comp-accommodations',
+    dimension: 'Suites & Living Spaces',
+    memoryCareApproach:
+      'Private Suites, Companion Units, and Jack & Jill floor-plan formats—each featuring a private bathroom and space for personal furniture and keepsakes.',
+    respiteCareApproach:
+      'Comfortable, furnished short-term accommodations with private bathroom access and full enjoyment of communal lounges, dining room, and courtyard.',
+    familyTakeaway:
+      'Even for a short stay, bringing a few familiar photos or a favorite blanket helps a suite feel immediately welcoming.',
+  },
+  {
+    id: 'comp-daily-life',
+    dimension: 'Dining, Activities & Support',
+    memoryCareApproach:
+      '24-hour staff availability, personalized help with daily tasks, three chef-prepared meals daily, housekeeping, laundry, and Legacies™ life-enrichment programming.',
+    respiteCareApproach:
+      'Tailored daily assistance, three chef-prepared meals and snacks daily, housekeeping, and warm inclusion in daily social, creative, and recreational activities.',
+    familyTakeaway:
+      'Respite Care guests are welcomed into the heart of daily community life—never set apart.',
+  },
+  {
+    id: 'comp-cost-planning',
+    dimension: 'How Pricing Is Discussed',
+    memoryCareApproach:
+      'Assessment-informed monthly pricing based on your loved one’s personal care needs and chosen suite format (Private, Companion, or Jack & Jill).',
+    respiteCareApproach:
+      'Arranged based on desired stay dates, furnished suite availability, and daily support needs confirmed during a pre-stay conversation.',
+    familyTakeaway:
+      'Our team shares clear, individualized cost information directly with your family—without generic online calculators.',
+  },
+];
+
+export const VISIT_QUESTION_THEMES: VisitQuestionTheme[] = [
+  'All Themes',
+  'Daily Care & Legacies™',
+  'Suites & Personalization',
+  'Dining & Community Life',
+  'Cost, Assessment & Timing',
+];
+
+export const VISIT_CHECKLIST_QUESTIONS: VisitChecklistQuestion[] = [
+  {
+    id: 'vq-legacies-story',
+    code: 'Q01',
+    theme: 'Daily Care & Legacies™',
+    question:
+      'How does the Legacies™ Memory Care team learn about my loved one’s life story, habits, and personal preferences before move-in?',
+    whyItMatters:
+      'Person-centered care depends on knowing who your loved one has always been—their family bonds, career, favorite music, and comforting routines.',
+    whatToListenFor:
+      'Look for a collaborative intake process where staff actively ask for family insights and share them across the daily care team.',
+  },
+  {
+    id: 'vq-24hr-support',
+    code: 'Q02',
+    theme: 'Daily Care & Legacies™',
+    question:
+      'What does 24-hour on-site staff support look like during the day and overnight, and how are routine assessments handled?',
+    whyItMatters:
+      'Understanding how staff assist with bathing, dressing, grooming, transfers, and nighttime reassurance gives families confidence in everyday safety.',
+    whatToListenFor:
+      'Clear, plain-language explanations of how staff respond to resident needs and how families are updated when care plans adjust.',
+  },
+  {
+    id: 'vq-suite-formats',
+    code: 'Q03',
+    theme: 'Suites & Personalization',
+    question:
+      'May we walk through available Private Suites, Companion Units, and Jack & Jill layouts to see the private bathrooms and lighting in person?',
+    whyItMatters:
+      'Seeing the physical scale, natural light, and bathroom layout helps you picture which suite format best matches your loved one’s personality.',
+    whatToListenFor:
+      'How companion matching is thoughtfully approached for shared suites and which apartment features (such as thermostat and emergency alert) apply.',
+  },
+  {
+    id: 'vq-personal-items',
+    code: 'Q04',
+    theme: 'Suites & Personalization',
+    question:
+      'What favorite furniture, framed family photographs, or familiar keepsakes do you recommend bringing to help the suite feel like home?',
+    whyItMatters:
+      'Familiar visual cues and textures provide immediate emotional grounding during the transition into a new environment.',
+    whatToListenFor:
+      'Practical guidance on arranging personal items safely and comfortably before your loved one arrives.',
+  },
+  {
+    id: 'vq-dining-experience',
+    code: 'Q05',
+    theme: 'Dining & Community Life',
+    question:
+      'How are chef-prepared meals served each day, and how do you accommodate personal food preferences or dietary needs?',
+    whyItMatters:
+      'Shared mealtimes are a daily anchor of warmth, nutrition, and social connection.',
+    whatToListenFor:
+      'Attentive table service, gentle mealtime cues, and flexibility for resident tastes and family dining visits.',
+  },
+  {
+    id: 'vq-activities-rhythm',
+    code: 'Q06',
+    theme: 'Dining & Community Life',
+    question:
+      'How does the Activity Director adapt daily games, music, art, gentle fitness, and courtyard time for different energy levels?',
+    whyItMatters:
+      'Meaningful engagement should feel inviting rather than overwhelming, offering both group camaraderie and quiet one-on-one moments.',
+    whatToListenFor:
+      'Examples of how staff gently invite participation while respecting when a resident prefers quiet rest in the lounge or patio.',
+  },
+  {
+    id: 'vq-cost-inclusions',
+    code: 'Q07',
+    theme: 'Cost, Assessment & Timing',
+    question:
+      'Following a care assessment, what services are included in the monthly rate versus billed as optional conveniences?',
+    whyItMatters:
+      'Separating core inclusions (suite, meals, 24-hour staff, housekeeping, laundry, activities) from optional services prevents surprises.',
+    whatToListenFor:
+      'A transparent walk-through of how care assessments, suite formats, and optional services (like salon/spa) are structured.',
+  },
+  {
+    id: 'vq-respite-availability',
+    code: 'Q08',
+    theme: 'Cost, Assessment & Timing',
+    question:
+      'If we are considering a short-term Respite Care stay or planning a move in the coming weeks, what are the steps and timeline?',
+    whyItMatters:
+      'Knowing the sequence from initial conversation and assessment to suite preparation helps families coordinate smoothly.',
+    whatToListenFor:
+      'Clear guidance on required documentation, assessment scheduling, and current suite availability at 995 East Market Street.',
+  },
+];
+
+export const FAMILY_INVOLVEMENT_CHAPTERS: FamilyInvolvementChapter[] = [
+  {
+    id: 'first-conversations',
+    stepNumber: 'Chapter 01',
+    kicker: 'Before the Transition',
+    title: 'Sharing Your Loved One’s Life Story & Daily Comforts',
+    subtitle: 'Beginning with listening, never a rushed checklist',
+    narrative:
+      'Long before move-in day or a short-term Respite stay, our team sits down with your family to learn who your loved one is. We talk about their lifelong routines, favorite foods, family history, and what brings them calm—laying the foundation for our Legacies™ Memory Care approach.',
+    practicalWaysToParticipate: [
+      'Share stories about your loved one’s career, hobbies, cultural traditions, and favorite music',
+      'Discuss familiar morning and evening habits so daily assistance feels natural and unhurried',
+      'Walk through available Private, Companion, or Jack & Jill suites together to choose the right setting',
+    ],
+    reassuranceNote:
+      'Your insights as spouse, son, daughter, or relative guide how our team connects with your loved one from day one.',
+    placeholderImage: {
+      src: 'https://images.unsplash.com/photo-1576765608535-5f04d1e3f289?auto=format&fit=crop&w=1400&q=85',
+      alt: 'Illustrative placeholder: Warm, unhurried conversation between family members and care staff',
+      caption: 'Every transition begins with listening closely to your family’s knowledge and stories',
+      status: 'ILLUSTRATIVE — REPLACE BEFORE LAUNCH',
+    },
+  },
+  {
+    id: 'personalizing-the-suite',
+    stepNumber: 'Chapter 02',
+    kicker: 'Creating a Familiar Sanctuary',
+    title: 'Personalizing the Suite With Treasured Touchpoints From Home',
+    subtitle: 'Making a Private or Companion suite feel recognizable right away',
+    narrative:
+      'Moving into a new space is gentler when a resident is surrounded by the things they love. Families are encouraged to bring framed photographs, a favorite quilt or armchair, and meaningful keepsakes so the suite feels personal and comforting from the very first afternoon.',
+    practicalWaysToParticipate: [
+      'Arrange family photo albums, labeled portraits, and familiar bedside items in the suite',
+      'Include favorite blankets, comfortable clothing, and sensory touchpoints that spark recognition',
+      'Set up the space ahead of arrival so your loved one walks into a warm, settled room',
+    ],
+    reassuranceNote:
+      'Whether in a Private Suite, Companion Unit, or Jack & Jill layout, personal touches honor identity and privacy.',
+    placeholderImage: {
+      src: 'https://images.unsplash.com/photo-1616594039964-ae9021a400a0?auto=format&fit=crop&w=1400&q=85',
+      alt: 'Illustrative placeholder: Sunlit residential suite personalized with warm bedding and home comforts',
+      caption: 'Personalizing suites with familiar photographs, bedding, and keepsakes from home',
+      status: 'ILLUSTRATIVE — REPLACE BEFORE LAUNCH',
+    },
+  },
+  {
+    id: 'staying-connected',
+    stepNumber: 'Chapter 03',
+    kicker: 'Everyday Family Visits',
+    title: 'Meaningful Visits in Our Lounges, Dining Room & Courtyard',
+    subtitle: 'Returning to being family while our team handles daily caregiving tasks',
+    narrative:
+      'When daily bathing, laundry, cooking, and 24-hour supervision are cared for by our staff, family visits transform. Instead of spending every visit exhausted by chores, you can enjoy a cup of coffee on the patio, join an afternoon activity, or reserve private family dining.',
+    practicalWaysToParticipate: [
+      'Visit comfortably in our communal sitting lounges, quiet library nook, or enclosed garden courtyard',
+      'Join your loved one for chef-prepared meals or inquire about private dining for family milestones',
+      'Participate in community music, art, and seasonal gatherings in Daly City',
+    ],
+    reassuranceNote:
+      'Conveniently located at 995 East Market Street in Daly City with on-site parking for visiting relatives.',
+    placeholderImage: {
+      src: 'https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=1400&q=85',
+      alt: 'Illustrative placeholder: Welcoming sunlit lounge and garden setting for family visits',
+      caption: 'Inviting indoor lounges and outdoor courtyard spaces designed for relaxed family time',
+      status: 'ILLUSTRATIVE — REPLACE BEFORE LAUNCH',
+    },
+  },
+  {
+    id: 'evolving-partnership',
+    stepNumber: 'Chapter 04',
+    kicker: 'Ongoing Communication',
+    title: 'Open Dialogue & Routine Care Plan Reviews Over Time',
+    subtitle: 'A transparent partnership as your loved one’s needs evolve',
+    narrative:
+      'Memory Care is an ongoing relationship between our staff and your family. Through approachable day-to-day communication and periodic routine assessments, we keep you informed about how your loved one is doing and collaborate closely whenever support needs change.',
+    practicalWaysToParticipate: [
+      'Stay in touch with our Daly City team by phone, email, or in-person conversations during visits',
+      'Review routine care assessments together as daily support or mobility needs change',
+      'Share feedback at any time on what is bringing your loved one comfort and joy',
+    ],
+    reassuranceNote:
+      'You never lose your voice in your loved one’s care—our team is here as your partner.',
+    placeholderImage: {
+      src: 'https://images.unsplash.com/photo-1585320806297-9794b3e4eeae?auto=format&fit=crop&w=1400&q=85',
+      alt: 'Illustrative placeholder: Peaceful garden greenery symbolizing ongoing care and family peace of mind',
+      caption: 'Continuous communication and collaborative assessments that support the whole family',
+      status: 'ILLUSTRATIVE — REPLACE BEFORE LAUNCH',
+    },
+  },
+];
+
+export const FAMILY_FAQ_CATEGORIES: FamilyFaqCategory[] = [
+  'All Topics',
+  'Care',
+  'Suites',
+  'Cost',
+  'Visits',
+];
+
+export const FOR_FAMILIES_FAQS: FamilyFaqItem[] = [
+  // CARE (3 items)
+  {
+    id: 'ff-faq-care-programs',
+    code: 'CARE 01',
+    category: 'Care',
+    question: 'What care programs does Mission Villa Senior Living offer in Daly City?',
+    answer:
+      'Mission Villa Senior Living specializes in two dedicated programs at 995 East Market Street in Daly City: full-time Memory Care (featuring our signature Legacies™ Memory Care program for seniors living with Alzheimer’s disease or other forms of dementia) and short-term Respite Care stays that support both seniors and family caregivers.',
+    relatedRouteHref: '/memory-care',
+    relatedRouteLabel: 'Explore Memory Care',
+  },
+  {
+    id: 'ff-faq-care-legacies',
+    code: 'CARE 02',
+    category: 'Care',
+    question: 'How does the Legacies™ Memory Care program support my loved one day to day?',
+    answer:
+      'Our Legacies™ Memory Care program centers on knowing the person behind the memory. By learning each resident’s life story, family relationships, and familiar routines, our 24-hour on-site staff provides respectful assistance with bathing, dressing, grooming, escorting, chef-prepared dining, and engaging daily activities that nurture dignity and belonging.',
+    relatedRouteHref: '/memory-care',
+    relatedRouteLabel: 'Read About Legacies™ Memory Care',
+  },
+  {
+    id: 'ff-faq-care-respite-vs-memory',
+    code: 'CARE 03',
+    category: 'Care',
+    question: 'How do families decide between a short-term Respite Care stay and full-time Memory Care?',
+    answer:
+      'Families often choose Respite Care when a primary caregiver needs temporary relief to rest, travel, or manage commitments, or when a loved one needs extra daily support for a few days to several weeks after an illness or rehabilitation. Full-time Memory Care is ideal when ongoing 24-hour staff support, predictable daily structure, and specialized dementia programming are needed long term. Some families also begin with a Respite stay as a gentle introduction to Mission Villa.',
+    relatedRouteHref: '/respite-care',
+    relatedRouteLabel: 'Explore Respite Care Stays',
+    confirmationNote: 'Confirm current Respite Care stay duration options and suite availability with our team.',
+  },
+
+  // SUITES (3 items)
+  {
+    id: 'ff-faq-suites-formats',
+    code: 'SUITES 01',
+    category: 'Suites',
+    question: 'What types of suites and floor-plan formats are available at Mission Villa?',
+    answer:
+      'Mission Villa offers both private suites and shared suites—including our Companion Unit and Jack & Jill floor-plan formats—each equipped with a private bathroom. During your visit in Daly City, our team will gladly show you available suite layouts so you can see the rooms and bathrooms in person.',
+    relatedRouteHref: '/suites-and-floor-plans',
+    relatedRouteLabel: 'View Suites & Floor Plans',
+  },
+  {
+    id: 'ff-faq-suites-companion-vs-private',
+    code: 'SUITES 02',
+    category: 'Suites',
+    question: 'How do we know whether a Private Suite, Companion Unit, or Jack & Jill format is best for our loved one?',
+    answer:
+      'A Private Suite offers a quiet individual sanctuary for residents who prefer solo downtime. A Companion Unit or Jack & Jill arrangement suits seniors who find comfort, reassurance, and camaraderie in sharing a homelike suite—while also offering families a more approachable monthly accommodation cost. All suite formats include private bathroom access and full community amenities.',
+    relatedRouteHref: '/suites-and-floor-plans',
+    relatedRouteLabel: 'Compare Suite Formats',
+  },
+  {
+    id: 'ff-faq-suites-personalize',
+    code: 'SUITES 03',
+    category: 'Suites',
+    question: 'Can our family personalize a suite with familiar photographs, bedding, and keepsakes?',
+    answer:
+      'Yes—we warmly encourage families to personalize suites with framed family photos, favorite quilts or armchairs, and meaningful keepsakes from home. Familiar surroundings help residents feel grounded, recognized, and comfortable right away. Routine housekeeping, personal laundry, and linen service are handled by our staff.',
+    relatedRouteHref: '/suites-and-floor-plans',
+    relatedRouteLabel: 'See Suite Personalization Guide',
+    confirmationNote: 'Ask our team during your tour about suite dimensions, furniture placement, and per-unit features.',
+  },
+
+  // COST (3 items)
+  {
+    id: 'ff-faq-cost-determination',
+    code: 'COST 01',
+    category: 'Cost',
+    question: 'How is monthly pricing determined, and why aren’t fixed rates or calculators shown online?',
+    answer:
+      'Because every resident’s daily support needs, care assessment, and suite preference (Private, Companion Unit, or Jack & Jill) are unique, automated online calculators or flat rate estimates can be misleading. Instead, our Daly City team provides clear, assessment-informed pricing tailored to your loved one after a personal conversation.',
+    relatedRouteHref: '/financial-planning',
+    relatedRouteLabel: 'Open Financial Planning & Paper Ledger',
+  },
+  {
+    id: 'ff-faq-cost-inclusions',
+    code: 'COST 02',
+    category: 'Cost',
+    question: 'What is typically included in monthly living compared with paying separate bills at home?',
+    answer:
+      'Monthly living at Mission Villa consolidates suite accommodation, utilities, three daily chef-prepared meals and snacks, 24-hour on-site staff availability, emergency alert features, housekeeping, personal laundry, and daily Legacies™ activities. On our Financial Planning page, you can use our blank Paper-Ledger Worksheet to compare these inclusions against your current household expenses.',
+    relatedRouteHref: '/financial-planning',
+    relatedRouteLabel: 'Use the Blank Paper-Ledger Worksheet',
+    confirmationNote: 'Confirm specific utility inclusions and optional fee-based services (such as salon/spa) on tour.',
+  },
+  {
+    id: 'ff-faq-cost-insurance-programs',
+    code: 'COST 03',
+    category: 'Cost',
+    question: 'Can families use Long-Term Care Insurance, referral credits, or state assistance programs?',
+    answer:
+      'Many families use Long-Term Care (LTC) insurance benefits to help pay for licensed RCFE Memory Care (#415601046) or Respite Care, and our team can assist with care documentation for your insurer. Because referral credits and state assistance participation mentioned on our historical website are subject to updates and specific eligibility rules, please reconfirm current availability directly with our team.',
+    relatedRouteHref: '/financial-planning',
+    relatedRouteLabel: 'Review Planning Pathways',
+    confirmationNote: 'CLIENT CONFIRMATION REQUIRED: Reconfirm current referral credit and state assistance terms with leadership.',
+  },
+
+  // VISITS (3 items)
+  {
+    id: 'ff-faq-visits-schedule',
+    code: 'VISITS 01',
+    category: 'Visits',
+    question: 'How can our family schedule a tour of Mission Villa in Daly City, and what happens during a visit?',
+    answer:
+      'You can call us directly at (650) 756-1995, email mktg.missionvilla@missionvillaseniorliving.com, or use the inquiry form on this page to request a visit at 995 East Market Street, Daly City, CA 94014. During your visit, we walk through our dining room, communal lounges, courtyard, and available suites, and take time to answer your family’s questions without pressure.',
+    relatedRouteHref: '#schedule-visit',
+    relatedRouteLabel: 'Schedule a Personal Visit ↓',
+  },
+  {
+    id: 'ff-faq-visits-family-involvement',
+    code: 'VISITS 02',
+    category: 'Visits',
+    question: 'How can family members visit and stay involved after a loved one moves in?',
+    answer:
+      'Family connection is central to life at Mission Villa. Relatives are welcomed to visit in our sunlit lounges, enclosed courtyard, and patio, join residents for meals or private family dining, participate in community events, and stay in close communication with our care team.',
+    relatedRouteHref: '/life-at-mission-villa',
+    relatedRouteLabel: 'Explore Life at Mission Villa',
+  },
+  {
+    id: 'ff-faq-visits-first-conversation',
+    code: 'VISITS 03',
+    category: 'Visits',
+    question: 'Should my loved one join us on our first tour, or should family members visit first?',
+    answer:
+      'Either approach is completely welcome. Many spouses or adult children choose to visit first so they can ask candid questions about care, suites, and financial planning at their own pace, and then return for a second visit—perhaps over lunch or an afternoon activity—with their loved one.',
+    relatedRouteHref: '#schedule-visit',
+    relatedRouteLabel: 'Plan Your First Conversation ↓',
+  },
+];
+
+export function filterVisitChecklistQuestions(
+  questions: VisitChecklistQuestion[],
+  theme: VisitQuestionTheme
+): VisitChecklistQuestion[] {
+  if (theme === 'All Themes') {
+    return questions;
+  }
+  return questions.filter((q) => q.theme === theme);
+}
+
+export function buildVisitQuestionsInquiryNote(
+  questions: VisitChecklistQuestion[],
+  selectedIds: string[],
+  activePathwayTitle?: string
+): string {
+  const selectedSet = new Set(selectedIds);
+  const chosen = questions.filter((q) => selectedSet.has(q.id));
+
+  const parts: string[] = [];
+  if (activePathwayTitle) {
+    parts.push(`Exploring pathway: ${activePathwayTitle}.`);
+  }
+
+  if (chosen.length === 0) {
+    parts.push('Would like to schedule a family visit and discuss questions about care, suites, and pricing.');
+    return parts.join(' ');
+  }
+
+  const previewList = chosen
+    .slice(0, 3)
+    .map((q) => `(${q.code}) ${q.question}`)
+    .join(' ');
+
+  parts.push(
+    `Bringing ${chosen.length} family visit question(s) to discuss on tour: ${previewList}${
+      chosen.length > 3 ? ` (+${chosen.length - 3} more)` : ''
+    }`
+  );
+  return parts.join(' ');
+}
+
+export function filterFamilyFaqs(
+  faqs: FamilyFaqItem[],
+  category: FamilyFaqCategory,
+  searchQuery: string
+): FamilyFaqItem[] {
+  const normalizedQuery = (searchQuery || '').trim().toLowerCase();
+
+  return faqs.filter((item) => {
+    const matchesCategory = category === 'All Topics' || item.category === category;
+    if (!matchesCategory) {
+      return false;
+    }
+    if (!normalizedQuery) {
+      return true;
+    }
+    const haystack = `${item.code} ${item.category} ${item.question} ${item.answer} ${
+      item.confirmationNote || ''
+    }`.toLowerCase();
+    return haystack.includes(normalizedQuery);
+  });
+}
+
+// ============================================================================
+// PAGE 10: CONTACT / SCHEDULE A VISIT (/contact) — SOURCE-GROUNDED DATA & LOGIC
+// ============================================================================
+// Grounded in https://missionvillaseniorliving.com/contact-us/ and §5 Page 10.
+// Do NOT request medical diagnoses or detailed health histories in this form.
+// Enforces local client-side validation and explicit "Demo only — no inquiry sent".
+
+export type ContactMethodPreference = 'Phone Call' | 'Email' | 'Either Phone or Email';
+
+export type PreferredContactWindow =
+  | 'Morning (9:00 AM – 12:00 PM)'
+  | 'Afternoon (12:00 PM – 4:00 PM)'
+  | 'Late Afternoon / Early Evening (4:00 PM – 6:00 PM)'
+  | 'Flexible / Any Convenient Time';
+
+export type ContactInquiryIntent =
+  | 'Schedule a Personal Visit'
+  | 'Request Pricing & Program Info'
+  | 'Request a Team Phone Call'
+  | 'Referral or Professional Introduction';
+
+export interface ContactPageInquiryInput {
+  fullName: string;
+  preferredContactMethod: ContactMethodPreference;
+  phone: string;
+  email: string;
+  careInterest: 'Memory Care (Legacies™ Program)' | 'Short-Term Respite Care' | 'Both / Exploring Options';
+  suitePreference: 'Private Suite' | 'Companion Unit (Shared)' | 'Jack & Jill Format' | 'Open / Compare on Tour';
+  inquiryIntent: ContactInquiryIntent;
+  preferredWindow: PreferredContactWindow;
+  preferredVisitTiming?: string;
+  message?: string;
+  referralNote?: string;
+  consentAccepted: boolean;
+}
+
+export interface ContactPageInquiryValidationResult {
+  valid: boolean;
+  errors: Partial<Record<keyof ContactPageInquiryInput, string>>;
+  sanitized?: ContactPageInquiryInput;
+}
+
+export function validateContactPageInquiry(
+  input: ContactPageInquiryInput
+): ContactPageInquiryValidationResult {
+  const errors: Partial<Record<keyof ContactPageInquiryInput, string>> = {};
+
+  const fullName = (input.fullName || '').trim();
+  const phone = (input.phone || '').trim();
+  const email = (input.email || '').trim();
+  const preferredVisitTiming = (input.preferredVisitTiming || '').trim();
+  const message = (input.message || '').trim();
+  const referralNote = (input.referralNote || '').trim();
+
+  if (fullName.length < 2) {
+    errors.fullName = 'Please enter your full name so our team knows how to address you.';
+  }
+
+  const digitsOnly = phone.replace(/\D/g, '');
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  const hasValidPhone = digitsOnly.length >= 10;
+  const hasValidEmail = emailRegex.test(email);
+
+  if (input.preferredContactMethod === 'Phone Call') {
+    if (!hasValidPhone) {
+      errors.phone = 'Please enter a valid 10-digit telephone number for a phone call.';
+    }
+    if (email.length > 0 && !hasValidEmail) {
+      errors.email = 'Please enter a valid email address or leave blank if preferring phone only.';
+    }
+  } else if (input.preferredContactMethod === 'Email') {
+    if (!hasValidEmail) {
+      errors.email = 'Please enter a valid email address so we can reply by email.';
+    }
+    if (phone.length > 0 && !hasValidPhone) {
+      errors.phone = 'Please enter a valid 10-digit phone number or leave blank if preferring email only.';
+    }
+  } else {
+    if (!hasValidPhone) {
+      errors.phone = 'Please enter a valid 10-digit phone number.';
+    }
+    if (!hasValidEmail) {
+      errors.email = 'Please enter a valid email address.';
+    }
+  }
+
+  const validCareInterests: ContactPageInquiryInput['careInterest'][] = [
+    'Memory Care (Legacies™ Program)',
+    'Short-Term Respite Care',
+    'Both / Exploring Options',
+  ];
+  if (!validCareInterests.includes(input.careInterest)) {
+    errors.careInterest = 'Please select the care program you are exploring.';
+  }
+
+  const validWindows: PreferredContactWindow[] = [
+    'Morning (9:00 AM – 12:00 PM)',
+    'Afternoon (12:00 PM – 4:00 PM)',
+    'Late Afternoon / Early Evening (4:00 PM – 6:00 PM)',
+    'Flexible / Any Convenient Time',
+  ];
+  if (!validWindows.includes(input.preferredWindow)) {
+    errors.preferredWindow = 'Please select a preferred contact window.';
+  }
+
+  if (!input.consentAccepted) {
+    errors.consentAccepted =
+      'Please acknowledge the contact and privacy consent note before previewing submission.';
+  }
+
+  if (Object.keys(errors).length > 0) {
+    return { valid: false, errors };
+  }
+
+  return {
+    valid: true,
+    errors: {},
+    sanitized: {
+      fullName,
+      preferredContactMethod: input.preferredContactMethod,
+      phone: phone || 'Not provided (Email preferred)',
+      email: email || 'Not provided (Phone preferred)',
+      careInterest: input.careInterest,
+      suitePreference: input.suitePreference,
+      inquiryIntent: input.inquiryIntent,
+      preferredWindow: input.preferredWindow,
+      preferredVisitTiming,
+      message,
+      referralNote,
+      consentAccepted: true,
+    },
+  };
+}
+
+export type ArrivalCorridorCategory =
+  | 'All Routes'
+  | 'Highway & Peninsula'
+  | 'San Francisco & Local Streets'
+  | 'BART & Public Transit'
+  | 'Parking & Accessibility';
+
+export interface ContactArrivalCorridor {
+  id: string;
+  code: string;
+  category: Exclude<ArrivalCorridorCategory, 'All Routes'>;
+  title: string;
+  subtitle: string;
+  routeSummary: string;
+  landmarksAndStreets: string[];
+  arrivalTip: string;
+}
+
+export const CONTACT_ARRIVAL_CORRIDORS: ContactArrivalCorridor[] = [
+  {
+    id: 'corridor-i280-peninsula',
+    code: 'ROUTE 01',
+    category: 'Highway & Peninsula',
+    title: 'Approaching From I-280 North or South (San Mateo County & Peninsula)',
+    subtitle: 'Direct freeway access from Burlingame, San Bruno, South San Francisco, and Colma',
+    routeSummary:
+      'Mission Villa Senior Living is located at 995 East Market Street in Daly City, just east of the I-280 corridor toward the residential foothills of San Bruno Mountain.',
+    landmarksAndStreets: [
+      'Connect via I-280 toward Mission Street / Junipero Serra Boulevard in Daly City',
+      'Head east along Market Street / East Market Street into the quiet residential neighborhood',
+      'Convenient regional access for relatives visiting from across the San Francisco Peninsula',
+    ],
+    arrivalTip:
+      'Call our front desk at 650-756-1995 if you would like live turn-by-turn landmarks before setting out.',
+  },
+  {
+    id: 'corridor-sf-mission',
+    code: 'ROUTE 02',
+    category: 'San Francisco & Local Streets',
+    title: 'Approaching From San Francisco, Excelsior, Glen Park & Sunset',
+    subtitle: 'Minutes south of the San Francisco county border along Mission Street or Geneva Avenue',
+    routeSummary:
+      'For families living in southern San Francisco neighborhoods, 995 East Market Street offers a straightforward neighborhood drive without needing to cross bridges or major toll corridors.',
+    landmarksAndStreets: [
+      'Travel south via Mission Street or San Jose Avenue into northern Daly City',
+      'Turn east onto Market Street / East Market Street toward San Bruno Mountain State & County Park',
+      'Situated in an established residential setting close to local dining and community parks',
+    ],
+    arrivalTip:
+      'Many San Francisco spouses and adult children find East Market Street easy to reach for regular afternoon or dining visits.',
+  },
+  {
+    id: 'corridor-bart-transit',
+    code: 'ROUTE 03',
+    category: 'BART & Public Transit',
+    title: 'BART & SamTrans Connections in Daly City',
+    subtitle: 'Public transit proximity via Daly City BART and Colma BART stations',
+    routeSummary:
+      'Visiting family members and friends arriving without a car can connect through the Daly City or Colma BART stations and local SamTrans bus routes serving Mission Street and East Market Street.',
+    landmarksAndStreets: [
+      'Short taxi, rideshare, or local bus connection from Daly City BART or Colma BART',
+      'Served by local SamTrans corridors along Mission Street in Daly City',
+      'Ask our concierge team for local transportation pointers when planning your visit',
+    ],
+    arrivalTip:
+      'When scheduling your visit, let our team know your arrival window so we are ready to greet you at the main entrance.',
+  },
+  {
+    id: 'corridor-parking-accessibility',
+    code: 'ACCESS 04',
+    category: 'Parking & Accessibility',
+    title: 'On-Site Visitor Parking & Accessible Community Entry',
+    subtitle: 'Thoughtful arrival experience for older adults, walkers, and wheelchairs',
+    routeSummary:
+      'Whether you are visiting solo for a first conversation or bringing an older loved one to see our dining room and suites, our community entrance is arranged for calm, unhurried arrival.',
+    landmarksAndStreets: [
+      'On-site parking available at 995 East Market Street (confirm specific visitor stall and drop-off instructions with our team)',
+      'Step-free, mobility-supportive entry pathways and residential common areas',
+      'Staff greeting at the front desk to assist with escorting or mobility devices',
+    ],
+    arrivalTip:
+      'If you are bringing a loved one who uses a walker or wheelchair, call 650-756-1995 upon arrival so a team member can meet you right at the entrance.',
+  },
+];
+
+export function filterContactArrivalCorridors(
+  corridors: ContactArrivalCorridor[],
+  category: ArrivalCorridorCategory
+): ContactArrivalCorridor[] {
+  if (category === 'All Routes') {
+    return corridors;
+  }
+  return corridors.filter((c) => c.category === category);
+}
+
+export interface PostSubmissionWorkflowStep {
+  id: string;
+  stepNumber: string;
+  timingBadge: string;
+  title: string;
+  subtitle: string;
+  whatHappensInProduction: string;
+  currentPrototypeBehavior: string;
+  familyReassurance: string;
+}
+
+export const POST_SUBMISSION_WORKFLOW_STEPS: PostSubmissionWorkflowStep[] = [
+  {
+    id: 'post-step-01-acknowledgment',
+    stepNumber: 'Step 01',
+    timingBadge: 'Immediate · Production Handoff',
+    title: 'Clear Inquiry Receipt & Direct Team Routing',
+    subtitle: 'Your request goes straight to our Daly City community desk—never a high-pressure call center',
+    whatHappensInProduction:
+      'Once backend integration is connected at launch, submitting the form securely delivers your contact preferences, care interest (Memory Care or Respite Care), and preferred time window directly to the Mission Villa team.',
+    currentPrototypeBehavior:
+      'In this frontend design prototype, clicking Submit validates your inputs locally in the browser and displays an explicit "Demo only — no inquiry sent" preview card without transmitting personal data.',
+    familyReassurance:
+      'Need to reach us today during the prototype phase? Call 650-756-1995 or email mktg.missionvilla@missionvillaseniorliving.com directly.',
+  },
+  {
+    id: 'post-step-02-listening-call',
+    stepNumber: 'Step 02',
+    timingBadge: 'In Your Preferred Contact Window',
+    title: 'An Unhurried First Conversation by Phone or Email',
+    subtitle: 'Listening to your family’s situation before suggesting next steps',
+    whatHappensInProduction:
+      'A Mission Villa team member reaches out during the contact window you selected (Morning, Afternoon, or Early Evening) using your preferred method to answer initial questions about Legacies™ Memory Care, short-term Respite Care, or suite formats.',
+    currentPrototypeBehavior:
+      'You can preview how preferred contact method and time window selections are captured in the guided inquiry form above.',
+    familyReassurance:
+      'There is never any obligation or sales pressure—only straightforward answers tailored to your timeline.',
+  },
+  {
+    id: 'post-step-03-personal-walkthrough',
+    stepNumber: 'Step 03',
+    timingBadge: 'At 995 East Market Street',
+    title: 'A Personal Visit & Guided Community Walkthrough',
+    subtitle: 'See our dining room, lounges, enclosed courtyard, and suites in person',
+    whatHappensInProduction:
+      'We confirm a convenient day and time for you (and your loved one, if you wish) to visit 995 East Market Street in Daly City, meet our 24-hour care staff, and compare Private, Companion Unit, and Jack & Jill suite layouts.',
+    currentPrototypeBehavior:
+      'Use the Guided Inquiry form’s "Preferred Visit Day or Timing" field to test how tour scheduling notes are structured.',
+    familyReassurance:
+      'Many spouses and adult children visit solo first to ask candid questions, then return with their loved one for a second visit.',
+  },
+  {
+    id: 'post-step-04-care-and-pricing-plan',
+    stepNumber: 'Step 04',
+    timingBadge: 'Personalized Follow-Up',
+    title: 'Assessment-Informed Care & Financial Planning Clarity',
+    subtitle: 'Written inclusions and care recommendations grounded in your loved one’s needs',
+    whatHappensInProduction:
+      'Following your conversation and walkthrough, our team outlines assessment-informed pricing, monthly inclusions, and—when moving forward—schedules a collaborative care assessment.',
+    currentPrototypeBehavior:
+      'Explore our interactive Paper-Ledger Worksheet on /financial-planning or bring questions from /for-families right into your visit.',
+    familyReassurance:
+      'Every step respects your family’s pace, privacy, and peace of mind.',
+  },
+];
+
+export interface ReferralInterestPathway {
+  id: 'family-friend-referral' | 'professional-care-referral';
+  badge: string;
+  title: string;
+  subtitle: string;
+  description: string;
+  highlights: string[];
+  verificationStatus: 'CLIENT CONFIRMATION REQUIRED';
+  verificationDisclosure: string;
+  presetInquiryNote: string;
+}
+
+export const CONTACT_REFERRAL_PATHWAYS: ReferralInterestPathway[] = [
+  {
+    id: 'family-friend-referral',
+    badge: 'Original Contact Page Topic · Family & Resident Referrals',
+    title: 'Referring a Friend or Relative to Mission Villa',
+    subtitle: 'Sharing a trusted Daly City Memory Care or Respite Care community with another family',
+    description:
+      'The original Mission Villa Contact Us and Financial Planning pages include a dedicated area for families and current community friends who wish to introduce another family exploring Memory Care or short-term Respite Care in Daly City.',
+    highlights: [
+      'Introduce a friend, neighbor, or relative who is searching for compassionate dementia or respite support',
+      'Our team reaches out with the same unhurried warmth, privacy, and respect',
+      'Legacy site materials mention a resident referral credit; specific eligibility and credit terms must be confirmed directly with Mission Villa leadership',
+    ],
+    verificationStatus: 'CLIENT CONFIRMATION REQUIRED',
+    verificationDisclosure:
+      'CLIENT CONFIRMATION REQUIRED: The historical Mission Villa website mentions a resident referral credit program. Please confirm current program status, dollar amounts, and eligibility terms with leadership before launch.',
+    presetInquiryNote:
+      'Referral Interest (Family / Friend Introduction): I would like to ask about introducing a family friend or relative to Mission Villa and confirm current referral program details.',
+  },
+  {
+    id: 'professional-care-referral',
+    badge: 'Community Partners · Senior Care Professionals',
+    title: 'Discharge Planners, Care Managers & Peninsula Senior Advisors',
+    subtitle: 'Coordinating Memory Care transitions or post-rehabilitation Respite Care stays',
+    description:
+      'Social workers, hospital discharge planners, geriatric care managers, and fiduciaries across San Mateo and San Francisco Counties can connect directly with our Daly City team regarding suite availability and care assessments.',
+    highlights: [
+      'Direct coordination for Legacies™ Memory Care or short-term Respite Care inquiries',
+      'Licensed California RCFE (#415601046) at 995 East Market Street, Daly City, CA 94014',
+      'Please do not transmit protected medical records or clinical diagnoses through the public website form; call 650-756-1995 to coordinate directly',
+    ],
+    verificationStatus: 'CLIENT CONFIRMATION REQUIRED',
+    verificationDisclosure:
+      'CLIENT CONFIRMATION REQUIRED: Confirm preferred professional referral intake contact protocol and whether secondary telephone (650) 534-2859 is active for partner inquiries.',
+    presetInquiryNote:
+      'Professional Referral / Care Coordination Inquiry: Reaching out to connect with the Mission Villa team regarding current Memory Care or Respite Care suite availability.',
+  },
+];
+
+export type ContactFaqCategory =
+  | 'All Questions'
+  | 'Scheduling & Visits'
+  | 'Directions & Accessibility'
+  | 'Contact & Phone Numbers'
+  | 'Privacy & Prototype Form';
+
+export interface ContactFaqItem {
+  id: string;
+  code: string;
+  category: Exclude<ContactFaqCategory, 'All Questions'>;
+  question: string;
+  answer: string;
+  confirmationNote?: string;
+}
+
+export const CONTACT_PAGE_FAQS: ContactFaqItem[] = [
+  {
+    id: 'contact-faq-schedule-tour',
+    code: 'VISIT 01',
+    category: 'Scheduling & Visits',
+    question: 'What is the fastest way to schedule a visit or speak with the Mission Villa team?',
+    answer:
+      'You can call our main community telephone directly at 650-756-1995, email mktg.missionvilla@missionvillaseniorliving.com, or use the Guided Inquiry & Visit Request form on this page (note: while this website is in its frontend design prototype stage, the form demonstrates validation locally—please call or email us directly for immediate assistance).',
+  },
+  {
+    id: 'contact-faq-what-to-expect-on-tour',
+    code: 'VISIT 02',
+    category: 'Scheduling & Visits',
+    question: 'What happens during an in-person visit at 995 East Market Street?',
+    answer:
+      'During a personal visit in Daly City, a member of our team will welcome you, listen to your family’s questions, and walk you through our dining room, communal lounges, enclosed courtyard/patio, and available Private, Companion Unit, or Jack & Jill suites. We can also discuss Legacies™ Memory Care, short-term Respite Care, and personalized pricing at your pace.',
+  },
+  {
+    id: 'contact-faq-parking-and-mobility',
+    code: 'ACCESS 01',
+    category: 'Directions & Accessibility',
+    question: 'Where is Mission Villa located, and is the entrance accessible for seniors with mobility needs?',
+    answer:
+      'Mission Villa Senior Living is located at 995 East Market Street, Daly City, CA 94014, near the San Bruno Mountain foothills with convenient access from I-280 and Mission Street. On-site parking is available, and our community features step-free, wheelchair- and walker-friendly pathways. If you are arriving with a loved one who needs escort or transfer assistance from the car, call 650-756-1995 when you pull up.',
+    confirmationNote:
+      'Confirm specific visitor parking stall locations and arrival gate/door buzz procedures when booking your tour.',
+  },
+  {
+    id: 'contact-faq-phone-numbers',
+    code: 'CONTACT 01',
+    category: 'Contact & Phone Numbers',
+    question: 'Which telephone number and email address should families use to reach Mission Villa?',
+    answer:
+      'Please use our primary verified telephone number, 650-756-1995, and our marketing email, mktg.missionvilla@missionvillaseniorliving.com, for all family inquiries, tour requests, and general questions. (Note: While the legacy Contact page also displayed a secondary number, (650) 534-2859, 650-756-1995 is the primary verified community line across Mission Villa.)',
+    confirmationNote:
+      'CLIENT CONFIRMATION REQUIRED: Confirm whether secondary number (650) 534-2859 from the legacy Contact page remains active for specific inquiries or should be retired.',
+  },
+  {
+    id: 'contact-faq-no-medical-history',
+    code: 'PRIVACY 01',
+    category: 'Privacy & Prototype Form',
+    question: 'Should I include my loved one’s medical diagnoses or health records in the online contact form?',
+    answer:
+      'No. For your family’s privacy and security, please do not enter medical diagnoses, medication lists, or detailed health histories into the website inquiry form. You only need to share your contact details, whether you are exploring Memory Care or Respite Care, and when you would like to talk. Personal care needs are discussed privately with our team during your consultation and routine assessment.',
+  },
+  {
+    id: 'contact-faq-digital-accessibility',
+    code: 'ACCESS 02',
+    category: 'Directions & Accessibility',
+    question: 'What digital accessibility features are built into this website for older adults and relatives?',
+    answer:
+      'Every page includes a "Text Comfort" reading scale selector (A, A+, A++) in the top utility bar, high-contrast editorial typography, keyboard-navigable menus and accordions, visible focus rings, and support for reduced-motion preferences. If you need assistance accessing any information on our site, please call us at 650-756-1995.',
+  },
+];
+
+export function filterContactFaqs(
+  faqs: ContactFaqItem[],
+  category: ContactFaqCategory,
+  searchQuery: string
+): ContactFaqItem[] {
+  const normalizedQuery = (searchQuery || '').trim().toLowerCase();
+
+  return faqs.filter((item) => {
+    const matchesCategory = category === 'All Questions' || item.category === category;
+    if (!matchesCategory) {
+      return false;
+    }
+    if (!normalizedQuery) {
+      return true;
+    }
+    const haystack = `${item.code} ${item.category} ${item.question} ${item.answer} ${
+      item.confirmationNote || ''
+    }`.toLowerCase();
+    return haystack.includes(normalizedQuery);
+  });
+}
+
+
+
 

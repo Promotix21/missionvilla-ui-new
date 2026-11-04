@@ -39,6 +39,9 @@ export default function HeaderAndUtilityBar({
   const isSuitesAndFloorPlans = pathname === '/suites-and-floor-plans';
   const isGallery = pathname === '/gallery';
   const isAbout = pathname === '/about';
+  const isFinancialPlanning = pathname === '/financial-planning';
+  const isForFamilies = pathname === '/for-families';
+  const isContact = pathname === '/contact';
 
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [livingDropdownOpen, setLivingDropdownOpen] = useState(false);
@@ -234,7 +237,7 @@ export default function HeaderAndUtilityBar({
           {/* Zone 2: Center Editorial Navigation Links */}
           <nav
             aria-label="Primary Navigation"
-            className="hidden xl:flex items-center gap-3 text-xs font-medium text-[#29272B]"
+            className="hidden xl:flex items-center gap-2.5 text-xs font-medium text-[#29272B]"
           >
             <Link
               href="/"
@@ -260,7 +263,11 @@ export default function HeaderAndUtilityBar({
                 aria-haspopup="true"
                 onClick={() => setLivingDropdownOpen((prev) => !prev)}
                 className={`inline-flex items-center gap-1 py-1.5 transition-colors whitespace-nowrap shrink-0 cursor-pointer relative after:content-[''] after:absolute after:left-0 after:bottom-0.5 after:h-[1.5px] after:bg-[#C98268] after:transition-all ${
-                  isMemoryCare || isRespiteCare || isSuitesAndFloorPlans
+                  isMemoryCare ||
+                  isRespiteCare ||
+                  isSuitesAndFloorPlans ||
+                  isFinancialPlanning ||
+                  isForFamilies
                     ? 'text-[#3B2348] font-semibold after:w-full'
                     : 'hover:text-[#3B2348] after:w-0 hover:after:w-full'
                 }`}
@@ -355,6 +362,56 @@ export default function HeaderAndUtilityBar({
                       </div>
                       <ArrowUpRight className="w-4 h-4 shrink-0 mt-0.5" aria-hidden="true" />
                     </Link>
+
+                    <Link
+                      href="/financial-planning"
+                      role="menuitem"
+                      onClick={() => setLivingDropdownOpen(false)}
+                      className={`flex items-start justify-between gap-2 p-3 rounded-xl transition ${
+                        isFinancialPlanning
+                          ? 'bg-[#3B2348] text-[#F7F4ED]'
+                          : 'hover:bg-[#D8C7A5]/35 text-[#3B2348]'
+                      }`}
+                    >
+                      <div>
+                        <span className="font-serif text-sm font-semibold block">
+                          Financial Planning
+                        </span>
+                        <span
+                          className={`text-[11px] block mt-0.5 ${
+                            isFinancialPlanning ? 'text-[#D8C7A5]' : 'text-[#29272B]/75'
+                          }`}
+                        >
+                          Cost factors, inclusions &amp; paper-ledger worksheet
+                        </span>
+                      </div>
+                      <ArrowUpRight className="w-4 h-4 shrink-0 mt-0.5" aria-hidden="true" />
+                    </Link>
+
+                    <Link
+                      href="/for-families"
+                      role="menuitem"
+                      onClick={() => setLivingDropdownOpen(false)}
+                      className={`flex items-start justify-between gap-2 p-3 rounded-xl transition ${
+                        isForFamilies
+                          ? 'bg-[#3B2348] text-[#F7F4ED]'
+                          : 'hover:bg-[#D8C7A5]/35 text-[#3B2348]'
+                      }`}
+                    >
+                      <div>
+                        <span className="font-serif text-sm font-semibold block">
+                          For Families &amp; FAQs
+                        </span>
+                        <span
+                          className={`text-[11px] block mt-0.5 ${
+                            isForFamilies ? 'text-[#D8C7A5]' : 'text-[#29272B]/75'
+                          }`}
+                        >
+                          Decision guide, visit questions &amp; grouped FAQs
+                        </span>
+                      </div>
+                      <ArrowUpRight className="w-4 h-4 shrink-0 mt-0.5" aria-hidden="true" />
+                    </Link>
                   </div>
                 </div>
               )}
@@ -382,18 +439,6 @@ export default function HeaderAndUtilityBar({
               }`}
             >
               Respite Care
-            </Link>
-
-            <Link
-              href="/suites-and-floor-plans"
-              aria-current={isSuitesAndFloorPlans ? 'page' : undefined}
-              className={`py-1.5 transition-colors whitespace-nowrap shrink-0 relative after:content-[''] after:absolute after:left-0 after:bottom-0.5 after:h-[1.5px] after:bg-[#C98268] after:transition-all ${
-                isSuitesAndFloorPlans
-                  ? 'text-[#3B2348] font-semibold after:w-full'
-                  : 'hover:text-[#3B2348] after:w-0 hover:after:w-full'
-              }`}
-            >
-              Suites &amp; Floor Plans
             </Link>
 
             {/* Accessible Life at Mission Villa Dropdown */}
@@ -510,18 +555,6 @@ export default function HeaderAndUtilityBar({
             </div>
 
             <Link
-              href="/gallery"
-              aria-current={isGallery ? 'page' : undefined}
-              className={`py-1.5 transition-colors whitespace-nowrap shrink-0 relative after:content-[''] after:absolute after:left-0 after:bottom-0.5 after:h-[1.5px] after:bg-[#C98268] after:transition-all ${
-                isGallery
-                  ? 'text-[#3B2348] font-semibold after:w-full'
-                  : 'hover:text-[#3B2348] after:w-0 hover:after:w-full'
-              }`}
-            >
-              Gallery
-            </Link>
-
-            <Link
               href="/about"
               aria-current={isAbout ? 'page' : undefined}
               className={`py-1.5 transition-colors whitespace-nowrap shrink-0 relative after:content-[''] after:absolute after:left-0 after:bottom-0.5 after:h-[1.5px] after:bg-[#C98268] after:transition-all ${
@@ -533,31 +566,41 @@ export default function HeaderAndUtilityBar({
               About Us
             </Link>
 
-            <button
-              type="button"
-              onClick={() =>
-                handleNavClick(
-                  isMemoryCare
-                    ? 'family-questions'
-                    : isRespiteCare
-                    ? 'respite-faqs'
-                    : isLifeAtMissionVilla
-                    ? 'chapter-family-connection'
-                    : isServicesAndAmenities
-                    ? 'ask-us-about'
-                    : isSuitesAndFloorPlans
-                    ? 'what-to-expect-in-a-suite'
-                    : isGallery
-                    ? 'virtual-tour'
-                    : isAbout
-                    ? 'daly-city-geography'
-                    : 'family-reassurance'
-                )
-              }
-              className="hover:text-[#3B2348] py-1.5 transition-colors whitespace-nowrap shrink-0 cursor-pointer relative after:content-[''] after:absolute after:left-0 after:bottom-0.5 after:w-0 after:h-[1.5px] after:bg-[#C98268] hover:after:w-full after:transition-all"
+            <Link
+              href="/financial-planning"
+              aria-current={isFinancialPlanning ? 'page' : undefined}
+              className={`py-1.5 transition-colors whitespace-nowrap shrink-0 relative after:content-[''] after:absolute after:left-0 after:bottom-0.5 after:h-[1.5px] after:bg-[#C98268] after:transition-all ${
+                isFinancialPlanning
+                  ? 'text-[#3B2348] font-semibold after:w-full'
+                  : 'hover:text-[#3B2348] after:w-0 hover:after:w-full'
+              }`}
             >
-              For Families
-            </button>
+              Financial Planning
+            </Link>
+
+            <Link
+              href="/for-families"
+              aria-current={isForFamilies ? 'page' : undefined}
+              className={`py-1.5 transition-colors whitespace-nowrap shrink-0 relative after:content-[''] after:absolute after:left-0 after:bottom-0.5 after:h-[1.5px] after:bg-[#C98268] after:transition-all ${
+                isForFamilies
+                  ? 'text-[#3B2348] font-semibold after:w-full'
+                  : 'hover:text-[#3B2348] after:w-0 hover:after:w-full'
+              }`}
+            >
+              For Families &amp; FAQs
+            </Link>
+
+            <Link
+              href="/contact"
+              aria-current={isContact ? 'page' : undefined}
+              className={`py-1.5 transition-colors whitespace-nowrap shrink-0 relative after:content-[''] after:absolute after:left-0 after:bottom-0.5 after:h-[1.5px] after:bg-[#C98268] after:transition-all ${
+                isContact
+                  ? 'text-[#3B2348] font-semibold after:w-full'
+                  : 'hover:text-[#3B2348] after:w-0 hover:after:w-full'
+              }`}
+            >
+              Contact
+            </Link>
           </nav>
 
           {/* Zone 3: Right Conversion CTA */}
@@ -711,6 +754,48 @@ export default function HeaderAndUtilityBar({
                   Page 07
                 </span>
               </Link>
+              <Link
+                href="/financial-planning"
+                onClick={() => setMobileMenuOpen(false)}
+                className={`text-left px-3 py-2 rounded-xl text-base font-serif font-medium transition flex items-center justify-between ${
+                  isFinancialPlanning
+                    ? 'bg-[#3B2348] text-[#F7F4ED]'
+                    : 'text-[#3B2348] hover:bg-[#D8C7A5]/35'
+                }`}
+              >
+                <span>Financial Planning (Paper-Ledger Guide)</span>
+                <span className="text-xs font-sans uppercase tracking-wider opacity-80">
+                  Page 08
+                </span>
+              </Link>
+              <Link
+                href="/for-families"
+                onClick={() => setMobileMenuOpen(false)}
+                className={`text-left px-3 py-2 rounded-xl text-base font-serif font-medium transition flex items-center justify-between ${
+                  isForFamilies
+                    ? 'bg-[#3B2348] text-[#F7F4ED]'
+                    : 'text-[#3B2348] hover:bg-[#D8C7A5]/35'
+                }`}
+              >
+                <span>For Families &amp; FAQs (Decision Guide)</span>
+                <span className="text-xs font-sans uppercase tracking-wider opacity-80">
+                  Page 09
+                </span>
+              </Link>
+              <Link
+                href="/contact"
+                onClick={() => setMobileMenuOpen(false)}
+                className={`text-left px-3 py-2 rounded-xl text-base font-serif font-medium transition flex items-center justify-between ${
+                  isContact
+                    ? 'bg-[#3B2348] text-[#F7F4ED]'
+                    : 'text-[#3B2348] hover:bg-[#D8C7A5]/35'
+                }`}
+              >
+                <span>Contact &amp; Schedule a Visit</span>
+                <span className="text-xs font-sans uppercase tracking-wider opacity-80">
+                  Page 10
+                </span>
+              </Link>
               <button
                 type="button"
                 onClick={() =>
@@ -729,6 +814,12 @@ export default function HeaderAndUtilityBar({
                       ? 'editorial-masonry-gallery'
                       : isAbout
                       ? 'care-philosophy-narrative'
+                      : isFinancialPlanning
+                      ? 'paper-ledger-worksheet'
+                      : isForFamilies
+                      ? 'family-decision-guide'
+                      : isContact
+                      ? 'map-and-directions'
                       : 'our-approach'
                   )
                 }
@@ -748,6 +839,12 @@ export default function HeaderAndUtilityBar({
                   ? 'Category Masonry Gallery'
                   : isAbout
                   ? 'Our Care Philosophy'
+                  : isFinancialPlanning
+                  ? 'Interactive Paper-Ledger Worksheet'
+                  : isForFamilies
+                  ? 'Memory Care vs. Respite Decision Guide'
+                  : isContact
+                  ? 'Grounded Map & Peninsula Directions'
                   : 'Our Approach'}
               </button>
               <button
@@ -768,6 +865,12 @@ export default function HeaderAndUtilityBar({
                       ? 'virtual-tour'
                       : isAbout
                       ? 'daly-city-geography'
+                      : isFinancialPlanning
+                      ? 'financial-faqs'
+                      : isForFamilies
+                      ? 'grouped-family-faqs'
+                      : isContact
+                      ? 'what-happens-next'
                       : 'family-reassurance'
                   )
                 }
@@ -781,6 +884,12 @@ export default function HeaderAndUtilityBar({
                   ? 'Virtual Tour & Walkthrough Stage'
                   : isAbout
                   ? 'Daly City & San Bruno Mountain Location'
+                  : isFinancialPlanning
+                  ? 'Financial Planning FAQs & Ways to Plan'
+                  : isForFamilies
+                  ? 'Grouped FAQs (Care, Suites, Cost, Visits)'
+                  : isContact
+                  ? 'What Happens After Submitting & FAQs'
                   : 'For Families & Connection'}
               </button>
             </nav>

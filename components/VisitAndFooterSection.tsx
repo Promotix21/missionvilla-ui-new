@@ -22,6 +22,7 @@ interface VisitAndFooterSectionProps {
   presetCareOption?: 'Memory Care' | 'Respite Care' | null;
   presetSuitePreference?: VisitInquiryInput['suitePreference'];
   prefilledNotes?: string;
+  hideVisitSection?: boolean;
   onNavigateToSection: (sectionId: string, presetCare?: 'Memory Care' | 'Respite Care') => void;
 }
 
@@ -29,6 +30,7 @@ export default function VisitAndFooterSection({
   presetCareOption,
   presetSuitePreference,
   prefilledNotes,
+  hideVisitSection = false,
   onNavigateToSection,
 }: VisitAndFooterSectionProps) {
   const [formState, setFormState] = useState<VisitInquiryInput>({
@@ -93,6 +95,7 @@ export default function VisitAndFooterSection({
       {/* =====================================================================
           SECTION 8: PRACTICAL NEXT STEP / SCHEDULE A VISIT & GET PRICING
       ====================================================================== */}
+      {!hideVisitSection && (
       <section
         id="schedule-visit"
         className="w-full py-20 lg:py-28 fluid-canvas bg-[#3B2348] text-[#F7F4ED] relative overflow-hidden"
@@ -493,6 +496,7 @@ export default function VisitAndFooterSection({
           </div>
         </div>
       </section>
+      )}
 
       {/* =====================================================================
           SECTION 9: COMPLETE ARCHITECTURAL FOOTER
@@ -677,13 +681,28 @@ export default function VisitAndFooterSection({
                   </Link>
                 </li>
                 <li>
-                  <button
-                    type="button"
-                    onClick={() => onNavigateToSection('schedule-visit')}
-                    className="hover:text-[#D8C7A5] transition cursor-pointer"
+                  <Link
+                    href="/financial-planning"
+                    className="hover:text-[#D8C7A5] transition inline-block"
                   >
-                    Schedule a Visit
-                  </button>
+                    Financial Planning
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href="/for-families"
+                    className="hover:text-[#D8C7A5] transition inline-block"
+                  >
+                    For Families &amp; FAQs
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href="/contact"
+                    className="hover:text-[#D8C7A5] transition inline-block"
+                  >
+                    Contact &amp; Schedule a Visit
+                  </Link>
                 </li>
               </ul>
             </div>

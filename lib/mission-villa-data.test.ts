@@ -40,7 +40,33 @@ import {
   ABOUT_TEAM_ROLES_OVERVIEW,
   ABOUT_PET_POLICY_NOTE,
   filterGeographyLandmarks,
+  FINANCIAL_COST_FACTORS,
+  FINANCIAL_INCLUSION_GROUPS,
+  FINANCIAL_INCLUSION_ITEMS,
+  PAPER_LEDGER_COMPARISON_ROWS,
+  FINANCIAL_PLANNING_PATHWAYS,
+  FINANCIAL_PLANNING_FAQS,
+  filterFinancialInclusions,
+  parseBlankLedgerAmount,
+  summarizePaperLedger,
+  FAMILY_DECISION_PATHWAYS,
+  CARE_VS_RESPITE_COMPARISON,
+  VISIT_QUESTION_THEMES,
+  VISIT_CHECKLIST_QUESTIONS,
+  FAMILY_INVOLVEMENT_CHAPTERS,
+  FAMILY_FAQ_CATEGORIES,
+  FOR_FAMILIES_FAQS,
+  filterVisitChecklistQuestions,
+  buildVisitQuestionsInquiryNote,
+  filterFamilyFaqs,
   validateVisitInquiry,
+  CONTACT_ARRIVAL_CORRIDORS,
+  POST_SUBMISSION_WORKFLOW_STEPS,
+  CONTACT_REFERRAL_PATHWAYS,
+  CONTACT_PAGE_FAQS,
+  validateContactPageInquiry,
+  filterContactArrivalCorridors,
+  filterContactFaqs,
 } from './mission-villa-data';
 
 test('MISSION_VILLA_FACTS preserves verified business identity and contact details', () => {
@@ -98,15 +124,26 @@ test('Content collections contain no fabricated statistics or unverified claims'
     ABOUT_CORE_VALUES,
     ABOUT_TEAM_ROLES_OVERVIEW,
     ABOUT_PET_POLICY_NOTE,
+    FINANCIAL_COST_FACTORS,
+    FINANCIAL_INCLUSION_ITEMS,
+    PAPER_LEDGER_COMPARISON_ROWS,
+    FINANCIAL_PLANNING_PATHWAYS,
+    FINANCIAL_PLANNING_FAQS,
+    CONTACT_ARRIVAL_CORRIDORS,
+    POST_SUBMISSION_WORKFLOW_STEPS,
+    CONTACT_REFERRAL_PATHWAYS,
+    CONTACT_PAGE_FAQS,
   });
 
   // Ensure no invented star ratings, fake review counts, fake pricing, or fabricated sq. ft.
   assert.equal(serialized.includes('4.9/5'), false);
   assert.equal(serialized.includes('$5,'), false);
+  assert.equal(serialized.includes('$6,'), false);
   assert.equal(serialized.includes('staff-to-resident ratio of 1:'), false);
   assert.equal(serialized.includes('460 sq'), false);
   assert.equal(serialized.includes('680 sq'), false);
   assert.equal(serialized.includes('940 sq'), false);
+  assert.equal(serialized.toLowerCase().includes('no hidden fees'), false);
 });
 
 test('Memory Care page data includes 3 storyboard scenes, 3 suite formats, and 7 FAQs', () => {
@@ -320,6 +357,62 @@ test('About Us page data covers 4 philosophy chapters, Daly City / San Bruno Mou
   );
 });
 
+test('Financial Planning page data enforces blank ledger fields, zero pre-filled numbers, and reconfirmation flags', () => {
+  assert.equal(FINANCIAL_COST_FACTORS.length, 4);
+  assert.equal(FINANCIAL_INCLUSION_GROUPS.length, 6);
+  assert.equal(FINANCIAL_INCLUSION_ITEMS.length, 10);
+  assert.equal(PAPER_LEDGER_COMPARISON_ROWS.length, 8);
+  assert.equal(FINANCIAL_PLANNING_PATHWAYS.length, 4);
+  assert.equal(FINANCIAL_PLANNING_FAQS.length, 6);
+
+  // Every paper-ledger row MUST have an empty string defaultMonthlyInput
+  for (const row of PAPER_LEDGER_COMPARISON_ROWS) {
+    assert.equal(row.defaultMonthlyInput, '');
+  }
+
+  // Verify legacy referral credit & state assistance pathway is marked CLIENT CONFIRMATION REQUIRED
+  const legacyPathway = FINANCIAL_PLANNING_PATHWAYS.find(
+    (p) => p.id === 'legacy-site-referral-and-state-programs'
+  );
+  assert.ok(legacyPathway);
+  assert.equal(legacyPathway.verificationStatus, 'CLIENT CONFIRMATION REQUIRED');
+
+  // Verify inclusion filtering
+  assert.equal(
+    filterFinancialInclusions(FINANCIAL_INCLUSION_ITEMS, 'All Categories').length,
+    10
+  );
+  assert.equal(
+    filterFinancialInclusions(FINANCIAL_INCLUSION_ITEMS, 'Chef-Prepared Dining').length,
+    1
+  );
+
+  // Verify blank ledger amount parsing and summary calculation
+  assert.equal(parseBlankLedgerAmount(''), null);
+  assert.equal(parseBlankLedgerAmount('   '), null);
+  assert.equal(parseBlankLedgerAmount('abc'), null);
+  assert.equal(parseBlankLedgerAmount('-100'), null);
+  assert.equal(parseBlankLedgerAmount('$1,850.50'), 1850.5);
+
+  const emptySummary = summarizePaperLedger(PAPER_LEDGER_COMPARISON_ROWS, [], {});
+  assert.equal(emptySummary.checkedCount, 0);
+  assert.equal(emptySummary.enteredAmountCount, 0);
+  assert.equal(emptySummary.familyEnteredHomeTotal, null);
+
+  const populatedSummary = summarizePaperLedger(
+    PAPER_LEDGER_COMPARISON_ROWS,
+    ['ledger-housing-property', 'ledger-groceries-dining'],
+    {
+      'ledger-housing-property': '2400',
+      'ledger-groceries-dining': '650',
+    }
+  );
+  assert.equal(populatedSummary.checkedCount, 2);
+  assert.equal(populatedSummary.enteredAmountCount, 2);
+  assert.equal(populatedSummary.familyEnteredHomeTotal, 3050);
+  assert.ok(populatedSummary.inquiryNoteSummary.includes('$3,050/mo'));
+});
+
 test('validateVisitInquiry rejects incomplete inputs and sanitizes valid submissions', () => {
   const invalidResult = validateVisitInquiry({
     fullName: 'A',
@@ -349,5 +442,125 @@ test('validateVisitInquiry rejects incomplete inputs and sanitizes valid submiss
   assert.equal(validResult.sanitized?.careInterest, 'Respite Care');
   assert.equal(validResult.sanitized?.notes, 'Looking to tour next week');
 });
+
+test('Page 09 For Families / FAQs data and pure helper functions obey guardrails', () => {
+  assert.equal(FAMILY_DECISION_PATHWAYS.length, 4);
+  assert.equal(CARE_VS_RESPITE_COMPARISON.length, 5);
+  assert.equal(VISIT_QUESTION_THEMES.length, 5);
+  assert.equal(VISIT_CHECKLIST_QUESTIONS.length, 8);
+  assert.equal(FAMILY_INVOLVEMENT_CHAPTERS.length, 4);
+  assert.deepEqual(FAMILY_FAQ_CATEGORIES, ['All Topics', 'Care', 'Suites', 'Cost', 'Visits']);
+  assert.equal(FOR_FAMILIES_FAQS.length, 12);
+
+  // Verify all 4 FAQ groups have items
+  for (const cat of ['Care', 'Suites', 'Cost', 'Visits'] as const) {
+    const items = filterFamilyFaqs(FOR_FAMILIES_FAQS, cat, '');
+    assert.equal(items.length, 3, `Expected 3 FAQs in ${cat} category`);
+  }
+
+  // Verify FAQ search filtering works
+  const legaciesFaqs = filterFamilyFaqs(FOR_FAMILIES_FAQS, 'All Topics', 'Legacies');
+  assert.ok(legaciesFaqs.length >= 2);
+  const costLegacies = filterFamilyFaqs(FOR_FAMILIES_FAQS, 'Cost', 'Legacies');
+  assert.equal(costLegacies.length, 1);
+
+  // Verify visit checklist filtering & inquiry note builder
+  const suiteQuestions = filterVisitChecklistQuestions(
+    VISIT_CHECKLIST_QUESTIONS,
+    'Suites & Personalization'
+  );
+  assert.equal(suiteQuestions.length, 2);
+
+  const noteWithQuestions = buildVisitQuestionsInquiryNote(
+    VISIT_CHECKLIST_QUESTIONS,
+    ['vq-legacies-story', 'vq-suite-formats'],
+    'When Daily Routines & Memory Changes Call for Steady Community Support'
+  );
+  assert.ok(noteWithQuestions.includes('Bringing 2 family visit question(s)'));
+  assert.ok(noteWithQuestions.includes('(Q01)'));
+  assert.ok(noteWithQuestions.includes('(Q03)'));
+
+  // Verify all chapter images are explicitly marked ILLUSTRATIVE — REPLACE BEFORE LAUNCH
+  for (const ch of FAMILY_INVOLVEMENT_CHAPTERS) {
+    assert.equal(ch.placeholderImage.status, 'ILLUSTRATIVE — REPLACE BEFORE LAUNCH');
+  }
+});
+
+test('Page 10 Contact / Schedule a Visit data and pure validation/filtering helpers obey guardrails', () => {
+  assert.equal(CONTACT_ARRIVAL_CORRIDORS.length, 4);
+  assert.equal(POST_SUBMISSION_WORKFLOW_STEPS.length, 4);
+  assert.equal(CONTACT_REFERRAL_PATHWAYS.length, 2);
+  assert.equal(CONTACT_PAGE_FAQS.length, 6);
+
+  // Verify referral pathways carry CLIENT CONFIRMATION REQUIRED
+  for (const pathway of CONTACT_REFERRAL_PATHWAYS) {
+    assert.equal(pathway.verificationStatus, 'CLIENT CONFIRMATION REQUIRED');
+  }
+
+  // Verify corridor filtering
+  assert.equal(
+    filterContactArrivalCorridors(CONTACT_ARRIVAL_CORRIDORS, 'All Routes').length,
+    4
+  );
+  assert.equal(
+    filterContactArrivalCorridors(CONTACT_ARRIVAL_CORRIDORS, 'Highway & Peninsula').length,
+    1
+  );
+  assert.equal(
+    filterContactArrivalCorridors(CONTACT_ARRIVAL_CORRIDORS, 'Parking & Accessibility').length,
+    1
+  );
+
+  // Verify FAQ filtering
+  assert.equal(filterContactFaqs(CONTACT_PAGE_FAQS, 'All Questions', '').length, 6);
+  assert.equal(
+    filterContactFaqs(CONTACT_PAGE_FAQS, 'Directions & Accessibility', '').length,
+    2
+  );
+  assert.equal(
+    filterContactFaqs(CONTACT_PAGE_FAQS, 'All Questions', 'medical diagnoses').length,
+    1
+  );
+
+  // Verify validateContactPageInquiry rejects missing fields and unaccepted consent
+  const invalidInquiry = validateContactPageInquiry({
+    fullName: '',
+    preferredContactMethod: 'Either Phone or Email',
+    phone: '123',
+    email: 'not-an-email',
+    careInterest: 'Memory Care (Legacies™ Program)',
+    suitePreference: 'Private Suite',
+    inquiryIntent: 'Schedule a Personal Visit',
+    preferredWindow: 'Morning (9:00 AM – 12:00 PM)',
+    consentAccepted: false,
+  });
+  assert.equal(invalidInquiry.valid, false);
+  assert.ok(invalidInquiry.errors.fullName);
+  assert.ok(invalidInquiry.errors.phone);
+  assert.ok(invalidInquiry.errors.email);
+  assert.ok(invalidInquiry.errors.consentAccepted);
+
+  // Verify Phone-only preference allows blank email when phone is valid
+  const validPhoneOnly = validateContactPageInquiry({
+    fullName: '  David Chen ',
+    preferredContactMethod: 'Phone Call',
+    phone: '650-555-0144',
+    email: '',
+    careInterest: 'Short-Term Respite Care',
+    suitePreference: 'Companion Unit (Shared)',
+    inquiryIntent: 'Schedule a Personal Visit',
+    preferredWindow: 'Afternoon (12:00 PM – 4:00 PM)',
+    preferredVisitTiming: ' Thursday afternoon ',
+    message: ' Looking to tour with my sister. ',
+    consentAccepted: true,
+  });
+  assert.equal(validPhoneOnly.valid, true);
+  assert.equal(validPhoneOnly.sanitized?.fullName, 'David Chen');
+  assert.equal(validPhoneOnly.sanitized?.email, 'Not provided (Phone preferred)');
+  assert.equal(validPhoneOnly.sanitized?.preferredVisitTiming, 'Thursday afternoon');
+  assert.equal(validPhoneOnly.sanitized?.message, 'Looking to tour with my sister.');
+});
+
+
 
 
