@@ -1028,6 +1028,13 @@ export default function LifeAtMissionVillaPage() {
                   <span>Tour Our Spaces in Person</span>
                   <ArrowUpRight className="w-4 h-4" aria-hidden="true" />
                 </button>
+                <Link
+                  href="/gallery"
+                  className="px-5 py-3 rounded-full border border-[#D8C7A5]/45 text-[#D8C7A5] hover:bg-[#D8C7A5] hover:text-[#3B2348] text-xs sm:text-sm font-semibold transition-colors inline-flex items-center gap-2"
+                >
+                  <span>Open Full Gallery &amp; Virtual Tour</span>
+                  <ArrowUpRight className="w-4 h-4" aria-hidden="true" />
+                </Link>
               </div>
             </div>
           </div>

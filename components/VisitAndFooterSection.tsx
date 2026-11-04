@@ -20,12 +20,14 @@ import {
 
 interface VisitAndFooterSectionProps {
   presetCareOption?: 'Memory Care' | 'Respite Care' | null;
+  presetSuitePreference?: VisitInquiryInput['suitePreference'];
   prefilledNotes?: string;
   onNavigateToSection: (sectionId: string, presetCare?: 'Memory Care' | 'Respite Care') => void;
 }
 
 export default function VisitAndFooterSection({
   presetCareOption,
+  presetSuitePreference,
   prefilledNotes,
   onNavigateToSection,
 }: VisitAndFooterSectionProps) {
@@ -34,7 +36,7 @@ export default function VisitAndFooterSection({
     phone: '',
     email: '',
     careInterest: presetCareOption || 'Memory Care',
-    suitePreference: 'Private Suite',
+    suitePreference: presetSuitePreference || 'Private Suite',
     inquiryType: 'Schedule a Visit',
     notes: prefilledNotes || '',
   });
@@ -51,6 +53,15 @@ export default function VisitAndFooterSection({
       }));
     }
   }, [presetCareOption]);
+
+  useEffect(() => {
+    if (presetSuitePreference) {
+      setFormState((prev) => ({
+        ...prev,
+        suitePreference: presetSuitePreference,
+      }));
+    }
+  }, [presetSuitePreference]);
 
   useEffect(() => {
     if (typeof prefilledNotes === 'string' && prefilledNotes.trim().length > 0) {
@@ -569,13 +580,12 @@ export default function VisitAndFooterSection({
                   </Link>
                 </li>
                 <li>
-                  <button
-                    type="button"
-                    onClick={() => onNavigateToSection('suites-preview')}
-                    className="hover:text-[#D8C7A5] transition text-left cursor-pointer"
+                  <Link
+                    href="/suites-and-floor-plans"
+                    className="hover:text-[#D8C7A5] transition text-left inline-block"
                   >
                     Private &amp; Shared Suites with Private Bathrooms
-                  </button>
+                  </Link>
                 </li>
                 <li>
                   <Link
@@ -640,6 +650,30 @@ export default function VisitAndFooterSection({
                     className="hover:text-[#D8C7A5] transition inline-block"
                   >
                     Services &amp; Amenities
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href="/suites-and-floor-plans"
+                    className="hover:text-[#D8C7A5] transition inline-block"
+                  >
+                    Suites &amp; Floor Plans
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href="/gallery"
+                    className="hover:text-[#D8C7A5] transition inline-block"
+                  >
+                    Gallery &amp; Virtual Tour
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href="/about"
+                    className="hover:text-[#D8C7A5] transition inline-block"
+                  >
+                    About Us
                   </Link>
                 </li>
                 <li>

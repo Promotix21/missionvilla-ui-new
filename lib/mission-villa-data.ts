@@ -2504,3 +2504,1499 @@ export function filterServicesAndAmenities(
     return haystack.includes(normalizedQuery);
   });
 }
+
+// ============================================================================
+// PAGE 05: SUITES & FLOOR PLANS (/suites-and-floor-plans) DATA & PURE HELPERS
+// Strictly follows Blueprint §5 Page 05:
+// - Verified facts: Private and shared suites with private bathrooms;
+//   Named floor-plan formats: Companion Unit and Jack & Jill (plus Private Suite);
+//   Original-site apartment features: thermostat, utilities, housekeeping,
+//   laundry, emergency alert (flagged for per-unit confirmation).
+// - Strict Rule: Never generate fake architectural drawings or invent sq. ft.,
+//   room types, or vacancies. Show `Awaiting official floor plan` where assets
+//   are not yet provided.
+// ============================================================================
+
+export type SuiteGalleryFilterCategory =
+  | 'All Accommodations'
+  | 'Private Suites'
+  | 'Shared & Companion'
+  | 'Private Bathrooms & Comfort';
+
+export interface SuiteAccommodationGalleryPlate {
+  id: string;
+  plateNumber: string;
+  category: Exclude<SuiteGalleryFilterCategory, 'All Accommodations'>;
+  suiteFormatTag: string;
+  title: string;
+  subtitle: string;
+  storyCaption: string;
+  spatialHighlights: string[];
+  colSpan: string;
+  aspectClass: string;
+  placeholderImage: {
+    src: string;
+    alt: string;
+    caption: string;
+    status: 'ILLUSTRATIVE — REPLACE BEFORE LAUNCH';
+  };
+}
+
+export interface OfficialFloorPlanFormatSpec {
+  id: 'companion-unit' | 'jack-and-jill' | 'private-suite';
+  code: string;
+  name: string;
+  sourceClassification: 'Original-Site Named Floor Plan' | 'Original-Site Verified Suite Option';
+  occupancyLabel: string;
+  bathroomConfiguration: string;
+  diagramAssetStatus: 'Awaiting official floor plan';
+  officialDiagramPath: null;
+  editorialOverview: string;
+  whoThisFormatServes: string;
+  spatialArrangementNotes: string[];
+  includedSuiteSupport: string[];
+  tourInspectionQuestions: string[];
+  inquirySuitePreset: VisitInquiryInput['suitePreference'];
+  inquiryNotePreset: string;
+  placeholderPreviewImage: {
+    src: string;
+    alt: string;
+    status: 'ILLUSTRATIVE — REPLACE BEFORE LAUNCH';
+  };
+}
+
+export interface SuiteExpectationSpecItem {
+  id: string;
+  code: string;
+  featureName: string;
+  category: 'Bathroom & Privacy' | 'In-Suite Comfort' | 'Daily Housekeeping & Care' | 'Safety & Reassurance';
+  verificationBadge: 'Verified Original-Site Feature' | 'Confirm Per-Unit Detail on Tour';
+  summary: string;
+  howItWorksForResidents: string;
+  clientConfirmationNote: string;
+}
+
+export interface SuitePersonalizationTouchpoint {
+  id: string;
+  number: string;
+  label: string;
+  title: string;
+  description: string;
+  familyExamples: string[];
+  legaciesConnection: string;
+}
+
+export interface RelatedCommunitySpaceCard {
+  id: string;
+  code: string;
+  spaceName: string;
+  atmosphereTag: string;
+  description: string;
+  connectionToSuiteLife: string;
+  destinationHref: string;
+  destinationLabel: string;
+  placeholderImage: {
+    src: string;
+    alt: string;
+    status: 'ILLUSTRATIVE — REPLACE BEFORE LAUNCH';
+  };
+}
+
+export const SUITE_ACCOMMODATION_GALLERY_PLATES: SuiteAccommodationGalleryPlate[] = [
+  {
+    id: 'suite-plate-private-sanctuary',
+    plateNumber: 'Plate I',
+    category: 'Private Suites',
+    suiteFormatTag: 'Private Suite with Private Bathroom',
+    title: 'Quiet Personal Sanctuary Filled with Natural Daylight',
+    subtitle: 'Restful Private Suite Living',
+    storyCaption:
+      'Private suites at Mission Villa offer older adults a calm, sunlit personal retreat where familiar furnishings, favorite blankets, and framed family photographs create an immediate sense of ownership and peace.',
+    spatialHighlights: [
+      'Dedicated sleeping and sitting area for unhurried personal downtime',
+      'Attached private bathroom for comfort and dignity day and night',
+      'Clear, uncluttered pathways thoughtfully arranged for ease of movement',
+    ],
+    colSpan: 'lg:col-span-7',
+    aspectClass: 'min-h-[360px] sm:min-h-[440px]',
+    placeholderImage: {
+      src: 'https://images.unsplash.com/photo-1598928506311-c55ded91a20c?auto=format&fit=crop&w=1400&q=85',
+      alt: 'Warm sunlit private senior suite bedroom with comfortable armchair and soft neutral bedding',
+      caption: 'Illustrative private suite bedroom — replace with authentic Mission Villa suite photography before launch',
+      status: 'ILLUSTRATIVE — REPLACE BEFORE LAUNCH',
+    },
+  },
+  {
+    id: 'suite-plate-companion-living',
+    plateNumber: 'Plate II',
+    category: 'Shared & Companion',
+    suiteFormatTag: 'Companion Unit & Jack & Jill Formats',
+    title: 'Shared Fellowship with Thoughtful Personal Space',
+    subtitle: 'Companion Unit & Jack & Jill Options',
+    storyCaption:
+      'For residents who find comfort in daily companionship—or families seeking a shared accommodation—our Companion Unit and Jack & Jill formats balance social warmth with defined personal sleeping areas and a private bathroom.',
+    spatialHighlights: [
+      'Named original-site floor plan formats: Companion Unit and Jack & Jill',
+      'Ideal for older adults who feel more at ease with a nearby suite companion',
+      'Individual space for personal keepsakes, photographs, and bedside comforts',
+    ],
+    colSpan: 'lg:col-span-5',
+    aspectClass: 'min-h-[360px] sm:min-h-[440px]',
+    placeholderImage: {
+      src: 'https://images.unsplash.com/photo-1595526114035-0d45ed16cfbf?auto=format&fit=crop&w=1200&q=85',
+      alt: 'Welcoming shared companion suite sitting area with warm natural light',
+      caption: 'Illustrative companion suite view — replace with authentic Mission Villa Companion Unit photography before launch',
+      status: 'ILLUSTRATIVE — REPLACE BEFORE LAUNCH',
+    },
+  },
+  {
+    id: 'suite-plate-reading-corner',
+    plateNumber: 'Plate III',
+    category: 'Private Suites',
+    suiteFormatTag: 'Personal Sitting & Reading Corner',
+    title: 'A Comfortable Chair for Family Visits & Quiet Afternoons',
+    subtitle: 'Homelike Scale & Familiar Objects',
+    storyCaption:
+      'Whether sharing afternoon tea with a visiting daughter or listening to favorite music before dinner, suites are arranged to welcome unhurried one-on-one conversation.',
+    spatialHighlights: [
+      'Room for a favorite reading chair, side table, or memory shadowbox',
+      'Housekeeping and personal laundry handled by our team so visits stay focused on family',
+      'Supported by 24-hour on-site staff and emergency alert reassurance',
+    ],
+    colSpan: 'lg:col-span-5',
+    aspectClass: 'min-h-[340px] sm:min-h-[400px]',
+    placeholderImage: {
+      src: 'https://images.unsplash.com/photo-1586023492125-27b2c045efd7?auto=format&fit=crop&w=1200&q=85',
+      alt: 'Warm armchair and side table by a sunny window in a homelike suite',
+      caption: 'Illustrative suite sitting corner — replace with authentic Mission Villa interior photography before launch',
+      status: 'ILLUSTRATIVE — REPLACE BEFORE LAUNCH',
+    },
+  },
+  {
+    id: 'suite-plate-private-bath-comfort',
+    plateNumber: 'Plate IV',
+    category: 'Private Bathrooms & Comfort',
+    suiteFormatTag: 'Private Bathroom & Daily Ease',
+    title: 'Private Bathrooms & Thoughtful Everyday Details',
+    subtitle: 'Dignity in Daily Routines',
+    storyCaption:
+      'Every private and shared suite at Mission Villa includes a private bathroom, supporting dignified morning and evening routines with attentive personal care assistance whenever needed.',
+    spatialHighlights: [
+      'Private bathroom access in both private and shared suite formats',
+      'Individual thermostat comfort control and included utilities (confirm per unit on tour)',
+      'Routine housekeeping and linen care included in daily life',
+    ],
+    colSpan: 'lg:col-span-7',
+    aspectClass: 'min-h-[340px] sm:min-h-[400px]',
+    placeholderImage: {
+      src: 'https://images.unsplash.com/photo-1616594039964-ae9021a400a0?auto=format&fit=crop&w=1400&q=85',
+      alt: 'Clean, calmly lit suite interior and dressing area designed for senior comfort',
+      caption: 'Illustrative suite interior — replace with authentic Mission Villa suite bathroom and dressing area photography before launch',
+      status: 'ILLUSTRATIVE — REPLACE BEFORE LAUNCH',
+    },
+  },
+];
+
+export const OFFICIAL_FLOOR_PLAN_FORMATS: OfficialFloorPlanFormatSpec[] = [
+  {
+    id: 'companion-unit',
+    code: 'FORMAT 01 · NAMED FLOOR PLAN',
+    name: 'Companion Unit',
+    sourceClassification: 'Original-Site Named Floor Plan',
+    occupancyLabel: 'Shared Companion Accommodation',
+    bathroomConfiguration: 'Includes Private Bathroom',
+    diagramAssetStatus: 'Awaiting official floor plan',
+    officialDiagramPath: null,
+    editorialOverview:
+      'Named on the original Mission Villa floor-plans page, the Companion Unit is designed for older adults who thrive on daily camaraderie and reassuring proximity while enjoying their own personal bed and keepsake area.',
+    whoThisFormatServes:
+      'Seniors in Memory Care or short-term Respite Care who feel comforted by companionship and families exploring a warm, socially connected shared suite option.',
+    spatialArrangementNotes: [
+      'Defined sleeping and personal furniture zones for each resident within a welcoming shared suite',
+      'Direct access to an attached private bathroom shared only within the suite',
+      'Easy step-out access to Mission Villa’s dining room, activity lounges, and enclosed courtyard',
+    ],
+    includedSuiteSupport: [
+      '24-hour on-site staff presence and individualized care support',
+      'Regular housekeeping, linen refreshes, and personal laundry service',
+      'Utilities, thermostat comfort control, and emergency alert features (confirm per unit on tour)',
+    ],
+    tourInspectionQuestions: [
+      'How does your team thoughtfully match suite companions based on daily routines and personality?',
+      'May we walk through an actual Companion Unit during our visit to 995 East Market Street?',
+    ],
+    inquirySuitePreset: 'Shared Suite',
+    inquiryNotePreset:
+      'Interested in viewing the Companion Unit format in person and confirming current availability and pricing.',
+    placeholderPreviewImage: {
+      src: 'https://images.unsplash.com/photo-1595526114035-0d45ed16cfbf?auto=format&fit=crop&w=1200&q=85',
+      alt: 'Illustrative preview of a welcoming shared companion suite at Mission Villa',
+      status: 'ILLUSTRATIVE — REPLACE BEFORE LAUNCH',
+    },
+  },
+  {
+    id: 'jack-and-jill',
+    code: 'FORMAT 02 · NAMED FLOOR PLAN',
+    name: 'Jack & Jill Suite',
+    sourceClassification: 'Original-Site Named Floor Plan',
+    occupancyLabel: 'Dual-Space Shared Bath Format',
+    bathroomConfiguration: 'Connecting Private Bathroom',
+    diagramAssetStatus: 'Awaiting official floor plan',
+    officialDiagramPath: null,
+    editorialOverview:
+      'Also featured by name on the original Mission Villa floor-plans page, the Jack & Jill format pairs distinct personal sleeping areas with a conveniently positioned connecting private bathroom—offering a thoughtful balance of individual retreat and shared convenience.',
+    whoThisFormatServes:
+      'Older adults who appreciate greater visual privacy around their sleeping space while sharing a connecting private bathroom with a suite neighbor or spouse.',
+    spatialArrangementNotes: [
+      'Individual sleeping alcoves or adjoining rooms connected by a shared private bathroom',
+      'Allows each resident to personalize their own wall space, bedding, and bedside table',
+      'Designed for calm orientation and supportive caregiver assistance day and night',
+    ],
+    includedSuiteSupport: [
+      '24-hour on-site staff support and routine care assessments',
+      'Full housekeeping, bed-making, and personal laundry care',
+      'Utilities, thermostat comfort control, and emergency alert features (confirm per unit on tour)',
+    ],
+    tourInspectionQuestions: [
+      'How is the connecting bathroom arranged between the two sleeping areas in the Jack & Jill format?',
+      'Are Jack & Jill suites available for both full-time Memory Care and short-term Respite stays?',
+    ],
+    inquirySuitePreset: 'Shared Suite',
+    inquiryNotePreset:
+      'Interested in seeing the Jack & Jill suite format and learning about current availability and rates.',
+    placeholderPreviewImage: {
+      src: 'https://images.unsplash.com/photo-1616594039964-ae9021a400a0?auto=format&fit=crop&w=1200&q=85',
+      alt: 'Illustrative preview of a Jack & Jill suite arrangement with personal sleeping space',
+      status: 'ILLUSTRATIVE — REPLACE BEFORE LAUNCH',
+    },
+  },
+  {
+    id: 'private-suite',
+    code: 'FORMAT 03 · VERIFIED SUITE OPTION',
+    name: 'Private Suite with Private Bathroom',
+    sourceClassification: 'Original-Site Verified Suite Option',
+    occupancyLabel: 'Single-Occupancy Private Suite',
+    bathroomConfiguration: 'En-Suite Private Bathroom',
+    diagramAssetStatus: 'Awaiting official floor plan',
+    officialDiagramPath: null,
+    editorialOverview:
+      'For older adults who prefer an individual living space—or whose daily routine calls for a quiet personal sanctuary—Mission Villa offers private suites complete with an en-suite private bathroom.',
+    whoThisFormatServes:
+      'Residents in our Legacies™ Memory Care program or short-term Respite Care guests who benefit most from a tranquil, single-occupancy environment.',
+    spatialArrangementNotes: [
+      'Dedicated private sleeping and sitting area tailored to a single resident',
+      'En-suite private bathroom for complete personal privacy and unhurried care assistance',
+      'Ample room for familiar personal touches, framed family photos, and favorite keepsakes',
+    ],
+    includedSuiteSupport: [
+      '24-hour on-site staff presence and personalized Legacies™ Memory Care or Respite support',
+      'Routine housekeeping, fresh linens, and personal laundry service',
+      'Utilities, thermostat comfort control, and emergency alert features (confirm per unit on tour)',
+    ],
+    tourInspectionQuestions: [
+      'Which private suites are currently open or upcoming at 995 East Market Street?',
+      'What furniture is provided by Mission Villa vs. brought from home for a private suite?',
+    ],
+    inquirySuitePreset: 'Private Suite',
+    inquiryNotePreset:
+      'Interested in touring a Private Suite with Private Bathroom and reviewing current pricing.',
+    placeholderPreviewImage: {
+      src: 'https://images.unsplash.com/photo-1598928506311-c55ded91a20c?auto=format&fit=crop&w=1200&q=85',
+      alt: 'Illustrative preview of a private single-occupancy suite at Mission Villa',
+      status: 'ILLUSTRATIVE — REPLACE BEFORE LAUNCH',
+    },
+  },
+];
+
+export const SUITE_WHAT_TO_EXPECT_SPECS: SuiteExpectationSpecItem[] = [
+  {
+    id: 'spec-private-bathrooms',
+    code: 'SUITE-01',
+    featureName: 'Private Bathrooms in Private & Shared Suites',
+    category: 'Bathroom & Privacy',
+    verificationBadge: 'Verified Original-Site Feature',
+    summary:
+      'Both private suites and shared companion formats at Mission Villa include a private bathroom inside the accommodation rather than corridor-style communal facilities.',
+    howItWorksForResidents:
+      'Supports personal dignity, familiar morning and bedtime routines, and calm one-on-one caregiver assistance whenever needed.',
+    clientConfirmationNote:
+      'Verified across original Mission Villa homepage and care descriptions. Confirm exact shower/bath configuration per unit during your tour.',
+  },
+  {
+    id: 'spec-thermostat-comfort',
+    code: 'SUITE-02',
+    featureName: 'Individual Thermostat & Climate Comfort',
+    category: 'In-Suite Comfort',
+    verificationBadge: 'Confirm Per-Unit Detail on Tour',
+    summary:
+      'Original Mission Villa apartment descriptions note thermostat climate control so suites stay warm and comfortable across Daly City’s coastal seasons.',
+    howItWorksForResidents:
+      'Older adults often have personal warmth preferences; adjustable room comfort helps residents sleep soundly and relax comfortably during the day.',
+    clientConfirmationNote:
+      'Listed on original site apartment features — confirm individual thermostat control per specific suite format (Companion, Jack & Jill, Private) on tour.',
+  },
+  {
+    id: 'spec-utilities-included',
+    code: 'SUITE-03',
+    featureName: 'Everyday Utilities Included',
+    category: 'In-Suite Comfort',
+    verificationBadge: 'Confirm Per-Unit Detail on Tour',
+    summary:
+      'Original Mission Villa apartment features reference included everyday utilities so families do not have to manage separate household utility bills.',
+    howItWorksForResidents:
+      'Simplifies monthly planning for families while ensuring consistent lighting, water, and heating comfort.',
+    clientConfirmationNote:
+      'Listed on original site apartment features — confirm exact utility inclusions (and Wi-Fi reach inside suites vs. common spaces) with the community team.',
+  },
+  {
+    id: 'spec-housekeeping-laundry',
+    code: 'SUITE-04',
+    featureName: 'Routine Housekeeping & Personal Laundry',
+    category: 'Daily Housekeeping & Care',
+    verificationBadge: 'Verified Original-Site Feature',
+    summary:
+      'Dedicated housekeeping and personal laundry services keep each resident’s suite tidy, fresh, and welcoming week after week.',
+    howItWorksForResidents:
+      'Frees residents and visiting family members from household chores so time together is spent enjoying conversation, meals, or a walk in the courtyard.',
+    clientConfirmationNote:
+      'Verified in original-site services and apartment features. Confirm weekly housekeeping schedule and garment-labeling guidelines prior to move-in.',
+  },
+  {
+    id: 'spec-emergency-alert-staff',
+    code: 'SUITE-05',
+    featureName: 'Emergency Alert Features & 24-Hour Staff Presence',
+    category: 'Safety & Reassurance',
+    verificationBadge: 'Confirm Per-Unit Detail on Tour',
+    summary:
+      'Original Mission Villa apartment descriptions highlight emergency alert capability alongside 24-hour on-site staff presence and routine assessments.',
+    howItWorksForResidents:
+      'Provides quiet day-and-night reassurance for both residents and family members that attentive help is always close at hand.',
+    clientConfirmationNote:
+      'Original-site apartment feature — confirm specific call-system hardware and nighttime check-in protocols per suite during your visit.',
+  },
+  {
+    id: 'spec-furnishings-keepsakes',
+    code: 'SUITE-06',
+    featureName: 'Ready for Familiar Furnishings & Personal Keepsakes',
+    category: 'In-Suite Comfort',
+    verificationBadge: 'Verified Original-Site Feature',
+    summary:
+      'Suites are designed to feel like a true personal home—welcoming framed photographs, cherished quilts, and familiar comfort items.',
+    howItWorksForResidents:
+      'Especially in Memory Care, recognizable personal belongings anchor orientation, spark life-story conversations, and ease the transition into community life.',
+    clientConfirmationNote:
+      'Ask our team during your tour which baseline furniture pieces are provided for Memory Care vs. furnished short-term Respite Care stays.',
+  },
+];
+
+export const SUITE_PERSONALIZATION_TOUCHPOINTS: SuitePersonalizationTouchpoint[] = [
+  {
+    id: 'touchpoint-familiar-objects',
+    number: '01',
+    label: 'Visual Recognition & Comfort',
+    title: 'Surrounding Your Loved One with Familiar Treasures',
+    description:
+      'Moving into a new space feels far gentler when the first things your loved one sees each morning are their own favorite quilt, a familiar bedside lamp, and framed family portraits.',
+    familyExamples: [
+      'A favorite throw blanket, quilt, or decorative pillows from home',
+      'Framed family photographs labeled with warm reminders of names and occasions',
+      'A cherished armchair or small side table (scaled to keep walkways clear)',
+    ],
+    legaciesConnection:
+      'In our Legacies™ Memory Care program, familiar visual landmarks help residents recognize their room with confidence and pride.',
+  },
+  {
+    id: 'touchpoint-life-story-cues',
+    number: '02',
+    label: 'Identity & Conversation',
+    title: 'Honoring Career, Hobbies & Cultural Heritage',
+    description:
+      'A suite is also how our care team and fellow residents get to know the remarkable person who lives there—their lifelong profession, musical tastes, faith, or creative passions.',
+    familyExamples: [
+      'Keepsakes reflecting a career in teaching, nursing, craftsmanship, or service',
+      'Books, gentle audio players with favorite songs, or art prints they have always loved',
+      'Seasonal cards and drawings from grandchildren displayed at eye level',
+    ],
+    legaciesConnection:
+      'Our team uses these personal touchpoints during daily care and social visits to spark meaningful, dignified conversation.',
+  },
+  {
+    id: 'touchpoint-calm-orientation',
+    number: '03',
+    label: 'Safe, Uncluttered Navigation',
+    title: 'Arranging the Suite for Calm Day-and-Night Ease',
+    description:
+      'Before move-in, our Daly City team partners with your family to arrange personal items thoughtfully—ensuring clear sightlines to the private bathroom and effortless mobility.',
+    familyExamples: [
+      'Clear, well-lit pathways between the bed, sitting area, and private bathroom',
+      'Everyday clothing organized simply so morning dressing feels calm and unhurried',
+      'Coordinated setup whether arriving for full-time Memory Care or a short-term Respite stay',
+    ],
+    legaciesConnection:
+      'Thoughtful room setup reduces visual overwhelm and supports both independence and safe caregiver assistance.',
+  },
+];
+
+export const RELATED_COMMUNITY_SPACES_FROM_SUITES: RelatedCommunitySpaceCard[] = [
+  {
+    id: 'related-space-dining',
+    code: 'STEPS FROM YOUR SUITE · 01',
+    spaceName: 'Restaurant-Style Dining Room & Private Family Dining',
+    atmosphereTag: 'Nourishment & Gathering',
+    description:
+      'Just down the hall from resident suites, our welcoming dining room serves chef-prepared meals with full-table service, dietary options, and a private dining room for family celebrations.',
+    connectionToSuiteLife:
+      'Encourages residents to step out of their suite three times a day for warm hospitality, conversation, and shared meals.',
+    destinationHref: '/life-at-mission-villa',
+    destinationLabel: 'Explore Dining & Daily Culture',
+    placeholderImage: {
+      src: 'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=1000&q=80',
+      alt: 'Warmly set senior living dining room tables with natural daylight',
+      status: 'ILLUSTRATIVE — REPLACE BEFORE LAUNCH',
+    },
+  },
+  {
+    id: 'related-space-lounges-library',
+    code: 'STEPS FROM YOUR SUITE · 02',
+    spaceName: 'Fireside Living Room, Library & Salon/Spa',
+    atmosphereTag: 'Indoor Comfort & Leisure',
+    description:
+      'Inviting indoor common areas—including social lounges, a quiet library nook, and an on-site salon/spa—act as natural extensions of each resident’s private or companion suite.',
+    connectionToSuiteLife:
+      'Offers cozy places to read, enjoy live entertainment, or visit with family without ever leaving the comfort of the building.',
+    destinationHref: '/services-and-amenities',
+    destinationLabel: 'View All Community Amenities',
+    placeholderImage: {
+      src: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1000&q=80',
+      alt: 'Sunlit community living room and library lounge with comfortable seating',
+      status: 'ILLUSTRATIVE — REPLACE BEFORE LAUNCH',
+    },
+  },
+  {
+    id: 'related-space-courtyard-patio',
+    code: 'STEPS FROM YOUR SUITE · 03',
+    spaceName: 'Enclosed Courtyard, Outdoor Patio & Garden Paths',
+    atmosphereTag: 'Fresh Air & Sunshine',
+    description:
+      'Our enclosed courtyard and outdoor patio offer calm, secure places to enjoy Daly City’s coastal air, tend to garden planters, or sit peacefully in the afternoon sun.',
+    connectionToSuiteLife:
+      'Gives residents and visiting relatives a serene outdoor sanctuary just moments from their suite.',
+    destinationHref: '/memory-care',
+    destinationLabel: 'Explore Our Memory Care Environment',
+    placeholderImage: {
+      src: 'https://images.unsplash.com/photo-1585320806297-9794b3e4eeae?auto=format&fit=crop&w=1000&q=80',
+      alt: 'Peaceful enclosed garden courtyard with benches and greenery',
+      status: 'ILLUSTRATIVE — REPLACE BEFORE LAUNCH',
+    },
+  },
+];
+
+export function filterSuiteGalleryPlates(
+  plates: SuiteAccommodationGalleryPlate[],
+  category: SuiteGalleryFilterCategory
+): SuiteAccommodationGalleryPlate[] {
+  if (!category || category === 'All Accommodations') {
+    return plates;
+  }
+  return plates.filter((plate) => plate.category === category);
+}
+
+// ============================================================================
+// PAGE 06: GALLERY & VIRTUAL TOUR (/gallery) DATA & PURE HELPERS
+// Strictly follows Blueprint §5 Page 06:
+// - Purpose: Proof through authentic visuals.
+// - Source: https://missionvillaseniorliving.com/gallery/
+// - Categories: Rooms, Dining, Common Areas, Outdoor Spaces, Activities
+// - Visual signature: sophisticated full-width editorial masonry / alternating
+//   aspect ratios, photo-caption system, keyboard-accessible lightbox, and
+//   dedicated virtual-tour stage.
+// - Guardrail: All current preview photography is explicitly labeled
+//   `ILLUSTRATIVE — REPLACE BEFORE LAUNCH` and never captioned as verified
+//   photographs of the actual building until official client photos are supplied.
+// ============================================================================
+
+export type GalleryCategory =
+  | 'Rooms'
+  | 'Dining'
+  | 'Common Areas'
+  | 'Outdoor Spaces'
+  | 'Activities';
+
+export type GalleryFilterCategory = 'All' | GalleryCategory;
+
+export type GalleryAspectRatioVariant =
+  | 'portrait-arch'
+  | 'landscape-wide'
+  | 'square-study'
+  | 'cinematic-panoramic';
+
+export interface GalleryPhotoPlate {
+  id: string;
+  plateCode: string;
+  category: GalleryCategory;
+  title: string;
+  subtitle: string;
+  editorialCaption: string;
+  spatialContext: string;
+  whatFamiliesNotice: string[];
+  relatedRoute: {
+    label: string;
+    href: string;
+  };
+  masonrySpan: string;
+  aspectVariant: GalleryAspectRatioVariant;
+  aspectCssClass: string;
+  cutoutBadge?: string;
+  inquiryPresetNote: string;
+  placeholderImage: {
+    src: string;
+    alt: string;
+    status: 'ILLUSTRATIVE — REPLACE BEFORE LAUNCH';
+    assetReplacementNote: string;
+  };
+}
+
+export interface VirtualTourStop {
+  id: string;
+  stopIndex: string;
+  category: GalleryCategory;
+  title: string;
+  locationLabel: string;
+  summary: string;
+  spatialHighlights: string[];
+  whatToLookForInPerson: string;
+  relatedRouteHref: string;
+  relatedRouteLabel: string;
+  placeholderImage: {
+    src: string;
+    alt: string;
+    status: 'ILLUSTRATIVE — REPLACE BEFORE LAUNCH';
+  };
+}
+
+export const GALLERY_CATEGORY_META: {
+  id: GalleryFilterCategory;
+  label: string;
+  shortDescription: string;
+}[] = [
+  {
+    id: 'All',
+    label: 'All Visual Plates',
+    shortDescription:
+      'Complete curatorial overview across suites, dining, indoor lounges, gardens, and daily life.',
+  },
+  {
+    id: 'Rooms',
+    label: 'Rooms',
+    shortDescription:
+      'Private suites, Companion Units, Jack & Jill layouts, and attached private bathrooms.',
+  },
+  {
+    id: 'Dining',
+    label: 'Dining',
+    shortDescription:
+      'Restaurant-style full-table service, chef-prepared meals, and private family dining.',
+  },
+  {
+    id: 'Common Areas',
+    label: 'Common Areas',
+    shortDescription:
+      'Homelike living rooms, library nook, on-site salon/spa, and welcoming gathering spaces.',
+  },
+  {
+    id: 'Outdoor Spaces',
+    label: 'Outdoor Spaces',
+    shortDescription:
+      'Enclosed garden courtyard, sunlit patio seating, and calm walking paths in Daly City.',
+  },
+  {
+    id: 'Activities',
+    label: 'Activities',
+    shortDescription:
+      'Legacies™ Memory Care engagement, art, music, fitness, games, and family connection.',
+  },
+];
+
+export const GALLERY_PHOTO_PLATES: GalleryPhotoPlate[] = [
+  {
+    id: 'gallery-plate-01-private-suite',
+    plateCode: 'PLATE 01',
+    category: 'Rooms',
+    title: 'Sunlit Private Suite Sanctuary',
+    subtitle: 'Private Suite with En-Suite Bathroom',
+    editorialCaption:
+      'Private suites at Mission Villa are arranged to feel personal, calm, and immediately recognizable—offering space for favorite bedding, framed family portraits, and an attached private bathroom.',
+    spatialContext: 'Resident Accommodations · Memory Care & Respite Care',
+    whatFamiliesNotice: [
+      'Natural daylight and uncluttered walkways between bed, armchair, and bath',
+      'Private bathroom inside the suite for everyday dignity and privacy',
+      'Room for familiar keepsakes that support orientation in Memory Care',
+    ],
+    relatedRoute: {
+      label: 'Explore Suites & Floor Plans',
+      href: '/suites-and-floor-plans',
+    },
+    masonrySpan: 'lg:col-span-7',
+    aspectVariant: 'landscape-wide',
+    aspectCssClass: 'aspect-[16/10]',
+    cutoutBadge: 'Rooms · Private Suite',
+    inquiryPresetNote:
+      'Interested in touring a Private Suite with Private Bathroom after viewing the Gallery.',
+    placeholderImage: {
+      src: 'https://images.unsplash.com/photo-1598928506311-c55ded91a20c?auto=format&fit=crop&w=1400&q=85',
+      alt: 'Illustrative placeholder: Warm sunlit private suite bedroom with armchair and neutral linens',
+      status: 'ILLUSTRATIVE — REPLACE BEFORE LAUNCH',
+      assetReplacementNote:
+        'Replace with official Mission Villa private suite interior photograph.',
+    },
+  },
+  {
+    id: 'gallery-plate-02-dining-room',
+    plateCode: 'PLATE 02',
+    category: 'Dining',
+    title: 'Restaurant-Style Community Dining Room',
+    subtitle: 'Full-Table Service & Chef-Prepared Meals',
+    editorialCaption:
+      'Three times a day, residents gather in our welcoming dining room for freshly prepared meals served tableside—turning nutrition into a warm ritual of conversation and fellowship.',
+    spatialContext: 'Main Dining Room · Full-Table Service',
+    whatFamiliesNotice: [
+      'Comfortable table seating designed for easy conversation and accessibility',
+      'Attentive tableside hospitality and individualized dietary accommodations',
+      'Unhurried mealtime pacing tailored to Memory Care and Respite guests',
+    ],
+    relatedRoute: {
+      label: 'Explore Dining & Daily Culture',
+      href: '/life-at-mission-villa',
+    },
+    masonrySpan: 'lg:col-span-5',
+    aspectVariant: 'portrait-arch',
+    aspectCssClass: 'aspect-[4/5]',
+    cutoutBadge: 'Dining · Shared Table',
+    inquiryPresetNote:
+      'Would like to see the main dining room and ask about sample menus during our visit.',
+    placeholderImage: {
+      src: 'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=1200&q=85',
+      alt: 'Illustrative placeholder: Inviting restaurant-style dining room with warm natural light',
+      status: 'ILLUSTRATIVE — REPLACE BEFORE LAUNCH',
+      assetReplacementNote:
+        'Replace with official Mission Villa dining room photograph.',
+    },
+  },
+  {
+    id: 'gallery-plate-03-common-lounge',
+    plateCode: 'PLATE 03',
+    category: 'Common Areas',
+    title: 'Homelike Fireside & Conversation Lounge',
+    subtitle: 'Welcoming Indoor Gathering Space',
+    editorialCaption:
+      'Just steps from resident suites, our indoor lounges provide a relaxed residential living room where neighbors share morning coffee, listen to music, or welcome visiting relatives.',
+    spatialContext: 'Community Common Areas · 995 East Market Street',
+    whatFamiliesNotice: [
+      'Warm residential scale rather than long, clinical institutional corridors',
+      'Comfortable seating groups suited for quiet reading or family visits',
+      'Wi-Fi available in common spaces for guests and family connection',
+    ],
+    relatedRoute: {
+      label: 'View Services & Amenities',
+      href: '/services-and-amenities',
+    },
+    masonrySpan: 'lg:col-span-5',
+    aspectVariant: 'square-study',
+    aspectCssClass: 'aspect-square',
+    cutoutBadge: 'Common Areas · Lounge',
+    inquiryPresetNote:
+      'Interested in seeing the communal lounges and family visiting areas on our tour.',
+    placeholderImage: {
+      src: 'https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=1200&q=85',
+      alt: 'Illustrative placeholder: Sunlit homelike residential sitting lounge with comfortable seating',
+      status: 'ILLUSTRATIVE — REPLACE BEFORE LAUNCH',
+      assetReplacementNote:
+        'Replace with official Mission Villa main lounge photograph.',
+    },
+  },
+  {
+    id: 'gallery-plate-04-garden-courtyard',
+    plateCode: 'PLATE 04',
+    category: 'Outdoor Spaces',
+    title: 'Enclosed Garden Courtyard & Sunlit Patio',
+    subtitle: 'Fresh Coastal Air & Tranquil Greenery',
+    editorialCaption:
+      'Our enclosed courtyard and patio invite residents outdoors to enjoy Daly City’s mild Peninsula sunshine, raised garden planters, and shaded bench seating in a calm, supportive setting.',
+    spatialContext: 'Outdoor Courtyard & Patio · Ground Level',
+    whatFamiliesNotice: [
+      'Enclosed outdoor setting that supports safe, relaxed fresh-air enjoyment',
+      'Level seating areas ideal for afternoon family visits and gentle strolls',
+      'Natural greenery and daylight that bring calm to the daily rhythm',
+    ],
+    relatedRoute: {
+      label: 'Explore Memory Care Environment',
+      href: '/memory-care',
+    },
+    masonrySpan: 'lg:col-span-7',
+    aspectVariant: 'landscape-wide',
+    aspectCssClass: 'aspect-[16/10]',
+    cutoutBadge: 'Outdoor Spaces · Courtyard',
+    inquiryPresetNote:
+      'Would love to walk through the enclosed courtyard and outdoor patio during our visit.',
+    placeholderImage: {
+      src: 'https://images.unsplash.com/photo-1585320806297-9794b3e4eeae?auto=format&fit=crop&w=1400&q=85',
+      alt: 'Illustrative placeholder: Peaceful garden courtyard with greenery and sunlit seating',
+      status: 'ILLUSTRATIVE — REPLACE BEFORE LAUNCH',
+      assetReplacementNote:
+        'Replace with official Mission Villa courtyard and patio photograph.',
+    },
+  },
+  {
+    id: 'gallery-plate-05-companion-suite',
+    plateCode: 'PLATE 05',
+    category: 'Rooms',
+    title: 'Companion Unit & Jack & Jill Suite Arrangements',
+    subtitle: 'Shared Fellowship Balanced with Personal Space',
+    editorialCaption:
+      'Our original-site Companion Unit and Jack & Jill formats offer older adults the reassurance of nearby company alongside defined personal sleeping areas and a shared private bathroom.',
+    spatialContext: 'Shared Suite Formats · Private Bathroom Included',
+    whatFamiliesNotice: [
+      'Thoughtful room division that honors each resident’s personal belongings',
+      'Private bathroom shared only within the suite—never a hallway bath',
+      'Full housekeeping, linen service, and 24-hour staff support included',
+    ],
+    relatedRoute: {
+      label: 'Compare Floor-Plan Formats',
+      href: '/suites-and-floor-plans',
+    },
+    masonrySpan: 'lg:col-span-6',
+    aspectVariant: 'landscape-wide',
+    aspectCssClass: 'aspect-[16/10]',
+    cutoutBadge: 'Rooms · Companion & Jack & Jill',
+    inquiryPresetNote:
+      'Interested in comparing Companion Unit and Jack & Jill suite layouts during a tour.',
+    placeholderImage: {
+      src: 'https://images.unsplash.com/photo-1595526114035-0d45ed16cfbf?auto=format&fit=crop&w=1200&q=85',
+      alt: 'Illustrative placeholder: Bright companion living space with twin seating and warm light',
+      status: 'ILLUSTRATIVE — REPLACE BEFORE LAUNCH',
+      assetReplacementNote:
+        'Replace with official Mission Villa Companion Unit / Jack & Jill suite photograph.',
+    },
+  },
+  {
+    id: 'gallery-plate-06-legacies-activities',
+    plateCode: 'PLATE 06',
+    category: 'Activities',
+    title: 'Creative Arts, Music & Legacies™ Engagement',
+    subtitle: 'Purposeful Daily Programming',
+    editorialCaption:
+      'Guided by our activity director and Legacies™ Memory Care philosophy, daily sessions bring residents together for music, art, reminiscence, games, and gentle fitness adapted to every ability.',
+    spatialContext: 'Activity Studio & Life Enrichment Spaces',
+    whatFamiliesNotice: [
+      'Small-group and one-on-one engagement that honors personal life stories',
+      'Failure-free creative, musical, and sensory programs that spark joy',
+      'Scheduled scenic drives and live entertainment (confirm current calendar on tour)',
+    ],
+    relatedRoute: {
+      label: 'Discover Life at Mission Villa',
+      href: '/life-at-mission-villa',
+    },
+    masonrySpan: 'lg:col-span-6',
+    aspectVariant: 'landscape-wide',
+    aspectCssClass: 'aspect-[16/10]',
+    cutoutBadge: 'Activities · Legacies™',
+    inquiryPresetNote:
+      'Interested in learning more about daily activities and the Legacies™ Memory Care program.',
+    placeholderImage: {
+      src: 'https://images.unsplash.com/photo-1490750967868-88aa4486c946?auto=format&fit=crop&w=1200&q=85',
+      alt: 'Illustrative placeholder: Botanical florals and creative table setup for sensory activities',
+      status: 'ILLUSTRATIVE — REPLACE BEFORE LAUNCH',
+      assetReplacementNote:
+        'Replace with official Mission Villa activity programming photograph.',
+    },
+  },
+  {
+    id: 'gallery-plate-07-private-family-dining',
+    plateCode: 'PLATE 07',
+    category: 'Dining',
+    title: 'Nourishing Culinary Presentation & Private Family Table',
+    subtitle: 'Shared Celebrations & Comforting Favorites',
+    editorialCaption:
+      'Alongside daily restaurant-style service, Mission Villa offers a private dining space where families can gather to celebrate birthdays, anniversaries, and cherished holiday traditions.',
+    spatialContext: 'Private Dining Room & Culinary Hospitality',
+    whatFamiliesNotice: [
+      'Freshly prepared, comforting dishes tailored to senior nutrition and taste',
+      'Private dining room option for visiting relatives and special occasions',
+      'Warm hospitality that makes family members feel at home during meals',
+    ],
+    relatedRoute: {
+      label: 'See Dining Amenities',
+      href: '/services-and-amenities',
+    },
+    masonrySpan: 'lg:col-span-4',
+    aspectVariant: 'portrait-arch',
+    aspectCssClass: 'aspect-[4/5]',
+    cutoutBadge: 'Dining · Family Table',
+    inquiryPresetNote:
+      'Would like to ask about private family dining reservations and dietary options.',
+    placeholderImage: {
+      src: 'https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=1000&q=85',
+      alt: 'Illustrative placeholder: Freshly prepared meal served on a warmly set dining table',
+      status: 'ILLUSTRATIVE — REPLACE BEFORE LAUNCH',
+      assetReplacementNote:
+        'Replace with official Mission Villa culinary / private dining photograph.',
+    },
+  },
+  {
+    id: 'gallery-plate-08-library-and-salon',
+    plateCode: 'PLATE 08',
+    category: 'Common Areas',
+    title: 'Quiet Library Nook & Reading Alcove',
+    subtitle: 'Restful Indoor Sanctuary',
+    editorialCaption:
+      'For residents who enjoy a peaceful afternoon with a book, classic magazines, or quiet one-on-one conversation, our library nook and smaller sitting alcoves offer calm indoor retreats.',
+    spatialContext: 'Library & Quiet Lounge Areas',
+    whatFamiliesNotice: [
+      'Calm acoustic environment away from busier social gatherings',
+      'Complemented by on-site salon/spa and concierge conveniences',
+      'Thoughtful lighting and comfortable armchair seating',
+    ],
+    relatedRoute: {
+      label: 'Browse All 18 Offerings',
+      href: '/services-and-amenities',
+    },
+    masonrySpan: 'lg:col-span-4',
+    aspectVariant: 'square-study',
+    aspectCssClass: 'aspect-square',
+    cutoutBadge: 'Common Areas · Library',
+    inquiryPresetNote:
+      'Interested in seeing the library nook, salon/spa, and quiet sitting areas during our visit.',
+    placeholderImage: {
+      src: 'https://images.unsplash.com/photo-1586023492125-27b2c045efd7?auto=format&fit=crop&w=1000&q=85',
+      alt: 'Illustrative placeholder: Quiet reading chair and sunlit side table in a residential alcove',
+      status: 'ILLUSTRATIVE — REPLACE BEFORE LAUNCH',
+      assetReplacementNote:
+        'Replace with official Mission Villa library and salon/spa photography.',
+    },
+  },
+  {
+    id: 'gallery-plate-09-outdoor-patio-social',
+    plateCode: 'PLATE 09',
+    category: 'Outdoor Spaces',
+    title: 'Afternoon Sunshine on the Community Patio',
+    subtitle: 'Seated Outdoor Relaxation & Family Visits',
+    editorialCaption:
+      'Whether enjoying morning tea in the fresh air or visiting with grandchildren on a sunny weekend, our patio spaces connect indoor comfort with the natural beauty of the Peninsula.',
+    spatialContext: 'Community Patio & Garden Seating',
+    whatFamiliesNotice: [
+      'Easy step-out access from indoor common areas',
+      'Comfortable outdoor seating for multi-generational family visits',
+      'Calm, welcoming atmosphere in our Daly City neighborhood',
+    ],
+    relatedRoute: {
+      label: 'Explore Short-Term Respite Stays',
+      href: '/respite-care',
+    },
+    masonrySpan: 'lg:col-span-4',
+    aspectVariant: 'portrait-arch',
+    aspectCssClass: 'aspect-[4/5]',
+    cutoutBadge: 'Outdoor Spaces · Patio',
+    inquiryPresetNote:
+      'Interested in seeing the outdoor patio and garden seating areas on a tour.',
+    placeholderImage: {
+      src: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1000&q=85',
+      alt: 'Illustrative placeholder: Welcoming patio and indoor-outdoor residential transition',
+      status: 'ILLUSTRATIVE — REPLACE BEFORE LAUNCH',
+      assetReplacementNote:
+        'Replace with official Mission Villa outdoor patio photograph.',
+    },
+  },
+  {
+    id: 'gallery-plate-10-family-connection-activity',
+    plateCode: 'PLATE 10',
+    category: 'Activities',
+    title: 'Meaningful Companionship & Family Moments',
+    subtitle: 'Shared Stories, Games & Warm Connection',
+    editorialCaption:
+      'Every activity and gathering space at Mission Villa is designed around human connection—helping residents feel known, valued, and closely connected to both peers and family members.',
+    spatialContext: 'Social Engagement & Family Partnership',
+    whatFamiliesNotice: [
+      'Unhurried one-on-one attention from compassionate 24-hour staff',
+      'Welcoming environment for spouses, adult children, and grandchildren',
+      'Seamless continuity between full-time Memory Care and Respite stays',
+    ],
+    relatedRoute: {
+      label: 'Learn About Memory Care',
+      href: '/memory-care',
+    },
+    masonrySpan: 'lg:col-span-12',
+    aspectVariant: 'cinematic-panoramic',
+    aspectCssClass: 'aspect-[16/9] lg:aspect-[21/9]',
+    cutoutBadge: 'Activities · Belonging & Family',
+    inquiryPresetNote:
+      'Would like to schedule a family visit to experience daily activities and meet the care team.',
+    placeholderImage: {
+      src: 'https://images.unsplash.com/photo-1576765608535-5f04d1e3f289?auto=format&fit=crop&w=1800&q=85',
+      alt: 'Illustrative placeholder: Warm, attentive conversation with a senior in a bright residential room',
+      status: 'ILLUSTRATIVE — REPLACE BEFORE LAUNCH',
+      assetReplacementNote:
+        'Replace with official Mission Villa resident & family activity photograph.',
+    },
+  },
+];
+
+export const VIRTUAL_TOUR_STOPS: VirtualTourStop[] = [
+  {
+    id: 'vt-stop-welcome-commons',
+    stopIndex: 'Stop 01',
+    category: 'Common Areas',
+    title: 'Welcome Reception & Fireside Living Lounge',
+    locationLabel: '995 East Market Street · Main Entry & Common Areas',
+    summary:
+      'Begin your walkthrough in Mission Villa’s welcoming reception and residential living areas, where natural light, comfortable seating, and 24-hour staff presence set a calm, homelike tone.',
+    spatialHighlights: [
+      'Approachable concierge and reception welcome for visiting families',
+      'Homelike living room and library nook for conversation and relaxation',
+      'Clear, easy-to-navigate sightlines suited for Memory Care comfort',
+    ],
+    whatToLookForInPerson:
+      'Notice the warm, unhurried interaction between staff and residents and how comfortable the common lounges feel for family visits.',
+    relatedRouteHref: '/services-and-amenities',
+    relatedRouteLabel: 'Explore Community Spaces & Services',
+    placeholderImage: {
+      src: 'https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=1600&q=85',
+      alt: 'Illustrative placeholder: Sunlit community living room and welcome lounge',
+      status: 'ILLUSTRATIVE — REPLACE BEFORE LAUNCH',
+    },
+  },
+  {
+    id: 'vt-stop-dining-room',
+    stopIndex: 'Stop 02',
+    category: 'Dining',
+    title: 'Restaurant-Style Dining Room & Private Family Table',
+    locationLabel: 'Community Dining Wing · Full-Table Service',
+    summary:
+      'Step into our bright dining room where chef-prepared meals are served with full-table hospitality three times daily, alongside a private dining area for family celebrations.',
+    spatialHighlights: [
+      'Full-table service that honors resident dignity and appetite',
+      'Dietary accommodations and comforting, freshly prepared menus',
+      'Private dining space available for family gatherings (confirm reservation details)',
+    ],
+    whatToLookForInPerson:
+      'Ask to see a current weekly menu and observe how team members offer gentle, respectful assistance at the table.',
+    relatedRouteHref: '/life-at-mission-villa',
+    relatedRouteLabel: 'Read About Dining & Daily Culture',
+    placeholderImage: {
+      src: 'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=1600&q=85',
+      alt: 'Illustrative placeholder: Warmly set restaurant-style senior dining room',
+      status: 'ILLUSTRATIVE — REPLACE BEFORE LAUNCH',
+    },
+  },
+  {
+    id: 'vt-stop-suites',
+    stopIndex: 'Stop 03',
+    category: 'Rooms',
+    title: 'Private Suites, Companion Units & Jack & Jill Formats',
+    locationLabel: 'Residential Suite Neighborhood · Private Bathrooms',
+    summary:
+      'Explore our private and shared suite accommodations—including Companion Unit and Jack & Jill formats—each equipped with a private bathroom and ready for personal keepsakes.',
+    spatialHighlights: [
+      'Private bathrooms in both private and shared companion suites',
+      'Individual thermostat comfort, utilities, housekeeping, and laundry',
+      'Emergency alert features and 24-hour staff support close at hand',
+    ],
+    whatToLookForInPerson:
+      'Compare a Private Suite alongside our Companion Unit and Jack & Jill layouts to see which arrangement best fits your loved one.',
+    relatedRouteHref: '/suites-and-floor-plans',
+    relatedRouteLabel: 'Open Suites & Floor-Plan Viewer',
+    placeholderImage: {
+      src: 'https://images.unsplash.com/photo-1598928506311-c55ded91a20c?auto=format&fit=crop&w=1600&q=85',
+      alt: 'Illustrative placeholder: Peaceful private bedroom suite with natural daylight',
+      status: 'ILLUSTRATIVE — REPLACE BEFORE LAUNCH',
+    },
+  },
+  {
+    id: 'vt-stop-courtyard-activities',
+    stopIndex: 'Stop 04',
+    category: 'Outdoor Spaces',
+    title: 'Enclosed Courtyard, Patio & Activity Spaces',
+    locationLabel: 'Outdoor Sanctuary & Life Enrichment',
+    summary:
+      'Conclude your preview in our enclosed garden courtyard and activity spaces, where Legacies™ Memory Care programming, music, art, and fresh-air relaxation happen daily.',
+    spatialHighlights: [
+      'Enclosed courtyard and patio with level walking paths and shaded benches',
+      'Dedicated spaces for daily games, art, fitness, and live entertainment',
+      'A calm setting in Daly City convenient for San Francisco and Peninsula families',
+    ],
+    whatToLookForInPerson:
+      'Step out onto the patio and ask our Activity Director for a copy of this month’s life-enrichment calendar.',
+    relatedRouteHref: '/memory-care',
+    relatedRouteLabel: 'Explore Legacies™ Memory Care',
+    placeholderImage: {
+      src: 'https://images.unsplash.com/photo-1585320806297-9794b3e4eeae?auto=format&fit=crop&w=1600&q=85',
+      alt: 'Illustrative placeholder: Sunlit enclosed garden courtyard and outdoor seating',
+      status: 'ILLUSTRATIVE — REPLACE BEFORE LAUNCH',
+    },
+  },
+];
+
+export function filterGalleryPhotoPlates(
+  plates: GalleryPhotoPlate[],
+  category: GalleryFilterCategory,
+  searchQuery: string = ''
+): GalleryPhotoPlate[] {
+  const normalizedQuery = (searchQuery || '').trim().toLowerCase();
+
+  return plates.filter((plate) => {
+    const matchesCategory = category === 'All' || plate.category === category;
+    if (!matchesCategory) {
+      return false;
+    }
+
+    if (!normalizedQuery) {
+      return true;
+    }
+
+    const haystack = [
+      plate.plateCode,
+      plate.category,
+      plate.title,
+      plate.subtitle,
+      plate.editorialCaption,
+      plate.spatialContext,
+      ...plate.whatFamiliesNotice,
+    ]
+      .join(' ')
+      .toLowerCase();
+
+    return haystack.includes(normalizedQuery);
+  });
+}
+
+// ============================================================================
+// PAGE 07: ABOUT US (/about) — SOURCE-GROUNDED DATA & CONTENT
+// ============================================================================
+// Grounded in https://missionvillaseniorliving.com/about-us/
+// Topics: Compassionate, personalized Memory Care, dignity & respect, family support;
+// Daly City near San Bruno Mountain; community activities; pet-friendly policy with
+// restrictions (confirm current policy); access to surrounding Peninsula amenities.
+// Guardrails: No fake founders, no invented staff portraits/bios, no fake awards,
+// no clinical staffing ratios or medical guarantees.
+
+export interface AboutPhilosophyChapter {
+  id: 'person-first-dignity' | 'legacies-stewardship' | 'family-peace-of-mind' | 'homelike-belonging';
+  chapterNumber: string;
+  kicker: string;
+  title: string;
+  subtitle: string;
+  editorialLead: string;
+  narrativeBody: string;
+  inEverydayLife: string[];
+  familyPromise: string;
+  relatedRoute: {
+    label: string;
+    href: string;
+  };
+  inquiryPresetNote: string;
+  placeholderImage: {
+    src: string;
+    alt: string;
+    caption: string;
+    status: 'ILLUSTRATIVE — REPLACE BEFORE LAUNCH';
+  };
+}
+
+export type GeographyCategory =
+  | 'All Landmarks'
+  | 'Natural Surroundings'
+  | 'Family Access'
+  | 'Peninsula Amenities'
+  | 'Scenic Outings';
+
+export interface DalyCityGeographyLandmark {
+  id: string;
+  indexCode: string;
+  category: Exclude<GeographyCategory, 'All Landmarks'>;
+  title: string;
+  subtitle: string;
+  proximityContext: string;
+  description: string;
+  whyItMattersForFamilies: string[];
+  inquiryPresetNote: string;
+  placeholderImage: {
+    src: string;
+    alt: string;
+    caption: string;
+    status: 'ILLUSTRATIVE — REPLACE BEFORE LAUNCH';
+  };
+}
+
+export interface AboutCoreValueItem {
+  id: string;
+  index: string;
+  valueTitle: string;
+  scriptAccent: string;
+  summary: string;
+  connectedActivities: string[];
+  relatedRouteHref: string;
+  relatedRouteLabel: string;
+}
+
+export interface AboutTeamRoleOverview {
+  id: string;
+  roleTitle: string;
+  departmentTag: string;
+  howTheySupportResidents: string;
+  questionsToAskOnTour: string;
+}
+
+export interface AboutPetPolicyDisclosure {
+  headline: string;
+  badge: string;
+  summary: string;
+  confirmationItems: string[];
+  verificationStatus: 'CLIENT CONFIRMATION REQUIRED';
+  inquiryPresetNote: string;
+}
+
+export const ABOUT_PHILOSOPHY_CHAPTERS: AboutPhilosophyChapter[] = [
+  {
+    id: 'person-first-dignity',
+    chapterNumber: 'Chapter I',
+    kicker: 'Dignity & Respect First',
+    title: 'Honoring the Individual Behind Every Life Story',
+    subtitle: 'Care shaped around lifelong identity, personal privacy, and self-respect',
+    editorialLead:
+      'At Mission Villa Senior Living, we believe that living with Alzheimer’s disease or another form of dementia never diminishes a person’s right to dignity, warmth, and personal choice.',
+    narrativeBody:
+      'Our philosophy starts with seeing the whole person—their accomplishments, sense of humor, treasured routines, and cultural traditions. Whether assisting with morning habits in a private or companion suite or welcoming a resident to the dining table, our 24-hour staff moves at a calm, human pace that protects self-esteem.',
+    inEverydayLife: [
+      'Unhurried, respectful assistance with bathing, dressing, and personal care',
+      'Private and shared suites—each with an attached private bathroom—to safeguard personal privacy',
+      'Encouraging everyday independence and personal decision-making wherever possible',
+    ],
+    familyPromise:
+      'Your loved one is respected as a cherished individual, never treated as a schedule or a diagnosis.',
+    relatedRoute: {
+      label: 'Explore Our Memory Care Approach',
+      href: '/memory-care',
+    },
+    inquiryPresetNote:
+      'Would like to learn more about Mission Villa’s care philosophy and person-centered approach during a visit.',
+    placeholderImage: {
+      src: 'https://images.unsplash.com/photo-1586023492125-27b2c045efd7?auto=format&fit=crop&w=1400&q=85',
+      alt: 'Illustrative placeholder: Warm, sunlit homelike sitting room designed for calm daily living and personal dignity',
+      caption: 'Respectful, person-first relationships form the heart of Mission Villa in Daly City',
+      status: 'ILLUSTRATIVE — REPLACE BEFORE LAUNCH',
+    },
+  },
+  {
+    id: 'legacies-stewardship',
+    chapterNumber: 'Chapter II',
+    kicker: 'Personalized Memory Care',
+    title: 'The Legacies™ Philosophy of Familiar Connection',
+    subtitle: 'Connecting past history with present comfort and daily purpose',
+    editorialLead:
+      'Through our signature Legacies™ Memory Care program and short-term Respite Care stays, we tailor daily support and engagement around what feels familiar and reassuring to each resident.',
+    narrativeBody:
+      'Before and after a resident joins our community, we partner closely with family members to learn the details that matter—favorite melodies, career stories, preferred mealtime comforts, and calming routines. Our team weaves these insights into daily interactions and small-group programming.',
+    inEverydayLife: [
+      'Life-story learning that informs daily conversation, music, and reminiscence',
+      'Routine assessments so care plans adapt thoughtfully as needs evolve',
+      'Failure-free creative, social, and recreational activities guided by our Activity Director',
+    ],
+    familyPromise:
+      'Care is customized around who your loved one has always been and what brings them comfort today.',
+    relatedRoute: {
+      label: 'Discover Life at Mission Villa',
+      href: '/life-at-mission-villa',
+    },
+    inquiryPresetNote:
+      'Interested in how the Legacies™ Memory Care philosophy personalizes daily routines for new residents.',
+    placeholderImage: {
+      src: 'https://images.unsplash.com/photo-1490750967868-88aa4486c946?auto=format&fit=crop&w=1400&q=85',
+      alt: 'Illustrative placeholder: Botanical florals and sensory table arrangement representing Legacies programming',
+      caption: 'Tailoring daily engagement and gentle rhythms around personal life stories',
+      status: 'ILLUSTRATIVE — REPLACE BEFORE LAUNCH',
+    },
+  },
+  {
+    id: 'family-peace-of-mind',
+    chapterNumber: 'Chapter III',
+    kicker: 'Family Support & Partnership',
+    title: 'Lifting the Caregiving Burden So Families Can Reconnect',
+    subtitle: 'Standing beside spouses, adult children, and relatives at every step',
+    editorialLead:
+      'We know that searching for Memory Care or Respite Care often comes after months or years of devoted family caregiving at home.',
+    narrativeBody:
+      'Mission Villa exists to support the entire family. When our 24-hour staff takes on the physical and logistical responsibilities of daily care, housekeeping, laundry, and meal preparation, family members can return to being a loving spouse, son, daughter, or grandchild—enjoying unhurried visits in our lounges, dining room, and garden courtyard.',
+    inEverydayLife: [
+      'Open, approachable communication between families and our Daly City care team',
+      'Flexible short-term Respite Care stays when primary family caregivers need rest or travel',
+      'Welcoming common lounges, patio seating, and private family dining for meaningful visits',
+    ],
+    familyPromise:
+      'You never navigate memory loss alone—our team at 995 East Market Street is your partner.',
+    relatedRoute: {
+      label: 'Explore Short-Term Respite Care',
+      href: '/respite-care',
+    },
+    inquiryPresetNote:
+      'Exploring how Mission Villa partners with families transitioning from home caregiving.',
+    placeholderImage: {
+      src: 'https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=1400&q=85',
+      alt: 'Illustrative placeholder: Sunlit residential lounge welcoming visiting family members',
+      caption: 'Warm, homelike gathering spaces where visiting relatives always feel welcome',
+      status: 'ILLUSTRATIVE — REPLACE BEFORE LAUNCH',
+    },
+  },
+  {
+    id: 'homelike-belonging',
+    chapterNumber: 'Chapter IV',
+    kicker: 'Intimate Residential Scale',
+    title: 'A Homelike Community Rather Than an Institution',
+    subtitle: 'Warm architecture, shared meals, and familiar neighborhood roots in Daly City',
+    editorialLead:
+      'Large, clinical facilities can feel overwhelming for seniors living with memory loss. Mission Villa is intentionally designed to feel like a welcoming home.',
+    narrativeBody:
+      'From our restaurant-style dining room with full-table service to our quiet library nook and enclosed garden courtyard near the foothills of San Bruno Mountain, every corner of Mission Villa encourages calm navigation, friendly companionship, and everyday belonging.',
+    inEverydayLife: [
+      'Three chef-prepared meals daily served with attentive full-table hospitality',
+      'Easy-to-navigate indoor common areas paired with an enclosed outdoor courtyard and patio',
+      'Licensed California RCFE (#415601046) dedicated specifically to Memory Care and Respite Care',
+    ],
+    familyPromise:
+      'A comforting residential sanctuary where neighbors, staff, and families know one another by name.',
+    relatedRoute: {
+      label: 'Browse Our Photo Gallery & Tour',
+      href: '/gallery',
+    },
+    inquiryPresetNote:
+      'Would love to tour Mission Villa in person to experience the homelike environment and dining spaces.',
+    placeholderImage: {
+      src: 'https://images.unsplash.com/photo-1585320806297-9794b3e4eeae?auto=format&fit=crop&w=1400&q=85',
+      alt: 'Illustrative placeholder: Peaceful garden courtyard with greenery and sunlit seating',
+      caption: 'An intimate, residential setting at 995 East Market Street in Daly City',
+      status: 'ILLUSTRATIVE — REPLACE BEFORE LAUNCH',
+    },
+  },
+];
+
+export const DALY_CITY_GEOGRAPHY_LANDMARKS: DalyCityGeographyLandmark[] = [
+  {
+    id: 'san-bruno-mountain-foothills',
+    indexCode: 'LOC 01',
+    category: 'Natural Surroundings',
+    title: 'Nestled Near San Bruno Mountain in Daly City',
+    subtitle: 'Tranquil Peninsula Foothill Microclimate & Coastal Breeze',
+    proximityContext: '995 East Market Street · Adjacent to San Bruno Mountain State & County Park',
+    description:
+      'Mission Villa is situated on East Market Street in Daly City, just steps from the western slopes of San Bruno Mountain. The surrounding hillside greenery, open sky, and fresh coastal air lend a peaceful residential character while remaining right in town.',
+    whyItMattersForFamilies: [
+      'Quiet residential setting buffered from heavy downtown congestion',
+      'Fresh Peninsula air enjoyed from our enclosed garden courtyard and outdoor patio',
+      'Natural hillside backdrop that makes family arrivals and outdoor visits calming',
+    ],
+    inquiryPresetNote:
+      'Looking for a Daly City Memory Care community near San Bruno Mountain; would like to schedule a visit.',
+    placeholderImage: {
+      src: 'https://images.unsplash.com/photo-1585320806297-9794b3e4eeae?auto=format&fit=crop&w=1400&q=85',
+      alt: 'Illustrative placeholder: Sunlit California garden greenery and peaceful outdoor hillside atmosphere',
+      caption: 'Peaceful residential surroundings near the slopes of San Bruno Mountain',
+      status: 'ILLUSTRATIVE — REPLACE BEFORE LAUNCH',
+    },
+  },
+  {
+    id: 'sf-peninsula-family-corridor',
+    indexCode: 'LOC 02',
+    category: 'Family Access',
+    title: 'Effortless Visits for San Francisco & Peninsula Families',
+    subtitle: 'Minutes from I-280, Mission Street & BART Connections',
+    proximityContext: 'Northern San Mateo County · Immediate Border of Southern San Francisco',
+    description:
+      'Because frequent family connection means everything in Memory Care, our location at 995 East Market Street bridges San Francisco and San Mateo County—making it simple for spouses, adult children, and grandchildren to drop by for lunch, an afternoon activity, or an evening visit.',
+    whyItMattersForFamilies: [
+      'Convenient access from San Francisco neighborhoods (Excelsior, Mission, Glen Park, Sunset) and Northern Peninsula communities (Colma, South San Francisco, San Bruno, Pacifica)',
+      'On-site community parking for visiting relatives and guests',
+      'Close enough for spontaneous weekday visits rather than long weekend drives',
+    ],
+    inquiryPresetNote:
+      'Our family lives in the San Francisco / Peninsula area and would like directions and parking info for a tour.',
+    placeholderImage: {
+      src: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1400&q=85',
+      alt: 'Illustrative placeholder: Welcoming residential entrance and sunlit patio for visiting families',
+      caption: 'Conveniently located at 995 East Market Street for San Francisco and Peninsula families',
+      status: 'ILLUSTRATIVE — REPLACE BEFORE LAUNCH',
+    },
+  },
+  {
+    id: 'peninsula-amenities-and-parks',
+    indexCode: 'LOC 03',
+    category: 'Peninsula Amenities',
+    title: 'Connected to Surrounding Peninsula Amenities',
+    subtitle: 'Local Dining, Shopping, Parks & Healthcare Proximity',
+    proximityContext: 'Daly City & Greater Peninsula Neighborhood Conveniences',
+    description:
+      'Mission Villa enjoys easy access to surrounding Peninsula amenities—including neighborhood cafes, shopping centers, local parks, and major regional medical centers across Daly City, Seton/Peninsula corridors, and San Francisco.',
+    whyItMattersForFamilies: [
+      'Easy for visiting family members to pick up favorite treats, flowers, or personal essentials nearby',
+      'Scheduled community transportation available (confirm current routing and details with our team)',
+      'Proximity to established Daly City and Peninsula medical and community services',
+    ],
+    inquiryPresetNote:
+      'Interested in learning about scheduled transportation and nearby Peninsula amenities.',
+    placeholderImage: {
+      src: 'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=1400&q=85',
+      alt: 'Illustrative placeholder: Warm hospitality and dining setting reflecting Peninsula community life',
+      caption: 'Close to everyday Daly City and Peninsula amenities, parks, and family conveniences',
+      status: 'ILLUSTRATIVE — REPLACE BEFORE LAUNCH',
+    },
+  },
+  {
+    id: 'scenic-drives-and-outings',
+    indexCode: 'LOC 04',
+    category: 'Scenic Outings',
+    title: 'Scenic Drives & Coastal Peninsula Vistas',
+    subtitle: 'Bringing the Beauty of the Bay Area Into Community Life',
+    proximityContext: 'Activity Director Programming · Peninsula & Coastline Excursions',
+    description:
+      'As highlighted in Mission Villa’s original community offerings, our life-enrichment programming includes scenic drives and community outings that allow residents to enjoy the natural beauty of San Bruno Mountain, the Pacific coastline, and familiar Bay Area neighborhoods.',
+    whyItMattersForFamilies: [
+      'Guided scenic drives organized through our Activity Director and transportation team',
+      'Familiar regional landmarks that spark conversation and reminiscence',
+      'Balanced with safe, comforting indoor and courtyard activities back at home',
+    ],
+    inquiryPresetNote:
+      'Would love to ask about scenic drives and monthly activity calendars during our visit.',
+    placeholderImage: {
+      src: 'https://images.unsplash.com/photo-1586023492125-27b2c045efd7?auto=format&fit=crop&w=1400&q=85',
+      alt: 'Illustrative placeholder: Bright residential lounge where residents gather before and after community activities',
+      caption: 'Connecting residents with the familiar beauty of Daly City and the Peninsula',
+      status: 'ILLUSTRATIVE — REPLACE BEFORE LAUNCH',
+    },
+  },
+];
+
+export const ABOUT_CORE_VALUES: AboutCoreValueItem[] = [
+  {
+    id: 'value-dignity-respect',
+    index: '01',
+    valueTitle: 'Unconditional Dignity & Respect',
+    scriptAccent: 'Every Resident Honored',
+    summary:
+      'We honor each resident’s life history, personal privacy, and individual pace—providing gentle 24-hour support in private and companion suites with private bathrooms.',
+    connectedActivities: [
+      'Unhurried personal care & morning routines',
+      'One-on-one reminiscence & life-story conversations',
+      'Personalization of suites with treasured keepsakes',
+    ],
+    relatedRouteHref: '/suites-and-floor-plans',
+    relatedRouteLabel: 'View Suites & Floor Plans',
+  },
+  {
+    id: 'value-purposeful-engagement',
+    index: '02',
+    valueTitle: 'Engaging Daily Community Activities',
+    scriptAccent: 'Moments of Joy',
+    summary:
+      'Led by our dedicated Activity Director and Legacies™ Memory Care approach, every day invites residents into social, creative, and sensory experiences adapted to their abilities.',
+    connectedActivities: [
+      'Creative art sessions, tabletop games & puzzles',
+      'Live entertainment, music & group sing-alongs',
+      'Gentle fitness, courtyard strolls & scenic drives',
+    ],
+    relatedRouteHref: '/life-at-mission-villa',
+    relatedRouteLabel: 'Explore Daily Culture & Activities',
+  },
+  {
+    id: 'value-shared-nourishment',
+    index: '03',
+    valueTitle: 'Warm Hospitality & Shared Table',
+    scriptAccent: 'Nourishing Body & Spirit',
+    summary:
+      'Meals at Mission Villa bring neighbors and families together three times a day for chef-prepared dishes served with full-table care and dietary thoughtfulness.',
+    connectedActivities: [
+      'Restaurant-style dining with full-table service',
+      'Private dining room for family celebrations',
+      'Afternoon socials & refreshments on the patio',
+    ],
+    relatedRouteHref: '/services-and-amenities',
+    relatedRouteLabel: 'See Dining & Amenities',
+  },
+  {
+    id: 'value-family-trust',
+    index: '04',
+    valueTitle: 'Transparent Family Partnership',
+    scriptAccent: 'Peace of Mind',
+    summary:
+      'Whether your family is exploring full-time Memory Care or a short-term Respite Care stay, we communicate openly, welcome regular visits, and support you through every transition.',
+    connectedActivities: [
+      'Family visits in our lounges, courtyard & dining room',
+      'Routine care assessments & collaborative planning',
+      'Volunteer programs & multi-generational gatherings',
+    ],
+    relatedRouteHref: '/respite-care',
+    relatedRouteLabel: 'Learn About Respite Stays',
+  },
+];
+
+export const ABOUT_TEAM_ROLES_OVERVIEW: AboutTeamRoleOverview[] = [
+  {
+    id: 'role-24hr-care-staff',
+    roleTitle: '24-Hour Dedicated Care Staff',
+    departmentTag: 'Around-the-Clock Personal Support',
+    howTheySupportResidents:
+      'Present day and night to provide compassionate assistance with bathing, dressing, grooming, escort/transfer support, and comforting reassurance tailored to each resident’s Legacies™ care plan.',
+    questionsToAskOnTour:
+      'How does your day and evening staff learn my loved one’s personal routines and preferences?',
+  },
+  {
+    id: 'role-activity-director',
+    roleTitle: 'Activity Director & Life Enrichment',
+    departmentTag: 'Legacies™ Programming & Community Culture',
+    howTheySupportResidents:
+      'Designs and guides daily small-group and one-on-one activities—including games, creative arts, gentle fitness, live entertainment, volunteer programs, and scenic drives.',
+    questionsToAskOnTour:
+      'May we see a current monthly activity calendar and learn how quieter residents are gently included?',
+  },
+  {
+    id: 'role-culinary-dining',
+    roleTitle: 'Culinary & Full-Table Dining Team',
+    departmentTag: 'Chef-Prepared Meals & Hospitality',
+    howTheySupportResidents:
+      'Prepares three nourishing daily meals and snacks, offers full-table service in our main dining room, accommodates dietary needs, and hosts families in our private dining space.',
+    questionsToAskOnTour:
+      'How does the culinary team accommodate favorite comfort foods and physician-recommended diets?',
+  },
+  {
+    id: 'role-concierge-housekeeping',
+    roleTitle: 'Community Leadership, Concierge & Housekeeping',
+    departmentTag: 'Family Communication & Daily Convenience',
+    howTheySupportResidents:
+      'Coordinates family inquiries, routine care assessments, scheduled transportation, laundry and linen service, and suite upkeep so residents live in a clean, calm environment.',
+    questionsToAskOnTour:
+      'Who is our primary point of contact for care updates, and how often are routine assessments reviewed?',
+  },
+];
+
+export const ABOUT_PET_POLICY_NOTE: AboutPetPolicyDisclosure = {
+  headline: 'Pet-Friendly Community Policy (With Applicable Restrictions)',
+  badge: 'Conditional Community Policy · Confirm Details on Tour',
+  summary:
+    'Mission Villa’s original community profile notes a pet-friendly approach with applicable restrictions. Because resident safety, comfort, and daily care abilities are paramount in a Memory Care environment, pet eligibility and visiting pet guidelines are reviewed individually with each family.',
+  confirmationItems: [
+    'Confirm current eligibility, size/breed guidelines, and care requirements for resident pets',
+    'Ask about guidelines for family members bringing a gentle, leashed family dog during courtyard or lounge visits',
+    'Verify vaccination documentation and community safety protocols with our Daly City team',
+  ],
+  verificationStatus: 'CLIENT CONFIRMATION REQUIRED',
+  inquiryPresetNote:
+    'Would like to confirm Mission Villa’s current pet-friendly policy and restrictions (for visiting or resident pets).',
+};
+
+export function filterGeographyLandmarks(
+  landmarks: DalyCityGeographyLandmark[],
+  category: GeographyCategory
+): DalyCityGeographyLandmark[] {
+  if (category === 'All Landmarks') {
+    return landmarks;
+  }
+  return landmarks.filter((item) => item.category === category);
+}
+
+

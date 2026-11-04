@@ -36,6 +36,9 @@ export default function HeaderAndUtilityBar({
   const isRespiteCare = pathname === '/respite-care';
   const isLifeAtMissionVilla = pathname === '/life-at-mission-villa';
   const isServicesAndAmenities = pathname === '/services-and-amenities';
+  const isSuitesAndFloorPlans = pathname === '/suites-and-floor-plans';
+  const isGallery = pathname === '/gallery';
+  const isAbout = pathname === '/about';
 
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [livingDropdownOpen, setLivingDropdownOpen] = useState(false);
@@ -154,7 +157,7 @@ export default function HeaderAndUtilityBar({
 
       {/* 2. Sticky Full-Width Editorial Monograph Header (68px Desktop — Total Top Height = 104px) */}
       <header className="sticky top-0 z-40 w-full bg-[#F7F4ED]/95 backdrop-blur-md grid-line-b fluid-canvas">
-        <div className="w-full h-16 lg:h-[68px] flex items-center justify-between gap-2 sm:gap-6">
+        <div className="w-full h-16 lg:h-[68px] flex items-center justify-between gap-2 sm:gap-4">
           {/* Zone 1: Brand Identity Lockup */}
           <Link
             href="/"
@@ -231,7 +234,7 @@ export default function HeaderAndUtilityBar({
           {/* Zone 2: Center Editorial Navigation Links */}
           <nav
             aria-label="Primary Navigation"
-            className="hidden xl:flex items-center gap-5 text-xs font-medium text-[#29272B]"
+            className="hidden xl:flex items-center gap-3 text-xs font-medium text-[#29272B]"
           >
             <Link
               href="/"
@@ -257,7 +260,7 @@ export default function HeaderAndUtilityBar({
                 aria-haspopup="true"
                 onClick={() => setLivingDropdownOpen((prev) => !prev)}
                 className={`inline-flex items-center gap-1 py-1.5 transition-colors whitespace-nowrap shrink-0 cursor-pointer relative after:content-[''] after:absolute after:left-0 after:bottom-0.5 after:h-[1.5px] after:bg-[#C98268] after:transition-all ${
-                  isMemoryCare || isRespiteCare
+                  isMemoryCare || isRespiteCare || isSuitesAndFloorPlans
                     ? 'text-[#3B2348] font-semibold after:w-full'
                     : 'hover:text-[#3B2348] after:w-0 hover:after:w-full'
                 }`}
@@ -328,33 +331,30 @@ export default function HeaderAndUtilityBar({
                       <ArrowUpRight className="w-4 h-4 shrink-0 mt-0.5" aria-hidden="true" />
                     </Link>
 
-                    <button
-                      type="button"
+                    <Link
+                      href="/suites-and-floor-plans"
                       role="menuitem"
-                      onClick={() =>
-                        handleNavClick(
-                          isMemoryCare
-                            ? 'memory-care-environment'
-                            : isRespiteCare
-                            ? 'respite-accommodations'
-                            : isLifeAtMissionVilla
-                            ? 'chapter-spaces'
-                            : isServicesAndAmenities
-                            ? 'care-programs-bridge'
-                            : 'suites-preview'
-                        )
-                      }
-                      className="w-full text-left flex items-start justify-between gap-2 p-3 rounded-xl hover:bg-[#D8C7A5]/35 text-[#3B2348] transition cursor-pointer"
+                      onClick={() => setLivingDropdownOpen(false)}
+                      className={`flex items-start justify-between gap-2 p-3 rounded-xl transition ${
+                        isSuitesAndFloorPlans
+                          ? 'bg-[#3B2348] text-[#F7F4ED]'
+                          : 'hover:bg-[#D8C7A5]/35 text-[#3B2348]'
+                      }`}
                     >
                       <div>
                         <span className="font-serif text-sm font-semibold block">
-                          Suites &amp; Floor Plan Formats
+                          Suites &amp; Floor Plans
                         </span>
-                        <span className="text-[11px] text-[#29272B]/75 block mt-0.5">
+                        <span
+                          className={`text-[11px] block mt-0.5 ${
+                            isSuitesAndFloorPlans ? 'text-[#D8C7A5]' : 'text-[#29272B]/75'
+                          }`}
+                        >
                           Private, Companion &amp; Jack &amp; Jill suites
                         </span>
                       </div>
-                    </button>
+                      <ArrowUpRight className="w-4 h-4 shrink-0 mt-0.5" aria-hidden="true" />
+                    </Link>
                   </div>
                 </div>
               )}
@@ -384,6 +384,18 @@ export default function HeaderAndUtilityBar({
               Respite Care
             </Link>
 
+            <Link
+              href="/suites-and-floor-plans"
+              aria-current={isSuitesAndFloorPlans ? 'page' : undefined}
+              className={`py-1.5 transition-colors whitespace-nowrap shrink-0 relative after:content-[''] after:absolute after:left-0 after:bottom-0.5 after:h-[1.5px] after:bg-[#C98268] after:transition-all ${
+                isSuitesAndFloorPlans
+                  ? 'text-[#3B2348] font-semibold after:w-full'
+                  : 'hover:text-[#3B2348] after:w-0 hover:after:w-full'
+              }`}
+            >
+              Suites &amp; Floor Plans
+            </Link>
+
             {/* Accessible Life at Mission Villa Dropdown */}
             <div
               ref={lifeDropdownRef}
@@ -397,7 +409,7 @@ export default function HeaderAndUtilityBar({
                 aria-haspopup="true"
                 onClick={() => setLifeDropdownOpen((prev) => !prev)}
                 className={`inline-flex items-center gap-1 py-1.5 transition-colors whitespace-nowrap shrink-0 cursor-pointer relative after:content-[''] after:absolute after:left-0 after:bottom-0.5 after:h-[1.5px] after:bg-[#C98268] after:transition-all ${
-                  isLifeAtMissionVilla || isServicesAndAmenities
+                  isLifeAtMissionVilla || isServicesAndAmenities || isGallery
                     ? 'text-[#3B2348] font-semibold after:w-full'
                     : 'hover:text-[#3B2348] after:w-0 hover:after:w-full'
                 }`}
@@ -467,21 +479,58 @@ export default function HeaderAndUtilityBar({
                       </div>
                       <ArrowUpRight className="w-4 h-4 shrink-0 mt-0.5" aria-hidden="true" />
                     </Link>
+
+                    <Link
+                      href="/gallery"
+                      role="menuitem"
+                      onClick={() => setLifeDropdownOpen(false)}
+                      className={`flex items-start justify-between gap-2 p-3 rounded-xl transition ${
+                        isGallery
+                          ? 'bg-[#3B2348] text-[#F7F4ED]'
+                          : 'hover:bg-[#D8C7A5]/35 text-[#3B2348]'
+                      }`}
+                    >
+                      <div>
+                        <span className="font-serif text-sm font-semibold block">
+                          Gallery &amp; Virtual Tour
+                        </span>
+                        <span
+                          className={`text-[11px] block mt-0.5 ${
+                            isGallery ? 'text-[#D8C7A5]' : 'text-[#29272B]/75'
+                          }`}
+                        >
+                          Rooms, dining, lounges, gardens &amp; tour preview
+                        </span>
+                      </div>
+                      <ArrowUpRight className="w-4 h-4 shrink-0 mt-0.5" aria-hidden="true" />
+                    </Link>
                   </div>
                 </div>
               )}
             </div>
 
             <Link
-              href="/services-and-amenities"
-              aria-current={isServicesAndAmenities ? 'page' : undefined}
+              href="/gallery"
+              aria-current={isGallery ? 'page' : undefined}
               className={`py-1.5 transition-colors whitespace-nowrap shrink-0 relative after:content-[''] after:absolute after:left-0 after:bottom-0.5 after:h-[1.5px] after:bg-[#C98268] after:transition-all ${
-                isServicesAndAmenities
+                isGallery
                   ? 'text-[#3B2348] font-semibold after:w-full'
                   : 'hover:text-[#3B2348] after:w-0 hover:after:w-full'
               }`}
             >
-              Services &amp; Amenities
+              Gallery
+            </Link>
+
+            <Link
+              href="/about"
+              aria-current={isAbout ? 'page' : undefined}
+              className={`py-1.5 transition-colors whitespace-nowrap shrink-0 relative after:content-[''] after:absolute after:left-0 after:bottom-0.5 after:h-[1.5px] after:bg-[#C98268] after:transition-all ${
+                isAbout
+                  ? 'text-[#3B2348] font-semibold after:w-full'
+                  : 'hover:text-[#3B2348] after:w-0 hover:after:w-full'
+              }`}
+            >
+              About Us
             </Link>
 
             <button
@@ -496,6 +545,12 @@ export default function HeaderAndUtilityBar({
                     ? 'chapter-family-connection'
                     : isServicesAndAmenities
                     ? 'ask-us-about'
+                    : isSuitesAndFloorPlans
+                    ? 'what-to-expect-in-a-suite'
+                    : isGallery
+                    ? 'virtual-tour'
+                    : isAbout
+                    ? 'daly-city-geography'
                     : 'family-reassurance'
                 )
               }
@@ -614,6 +669,48 @@ export default function HeaderAndUtilityBar({
                   Page 04
                 </span>
               </Link>
+              <Link
+                href="/suites-and-floor-plans"
+                onClick={() => setMobileMenuOpen(false)}
+                className={`text-left px-3 py-2 rounded-xl text-base font-serif font-medium transition flex items-center justify-between ${
+                  isSuitesAndFloorPlans
+                    ? 'bg-[#3B2348] text-[#F7F4ED]'
+                    : 'text-[#3B2348] hover:bg-[#D8C7A5]/35'
+                }`}
+              >
+                <span>Suites &amp; Floor Plans</span>
+                <span className="text-xs font-sans uppercase tracking-wider opacity-80">
+                  Page 05
+                </span>
+              </Link>
+              <Link
+                href="/gallery"
+                onClick={() => setMobileMenuOpen(false)}
+                className={`text-left px-3 py-2 rounded-xl text-base font-serif font-medium transition flex items-center justify-between ${
+                  isGallery
+                    ? 'bg-[#3B2348] text-[#F7F4ED]'
+                    : 'text-[#3B2348] hover:bg-[#D8C7A5]/35'
+                }`}
+              >
+                <span>Gallery &amp; Virtual Tour</span>
+                <span className="text-xs font-sans uppercase tracking-wider opacity-80">
+                  Page 06
+                </span>
+              </Link>
+              <Link
+                href="/about"
+                onClick={() => setMobileMenuOpen(false)}
+                className={`text-left px-3 py-2 rounded-xl text-base font-serif font-medium transition flex items-center justify-between ${
+                  isAbout
+                    ? 'bg-[#3B2348] text-[#F7F4ED]'
+                    : 'text-[#3B2348] hover:bg-[#D8C7A5]/35'
+                }`}
+              >
+                <span>About Us (Philosophy &amp; Location)</span>
+                <span className="text-xs font-sans uppercase tracking-wider opacity-80">
+                  Page 07
+                </span>
+              </Link>
               <button
                 type="button"
                 onClick={() =>
@@ -626,6 +723,12 @@ export default function HeaderAndUtilityBar({
                       ? 'day-in-the-life'
                       : isServicesAndAmenities
                       ? 'services-explorer'
+                      : isSuitesAndFloorPlans
+                      ? 'floor-plan-viewer'
+                      : isGallery
+                      ? 'editorial-masonry-gallery'
+                      : isAbout
+                      ? 'care-philosophy-narrative'
                       : 'our-approach'
                   )
                 }
@@ -639,6 +742,12 @@ export default function HeaderAndUtilityBar({
                   ? 'Curated Day-in-the-Life'
                   : isServicesAndAmenities
                   ? 'Interactive Category & Search Directory'
+                  : isSuitesAndFloorPlans
+                  ? 'Floor-Plan Format Viewer'
+                  : isGallery
+                  ? 'Category Masonry Gallery'
+                  : isAbout
+                  ? 'Our Care Philosophy'
                   : 'Our Approach'}
               </button>
               <button
@@ -653,6 +762,12 @@ export default function HeaderAndUtilityBar({
                       ? 'chapter-family-connection'
                       : isServicesAndAmenities
                       ? 'ask-us-about'
+                      : isSuitesAndFloorPlans
+                      ? 'what-to-expect-in-a-suite'
+                      : isGallery
+                      ? 'virtual-tour'
+                      : isAbout
+                      ? 'daly-city-geography'
                       : 'family-reassurance'
                   )
                 }
@@ -660,6 +775,12 @@ export default function HeaderAndUtilityBar({
               >
                 {isServicesAndAmenities
                   ? 'Ask Us About Eligibility & Availability'
+                  : isSuitesAndFloorPlans
+                  ? 'What to Expect in a Suite'
+                  : isGallery
+                  ? 'Virtual Tour & Walkthrough Stage'
+                  : isAbout
+                  ? 'Daly City & San Bruno Mountain Location'
                   : 'For Families & Connection'}
               </button>
             </nav>

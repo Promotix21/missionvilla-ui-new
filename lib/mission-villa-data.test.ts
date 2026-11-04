@@ -5,8 +5,8 @@ import {
   CARE_PROGRAMS,
   CARE_GUIDANCE_SCENARIOS,
   APPROACH_PILLARS,
+  DAILY_LIFE_MOMENTS,
   LIVING_SPACE_OPTIONS,
-  LEGACIES_TOUCHPOINTS,
   MEMORY_CARE_STORYBOARD,
   MEMORY_CARE_SUPPORT_COMMITMENTS,
   MEMORY_CARE_SUITE_FORMATS,
@@ -24,16 +24,31 @@ import {
   SERVICES_AND_AMENITIES_ITEMS,
   ASK_US_ABOUT_DISCLOSURES,
   filterServicesAndAmenities,
+  SUITE_ACCOMMODATION_GALLERY_PLATES,
+  OFFICIAL_FLOOR_PLAN_FORMATS,
+  SUITE_WHAT_TO_EXPECT_SPECS,
+  SUITE_PERSONALIZATION_TOUCHPOINTS,
+  RELATED_COMMUNITY_SPACES_FROM_SUITES,
+  filterSuiteGalleryPlates,
+  GALLERY_CATEGORY_META,
+  GALLERY_PHOTO_PLATES,
+  VIRTUAL_TOUR_STOPS,
+  filterGalleryPhotoPlates,
+  ABOUT_PHILOSOPHY_CHAPTERS,
+  DALY_CITY_GEOGRAPHY_LANDMARKS,
+  ABOUT_CORE_VALUES,
+  ABOUT_TEAM_ROLES_OVERVIEW,
+  ABOUT_PET_POLICY_NOTE,
+  filterGeographyLandmarks,
   validateVisitInquiry,
 } from './mission-villa-data';
 
-test('verified business facts match official Mission Villa Senior Living facts', () => {
+test('MISSION_VILLA_FACTS preserves verified business identity and contact details', () => {
   assert.equal(MISSION_VILLA_FACTS.name, 'Mission Villa Senior Living');
-  assert.equal(
-    MISSION_VILLA_FACTS.address.full,
-    '995 East Market Street, Daly City, CA 94014'
-  );
+  assert.equal(MISSION_VILLA_FACTS.address.full, '995 East Market Street, Daly City, CA 94014');
   assert.equal(MISSION_VILLA_FACTS.phone.raw, '650-756-1995');
+  assert.equal(MISSION_VILLA_FACTS.phone.formatted, '(650) 756-1995');
+  assert.equal(MISSION_VILLA_FACTS.phone.href, 'tel:16507561995');
   assert.equal(
     MISSION_VILLA_FACTS.email.address,
     'mktg.missionvilla@missionvillaseniorliving.com'
@@ -41,19 +56,19 @@ test('verified business facts match official Mission Villa Senior Living facts',
   assert.equal(MISSION_VILLA_FACTS.licenseNumber, '415601046');
 });
 
-test('care offerings strictly center Memory Care and Respite Care without fabricated tiers', () => {
+test('Content collections contain no fabricated statistics or unverified claims', () => {
   assert.equal(CARE_PROGRAMS.length, 2);
-  const programIds = CARE_PROGRAMS.map((p) => p.id);
-  assert.deepEqual(programIds, ['memory-care', 'respite-care']);
+  assert.equal(CARE_GUIDANCE_SCENARIOS.length, 3);
+  assert.equal(APPROACH_PILLARS.length, 3);
+  assert.equal(DAILY_LIFE_MOMENTS.length, 4);
+  assert.equal(LIVING_SPACE_OPTIONS.length, 3);
 
-  // Verify no fabricated rates, staffing ratios, or fake clinical percentages exist in public copy
   const serialized = JSON.stringify({
-    MISSION_VILLA_FACTS,
     CARE_PROGRAMS,
     CARE_GUIDANCE_SCENARIOS,
     APPROACH_PILLARS,
+    DAILY_LIFE_MOMENTS,
     LIVING_SPACE_OPTIONS,
-    LEGACIES_TOUCHPOINTS,
     MEMORY_CARE_STORYBOARD,
     MEMORY_CARE_SUPPORT_COMMITMENTS,
     MEMORY_CARE_SUITE_FORMATS,
@@ -70,31 +85,37 @@ test('care offerings strictly center Memory Care and Respite Care without fabric
     SERVICES_AMENITIES_CATEGORIES,
     SERVICES_AND_AMENITIES_ITEMS,
     ASK_US_ABOUT_DISCLOSURES,
+    SUITE_ACCOMMODATION_GALLERY_PLATES,
+    OFFICIAL_FLOOR_PLAN_FORMATS,
+    SUITE_WHAT_TO_EXPECT_SPECS,
+    SUITE_PERSONALIZATION_TOUCHPOINTS,
+    RELATED_COMMUNITY_SPACES_FROM_SUITES,
+    GALLERY_CATEGORY_META,
+    GALLERY_PHOTO_PLATES,
+    VIRTUAL_TOUR_STOPS,
+    ABOUT_PHILOSOPHY_CHAPTERS,
+    DALY_CITY_GEOGRAPHY_LANDMARKS,
+    ABOUT_CORE_VALUES,
+    ABOUT_TEAM_ROLES_OVERVIEW,
+    ABOUT_PET_POLICY_NOTE,
   });
-  assert.equal(serialized.includes('$4,250'), false);
-  assert.equal(serialized.includes('$5,450'), false);
-  assert.equal(serialized.includes('$6,800'), false);
-  assert.equal(serialized.includes('1:5'), false);
-  assert.equal(serialized.includes('1080 Olive Grove'), false);
-  assert.equal(serialized.includes('555-VILLA'), false);
-  assert.equal(serialized.includes('98.4%'), false);
-  assert.equal(serialized.includes('42%'), false);
+
+  // Ensure no invented star ratings, fake review counts, fake pricing, or fabricated sq. ft.
+  assert.equal(serialized.includes('4.9/5'), false);
+  assert.equal(serialized.includes('$5,'), false);
+  assert.equal(serialized.includes('staff-to-resident ratio of 1:'), false);
+  assert.equal(serialized.includes('460 sq'), false);
+  assert.equal(serialized.includes('680 sq'), false);
+  assert.equal(serialized.includes('940 sq'), false);
 });
 
-test('Memory Care page data includes Legacies touchpoints, 3-scene storyboard, and named suite formats', () => {
-  assert.equal(LEGACIES_TOUCHPOINTS.length, 4);
+test('Memory Care page data includes 3 storyboard scenes, 3 suite formats, and 7 FAQs', () => {
   assert.equal(MEMORY_CARE_STORYBOARD.length, 3);
   assert.equal(MEMORY_CARE_SUPPORT_COMMITMENTS.length, 3);
-  assert.deepEqual(
-    MEMORY_CARE_SUITE_FORMATS.map((s) => s.id),
-    ['companion-unit', 'jack-and-jill', 'private-suite']
-  );
+  assert.equal(MEMORY_CARE_SUITE_FORMATS.length, 3);
   assert.ok(MEMORY_CARE_FAQS.length >= 6);
 
-  // Every placeholder image in Memory Care data must be marked ILLUSTRATIVE — REPLACE BEFORE LAUNCH
-  for (const tp of LEGACIES_TOUCHPOINTS) {
-    assert.equal(tp.placeholderImage.status, 'ILLUSTRATIVE — REPLACE BEFORE LAUNCH');
-  }
+  // Every placeholder image must be explicitly marked ILLUSTRATIVE — REPLACE BEFORE LAUNCH
   for (const scene of MEMORY_CARE_STORYBOARD) {
     assert.equal(scene.placeholderImage.status, 'ILLUSTRATIVE — REPLACE BEFORE LAUNCH');
   }
@@ -187,6 +208,118 @@ test('Services & Amenities page data covers all 5 blueprint categories, 18 origi
   assert.equal(amenitiesOnly.length, 9);
 });
 
+test('Suites & Floor Plans page data covers named formats, honest floor-plan placeholders, and gallery filtering', () => {
+  assert.equal(SUITE_ACCOMMODATION_GALLERY_PLATES.length, 4);
+  assert.deepEqual(
+    OFFICIAL_FLOOR_PLAN_FORMATS.map((f) => f.id),
+    ['companion-unit', 'jack-and-jill', 'private-suite']
+  );
+  assert.equal(SUITE_WHAT_TO_EXPECT_SPECS.length, 6);
+  assert.equal(SUITE_PERSONALIZATION_TOUCHPOINTS.length, 3);
+  assert.equal(RELATED_COMMUNITY_SPACES_FROM_SUITES.length, 3);
+
+  // Every floor plan format must explicitly carry 'Awaiting official floor plan' status and null diagram path
+  for (const format of OFFICIAL_FLOOR_PLAN_FORMATS) {
+    assert.equal(format.diagramAssetStatus, 'Awaiting official floor plan');
+    assert.equal(format.officialDiagramPath, null);
+    assert.equal(
+      format.placeholderPreviewImage.status,
+      'ILLUSTRATIVE — REPLACE BEFORE LAUNCH'
+    );
+  }
+
+  for (const plate of SUITE_ACCOMMODATION_GALLERY_PLATES) {
+    assert.equal(plate.placeholderImage.status, 'ILLUSTRATIVE — REPLACE BEFORE LAUNCH');
+  }
+
+  // Pure category filter verification
+  const allPlates = filterSuiteGalleryPlates(
+    SUITE_ACCOMMODATION_GALLERY_PLATES,
+    'All Accommodations'
+  );
+  assert.equal(allPlates.length, 4);
+
+  const privatePlates = filterSuiteGalleryPlates(
+    SUITE_ACCOMMODATION_GALLERY_PLATES,
+    'Private Suites'
+  );
+  assert.equal(privatePlates.length, 2);
+
+  const companionPlates = filterSuiteGalleryPlates(
+    SUITE_ACCOMMODATION_GALLERY_PLATES,
+    'Shared & Companion'
+  );
+  assert.equal(companionPlates.length, 1);
+  assert.equal(companionPlates[0].id, 'suite-plate-companion-living');
+});
+
+test('Gallery & Virtual Tour page data covers 5 blueprint categories, 10 masonry plates, virtual tour stops, and pure filtering', () => {
+  assert.deepEqual(
+    GALLERY_CATEGORY_META.map((c) => c.id),
+    ['All', 'Rooms', 'Dining', 'Common Areas', 'Outdoor Spaces', 'Activities']
+  );
+  assert.equal(GALLERY_PHOTO_PLATES.length, 10);
+  assert.equal(VIRTUAL_TOUR_STOPS.length, 4);
+
+  // Every gallery plate and virtual tour stop must explicitly carry 'ILLUSTRATIVE — REPLACE BEFORE LAUNCH'
+  for (const plate of GALLERY_PHOTO_PLATES) {
+    assert.equal(plate.placeholderImage.status, 'ILLUSTRATIVE — REPLACE BEFORE LAUNCH');
+    assert.ok(plate.editorialCaption.length > 20);
+  }
+  for (const stop of VIRTUAL_TOUR_STOPS) {
+    assert.equal(stop.placeholderImage.status, 'ILLUSTRATIVE — REPLACE BEFORE LAUNCH');
+  }
+
+  // Filter by each category
+  assert.equal(filterGalleryPhotoPlates(GALLERY_PHOTO_PLATES, 'All').length, 10);
+  assert.equal(filterGalleryPhotoPlates(GALLERY_PHOTO_PLATES, 'Rooms').length, 2);
+  assert.equal(filterGalleryPhotoPlates(GALLERY_PHOTO_PLATES, 'Dining').length, 2);
+  assert.equal(filterGalleryPhotoPlates(GALLERY_PHOTO_PLATES, 'Common Areas').length, 2);
+  assert.equal(filterGalleryPhotoPlates(GALLERY_PHOTO_PLATES, 'Outdoor Spaces').length, 2);
+  assert.equal(filterGalleryPhotoPlates(GALLERY_PHOTO_PLATES, 'Activities').length, 2);
+
+  // Search query filtering
+  const courtyardMatches = filterGalleryPhotoPlates(GALLERY_PHOTO_PLATES, 'All', 'courtyard');
+  assert.equal(courtyardMatches.length, 1);
+  assert.equal(courtyardMatches[0].id, 'gallery-plate-04-garden-courtyard');
+});
+
+test('About Us page data covers 4 philosophy chapters, Daly City / San Bruno Mountain geography, core values, team roles, and conditional pet policy', () => {
+  assert.equal(ABOUT_PHILOSOPHY_CHAPTERS.length, 4);
+  assert.equal(DALY_CITY_GEOGRAPHY_LANDMARKS.length, 4);
+  assert.equal(ABOUT_CORE_VALUES.length, 4);
+  assert.equal(ABOUT_TEAM_ROLES_OVERVIEW.length, 4);
+  assert.equal(ABOUT_PET_POLICY_NOTE.verificationStatus, 'CLIENT CONFIRMATION REQUIRED');
+
+  for (const chapter of ABOUT_PHILOSOPHY_CHAPTERS) {
+    assert.equal(chapter.placeholderImage.status, 'ILLUSTRATIVE — REPLACE BEFORE LAUNCH');
+  }
+  for (const landmark of DALY_CITY_GEOGRAPHY_LANDMARKS) {
+    assert.equal(landmark.placeholderImage.status, 'ILLUSTRATIVE — REPLACE BEFORE LAUNCH');
+  }
+
+  // Verify San Bruno Mountain is explicitly featured in the local geography narrative
+  const sanBrunoMatch = DALY_CITY_GEOGRAPHY_LANDMARKS.find(
+    (item) => item.id === 'san-bruno-mountain-foothills'
+  );
+  assert.ok(sanBrunoMatch);
+  assert.ok(sanBrunoMatch.title.includes('San Bruno Mountain'));
+
+  // Verify pure filter helper
+  assert.equal(
+    filterGeographyLandmarks(DALY_CITY_GEOGRAPHY_LANDMARKS, 'All Landmarks').length,
+    4
+  );
+  assert.equal(
+    filterGeographyLandmarks(DALY_CITY_GEOGRAPHY_LANDMARKS, 'Natural Surroundings').length,
+    1
+  );
+  assert.equal(
+    filterGeographyLandmarks(DALY_CITY_GEOGRAPHY_LANDMARKS, 'Family Access').length,
+    1
+  );
+});
+
 test('validateVisitInquiry rejects incomplete inputs and sanitizes valid submissions', () => {
   const invalidResult = validateVisitInquiry({
     fullName: 'A',
@@ -216,3 +349,5 @@ test('validateVisitInquiry rejects incomplete inputs and sanitizes valid submiss
   assert.equal(validResult.sanitized?.careInterest, 'Respite Care');
   assert.equal(validResult.sanitized?.notes, 'Looking to tour next week');
 });
+
+

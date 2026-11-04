@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
+import Link from 'next/link';
 import { ArrowUpRight, Check, Phone, ChevronDown, HeartHandshake, Shield } from 'lucide-react';
 import {
   LIVING_SPACE_OPTIONS,
@@ -183,6 +184,13 @@ export default function SuitesAndFamilySection({
                   <span>Request Suite Availability &amp; Pricing</span>
                   <ArrowUpRight className="w-4 h-4" aria-hidden="true" />
                 </button>
+
+                <Link
+                  href="/suites-and-floor-plans"
+                  className="py-3.5 px-4 rounded-full border border-[#3B2348]/30 text-[#3B2348] text-xs font-semibold hover:border-[#3B2348] transition-colors"
+                >
+                  Suites &amp; Floor Plans
+                </Link>
               </div>
             </div>
           </div>
