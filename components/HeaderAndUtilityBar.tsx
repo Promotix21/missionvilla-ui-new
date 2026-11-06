@@ -178,76 +178,27 @@ export default function HeaderAndUtilityBar({
 
       {/* 2. Sticky Full-Width Editorial Monograph Header (68px Desktop — Total Top Height = 104px) */}
       <header className="sticky top-0 z-40 w-full bg-[#F7F4ED]/95 backdrop-blur-md grid-line-b fluid-canvas">
-        <div className="w-full h-16 lg:h-[68px] flex items-center justify-between gap-2 sm:gap-4">
+        <div className="w-full h-16 lg:h-[68px] flex items-center justify-between gap-1.5 sm:gap-4">
           {/* Zone 1: Brand Identity Lockup */}
           <Link
             href="/"
-            className="flex items-center gap-2.5 sm:gap-3 group shrink-0 focus-visible:outline-2 focus-visible:outline-[#3B2348] rounded-lg"
+            className="flex items-center gap-2 sm:gap-3 group shrink-0 rounded-lg"
           >
-            <div
-              className="w-8 h-8 sm:w-10 sm:h-10 shrink-0 transition-transform duration-300 group-hover:scale-105"
+            {/* Official Mission Villa leaf mark — extracted unaltered from the brand PDF (public/brand) */}
+            <img
+              src="/brand/mission-villa-mark-160.webp"
+              alt=""
               aria-hidden="true"
-            >
-              <svg
-                viewBox="0 0 120 110"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-                className="w-full h-full"
-              >
-                <defs>
-                  <linearGradient id="mvPlum" x1="10" y1="10" x2="60" y2="95" gradientUnits="userSpaceOnUse">
-                    <stop offset="0%" stopColor="#5B3270" />
-                    <stop offset="55%" stopColor="#3B2348" />
-                    <stop offset="100%" stopColor="#22122B" />
-                  </linearGradient>
-                  <linearGradient id="mvSage" x1="35" y1="8" x2="65" y2="100" gradientUnits="userSpaceOnUse">
-                    <stop offset="0%" stopColor="#C5DFB0" />
-                    <stop offset="50%" stopColor="#8FAF78" />
-                    <stop offset="100%" stopColor="#3D682E" />
-                  </linearGradient>
-                  <linearGradient id="mvTerra" x1="115" y1="30" x2="48" y2="102" gradientUnits="userSpaceOnUse">
-                    <stop offset="0%" stopColor="#E57B52" />
-                    <stop offset="50%" stopColor="#C98268" />
-                    <stop offset="100%" stopColor="#9A482B" />
-                  </linearGradient>
-                  <linearGradient id="mvSand" x1="25" y1="70" x2="52" y2="102" gradientUnits="userSpaceOnUse">
-                    <stop offset="0%" stopColor="#F5E6C8" />
-                    <stop offset="100%" stopColor="#D8C7A5" />
-                  </linearGradient>
-                </defs>
-                <path d="M26 74C34 80 45 84 48 104C36 93 29 84 26 74Z" fill="url(#mvSand)" />
-                <path
-                  d="M28 6C5 34 4 68 32 80C42 84 47 92 48 104C49 85 40 66 32 48C25 32 24 18 28 6Z"
-                  fill="url(#mvPlum)"
-                />
-                <path
-                  d="M28 6C26 26 36 46 47 64C55 77 54 92 48 104C66 86 72 60 56 38C44 22 33 16 28 6Z"
-                  fill="url(#mvSage)"
-                />
-                <path
-                  d="M114 34C82 42 64 58 64 78C64 89 56 97 48 104C76 94 96 76 114 34Z"
-                  fill="url(#mvTerra)"
-                />
-                <path
-                  d="M28 6C26 32 46 66 48 104"
-                  stroke="#F7F4ED"
-                  strokeWidth="1.75"
-                  strokeLinecap="round"
-                />
-                <path
-                  d="M114 34C86 56 68 78 48 104"
-                  stroke="#F7F4ED"
-                  strokeWidth="1.75"
-                  strokeLinecap="round"
-                />
-              </svg>
-            </div>
-            <div>
-              <span className="block font-serif text-sm sm:text-xl font-bold tracking-tight text-[#3B2348] leading-none whitespace-nowrap">
+              width={160}
+              height={102}
+              className="h-7 sm:h-10 w-auto shrink-0 transition-transform duration-300 group-hover:scale-105"
+            />
+            <div className="xl:max-[1439px]:sr-only">
+              <span className="block font-serif text-[13px] min-[390px]:text-sm sm:text-xl font-bold tracking-tight text-[#3B2348] leading-none whitespace-nowrap">
                 MISSION VILLA
               </span>
-              <span className="block font-sans text-[8.5px] sm:text-[10px] tracking-[0.18em] sm:tracking-[0.28em] uppercase text-[#29272B]/75 font-medium mt-1 whitespace-nowrap">
-                Senior Living · Daly City
+              <span className="block font-sans text-[8.5px] sm:text-[10px] tracking-[0.12em] sm:tracking-[0.28em] uppercase text-[#29272B]/75 font-medium mt-1 whitespace-nowrap">
+                Senior Living<span className="hidden sm:inline"> · Daly City</span>
               </span>
             </div>
           </Link>
@@ -255,7 +206,7 @@ export default function HeaderAndUtilityBar({
           {/* Zone 2: Center Editorial Navigation Links */}
           <nav
             aria-label="Primary Navigation"
-            className="hidden xl:flex items-center gap-2.5 text-xs font-medium text-[#29272B]"
+            className="hidden xl:flex items-center gap-2 min-[1536px]:gap-2.5 text-xs font-medium text-[#29272B]"
           >
             <Link
               href="/"
@@ -783,7 +734,7 @@ export default function HeaderAndUtilityBar({
           </nav>
 
           {/* Zone 3: Right Conversion CTA */}
-          <div className="flex items-center gap-1.5 sm:gap-3 shrink-0">
+          <div className="flex items-center gap-1 sm:gap-3 shrink-0">
             {cleanLovedOne && (
               <div className="hidden lg:block text-right">
                 <span className="block text-[9px] uppercase tracking-[0.2em] text-[#A65D43] font-semibold">
@@ -798,9 +749,9 @@ export default function HeaderAndUtilityBar({
             <button
               type="button"
               onClick={() => handleNavClick('schedule-visit')}
-              className="inline-flex items-center gap-1.5 sm:gap-2 px-2.5 sm:px-5 py-2 sm:py-2.5 rounded-full bg-[#3B2348] text-[#F7F4ED] font-medium text-[11px] sm:text-xs hover:bg-[#C98268] transition-all duration-300 shadow-md cursor-pointer whitespace-nowrap"
+              className="inline-flex items-center gap-1.5 sm:gap-2 px-2 min-[390px]:px-3 sm:px-5 py-2 sm:py-2.5 rounded-full bg-[#3B2348] text-[#F7F4ED] font-medium text-[11px] sm:text-xs hover:bg-[#C98268] transition-all duration-300 shadow-md cursor-pointer whitespace-nowrap"
             >
-              <Calendar className="w-3.5 h-3.5 shrink-0" aria-hidden="true" />
+              <Calendar className="hidden min-[400px]:block sm:block w-3.5 h-3.5 shrink-0" aria-hidden="true" />
               <span>{MISSION_VILLA_FACTS.primaryCtas.scheduleVisit}</span>
               <span className="hidden sm:inline" aria-hidden="true">
                 →

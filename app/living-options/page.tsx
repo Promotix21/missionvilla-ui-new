@@ -1129,7 +1129,7 @@ export default function LivingOptionsOverviewPage() {
                           `Accommodation Interest: Would like to see ${activeSuite.title} during a visit.`
                         )
                       }
-                      className="px-5 py-3 rounded-full border border-[#3B2348]/35 text-[#3B2348] text-xs sm:text-sm font-semibold hover:bg-[#3B2348] hover:text-[#F7F4ED] transition-colors cursor-pointer whitespace-nowrap"
+                      className="max-w-full px-5 py-3 rounded-full border border-[#3B2348]/35 text-[#3B2348] text-xs sm:text-sm font-semibold text-center leading-snug hover:bg-[#3B2348] hover:text-[#F7F4ED] transition-colors cursor-pointer sm:whitespace-nowrap"
                     >
                       Ask About {activeSuite.title} ↓
                     </button>

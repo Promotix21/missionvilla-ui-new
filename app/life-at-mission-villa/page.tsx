@@ -31,6 +31,7 @@ import {
   LIFESTYLE_SERVICES_PREVIEW,
   type DayInTheLifeMoment,
   type EditorialGalleryPlate,
+  imageCreditLabel,
 } from '@/lib/mission-villa-data';
 
 export default function LifeAtMissionVillaPage() {
@@ -249,8 +250,8 @@ export default function LifeAtMissionVillaPage() {
               <div className="bento-frame w-full h-[450px] sm:h-[520px] lg:h-full max-h-[630px] relative shadow-2xl border border-[#D8C7A5] bg-[#3B2348] group flex flex-col justify-between">
                 {/* ILLUSTRATIVE — REPLACE BEFORE LAUNCH */}
                 <img
-                  src="https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=1600&q=85"
-                  alt="Illustrative placeholder: Warm, sunlit residential living and social gathering space at Mission Villa"
+                  src="/images/property/community-lounge.webp"
+                  alt="Mission Villa community lounge with armchairs, a sofa and natural light"
                   referrerPolicy="no-referrer"
                   className="absolute inset-0 w-full h-full object-cover object-center mood-grade group-hover:scale-[1.03] transition-transform duration-700"
                 />
@@ -268,8 +269,8 @@ export default function LifeAtMissionVillaPage() {
                   <div className="w-40 xl:w-44 p-2 rounded-t-[110px] rounded-b-2xl bg-[#FCFBF8]/95 border border-[#D8C7A5] shadow-xl">
                     <div className="arch-portal h-36 xl:h-40 w-full bg-[#22122B] relative">
                       <img
-                        src="https://images.unsplash.com/photo-1585320806297-9794b3e4eeae?auto=format&fit=crop&w=800&q=80"
-                        alt="Illustrative placeholder: Peaceful garden courtyard greenery and sunlit patio setting"
+                        src="/images/property/courtyard-patio.webp"
+                        alt="Mission Villa courtyard patio with umbrella tables and garden seating"
                         referrerPolicy="no-referrer"
                         className="w-full h-full object-cover mood-grade"
                       />
@@ -295,7 +296,7 @@ export default function LifeAtMissionVillaPage() {
                       “From freshly prepared meals in our dining room to music, art, scenic drives, and unhurried visits with family, life here honors who each resident is.”
                     </p>
                     <p className="text-[10px] text-[#F7F4ED]/70">
-                      Illustrative placeholder photography · Replace with official Mission Villa photography before launch
+                      Mission Villa property photographs · Daly City
                     </p>
                   </div>
 
@@ -449,7 +450,7 @@ export default function LifeAtMissionVillaPage() {
                             “{chapter.primaryImage.caption}”
                           </p>
                           <p className="text-[10px] text-[#F7F4ED]/70">
-                            Illustrative placeholder photography — replace before launch
+                            {imageCreditLabel(chapter.primaryImage.status)}
                           </p>
                         </div>
 
@@ -848,7 +849,7 @@ export default function LifeAtMissionVillaPage() {
                         “{activeDayMoment.placeholderImage.caption}”
                       </p>
                       <p className="text-[10px] text-[#F7F4ED]/70">
-                        Illustrative placeholder photography ({activeDayMoment.placeholderImage.status})
+                        {imageCreditLabel(activeDayMoment.placeholderImage.status)}
                       </p>
                     </div>
                   </div>
@@ -1014,7 +1015,7 @@ export default function LifeAtMissionVillaPage() {
 
                     <div className="pt-3 border-t border-white/10 flex items-center justify-between text-[11px] text-[#D8C7A5]">
                       <span>{isSelected ? 'Selected in Plate Viewer' : 'Inspect Plate →'}</span>
-                      <span className="text-[#F7F4ED]/55">Illustrative Placeholder</span>
+                      <span className="text-[#F7F4ED]/55">{imageCreditLabel(plate.placeholderImage.status)}</span>
                     </div>
                   </div>
                 </button>
@@ -1053,7 +1054,7 @@ export default function LifeAtMissionVillaPage() {
                 {activeGalleryPlate.caption}
               </p>
               <div className="p-3.5 rounded-2xl bg-white/5 border border-white/10 text-xs text-[#D8C7A5]/90">
-                <strong>Photography Note:</strong> Current preview uses illustrative placeholder imagery ({activeGalleryPlate.placeholderImage.status}). Official Mission Villa photography and virtual tour media will be integrated in the Gallery &amp; Virtual Tour collection.
+                <strong>Photography Note:</strong> {activeGalleryPlate.placeholderImage.status === 'MISSION VILLA PROPERTY PHOTO' ? 'This plate is a Mission Villa property photograph.' : 'Current preview uses illustrative placeholder imagery.'} Official Mission Villa photography and virtual tour media will be integrated in the Gallery &amp; Virtual Tour collection.
               </div>
               <div className="pt-2 flex flex-wrap items-center gap-3">
                 <button

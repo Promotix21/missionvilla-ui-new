@@ -34,6 +34,7 @@ import {
   type RespiteScenario,
   type RespiteTimelineStep,
   type RespiteFaqItem,
+  imageCreditLabel,
 } from '@/lib/mission-villa-data';
 
 export default function RespiteCarePage() {
@@ -245,8 +246,8 @@ export default function RespiteCarePage() {
               <div className="bento-frame w-full h-[430px] sm:h-[500px] lg:h-full max-h-[620px] relative shadow-2xl border border-[#D8C7A5] bg-[#3B2348] group flex flex-col justify-between">
                 {/* ILLUSTRATIVE — REPLACE BEFORE LAUNCH */}
                 <img
-                  src="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?auto=format&fit=crop&w=1600&q=85"
-                  alt="Illustrative placeholder: Warm, sunlit furnished sitting area prepared for a comfortable short-term Respite Care stay"
+                  src="/images/property/sitting-nook-detail.webp"
+                  alt="Sunlit sitting nook at Mission Villa with a Golden Gate Bridge mural"
                   referrerPolicy="no-referrer"
                   className="absolute inset-0 w-full h-full object-cover object-center mood-grade group-hover:scale-[1.03] transition-transform duration-700"
                 />
@@ -269,7 +270,7 @@ export default function RespiteCarePage() {
                       “Whether you need a trusted place while you travel, time to recharge as a caregiver, or a supportive bridge after an illness, your loved one is cared for with warmth and dignity.”
                     </p>
                     <p className="text-[10px] text-[#F7F4ED]/70">
-                      Illustrative placeholder photography · Replace with official Mission Villa photography before launch
+                      Mission Villa property photograph · Daly City
                     </p>
                   </div>
 
@@ -651,7 +652,7 @@ export default function RespiteCarePage() {
                         “{chapter.placeholderImage.caption}”
                       </p>
                       <p className="text-[10px] text-[#F7F4ED]/70">
-                        Illustrative placeholder photography
+                        {imageCreditLabel(chapter.placeholderImage.status)}
                       </p>
                     </div>
                   </div>

@@ -33,6 +33,7 @@ import {
   filterServicesAndAmenities,
   type ServiceAmenityCategoryId,
   type OfferingClassification,
+  imageCreditLabel,
 } from '@/lib/mission-villa-data';
 
 export default function ServicesAndAmenitiesPage() {
@@ -326,7 +327,7 @@ export default function ServicesAndAmenitiesPage() {
               <div className="sm:col-span-7 bento-frame min-h-[290px] sm:min-h-[360px] relative bg-[#3B2348] border border-[#D8C7A5]/30 shadow-2xl flex flex-col justify-between group">
                 {/* ILLUSTRATIVE — REPLACE BEFORE LAUNCH */}
                 <img
-                  src="https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=1400&q=85"
+                  src="/images/illustrative/hero-life.webp"
                   alt="Illustrative placeholder: Restaurant-style full-table dining service with freshly prepared dishes at Mission Villa"
                   referrerPolicy="no-referrer"
                   className="absolute inset-0 w-full h-full object-cover mood-grade group-hover:scale-[1.03] transition-transform duration-700"
@@ -355,8 +356,8 @@ export default function ServicesAndAmenitiesPage() {
                 <div className="arch-portal h-[220px] sm:h-[235px] w-full relative bg-[#3B2348] border border-[#D8C7A5]/35 shadow-xl overflow-hidden flex flex-col justify-end group">
                   {/* ILLUSTRATIVE — REPLACE BEFORE LAUNCH */}
                   <img
-                    src="https://images.unsplash.com/photo-1585320806297-9794b3e4eeae?auto=format&fit=crop&w=1000&q=80"
-                    alt="Illustrative placeholder: Sunlit enclosed garden courtyard and patio seating at Mission Villa"
+                    src="/images/property/courtyard-patio.webp"
+                    alt="Mission Villa courtyard patio with umbrella tables and garden seating"
                     referrerPolicy="no-referrer"
                     className="absolute inset-0 w-full h-full object-cover mood-grade group-hover:scale-105 transition-transform duration-700"
                   />
@@ -659,7 +660,7 @@ export default function ServicesAndAmenitiesPage() {
                       “{activeCategoryMeta.editorialPairingImage.caption}”
                     </p>
                     <p className="text-[10px] text-[#F7F4ED]/70">
-                      Illustrative placeholder ({activeCategoryMeta.editorialPairingImage.status})
+                      {imageCreditLabel(activeCategoryMeta.editorialPairingImage.status)}
                     </p>
                   </div>
                 </div>
@@ -928,8 +929,8 @@ export default function ServicesAndAmenitiesPage() {
               <div className="bento-frame w-full min-h-[380px] sm:min-h-[460px] lg:h-full relative bg-[#3B2348] border border-[#D8C7A5] shadow-xl flex flex-col justify-between group">
                 {/* ILLUSTRATIVE — REPLACE BEFORE LAUNCH */}
                 <img
-                  src="https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=1800&q=85"
-                  alt="Illustrative placeholder: Sunlit residential common lounge, library reading corner, and dining transition at Mission Villa"
+                  src="/images/property/community-lounge.webp"
+                  alt="Mission Villa community lounge with armchairs, a sofa and natural light"
                   referrerPolicy="no-referrer"
                   className="absolute inset-0 w-full h-full object-cover mood-grade group-hover:scale-[1.02] transition-transform duration-700"
                 />
@@ -957,7 +958,7 @@ export default function ServicesAndAmenitiesPage() {
                     Because our 24-hour staff provides gentle escort and transfer support, residents can move comfortably from their suites to full-table meals, library reading corners, salon appointments, and afternoon activities.
                   </p>
                   <p className="text-[10px] text-[#D8C7A5]/80">
-                    Illustrative placeholder photography (ILLUSTRATIVE — REPLACE BEFORE LAUNCH)
+                    Mission Villa property photograph
                   </p>
                 </div>
               </div>
@@ -971,7 +972,7 @@ export default function ServicesAndAmenitiesPage() {
               <div className="arch-portal h-56 w-full relative bg-[#22122B] border border-[#D8C7A5] overflow-hidden">
                 {/* ILLUSTRATIVE — REPLACE BEFORE LAUNCH */}
                 <img
-                  src="https://images.unsplash.com/photo-1490750967868-88aa4486c946?auto=format&fit=crop&w=1000&q=80"
+                  src="/images/illustrative/life-create.webp"
                   alt="Illustrative placeholder: Fresh botanical detail representing daily enrichment and courtyard garden care"
                   referrerPolicy="no-referrer"
                   className="w-full h-full object-cover mood-grade"

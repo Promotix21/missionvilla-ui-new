@@ -297,3 +297,12 @@ html {
     scroll-behavior: auto !important;
   }
 }
+
+/* Site-wide keyboard focus indicator (brand terracotta). Lives in the base layer so
+   component utilities can still refine it; mouse clicks do not trigger :focus-visible. */
+@layer base {
+  :where(a[href], button, summary, [role='button'], [role='tab'], [tabindex]:not([tabindex='-1'])):focus-visible {
+    outline: 2px solid #c98268;
+    outline-offset: 3px;
+  }
+}

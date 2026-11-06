@@ -32,6 +32,7 @@ import {
   type LegaciesTouchpoint,
   type MemoryCareSuiteFormat,
   type MemoryCareFaqItem,
+  imageCreditLabel,
 } from '@/lib/mission-villa-data';
 
 export default function MemoryCarePage() {
@@ -240,7 +241,7 @@ export default function MemoryCarePage() {
               <div className="arch-portal w-full lg:w-[90%] h-[430px] sm:h-[500px] lg:h-full max-h-[620px] relative shadow-2xl border-4 border-[#FCFBF8] bg-[#3B2348] group">
                 {/* ILLUSTRATIVE — REPLACE BEFORE LAUNCH */}
                 <img
-                  src="https://images.unsplash.com/photo-1576765608535-5f04d1e3f289?auto=format&fit=crop&w=1600&q=85"
+                  src="/images/illustrative/approach-main.webp"
                   alt="Illustrative placeholder: Warm, reassuring connection with an older adult in a sunlit residential setting"
                   referrerPolicy="no-referrer"
                   className="w-full h-full object-cover object-center mood-grade group-hover:scale-[1.03] transition-transform duration-700"
@@ -558,7 +559,7 @@ export default function MemoryCarePage() {
                     “{activeLegacies.placeholderImage.caption}”
                   </p>
                   <p className="text-[10px] text-[#F7F4ED]/65">
-                    Illustrative placeholder photography
+                    {imageCreditLabel(activeLegacies.placeholderImage.status)}
                   </p>
                 </div>
 
@@ -635,7 +636,7 @@ export default function MemoryCarePage() {
                       </div>
 
                       <div className="absolute top-5 right-5 px-3 py-1 rounded-lg bg-black/45 backdrop-blur-sm text-[10px] text-[#F7F4ED]/85">
-                        Illustrative photography
+                        {imageCreditLabel(scene.placeholderImage.status)}
                       </div>
                     </div>
 
@@ -897,7 +898,7 @@ export default function MemoryCarePage() {
                   {activeSuiteFormat.name}
                 </h3>
                 <p className="text-[11px] text-[#F7F4ED]/75">
-                  Illustrative placeholder photography · Schedule an in-person tour at 995 East Market Street to view actual suites.
+                  {imageCreditLabel(activeSuiteFormat.placeholderImage.status)} · Schedule an in-person tour at 995 East Market Street to view actual suites.
                 </p>
               </div>
             </div>

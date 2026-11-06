@@ -35,6 +35,7 @@ import {
   type GalleryPhotoPlate,
   type VirtualTourStop,
   type VisitInquiryInput,
+  imageCreditLabel,
 } from '@/lib/mission-villa-data';
 
 export default function GalleryAndVirtualTourPage() {
@@ -262,7 +263,7 @@ export default function GalleryAndVirtualTourPage() {
                 </div>
 
                 <p className="text-[11px] text-[#29272B]/70 leading-snug">
-                  <strong className="text-[#3B2348]">Prototype Media Note:</strong> Preview plates use illustrative placeholder photography (<code className="text-[10px] bg-[#D8C7A5]/35 px-1.5 py-0.5 rounded">ILLUSTRATIVE — REPLACE BEFORE LAUNCH</code>) until official Mission Villa photography is supplied.
+                  <strong className="text-[#3B2348]">Prototype Media Note:</strong> Plates combine Mission Villa property photographs with clearly labelled illustrative imagery until the full official photo library is supplied.
                 </p>
               </div>
 
@@ -335,7 +336,7 @@ export default function GalleryAndVirtualTourPage() {
                     {GALLERY_PHOTO_PLATES[1].title}
                   </h2>
                   <p className="text-[11px] text-[#F7F4ED]/75">
-                    {GALLERY_PHOTO_PLATES[1].subtitle} · Illustrative placeholder
+                    {GALLERY_PHOTO_PLATES[1].subtitle} · {imageCreditLabel(GALLERY_PHOTO_PLATES[1].placeholderImage.status)}
                   </p>
                 </div>
               </div>
@@ -1106,7 +1107,7 @@ export default function GalleryAndVirtualTourPage() {
                       {activeTourStop.title}
                     </h3>
                     <p className="text-[11px] text-[#F7F4ED]/75">
-                      Illustrative preview ({activeTourStop.placeholderImage.status}) — schedule a visit to walk this space in person.
+                      {imageCreditLabel(activeTourStop.placeholderImage.status)} — schedule a visit to walk this space in person.
                     </p>
                   </div>
                 </div>

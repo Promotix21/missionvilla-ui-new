@@ -513,54 +513,20 @@ export default function VisitAndFooterSection({
           <div className="w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-10 lg:gap-8">
             {/* Columns 1–4: Brand Identity & Tagline */}
             <div className="lg:col-span-4 space-y-5 pr-0 lg:pr-6">
-              <div className="flex items-center gap-3.5">
-                <div className="w-11 h-11 shrink-0" aria-hidden="true">
-                  <svg
-                    viewBox="0 0 120 110"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="w-full h-full"
-                  >
-                    <path d="M26 74C34 80 45 84 48 104C36 93 29 84 26 74Z" fill="#D8C7A5" />
-                    <path
-                      d="M28 6C5 34 4 68 32 80C42 84 47 92 48 104C49 85 40 66 32 48C25 32 24 18 28 6Z"
-                      fill="#5B3270"
-                    />
-                    <path
-                      d="M28 6C26 26 36 46 47 64C55 77 54 92 48 104C66 86 72 60 56 38C44 22 33 16 28 6Z"
-                      fill="#8FAF78"
-                    />
-                    <path
-                      d="M114 34C82 42 64 58 64 78C64 89 56 97 48 104C76 94 96 76 114 34Z"
-                      fill="#C98268"
-                    />
-                    <path
-                      d="M28 6C26 32 46 66 48 104"
-                      stroke="#F7F4ED"
-                      strokeWidth="1.75"
-                      strokeLinecap="round"
-                    />
-                    <path
-                      d="M114 34C86 56 68 78 48 104"
-                      stroke="#F7F4ED"
-                      strokeWidth="1.75"
-                      strokeLinecap="round"
-                    />
-                  </svg>
-                </div>
-                <div>
-                  <span className="block font-serif text-xl font-bold tracking-tight text-[#F7F4ED] leading-none">
-                    MISSION VILLA
-                  </span>
-                  <span className="block font-sans text-[10px] tracking-[0.26em] uppercase text-[#D8C7A5] font-medium mt-1">
-                    Senior Living · Daly City
-                  </span>
-                </div>
-              </div>
-
-              <p className="font-serif italic text-base text-[#D8C7A5] leading-relaxed">
-                “{MISSION_VILLA_FACTS.tagline}”
-              </p>
+              {/* Official Mission Villa logo lockup — extracted unaltered from the brand PDF.
+                  The plum lettering needs a light ground, so it sits on a cream plate. */}
+              <Link
+                href="/"
+                className="inline-block rounded-2xl bg-[#F7F4ED] px-5 py-4 shadow-[0_10px_30px_-18px_rgba(0,0,0,0.6)] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#D8C7A5]"
+              >
+                <img
+                  src="/brand/mission-villa-logo-honor-560.webp"
+                  alt={`Mission Villa Senior Living — ${MISSION_VILLA_FACTS.tagline}`}
+                  width={560}
+                  height={417}
+                  className="w-[220px] sm:w-[250px] h-auto"
+                />
+              </Link>
 
               <p className="text-xs sm:text-sm text-[#F7F4ED]/75 leading-relaxed">
                 Compassionate, personalized Memory Care and short-term Respite Care in a welcoming, homelike Daly City community.

@@ -358,15 +358,15 @@ export default function ForFamiliesPage() {
                 {/* Editorial Photography Plate (Clearly Labeled Illustrative) */}
                 <div className="relative rounded-2xl overflow-hidden bg-[#22122B] h-44 sm:h-52 border border-[#D8C7A5]/60">
                   <img
-                    src="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?auto=format&fit=crop&w=1400&q=85"
-                    alt="Illustrative placeholder: Warm, sunlit residential sitting room designed for unhurried family visits and conversation"
+                    src="/images/property/sitting-nook-detail.webp"
+                    alt="Sunlit sitting nook at Mission Villa with a Golden Gate Bridge mural"
                     referrerPolicy="no-referrer"
                     className="w-full h-full object-cover"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-[#22122B]/90 via-[#22122B]/40 to-transparent" />
                   <div className="absolute bottom-3.5 left-4 right-4 text-[#F7F4ED] space-y-1">
                     <span className="text-[10px] uppercase tracking-[0.18em] text-[#D8C7A5] font-semibold block">
-                      ILLUSTRATIVE — REPLACE BEFORE LAUNCH
+                      MISSION VILLA · PROPERTY PHOTO
                     </span>
                     <p className="font-serif text-sm sm:text-base font-medium leading-snug">
                       You don’t have to have every question figured out before you call or visit—our Daly City team is here to listen first.

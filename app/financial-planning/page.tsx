@@ -366,7 +366,7 @@ export default function FinancialPlanningPage() {
                 <div className="grid grid-cols-1 sm:grid-cols-12 gap-4 items-stretch my-auto">
                   <div className="sm:col-span-5 relative arch-portal overflow-hidden bg-[#3B2348] min-h-[190px] border border-[#D8C7A5]/40">
                     <img
-                      src="https://images.unsplash.com/photo-1576765608535-5f04d1e3f289?auto=format&fit=crop&w=1400&q=85"
+                      src="/images/illustrative/approach-main.webp"
                       alt="Illustrative placeholder: Warm, unhurried family conversation in a sunlit residential lounge"
                       referrerPolicy="no-referrer"
                       className="w-full h-full object-cover mood-grade"

@@ -273,8 +273,8 @@ export default function HeroStage({
               {/* REPLACEABLE ILLUSTRATIVE PLACEHOLDER PHOTO */}
               <img
                 id="hero-arch-img"
-                src="https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=2000&q=85"
-                alt="Illustrative placeholder: Warm, sunlit residential living and conservatory gathering space"
+                src="/images/illustrative/care-memory.webp"
+                alt="Illustrative image: a caregiver sharing a calm, familiar moment with a resident"
                 referrerPolicy="no-referrer"
                 className="w-full h-full object-cover object-center mood-grade group-hover:scale-[1.03] transition-transform duration-700"
               />
@@ -328,8 +328,8 @@ export default function HeroStage({
             >
               <div className="h-20 xl:h-24 rounded-xl overflow-hidden mb-2 bg-[#3B2348]">
                 <img
-                  src="https://images.unsplash.com/photo-1509316975850-ff9c5deb0cd9?auto=format&fit=crop&w=500&q=80"
-                  alt="Illustrative botanical olive foliage"
+                  src="/images/illustrative/approach-detail.webp"
+                  alt="Illustrative image: hands resting on a journal beside a cup of tea"
                   referrerPolicy="no-referrer"
                   className="w-full h-full object-cover mood-grade"
                 />
@@ -351,8 +351,8 @@ export default function HeroStage({
             >
               <div className="flex items-center gap-2.5">
                 <img
-                  src="https://images.unsplash.com/photo-1490750967868-88aa4486c946?auto=format&fit=crop&w=300&q=80"
-                  alt="Illustrative sunlit pink cosmos blossom"
+                  src="/images/property/bedroom.webp"
+                  alt="A furnished suite bedroom at Mission Villa"
                   referrerPolicy="no-referrer"
                   className="w-12 h-12 rounded-xl object-cover shrink-0 border border-[#D8C7A5]"
                 />

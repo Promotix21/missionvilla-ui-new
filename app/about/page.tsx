@@ -328,8 +328,8 @@ export default function AboutUsPage() {
               {/* Primary Arched Portrait-Led Study (7 of 12 right cols) */}
               <div className="sm:col-span-7 relative rounded-t-[140px] rounded-b-[28px] overflow-hidden border border-[#D8C7A5] bg-[#22122B] min-h-[290px] lg:min-h-[370px] flex flex-col justify-between p-5 shadow-lg group">
                 <img
-                  src="https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=1200&q=85"
-                  alt="Illustrative placeholder: Warm, sunlit residential living space honoring a senior resident’s personal story and comfort"
+                  src="/images/property/community-lounge.webp"
+                  alt="Mission Villa community lounge with armchairs, a sofa and natural light"
                   referrerPolicy="no-referrer"
                   className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                 />
@@ -353,7 +353,7 @@ export default function AboutUsPage() {
                     resident’s routines, cherished memories, and personal pace.
                   </p>
                   <p className="text-[10px] text-[#D8C7A5]/75 pt-1">
-                    ILLUSTRATIVE — REPLACE BEFORE LAUNCH
+                    MISSION VILLA · PROPERTY PHOTO
                   </p>
                 </div>
               </div>
@@ -363,8 +363,8 @@ export default function AboutUsPage() {
                 {/* Top Card: Daly City & San Bruno Mountain Context */}
                 <div className="flex-1 relative rounded-[24px] overflow-hidden border border-[#D8C7A5] bg-[#22122B] min-h-[175px] p-4 flex flex-col justify-between">
                   <img
-                    src="https://images.unsplash.com/photo-1585320806297-9794b3e4eeae?auto=format&fit=crop&w=900&q=80"
-                    alt="Illustrative placeholder: Sunlit California garden greenery near San Bruno Mountain in Daly City"
+                    src="/images/property/courtyard-patio.webp"
+                    alt="Mission Villa courtyard patio with umbrella tables and garden seating"
                     referrerPolicy="no-referrer"
                     className="absolute inset-0 w-full h-full object-cover opacity-85"
                   />
@@ -422,11 +422,8 @@ export default function AboutUsPage() {
               <Info className="w-3.5 h-3.5 text-[#C98268] shrink-0" aria-hidden="true" />
               <span>
                 <strong>Prototype Visual Note:</strong> Photography on this page
-                is marked{' '}
-                <code className="text-[#3B2348] font-semibold">
-                  ILLUSTRATIVE — REPLACE BEFORE LAUNCH
-                </code>{' '}
-                pending official community &amp; team portraits.
+                combines Mission Villa property photos with labelled illustrative
+                imagery, pending official community &amp; team portraits.
               </span>
             </div>
             <div className="flex items-center gap-3">

@@ -5,6 +5,15 @@
 // Kept separate from presentation for easy developer/CMS integration and testing.
 // All illustrative stock imagery is marked as replaceable placeholder media.
 
+// Provenance label for every image slot: authentic property photo vs illustrative stand-in.
+export type ImageStatus = 'ILLUSTRATIVE — REPLACE BEFORE LAUNCH' | 'MISSION VILLA PROPERTY PHOTO';
+
+export function imageCreditLabel(status: ImageStatus): string {
+  return status === 'MISSION VILLA PROPERTY PHOTO'
+    ? 'Mission Villa property photograph'
+    : 'Illustrative placeholder photography';
+}
+
 export interface BusinessFacts {
   name: string;
   shortName: string;
@@ -115,8 +124,8 @@ export const CARE_PROGRAMS: CareProgram[] = [
     ctaLabel: 'Explore Memory Care & Request Info',
     placeholderImage: {
       // REPLACEABLE ILLUSTRATIVE PLACEHOLDER PHOTO
-      src: 'https://images.unsplash.com/photo-1586023492125-27b2c045efd7?auto=format&fit=crop&w=1400&q=85',
-      alt: 'Illustrative placeholder: Warm, comfortable homelike sitting room designed for calm daily living',
+      src: '/images/property/sitting-nook-detail.webp',
+      alt: 'Sunlit sitting nook at Mission Villa with a Golden Gate Bridge mural',
       caption: 'Compassionate daily connection through our Legacies™ Memory Care approach',
     },
   },
@@ -145,7 +154,7 @@ export const CARE_PROGRAMS: CareProgram[] = [
     ctaLabel: 'Inquire About Respite Care Availability',
     placeholderImage: {
       // REPLACEABLE ILLUSTRATIVE PLACEHOLDER PHOTO
-      src: 'https://images.unsplash.com/photo-1576765608535-5f04d1e3f289?auto=format&fit=crop&w=1400&q=85',
+      src: '/images/illustrative/approach-main.webp',
       alt: 'Illustrative placeholder: Gentle, attentive conversation with a senior in a bright, comfortable room',
       caption: 'Dependable short-term stays that support both residents and family caregivers',
     },
@@ -269,8 +278,8 @@ export const APPROACH_PILLARS: ApproachPillar[] = [
     ],
     placeholderImage: {
       // REPLACEABLE ILLUSTRATIVE PLACEHOLDER PHOTO
-      src: 'https://images.unsplash.com/photo-1585320806297-9794b3e4eeae?auto=format&fit=crop&w=1400&q=85',
-      alt: 'Illustrative placeholder: Peaceful sunlit garden greenery and tranquil outdoor atmosphere',
+      src: '/images/property/courtyard-patio.webp',
+      alt: 'Mission Villa courtyard patio with umbrella tables and garden seating',
       caption: 'Calm, welcoming surroundings that support everyday comfort and dignity',
     },
   },
@@ -289,7 +298,7 @@ export const APPROACH_PILLARS: ApproachPillar[] = [
     ],
     placeholderImage: {
       // REPLACEABLE ILLUSTRATIVE PLACEHOLDER PHOTO
-      src: 'https://images.unsplash.com/photo-1576765608535-5f04d1e3f289?auto=format&fit=crop&w=1400&q=85',
+      src: '/images/illustrative/approach-main.webp',
       alt: 'Illustrative placeholder: Warm conversation and shared smiles in a comfortable lounge setting',
       caption: 'Meaningful relationships between residents, families, and care team members',
     },
@@ -309,7 +318,7 @@ export const APPROACH_PILLARS: ApproachPillar[] = [
     ],
     placeholderImage: {
       // REPLACEABLE ILLUSTRATIVE PLACEHOLDER PHOTO
-      src: 'https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=1400&q=85',
+      src: '/images/illustrative/hero-life.webp',
       alt: 'Illustrative placeholder: Freshly prepared, nourishing meal served at a welcoming table',
       caption: 'Chef-prepared dining and daily engagement that bring warmth to every day',
     },
@@ -340,8 +349,8 @@ export const DAILY_LIFE_MOMENTS: DailyLifeMoment[] = [
       'Each day begins at a comfortable, reassuring pace. Our team provides personalized assistance while honoring each resident’s privacy, independence, and lifelong morning habits.',
     detailNote: 'Private & shared suites with private bathrooms',
     placeholderImage: {
-      src: 'https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=1000&q=80',
-      alt: 'Illustrative placeholder: Warm morning daylight filling a welcoming communal sitting area',
+      src: '/images/property/community-lounge.webp',
+      alt: 'Mission Villa community lounge with armchairs, a sofa and natural light',
     },
   },
   {
@@ -353,7 +362,7 @@ export const DAILY_LIFE_MOMENTS: DailyLifeMoment[] = [
       'Residents gather in welcoming communal spaces for thoughtfully guided activities—from music and reminiscence to gentle movement and creative projects that spark recognition and joy.',
     detailNote: 'Tailored to individual interests & abilities',
     placeholderImage: {
-      src: 'https://images.unsplash.com/photo-1490750967868-88aa4486c946?auto=format&fit=crop&w=1000&q=80',
+      src: '/images/illustrative/life-create.webp',
       alt: 'Illustrative placeholder: Bright botanical blooms representing sensory and creative engagement',
     },
   },
@@ -366,7 +375,7 @@ export const DAILY_LIFE_MOMENTS: DailyLifeMoment[] = [
       'Mealtimes are a cornerstone of community life at Mission Villa. Residents enjoy freshly prepared, comforting meals in a warm dining setting that encourages conversation and appetite.',
     detailNote: 'Nutritious dining in a welcoming communal setting',
     placeholderImage: {
-      src: 'https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=1000&q=80',
+      src: '/images/illustrative/hero-life.webp',
       alt: 'Illustrative placeholder: Freshly prepared meal served at an inviting dining table',
     },
   },
@@ -379,8 +388,8 @@ export const DAILY_LIFE_MOMENTS: DailyLifeMoment[] = [
       'Afternoons and evenings invite quiet relaxation in common lounges, friendly conversation with neighbors, and meaningful visits with family members in our homelike Daly City community.',
     detailNote: '995 East Market Street, Daly City, CA 94014',
     placeholderImage: {
-      src: 'https://images.unsplash.com/photo-1586023492125-27b2c045efd7?auto=format&fit=crop&w=1000&q=80',
-      alt: 'Illustrative placeholder: Warm afternoon lounge setting for family visits and companionship',
+      src: '/images/property/sitting-nook-detail.webp',
+      alt: 'Sunlit sitting nook at Mission Villa with a Golden Gate Bridge mural',
     },
   },
 ];
@@ -415,7 +424,7 @@ export const LIVING_SPACE_OPTIONS: LivingSpaceOption[] = [
     ],
     note: 'Contact our team at (650) 756-1995 for current private suite availability and pricing.',
     placeholderImage: {
-      src: 'https://images.unsplash.com/photo-1616594039964-ae9021a400a0?auto=format&fit=crop&w=1400&q=85',
+      src: '/images/illustrative/care-respite.webp',
       alt: 'Illustrative placeholder: Warm, comfortable private bedroom suite with natural light',
     },
   },
@@ -434,8 +443,8 @@ export const LIVING_SPACE_OPTIONS: LivingSpaceOption[] = [
     ],
     note: 'Ask our Daly City team about companion matching and shared suite pricing during your tour.',
     placeholderImage: {
-      src: 'https://images.unsplash.com/photo-1598928506311-c55ded91a20c?auto=format&fit=crop&w=1400&q=85',
-      alt: 'Illustrative placeholder: Inviting, well-lit residential living space with warm furnishings',
+      src: '/images/property/bedroom.webp',
+      alt: 'A furnished suite bedroom at Mission Villa with natural light',
     },
   },
   {
@@ -453,8 +462,8 @@ export const LIVING_SPACE_OPTIONS: LivingSpaceOption[] = [
     ],
     note: 'Schedule a visit to walk through our common areas and meet our care team in person.',
     placeholderImage: {
-      src: 'https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=1400&q=85',
-      alt: 'Illustrative placeholder: Sunlit communal lounge designed for gathering and conversation',
+      src: '/images/property/community-lounge.webp',
+      alt: 'Mission Villa community lounge with armchairs, a sofa and natural light',
     },
   },
 ];
@@ -546,7 +555,7 @@ export interface LegaciesTouchpoint {
     src: string;
     alt: string;
     caption: string;
-    status: 'ILLUSTRATIVE — REPLACE BEFORE LAUNCH';
+    status: ImageStatus;
   };
 }
 
@@ -564,7 +573,7 @@ export interface StoryboardScene {
     src: string;
     alt: string;
     caption: string;
-    status: 'ILLUSTRATIVE — REPLACE BEFORE LAUNCH';
+    status: ImageStatus;
   };
 }
 
@@ -588,7 +597,7 @@ export interface MemoryCareSuiteFormat {
   placeholderImage: {
     src: string;
     alt: string;
-    status: 'ILLUSTRATIVE — REPLACE BEFORE LAUNCH';
+    status: ImageStatus;
   };
 }
 
@@ -616,10 +625,10 @@ export const LEGACIES_TOUCHPOINTS: LegaciesTouchpoint[] = [
     familyTakeaway:
       'Your loved one is known as an individual with a rich life story—never defined solely by Alzheimer’s or dementia.',
     placeholderImage: {
-      src: 'https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=1400&q=85',
-      alt: 'Illustrative placeholder: Warm, sunlit residential living space honoring a senior resident’s personal story',
+      src: '/images/property/community-lounge.webp',
+      alt: 'Mission Villa community lounge with armchairs, a sofa and natural light',
       caption: 'Listening closely to personal histories, cherished memories, and family traditions',
-      status: 'ILLUSTRATIVE — REPLACE BEFORE LAUNCH',
+      status: 'MISSION VILLA PROPERTY PHOTO',
     },
   },
   {
@@ -638,10 +647,10 @@ export const LEGACIES_TOUCHPOINTS: LegaciesTouchpoint[] = [
     familyTakeaway:
       'Predictable rhythms help residents feel grounded and secure while preserving personal choice.',
     placeholderImage: {
-      src: 'https://images.unsplash.com/photo-1586023492125-27b2c045efd7?auto=format&fit=crop&w=1400&q=85',
-      alt: 'Illustrative placeholder: Sunlit residential sitting room offering a calm, familiar daily setting',
+      src: '/images/property/sitting-nook-detail.webp',
+      alt: 'Sunlit sitting nook at Mission Villa with a Golden Gate Bridge mural',
       caption: 'Homelike spaces in Daly City designed for calm transitions and everyday ease',
-      status: 'ILLUSTRATIVE — REPLACE BEFORE LAUNCH',
+      status: 'MISSION VILLA PROPERTY PHOTO',
     },
   },
   {
@@ -660,7 +669,7 @@ export const LEGACIES_TOUCHPOINTS: LegaciesTouchpoint[] = [
     familyTakeaway:
       'Every day holds gentle invitations to participate, connect with neighbors, and experience accomplishment.',
     placeholderImage: {
-      src: 'https://images.unsplash.com/photo-1490750967868-88aa4486c946?auto=format&fit=crop&w=1400&q=80',
+      src: '/images/illustrative/life-create.webp',
       alt: 'Illustrative placeholder: Botanical blossoms representing sensory engagement and creative activities',
       caption: 'Sensory-rich activities, music, and shared moments tailored to each resident',
       status: 'ILLUSTRATIVE — REPLACE BEFORE LAUNCH',
@@ -682,7 +691,7 @@ export const LEGACIES_TOUCHPOINTS: LegaciesTouchpoint[] = [
     familyTakeaway:
       'You remain at the heart of your loved one’s life, supported by an attentive team at 995 East Market Street.',
     placeholderImage: {
-      src: 'https://images.unsplash.com/photo-1576765608535-5f04d1e3f289?auto=format&fit=crop&w=1400&q=85',
+      src: '/images/illustrative/approach-main.webp',
       alt: 'Illustrative placeholder: Family member and care partner sharing a warm smile with a senior resident',
       caption: 'A reassuring partnership that welcomes family connection every day',
       status: 'ILLUSTRATIVE — REPLACE BEFORE LAUNCH',
@@ -707,7 +716,7 @@ export const MEMORY_CARE_STORYBOARD: StoryboardScene[] = [
     cutoutStyle: 'cutout-tl-cream',
     colSpan: 'lg:col-span-7',
     placeholderImage: {
-      src: 'https://images.unsplash.com/photo-1616594039964-ae9021a400a0?auto=format&fit=crop&w=1400&q=85',
+      src: '/images/illustrative/care-respite.webp',
       alt: 'Illustrative placeholder: Soft morning daylight entering a comfortable bedroom suite',
       caption: 'Unhurried morning routines that protect privacy and self-respect',
       status: 'ILLUSTRATIVE — REPLACE BEFORE LAUNCH',
@@ -729,7 +738,7 @@ export const MEMORY_CARE_STORYBOARD: StoryboardScene[] = [
     cutoutStyle: 'cutout-br-cream',
     colSpan: 'lg:col-span-5',
     placeholderImage: {
-      src: 'https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=1400&q=85',
+      src: '/images/illustrative/hero-life.webp',
       alt: 'Illustrative placeholder: Nourishing, freshly prepared meal served at a warm dining table',
       caption: 'Freshly prepared meals shared in a welcoming community dining setting',
       status: 'ILLUSTRATIVE — REPLACE BEFORE LAUNCH',
@@ -751,10 +760,10 @@ export const MEMORY_CARE_STORYBOARD: StoryboardScene[] = [
     cutoutStyle: 'cutout-bl-cream',
     colSpan: 'lg:col-span-12',
     placeholderImage: {
-      src: 'https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=1800&q=85',
-      alt: 'Illustrative placeholder: Warm afternoon light in a comfortable residential lounge and garden conservatory',
+      src: '/images/property/community-lounge.webp',
+      alt: 'Mission Villa community lounge with armchairs, a sofa and natural light',
       caption: 'Welcoming common spaces where residents and visiting families feel at ease',
-      status: 'ILLUSTRATIVE — REPLACE BEFORE LAUNCH',
+      status: 'MISSION VILLA PROPERTY PHOTO',
     },
   },
 ];
@@ -816,9 +825,9 @@ export const MEMORY_CARE_SUITE_FORMATS: MemoryCareSuiteFormat[] = [
     ],
     floorPlanStatus: 'Awaiting official architectural floor plan asset — view in person during your Daly City tour.',
     placeholderImage: {
-      src: 'https://images.unsplash.com/photo-1598928506311-c55ded91a20c?auto=format&fit=crop&w=1400&q=85',
-      alt: 'Illustrative placeholder: Warm, inviting companion living space with natural light',
-      status: 'ILLUSTRATIVE — REPLACE BEFORE LAUNCH',
+      src: '/images/property/bedroom.webp',
+      alt: 'A furnished suite bedroom at Mission Villa with natural light',
+      status: 'MISSION VILLA PROPERTY PHOTO',
     },
   },
   {
@@ -838,9 +847,9 @@ export const MEMORY_CARE_SUITE_FORMATS: MemoryCareSuiteFormat[] = [
     ],
     floorPlanStatus: 'Awaiting official architectural floor plan asset — ask our team to show you available layouts.',
     placeholderImage: {
-      src: 'https://images.unsplash.com/photo-1586023492125-27b2c045efd7?auto=format&fit=crop&w=1400&q=85',
-      alt: 'Illustrative placeholder: Bright, homelike suite interior with comfortable residential seating',
-      status: 'ILLUSTRATIVE — REPLACE BEFORE LAUNCH',
+      src: '/images/property/sitting-nook-detail.webp',
+      alt: 'Sunlit sitting nook at Mission Villa with a Golden Gate Bridge mural',
+      status: 'MISSION VILLA PROPERTY PHOTO',
     },
   },
   {
@@ -860,7 +869,7 @@ export const MEMORY_CARE_SUITE_FORMATS: MemoryCareSuiteFormat[] = [
     ],
     floorPlanStatus: 'Awaiting official architectural floor plan asset — call (650) 756-1995 for current availability.',
     placeholderImage: {
-      src: 'https://images.unsplash.com/photo-1616594039964-ae9021a400a0?auto=format&fit=crop&w=1400&q=85',
+      src: '/images/illustrative/care-respite.webp',
       alt: 'Illustrative placeholder: Peaceful private bedroom suite with warm natural lighting',
       status: 'ILLUSTRATIVE — REPLACE BEFORE LAUNCH',
     },
@@ -950,7 +959,7 @@ export interface RespiteStayChapter {
     src: string;
     alt: string;
     caption: string;
-    status: 'ILLUSTRATIVE — REPLACE BEFORE LAUNCH';
+    status: ImageStatus;
   };
 }
 
@@ -1153,7 +1162,7 @@ export const RESPITE_STAY_CHAPTERS: RespiteStayChapter[] = [
       'A gentle walkthrough of nearby lounges, the dining room, and the courtyard patio',
     ],
     placeholderImage: {
-      src: 'https://images.unsplash.com/photo-1616594039964-ae9021a400a0?auto=format&fit=crop&w=1600&q=85',
+      src: '/images/illustrative/care-respite.webp',
       alt: 'Illustrative placeholder: Sunlit, welcoming furnished bedroom suite prepared for a restful short-term stay',
       caption: 'Furnished accommodations ready to welcome short-term Respite Care guests in Daly City',
       status: 'ILLUSTRATIVE — REPLACE BEFORE LAUNCH',
@@ -1172,7 +1181,7 @@ export const RESPITE_STAY_CHAPTERS: RespiteStayChapter[] = [
       'Choice between lively small-group activities or quiet reading and garden air',
     ],
     placeholderImage: {
-      src: 'https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=1600&q=85',
+      src: '/images/illustrative/hero-life.webp',
       alt: 'Illustrative placeholder: Nourishing chef-prepared meal served in a warm, sociable dining setting',
       caption: 'Chef-prepared dining and daily social engagement included throughout every respite stay',
       status: 'ILLUSTRATIVE — REPLACE BEFORE LAUNCH',
@@ -1191,10 +1200,10 @@ export const RESPITE_STAY_CHAPTERS: RespiteStayChapter[] = [
       'Smooth coordination for returning home—or exploring longer-term options if desired',
     ],
     placeholderImage: {
-      src: 'https://images.unsplash.com/photo-1585320806297-9794b3e4eeae?auto=format&fit=crop&w=1600&q=85',
-      alt: 'Illustrative placeholder: Peaceful sunlit garden courtyard offering calm and renewal',
+      src: '/images/property/courtyard-patio.webp',
+      alt: 'Mission Villa courtyard patio with umbrella tables and garden seating',
       caption: 'Peace of mind for family caregivers across Daly City and San Mateo County',
-      status: 'ILLUSTRATIVE — REPLACE BEFORE LAUNCH',
+      status: 'MISSION VILLA PROPERTY PHOTO',
     },
   },
 ];
@@ -1377,7 +1386,7 @@ export interface LifestyleChapter {
     src: string;
     alt: string;
     caption: string;
-    status: 'ILLUSTRATIVE — REPLACE BEFORE LAUNCH';
+    status: ImageStatus;
   };
   insetNote: {
     heading: string;
@@ -1400,7 +1409,7 @@ export interface DayInTheLifeMoment {
     src: string;
     alt: string;
     caption: string;
-    status: 'ILLUSTRATIVE — REPLACE BEFORE LAUNCH';
+    status: ImageStatus;
   };
 }
 
@@ -1416,7 +1425,7 @@ export interface EditorialGalleryPlate {
   placeholderImage: {
     src: string;
     alt: string;
-    status: 'ILLUSTRATIVE — REPLACE BEFORE LAUNCH';
+    status: ImageStatus;
   };
 }
 
@@ -1463,7 +1472,7 @@ export const LIFESTYLE_STORY_CHAPTERS: LifestyleChapter[] = [
     ],
     cutoutPosition: 'cutout-tl-cream',
     primaryImage: {
-      src: 'https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=1600&q=85',
+      src: '/images/illustrative/hero-life.webp',
       alt: 'Illustrative placeholder: Freshly prepared chef meal served at an inviting, sunlit community dining table',
       caption: 'Chef-prepared meals shared in a warm, conversational dining setting in Daly City',
       status: 'ILLUSTRATIVE — REPLACE BEFORE LAUNCH',
@@ -1507,7 +1516,7 @@ export const LIFESTYLE_STORY_CHAPTERS: LifestyleChapter[] = [
     ],
     cutoutPosition: 'cutout-br-cream',
     primaryImage: {
-      src: 'https://images.unsplash.com/photo-1490750967868-88aa4486c946?auto=format&fit=crop&w=1600&q=85',
+      src: '/images/illustrative/life-create.webp',
       alt: 'Illustrative placeholder: Bright botanical arrangements and creative art table prepared for resident engagement',
       caption: 'Creative arts, games, live music, fitness, and scenic Peninsula drives',
       status: 'ILLUSTRATIVE — REPLACE BEFORE LAUNCH',
@@ -1551,10 +1560,10 @@ export const LIFESTYLE_STORY_CHAPTERS: LifestyleChapter[] = [
     ],
     cutoutPosition: 'cutout-tl-cream',
     primaryImage: {
-      src: 'https://images.unsplash.com/photo-1585320806297-9794b3e4eeae?auto=format&fit=crop&w=1600&q=85',
-      alt: 'Illustrative placeholder: Peaceful sunlit garden courtyard and patio seating surrounded by greenery',
+      src: '/images/property/courtyard-patio.webp',
+      alt: 'Mission Villa courtyard patio with umbrella tables and garden seating',
       caption: 'Outdoor courtyard, garden, and patio settings alongside homelike indoor lounges',
-      status: 'ILLUSTRATIVE — REPLACE BEFORE LAUNCH',
+      status: 'MISSION VILLA PROPERTY PHOTO',
     },
     insetNote: {
       heading: 'Daly City Neighborhood Roots',
@@ -1595,7 +1604,7 @@ export const LIFESTYLE_STORY_CHAPTERS: LifestyleChapter[] = [
     ],
     cutoutPosition: 'cutout-bl-cream',
     primaryImage: {
-      src: 'https://images.unsplash.com/photo-1576765608535-5f04d1e3f289?auto=format&fit=crop&w=1600&q=85',
+      src: '/images/illustrative/approach-main.webp',
       alt: 'Illustrative placeholder: Warm, affectionate conversation between a senior resident, family member, and care partner',
       caption: 'Meaningful family visits and enduring relationships at the heart of community life',
       status: 'ILLUSTRATIVE — REPLACE BEFORE LAUNCH',
@@ -1629,7 +1638,7 @@ export const CURATED_DAY_ILLUSTRATION: DayInTheLifeMoment[] = [
     illustrationDisclaimer:
       'Curated day-in-the-life illustration — daily rhythms adapt to individual resident preferences and current community programming rather than a fixed timetable.',
     placeholderImage: {
-      src: 'https://images.unsplash.com/photo-1616594039964-ae9021a400a0?auto=format&fit=crop&w=1400&q=85',
+      src: '/images/illustrative/care-respite.webp',
       alt: 'Illustrative placeholder: Soft morning sunlight entering a peaceful, homelike suite',
       caption: 'Unhurried mornings tailored to lifelong waking and breakfast habits',
       status: 'ILLUSTRATIVE — REPLACE BEFORE LAUNCH',
@@ -1656,7 +1665,7 @@ export const CURATED_DAY_ILLUSTRATION: DayInTheLifeMoment[] = [
     illustrationDisclaimer:
       'Curated day-in-the-life illustration — activities vary daily and are always optional, not a rigid schedule.',
     placeholderImage: {
-      src: 'https://images.unsplash.com/photo-1490750967868-88aa4486c946?auto=format&fit=crop&w=1400&q=85',
+      src: '/images/illustrative/life-create.webp',
       alt: 'Illustrative placeholder: Colourful floral and creative materials prepared for morning group activities',
       caption: 'Morning fitness, creative art, and friendly games guided by our activity team',
       status: 'ILLUSTRATIVE — REPLACE BEFORE LAUNCH',
@@ -1683,7 +1692,7 @@ export const CURATED_DAY_ILLUSTRATION: DayInTheLifeMoment[] = [
     illustrationDisclaimer:
       'Curated day-in-the-life illustration — menu offerings and dining times reflect current community hospitality.',
     placeholderImage: {
-      src: 'https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=1400&q=85',
+      src: '/images/illustrative/hero-life.webp',
       alt: 'Illustrative placeholder: Nourishing midday meal served at a welcoming community table',
       caption: 'Midday chef-prepared dining that nourishes both body and friendship',
       status: 'ILLUSTRATIVE — REPLACE BEFORE LAUNCH',
@@ -1710,10 +1719,10 @@ export const CURATED_DAY_ILLUSTRATION: DayInTheLifeMoment[] = [
     illustrationDisclaimer:
       'Curated day-in-the-life illustration — scenic drives and live entertainment are scheduled periodically; ask our team for a current monthly calendar.',
     placeholderImage: {
-      src: 'https://images.unsplash.com/photo-1585320806297-9794b3e4eeae?auto=format&fit=crop&w=1400&q=85',
-      alt: 'Illustrative placeholder: Sunlit garden courtyard and outdoor seating area for afternoon relaxation',
+      src: '/images/property/courtyard-patio.webp',
+      alt: 'Mission Villa courtyard patio with umbrella tables and garden seating',
       caption: 'Afternoon scenic drives, live music, and fresh air on the courtyard patio',
-      status: 'ILLUSTRATIVE — REPLACE BEFORE LAUNCH',
+      status: 'MISSION VILLA PROPERTY PHOTO',
     },
   },
   {
@@ -1737,10 +1746,10 @@ export const CURATED_DAY_ILLUSTRATION: DayInTheLifeMoment[] = [
     illustrationDisclaimer:
       'Curated day-in-the-life illustration — evening routines are personalized to each resident’s comfort and sleep habits.',
     placeholderImage: {
-      src: 'https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=1400&q=85',
-      alt: 'Illustrative placeholder: Warm, softly lit residential lounge in the early evening',
+      src: '/images/property/community-lounge.webp',
+      alt: 'Mission Villa community lounge with armchairs, a sofa and natural light',
       caption: 'Calm evening routines, family visits, and 24-hour on-site reassurance',
-      status: 'ILLUSTRATIVE — REPLACE BEFORE LAUNCH',
+      status: 'MISSION VILLA PROPERTY PHOTO',
     },
   },
 ];
@@ -1757,7 +1766,7 @@ export const EDITORIAL_GALLERY_BAND_PLATES: EditorialGalleryPlate[] = [
     aspectClass: 'aspect-[16/10]',
     widthClass: 'lg:col-span-7',
     placeholderImage: {
-      src: 'https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=1600&q=85',
+      src: '/images/illustrative/hero-life.webp',
       alt: 'Illustrative placeholder: Warm community dining table with freshly prepared meal',
       status: 'ILLUSTRATIVE — REPLACE BEFORE LAUNCH',
     },
@@ -1773,9 +1782,9 @@ export const EDITORIAL_GALLERY_BAND_PLATES: EditorialGalleryPlate[] = [
     aspectClass: 'aspect-[4/5]',
     widthClass: 'lg:col-span-5',
     placeholderImage: {
-      src: 'https://images.unsplash.com/photo-1585320806297-9794b3e4eeae?auto=format&fit=crop&w=1400&q=85',
-      alt: 'Illustrative placeholder: Tranquil garden greenery and sunlit courtyard path',
-      status: 'ILLUSTRATIVE — REPLACE BEFORE LAUNCH',
+      src: '/images/property/courtyard-patio.webp',
+      alt: 'Mission Villa courtyard patio with umbrella tables and garden seating',
+      status: 'MISSION VILLA PROPERTY PHOTO',
     },
   },
   {
@@ -1789,7 +1798,7 @@ export const EDITORIAL_GALLERY_BAND_PLATES: EditorialGalleryPlate[] = [
     aspectClass: 'aspect-[4/3]',
     widthClass: 'lg:col-span-4',
     placeholderImage: {
-      src: 'https://images.unsplash.com/photo-1490750967868-88aa4486c946?auto=format&fit=crop&w=1200&q=85',
+      src: '/images/illustrative/life-create.webp',
       alt: 'Illustrative placeholder: Botanical blossoms and creative table setting for resident activities',
       status: 'ILLUSTRATIVE — REPLACE BEFORE LAUNCH',
     },
@@ -1805,7 +1814,7 @@ export const EDITORIAL_GALLERY_BAND_PLATES: EditorialGalleryPlate[] = [
     aspectClass: 'aspect-[4/3]',
     widthClass: 'lg:col-span-4',
     placeholderImage: {
-      src: 'https://images.unsplash.com/photo-1576765608535-5f04d1e3f289?auto=format&fit=crop&w=1200&q=85',
+      src: '/images/illustrative/approach-main.webp',
       alt: 'Illustrative placeholder: Caring conversation and shared smiles with a senior resident',
       status: 'ILLUSTRATIVE — REPLACE BEFORE LAUNCH',
     },
@@ -1821,9 +1830,9 @@ export const EDITORIAL_GALLERY_BAND_PLATES: EditorialGalleryPlate[] = [
     aspectClass: 'aspect-[4/3]',
     widthClass: 'lg:col-span-4',
     placeholderImage: {
-      src: 'https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=1200&q=85',
-      alt: 'Illustrative placeholder: Sunlit residential lounge with warm armchairs and natural light',
-      status: 'ILLUSTRATIVE — REPLACE BEFORE LAUNCH',
+      src: '/images/property/community-lounge.webp',
+      alt: 'Mission Villa community lounge with armchairs, a sofa and natural light',
+      status: 'MISSION VILLA PROPERTY PHOTO',
     },
   },
 ];
@@ -1912,7 +1921,7 @@ export interface ServiceAmenityCategoryMeta {
     alt: string;
     caption: string;
     locationLabel: string;
-    status: 'ILLUSTRATIVE — REPLACE BEFORE LAUNCH';
+    status: ImageStatus;
   };
   secondaryVignette: {
     title: string;
@@ -1959,7 +1968,7 @@ export const SERVICES_AMENITIES_CATEGORIES: ServiceAmenityCategoryMeta[] = [
     availabilityNote:
       'Original-site service descriptions — specific personal care levels, transfer assistance scope, and routine assessment intervals are confirmed during your family’s pre-move-in assessment.',
     editorialPairingImage: {
-      src: 'https://images.unsplash.com/photo-1576765608535-5f04d1e3f289?auto=format&fit=crop&w=1400&q=85',
+      src: '/images/illustrative/approach-main.webp',
       alt: 'Illustrative placeholder: Warm, attentive conversation between a senior resident and a care team member in a sunlit lounge',
       caption: '24-hour staff presence, routine assessments, and respectful escort support',
       locationLabel: 'On-Site Support · 995 East Market Street',
@@ -1984,7 +1993,7 @@ export const SERVICES_AMENITIES_CATEGORIES: ServiceAmenityCategoryMeta[] = [
     availabilityNote:
       'Original-site amenity descriptions — confirm specific dietary accommodations, texture-modified or therapeutic meal options, and private dining reservation guidelines with our team.',
     editorialPairingImage: {
-      src: 'https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=1400&q=85',
+      src: '/images/illustrative/hero-life.webp',
       alt: 'Illustrative placeholder: Freshly prepared meal served at a warm, inviting community dining table',
       caption: 'Full-table restaurant-style service, dietary options, and private family dining',
       locationLabel: 'Community Dining Room & Private Dining',
@@ -2009,7 +2018,7 @@ export const SERVICES_AMENITIES_CATEGORIES: ServiceAmenityCategoryMeta[] = [
     availabilityNote:
       'Original-site service descriptions — ask our Daly City team for a current monthly activity calendar, volunteer schedule, and salon/spa appointment availability or fee details.',
     editorialPairingImage: {
-      src: 'https://images.unsplash.com/photo-1490750967868-88aa4486c946?auto=format&fit=crop&w=1400&q=85',
+      src: '/images/illustrative/life-create.webp',
       alt: 'Illustrative placeholder: Botanical arrangements and creative workshop table prepared for resident engagement',
       caption: 'Activity director programming, volunteer warmth, and on-site salon/spa care',
       locationLabel: 'Life Enrichment & Salon Spaces',
@@ -2034,11 +2043,11 @@ export const SERVICES_AMENITIES_CATEGORIES: ServiceAmenityCategoryMeta[] = [
     availabilityNote:
       'Original-site amenity descriptions — we invite families to walk through our courtyard, patio, library area, and lounges in person during a tour at 995 East Market Street.',
     editorialPairingImage: {
-      src: 'https://images.unsplash.com/photo-1585320806297-9794b3e4eeae?auto=format&fit=crop&w=1400&q=85',
-      alt: 'Illustrative placeholder: Peaceful sunlit garden courtyard and sheltered outdoor patio seating',
+      src: '/images/property/courtyard-patio.webp',
+      alt: 'Mission Villa courtyard patio with umbrella tables and garden seating',
       caption: 'Outdoor courtyard and patio sanctuaries paired with welcoming indoor lounges and library',
       locationLabel: 'Courtyard, Patio & Common Areas',
-      status: 'ILLUSTRATIVE — REPLACE BEFORE LAUNCH',
+      status: 'MISSION VILLA PROPERTY PHOTO',
     },
     secondaryVignette: {
       title: 'Connected Common Areas',
@@ -2059,11 +2068,11 @@ export const SERVICES_AMENITIES_CATEGORIES: ServiceAmenityCategoryMeta[] = [
     availabilityNote:
       'Original-site service & amenity descriptions — confirm scheduled transportation routes, concierge scope, and laundry inclusions for Memory Care or Respite Care stays with our team.',
     editorialPairingImage: {
-      src: 'https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=1400&q=85',
-      alt: 'Illustrative placeholder: Welcoming residential reception and sunlit lounge at Mission Villa',
+      src: '/images/property/community-lounge.webp',
+      alt: 'Mission Villa community lounge with armchairs, a sofa and natural light',
       caption: 'Personal laundry, concierge support, scheduled transportation, and convenient parking',
       locationLabel: 'Everyday Hospitality · Daly City, CA',
-      status: 'ILLUSTRATIVE — REPLACE BEFORE LAUNCH',
+      status: 'MISSION VILLA PROPERTY PHOTO',
     },
     secondaryVignette: {
       title: 'Easy Peninsula Access',
@@ -2538,7 +2547,7 @@ export interface SuiteAccommodationGalleryPlate {
     src: string;
     alt: string;
     caption: string;
-    status: 'ILLUSTRATIVE — REPLACE BEFORE LAUNCH';
+    status: ImageStatus;
   };
 }
 
@@ -2561,7 +2570,7 @@ export interface OfficialFloorPlanFormatSpec {
   placeholderPreviewImage: {
     src: string;
     alt: string;
-    status: 'ILLUSTRATIVE — REPLACE BEFORE LAUNCH';
+    status: ImageStatus;
   };
 }
 
@@ -2598,7 +2607,7 @@ export interface RelatedCommunitySpaceCard {
   placeholderImage: {
     src: string;
     alt: string;
-    status: 'ILLUSTRATIVE — REPLACE BEFORE LAUNCH';
+    status: ImageStatus;
   };
 }
 
@@ -2620,10 +2629,10 @@ export const SUITE_ACCOMMODATION_GALLERY_PLATES: SuiteAccommodationGalleryPlate[
     colSpan: 'lg:col-span-7',
     aspectClass: 'min-h-[360px] sm:min-h-[440px]',
     placeholderImage: {
-      src: 'https://images.unsplash.com/photo-1598928506311-c55ded91a20c?auto=format&fit=crop&w=1400&q=85',
-      alt: 'Warm sunlit private senior suite bedroom with comfortable armchair and soft neutral bedding',
+      src: '/images/property/bedroom.webp',
+      alt: 'A furnished suite bedroom at Mission Villa with natural light',
       caption: 'Illustrative private suite bedroom — replace with authentic Mission Villa suite photography before launch',
-      status: 'ILLUSTRATIVE — REPLACE BEFORE LAUNCH',
+      status: 'MISSION VILLA PROPERTY PHOTO',
     },
   },
   {
@@ -2643,10 +2652,10 @@ export const SUITE_ACCOMMODATION_GALLERY_PLATES: SuiteAccommodationGalleryPlate[
     colSpan: 'lg:col-span-5',
     aspectClass: 'min-h-[360px] sm:min-h-[440px]',
     placeholderImage: {
-      src: 'https://images.unsplash.com/photo-1595526114035-0d45ed16cfbf?auto=format&fit=crop&w=1200&q=85',
-      alt: 'Welcoming shared companion suite sitting area with warm natural light',
+      src: '/images/property/floorplan-companion.webp',
+      alt: 'Mission Villa Companion Unit floor plan rendering',
       caption: 'Illustrative companion suite view — replace with authentic Mission Villa Companion Unit photography before launch',
-      status: 'ILLUSTRATIVE — REPLACE BEFORE LAUNCH',
+      status: 'MISSION VILLA PROPERTY PHOTO',
     },
   },
   {
@@ -2666,10 +2675,10 @@ export const SUITE_ACCOMMODATION_GALLERY_PLATES: SuiteAccommodationGalleryPlate[
     colSpan: 'lg:col-span-5',
     aspectClass: 'min-h-[340px] sm:min-h-[400px]',
     placeholderImage: {
-      src: 'https://images.unsplash.com/photo-1586023492125-27b2c045efd7?auto=format&fit=crop&w=1200&q=85',
-      alt: 'Warm armchair and side table by a sunny window in a homelike suite',
+      src: '/images/property/sitting-nook-detail.webp',
+      alt: 'Sunlit sitting nook at Mission Villa with a Golden Gate Bridge mural',
       caption: 'Illustrative suite sitting corner — replace with authentic Mission Villa interior photography before launch',
-      status: 'ILLUSTRATIVE — REPLACE BEFORE LAUNCH',
+      status: 'MISSION VILLA PROPERTY PHOTO',
     },
   },
   {
@@ -2689,7 +2698,7 @@ export const SUITE_ACCOMMODATION_GALLERY_PLATES: SuiteAccommodationGalleryPlate[
     colSpan: 'lg:col-span-7',
     aspectClass: 'min-h-[340px] sm:min-h-[400px]',
     placeholderImage: {
-      src: 'https://images.unsplash.com/photo-1616594039964-ae9021a400a0?auto=format&fit=crop&w=1400&q=85',
+      src: '/images/illustrative/care-respite.webp',
       alt: 'Clean, calmly lit suite interior and dressing area designed for senior comfort',
       caption: 'Illustrative suite interior — replace with authentic Mission Villa suite bathroom and dressing area photography before launch',
       status: 'ILLUSTRATIVE — REPLACE BEFORE LAUNCH',
@@ -2729,9 +2738,9 @@ export const OFFICIAL_FLOOR_PLAN_FORMATS: OfficialFloorPlanFormatSpec[] = [
     inquiryNotePreset:
       'Interested in viewing the Companion Unit format in person and confirming current availability and pricing.',
     placeholderPreviewImage: {
-      src: 'https://images.unsplash.com/photo-1595526114035-0d45ed16cfbf?auto=format&fit=crop&w=1200&q=85',
-      alt: 'Illustrative preview of a welcoming shared companion suite at Mission Villa',
-      status: 'ILLUSTRATIVE — REPLACE BEFORE LAUNCH',
+      src: '/images/property/floorplan-companion.webp',
+      alt: 'Mission Villa Companion Unit floor plan rendering',
+      status: 'MISSION VILLA PROPERTY PHOTO',
     },
   },
   {
@@ -2765,7 +2774,7 @@ export const OFFICIAL_FLOOR_PLAN_FORMATS: OfficialFloorPlanFormatSpec[] = [
     inquiryNotePreset:
       'Interested in seeing the Jack & Jill suite format and learning about current availability and rates.',
     placeholderPreviewImage: {
-      src: 'https://images.unsplash.com/photo-1616594039964-ae9021a400a0?auto=format&fit=crop&w=1200&q=85',
+      src: '/images/illustrative/care-respite.webp',
       alt: 'Illustrative preview of a Jack & Jill suite arrangement with personal sleeping space',
       status: 'ILLUSTRATIVE — REPLACE BEFORE LAUNCH',
     },
@@ -2801,9 +2810,9 @@ export const OFFICIAL_FLOOR_PLAN_FORMATS: OfficialFloorPlanFormatSpec[] = [
     inquiryNotePreset:
       'Interested in touring a Private Suite with Private Bathroom and reviewing current pricing.',
     placeholderPreviewImage: {
-      src: 'https://images.unsplash.com/photo-1598928506311-c55ded91a20c?auto=format&fit=crop&w=1200&q=85',
-      alt: 'Illustrative preview of a private single-occupancy suite at Mission Villa',
-      status: 'ILLUSTRATIVE — REPLACE BEFORE LAUNCH',
+      src: '/images/property/bedroom.webp',
+      alt: 'A furnished suite bedroom at Mission Villa with natural light',
+      status: 'MISSION VILLA PROPERTY PHOTO',
     },
   },
 ];
@@ -2950,9 +2959,9 @@ export const RELATED_COMMUNITY_SPACES_FROM_SUITES: RelatedCommunitySpaceCard[] =
     destinationHref: '/life-at-mission-villa',
     destinationLabel: 'Explore Dining & Daily Culture',
     placeholderImage: {
-      src: 'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=1000&q=80',
-      alt: 'Warmly set senior living dining room tables with natural daylight',
-      status: 'ILLUSTRATIVE — REPLACE BEFORE LAUNCH',
+      src: '/images/property/dining-room.webp',
+      alt: 'Mission Villa dining room with set tables and bright windows',
+      status: 'MISSION VILLA PROPERTY PHOTO',
     },
   },
   {
@@ -2967,9 +2976,9 @@ export const RELATED_COMMUNITY_SPACES_FROM_SUITES: RelatedCommunitySpaceCard[] =
     destinationHref: '/services-and-amenities',
     destinationLabel: 'View All Community Amenities',
     placeholderImage: {
-      src: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1000&q=80',
-      alt: 'Sunlit community living room and library lounge with comfortable seating',
-      status: 'ILLUSTRATIVE — REPLACE BEFORE LAUNCH',
+      src: '/images/property/entrance.webp',
+      alt: 'Mission Villa entrance on East Market Street in Daly City',
+      status: 'MISSION VILLA PROPERTY PHOTO',
     },
   },
   {
@@ -2984,9 +2993,9 @@ export const RELATED_COMMUNITY_SPACES_FROM_SUITES: RelatedCommunitySpaceCard[] =
     destinationHref: '/memory-care',
     destinationLabel: 'Explore Our Memory Care Environment',
     placeholderImage: {
-      src: 'https://images.unsplash.com/photo-1585320806297-9794b3e4eeae?auto=format&fit=crop&w=1000&q=80',
-      alt: 'Peaceful enclosed garden courtyard with benches and greenery',
-      status: 'ILLUSTRATIVE — REPLACE BEFORE LAUNCH',
+      src: '/images/property/courtyard-patio.webp',
+      alt: 'Mission Villa courtyard patio with umbrella tables and garden seating',
+      status: 'MISSION VILLA PROPERTY PHOTO',
     },
   },
 ];
@@ -3051,7 +3060,7 @@ export interface GalleryPhotoPlate {
   placeholderImage: {
     src: string;
     alt: string;
-    status: 'ILLUSTRATIVE — REPLACE BEFORE LAUNCH';
+    status: ImageStatus;
     assetReplacementNote: string;
   };
 }
@@ -3070,7 +3079,7 @@ export interface VirtualTourStop {
   placeholderImage: {
     src: string;
     alt: string;
-    status: 'ILLUSTRATIVE — REPLACE BEFORE LAUNCH';
+    status: ImageStatus;
   };
 }
 
@@ -3143,9 +3152,9 @@ export const GALLERY_PHOTO_PLATES: GalleryPhotoPlate[] = [
     inquiryPresetNote:
       'Interested in touring a Private Suite with Private Bathroom after viewing the Gallery.',
     placeholderImage: {
-      src: 'https://images.unsplash.com/photo-1598928506311-c55ded91a20c?auto=format&fit=crop&w=1400&q=85',
-      alt: 'Illustrative placeholder: Warm sunlit private suite bedroom with armchair and neutral linens',
-      status: 'ILLUSTRATIVE — REPLACE BEFORE LAUNCH',
+      src: '/images/property/bedroom.webp',
+      alt: 'A furnished suite bedroom at Mission Villa with natural light',
+      status: 'MISSION VILLA PROPERTY PHOTO',
       assetReplacementNote:
         'Replace with official Mission Villa private suite interior photograph.',
     },
@@ -3175,9 +3184,9 @@ export const GALLERY_PHOTO_PLATES: GalleryPhotoPlate[] = [
     inquiryPresetNote:
       'Would like to see the main dining room and ask about sample menus during our visit.',
     placeholderImage: {
-      src: 'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=1200&q=85',
-      alt: 'Illustrative placeholder: Inviting restaurant-style dining room with warm natural light',
-      status: 'ILLUSTRATIVE — REPLACE BEFORE LAUNCH',
+      src: '/images/property/dining-room.webp',
+      alt: 'Mission Villa dining room with set tables and bright windows',
+      status: 'MISSION VILLA PROPERTY PHOTO',
       assetReplacementNote:
         'Replace with official Mission Villa dining room photograph.',
     },
@@ -3207,9 +3216,9 @@ export const GALLERY_PHOTO_PLATES: GalleryPhotoPlate[] = [
     inquiryPresetNote:
       'Interested in seeing the communal lounges and family visiting areas on our tour.',
     placeholderImage: {
-      src: 'https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=1200&q=85',
-      alt: 'Illustrative placeholder: Sunlit homelike residential sitting lounge with comfortable seating',
-      status: 'ILLUSTRATIVE — REPLACE BEFORE LAUNCH',
+      src: '/images/property/community-lounge.webp',
+      alt: 'Mission Villa community lounge with armchairs, a sofa and natural light',
+      status: 'MISSION VILLA PROPERTY PHOTO',
       assetReplacementNote:
         'Replace with official Mission Villa main lounge photograph.',
     },
@@ -3239,9 +3248,9 @@ export const GALLERY_PHOTO_PLATES: GalleryPhotoPlate[] = [
     inquiryPresetNote:
       'Would love to walk through the enclosed courtyard and outdoor patio during our visit.',
     placeholderImage: {
-      src: 'https://images.unsplash.com/photo-1585320806297-9794b3e4eeae?auto=format&fit=crop&w=1400&q=85',
-      alt: 'Illustrative placeholder: Peaceful garden courtyard with greenery and sunlit seating',
-      status: 'ILLUSTRATIVE — REPLACE BEFORE LAUNCH',
+      src: '/images/property/courtyard-patio.webp',
+      alt: 'Mission Villa courtyard patio with umbrella tables and garden seating',
+      status: 'MISSION VILLA PROPERTY PHOTO',
       assetReplacementNote:
         'Replace with official Mission Villa courtyard and patio photograph.',
     },
@@ -3271,9 +3280,9 @@ export const GALLERY_PHOTO_PLATES: GalleryPhotoPlate[] = [
     inquiryPresetNote:
       'Interested in comparing Companion Unit and Jack & Jill suite layouts during a tour.',
     placeholderImage: {
-      src: 'https://images.unsplash.com/photo-1595526114035-0d45ed16cfbf?auto=format&fit=crop&w=1200&q=85',
-      alt: 'Illustrative placeholder: Bright companion living space with twin seating and warm light',
-      status: 'ILLUSTRATIVE — REPLACE BEFORE LAUNCH',
+      src: '/images/property/floorplan-companion.webp',
+      alt: 'Mission Villa Companion Unit floor plan rendering',
+      status: 'MISSION VILLA PROPERTY PHOTO',
       assetReplacementNote:
         'Replace with official Mission Villa Companion Unit / Jack & Jill suite photograph.',
     },
@@ -3303,7 +3312,7 @@ export const GALLERY_PHOTO_PLATES: GalleryPhotoPlate[] = [
     inquiryPresetNote:
       'Interested in learning more about daily activities and the Legacies™ Memory Care program.',
     placeholderImage: {
-      src: 'https://images.unsplash.com/photo-1490750967868-88aa4486c946?auto=format&fit=crop&w=1200&q=85',
+      src: '/images/illustrative/life-create.webp',
       alt: 'Illustrative placeholder: Botanical florals and creative table setup for sensory activities',
       status: 'ILLUSTRATIVE — REPLACE BEFORE LAUNCH',
       assetReplacementNote:
@@ -3335,7 +3344,7 @@ export const GALLERY_PHOTO_PLATES: GalleryPhotoPlate[] = [
     inquiryPresetNote:
       'Would like to ask about private family dining reservations and dietary options.',
     placeholderImage: {
-      src: 'https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=1000&q=85',
+      src: '/images/illustrative/hero-life.webp',
       alt: 'Illustrative placeholder: Freshly prepared meal served on a warmly set dining table',
       status: 'ILLUSTRATIVE — REPLACE BEFORE LAUNCH',
       assetReplacementNote:
@@ -3367,9 +3376,9 @@ export const GALLERY_PHOTO_PLATES: GalleryPhotoPlate[] = [
     inquiryPresetNote:
       'Interested in seeing the library nook, salon/spa, and quiet sitting areas during our visit.',
     placeholderImage: {
-      src: 'https://images.unsplash.com/photo-1586023492125-27b2c045efd7?auto=format&fit=crop&w=1000&q=85',
-      alt: 'Illustrative placeholder: Quiet reading chair and sunlit side table in a residential alcove',
-      status: 'ILLUSTRATIVE — REPLACE BEFORE LAUNCH',
+      src: '/images/property/sitting-nook-detail.webp',
+      alt: 'Sunlit sitting nook at Mission Villa with a Golden Gate Bridge mural',
+      status: 'MISSION VILLA PROPERTY PHOTO',
       assetReplacementNote:
         'Replace with official Mission Villa library and salon/spa photography.',
     },
@@ -3399,9 +3408,9 @@ export const GALLERY_PHOTO_PLATES: GalleryPhotoPlate[] = [
     inquiryPresetNote:
       'Interested in seeing the outdoor patio and garden seating areas on a tour.',
     placeholderImage: {
-      src: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1000&q=85',
-      alt: 'Illustrative placeholder: Welcoming patio and indoor-outdoor residential transition',
-      status: 'ILLUSTRATIVE — REPLACE BEFORE LAUNCH',
+      src: '/images/property/entrance.webp',
+      alt: 'Mission Villa entrance on East Market Street in Daly City',
+      status: 'MISSION VILLA PROPERTY PHOTO',
       assetReplacementNote:
         'Replace with official Mission Villa outdoor patio photograph.',
     },
@@ -3431,7 +3440,7 @@ export const GALLERY_PHOTO_PLATES: GalleryPhotoPlate[] = [
     inquiryPresetNote:
       'Would like to schedule a family visit to experience daily activities and meet the care team.',
     placeholderImage: {
-      src: 'https://images.unsplash.com/photo-1576765608535-5f04d1e3f289?auto=format&fit=crop&w=1800&q=85',
+      src: '/images/illustrative/approach-main.webp',
       alt: 'Illustrative placeholder: Warm, attentive conversation with a senior in a bright residential room',
       status: 'ILLUSTRATIVE — REPLACE BEFORE LAUNCH',
       assetReplacementNote:
@@ -3459,9 +3468,9 @@ export const VIRTUAL_TOUR_STOPS: VirtualTourStop[] = [
     relatedRouteHref: '/services-and-amenities',
     relatedRouteLabel: 'Explore Community Spaces & Services',
     placeholderImage: {
-      src: 'https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=1600&q=85',
-      alt: 'Illustrative placeholder: Sunlit community living room and welcome lounge',
-      status: 'ILLUSTRATIVE — REPLACE BEFORE LAUNCH',
+      src: '/images/property/community-lounge.webp',
+      alt: 'Mission Villa community lounge with armchairs, a sofa and natural light',
+      status: 'MISSION VILLA PROPERTY PHOTO',
     },
   },
   {
@@ -3482,9 +3491,9 @@ export const VIRTUAL_TOUR_STOPS: VirtualTourStop[] = [
     relatedRouteHref: '/life-at-mission-villa',
     relatedRouteLabel: 'Read About Dining & Daily Culture',
     placeholderImage: {
-      src: 'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=1600&q=85',
-      alt: 'Illustrative placeholder: Warmly set restaurant-style senior dining room',
-      status: 'ILLUSTRATIVE — REPLACE BEFORE LAUNCH',
+      src: '/images/property/dining-room.webp',
+      alt: 'Mission Villa dining room with set tables and bright windows',
+      status: 'MISSION VILLA PROPERTY PHOTO',
     },
   },
   {
@@ -3505,9 +3514,9 @@ export const VIRTUAL_TOUR_STOPS: VirtualTourStop[] = [
     relatedRouteHref: '/suites-and-floor-plans',
     relatedRouteLabel: 'Open Suites & Floor-Plan Viewer',
     placeholderImage: {
-      src: 'https://images.unsplash.com/photo-1598928506311-c55ded91a20c?auto=format&fit=crop&w=1600&q=85',
-      alt: 'Illustrative placeholder: Peaceful private bedroom suite with natural daylight',
-      status: 'ILLUSTRATIVE — REPLACE BEFORE LAUNCH',
+      src: '/images/property/bedroom.webp',
+      alt: 'A furnished suite bedroom at Mission Villa with natural light',
+      status: 'MISSION VILLA PROPERTY PHOTO',
     },
   },
   {
@@ -3528,9 +3537,9 @@ export const VIRTUAL_TOUR_STOPS: VirtualTourStop[] = [
     relatedRouteHref: '/memory-care',
     relatedRouteLabel: 'Explore Legacies™ Memory Care',
     placeholderImage: {
-      src: 'https://images.unsplash.com/photo-1585320806297-9794b3e4eeae?auto=format&fit=crop&w=1600&q=85',
-      alt: 'Illustrative placeholder: Sunlit enclosed garden courtyard and outdoor seating',
-      status: 'ILLUSTRATIVE — REPLACE BEFORE LAUNCH',
+      src: '/images/property/courtyard-patio.webp',
+      alt: 'Mission Villa courtyard patio with umbrella tables and garden seating',
+      status: 'MISSION VILLA PROPERTY PHOTO',
     },
   },
 ];
@@ -3597,7 +3606,7 @@ export interface AboutPhilosophyChapter {
     src: string;
     alt: string;
     caption: string;
-    status: 'ILLUSTRATIVE — REPLACE BEFORE LAUNCH';
+    status: ImageStatus;
   };
 }
 
@@ -3622,7 +3631,7 @@ export interface DalyCityGeographyLandmark {
     src: string;
     alt: string;
     caption: string;
-    status: 'ILLUSTRATIVE — REPLACE BEFORE LAUNCH';
+    status: ImageStatus;
   };
 }
 
@@ -3679,10 +3688,10 @@ export const ABOUT_PHILOSOPHY_CHAPTERS: AboutPhilosophyChapter[] = [
     inquiryPresetNote:
       'Would like to learn more about Mission Villa’s care philosophy and person-centered approach during a visit.',
     placeholderImage: {
-      src: 'https://images.unsplash.com/photo-1586023492125-27b2c045efd7?auto=format&fit=crop&w=1400&q=85',
-      alt: 'Illustrative placeholder: Warm, sunlit homelike sitting room designed for calm daily living and personal dignity',
+      src: '/images/property/sitting-nook-detail.webp',
+      alt: 'Sunlit sitting nook at Mission Villa with a Golden Gate Bridge mural',
       caption: 'Respectful, person-first relationships form the heart of Mission Villa in Daly City',
-      status: 'ILLUSTRATIVE — REPLACE BEFORE LAUNCH',
+      status: 'MISSION VILLA PROPERTY PHOTO',
     },
   },
   {
@@ -3709,7 +3718,7 @@ export const ABOUT_PHILOSOPHY_CHAPTERS: AboutPhilosophyChapter[] = [
     inquiryPresetNote:
       'Interested in how the Legacies™ Memory Care philosophy personalizes daily routines for new residents.',
     placeholderImage: {
-      src: 'https://images.unsplash.com/photo-1490750967868-88aa4486c946?auto=format&fit=crop&w=1400&q=85',
+      src: '/images/illustrative/life-create.webp',
       alt: 'Illustrative placeholder: Botanical florals and sensory table arrangement representing Legacies programming',
       caption: 'Tailoring daily engagement and gentle rhythms around personal life stories',
       status: 'ILLUSTRATIVE — REPLACE BEFORE LAUNCH',
@@ -3739,10 +3748,10 @@ export const ABOUT_PHILOSOPHY_CHAPTERS: AboutPhilosophyChapter[] = [
     inquiryPresetNote:
       'Exploring how Mission Villa partners with families transitioning from home caregiving.',
     placeholderImage: {
-      src: 'https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=1400&q=85',
-      alt: 'Illustrative placeholder: Sunlit residential lounge welcoming visiting family members',
+      src: '/images/property/community-lounge.webp',
+      alt: 'Mission Villa community lounge with armchairs, a sofa and natural light',
       caption: 'Warm, homelike gathering spaces where visiting relatives always feel welcome',
-      status: 'ILLUSTRATIVE — REPLACE BEFORE LAUNCH',
+      status: 'MISSION VILLA PROPERTY PHOTO',
     },
   },
   {
@@ -3769,10 +3778,10 @@ export const ABOUT_PHILOSOPHY_CHAPTERS: AboutPhilosophyChapter[] = [
     inquiryPresetNote:
       'Would love to tour Mission Villa in person to experience the homelike environment and dining spaces.',
     placeholderImage: {
-      src: 'https://images.unsplash.com/photo-1585320806297-9794b3e4eeae?auto=format&fit=crop&w=1400&q=85',
-      alt: 'Illustrative placeholder: Peaceful garden courtyard with greenery and sunlit seating',
+      src: '/images/property/courtyard-patio.webp',
+      alt: 'Mission Villa courtyard patio with umbrella tables and garden seating',
       caption: 'An intimate, residential setting at 995 East Market Street in Daly City',
-      status: 'ILLUSTRATIVE — REPLACE BEFORE LAUNCH',
+      status: 'MISSION VILLA PROPERTY PHOTO',
     },
   },
 ];
@@ -3795,10 +3804,10 @@ export const DALY_CITY_GEOGRAPHY_LANDMARKS: DalyCityGeographyLandmark[] = [
     inquiryPresetNote:
       'Looking for a Daly City Memory Care community near San Bruno Mountain; would like to schedule a visit.',
     placeholderImage: {
-      src: 'https://images.unsplash.com/photo-1585320806297-9794b3e4eeae?auto=format&fit=crop&w=1400&q=85',
-      alt: 'Illustrative placeholder: Sunlit California garden greenery and peaceful outdoor hillside atmosphere',
+      src: '/images/property/courtyard-patio.webp',
+      alt: 'Mission Villa courtyard patio with umbrella tables and garden seating',
       caption: 'Peaceful residential surroundings near the slopes of San Bruno Mountain',
-      status: 'ILLUSTRATIVE — REPLACE BEFORE LAUNCH',
+      status: 'MISSION VILLA PROPERTY PHOTO',
     },
   },
   {
@@ -3818,10 +3827,10 @@ export const DALY_CITY_GEOGRAPHY_LANDMARKS: DalyCityGeographyLandmark[] = [
     inquiryPresetNote:
       'Our family lives in the San Francisco / Peninsula area and would like directions and parking info for a tour.',
     placeholderImage: {
-      src: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1400&q=85',
-      alt: 'Illustrative placeholder: Welcoming residential entrance and sunlit patio for visiting families',
+      src: '/images/property/entrance.webp',
+      alt: 'Mission Villa entrance on East Market Street in Daly City',
       caption: 'Conveniently located at 995 East Market Street for San Francisco and Peninsula families',
-      status: 'ILLUSTRATIVE — REPLACE BEFORE LAUNCH',
+      status: 'MISSION VILLA PROPERTY PHOTO',
     },
   },
   {
@@ -3841,10 +3850,10 @@ export const DALY_CITY_GEOGRAPHY_LANDMARKS: DalyCityGeographyLandmark[] = [
     inquiryPresetNote:
       'Interested in learning about scheduled transportation and nearby Peninsula amenities.',
     placeholderImage: {
-      src: 'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=1400&q=85',
-      alt: 'Illustrative placeholder: Warm hospitality and dining setting reflecting Peninsula community life',
+      src: '/images/property/dining-room.webp',
+      alt: 'Mission Villa dining room with set tables and bright windows',
       caption: 'Close to everyday Daly City and Peninsula amenities, parks, and family conveniences',
-      status: 'ILLUSTRATIVE — REPLACE BEFORE LAUNCH',
+      status: 'MISSION VILLA PROPERTY PHOTO',
     },
   },
   {
@@ -3864,10 +3873,10 @@ export const DALY_CITY_GEOGRAPHY_LANDMARKS: DalyCityGeographyLandmark[] = [
     inquiryPresetNote:
       'Would love to ask about scenic drives and monthly activity calendars during our visit.',
     placeholderImage: {
-      src: 'https://images.unsplash.com/photo-1586023492125-27b2c045efd7?auto=format&fit=crop&w=1400&q=85',
-      alt: 'Illustrative placeholder: Bright residential lounge where residents gather before and after community activities',
+      src: '/images/property/sitting-nook-detail.webp',
+      alt: 'Sunlit sitting nook at Mission Villa with a Golden Gate Bridge mural',
       caption: 'Connecting residents with the familiar beauty of Daly City and the Peninsula',
-      status: 'ILLUSTRATIVE — REPLACE BEFORE LAUNCH',
+      status: 'MISSION VILLA PROPERTY PHOTO',
     },
   },
 ];
@@ -4681,7 +4690,7 @@ export interface FamilyInvolvementChapter {
     src: string;
     alt: string;
     caption: string;
-    status: 'ILLUSTRATIVE — REPLACE BEFORE LAUNCH';
+    status: ImageStatus;
   };
 }
 
@@ -4966,7 +4975,7 @@ export const FAMILY_INVOLVEMENT_CHAPTERS: FamilyInvolvementChapter[] = [
     reassuranceNote:
       'Your insights as spouse, son, daughter, or relative guide how our team connects with your loved one from day one.',
     placeholderImage: {
-      src: 'https://images.unsplash.com/photo-1576765608535-5f04d1e3f289?auto=format&fit=crop&w=1400&q=85',
+      src: '/images/illustrative/approach-main.webp',
       alt: 'Illustrative placeholder: Warm, unhurried conversation between family members and care staff',
       caption: 'Every transition begins with listening closely to your family’s knowledge and stories',
       status: 'ILLUSTRATIVE — REPLACE BEFORE LAUNCH',
@@ -4988,7 +4997,7 @@ export const FAMILY_INVOLVEMENT_CHAPTERS: FamilyInvolvementChapter[] = [
     reassuranceNote:
       'Whether in a Private Suite, Companion Unit, or Jack & Jill layout, personal touches honor identity and privacy.',
     placeholderImage: {
-      src: 'https://images.unsplash.com/photo-1616594039964-ae9021a400a0?auto=format&fit=crop&w=1400&q=85',
+      src: '/images/illustrative/care-respite.webp',
       alt: 'Illustrative placeholder: Sunlit residential suite personalized with warm bedding and home comforts',
       caption: 'Personalizing suites with familiar photographs, bedding, and keepsakes from home',
       status: 'ILLUSTRATIVE — REPLACE BEFORE LAUNCH',
@@ -5010,10 +5019,10 @@ export const FAMILY_INVOLVEMENT_CHAPTERS: FamilyInvolvementChapter[] = [
     reassuranceNote:
       'Conveniently located at 995 East Market Street in Daly City with on-site parking for visiting relatives.',
     placeholderImage: {
-      src: 'https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=1400&q=85',
-      alt: 'Illustrative placeholder: Welcoming sunlit lounge and garden setting for family visits',
+      src: '/images/property/community-lounge.webp',
+      alt: 'Mission Villa community lounge with armchairs, a sofa and natural light',
       caption: 'Inviting indoor lounges and outdoor courtyard spaces designed for relaxed family time',
-      status: 'ILLUSTRATIVE — REPLACE BEFORE LAUNCH',
+      status: 'MISSION VILLA PROPERTY PHOTO',
     },
   },
   {
@@ -5032,10 +5041,10 @@ export const FAMILY_INVOLVEMENT_CHAPTERS: FamilyInvolvementChapter[] = [
     reassuranceNote:
       'You never lose your voice in your loved one’s care—our team is here as your partner.',
     placeholderImage: {
-      src: 'https://images.unsplash.com/photo-1585320806297-9794b3e4eeae?auto=format&fit=crop&w=1400&q=85',
-      alt: 'Illustrative placeholder: Peaceful garden greenery symbolizing ongoing care and family peace of mind',
+      src: '/images/property/courtyard-patio.webp',
+      alt: 'Mission Villa courtyard patio with umbrella tables and garden seating',
       caption: 'Continuous communication and collaborative assessments that support the whole family',
-      status: 'ILLUSTRATIVE — REPLACE BEFORE LAUNCH',
+      status: 'MISSION VILLA PROPERTY PHOTO',
     },
   },
 ];
@@ -5826,7 +5835,7 @@ export interface LivingOptionOverviewCard {
     src: string;
     alt: string;
     caption: string;
-    status: 'ILLUSTRATIVE — REPLACE BEFORE LAUNCH';
+    status: ImageStatus;
   };
 }
 
@@ -5859,10 +5868,10 @@ export const LIVING_OPTIONS_OVERVIEW_CARDS: LivingOptionOverviewCard[] = [
     presetInquiryNote:
       'Exploring Living Options Overview: Interested in learning more about full-time Legacies™ Memory Care and touring available suites.',
     placeholderImage: {
-      src: 'https://images.unsplash.com/photo-1586023492125-27b2c045efd7?auto=format&fit=crop&w=1400&q=85',
-      alt: 'Illustrative placeholder: Warm, sunlit homelike living room designed for calm Memory Care routines',
+      src: '/images/property/sitting-nook-detail.webp',
+      alt: 'Sunlit sitting nook at Mission Villa with a Golden Gate Bridge mural',
       caption: 'Legacies™ Memory Care honors personal history, familiar routines, and family connection',
-      status: 'ILLUSTRATIVE — REPLACE BEFORE LAUNCH',
+      status: 'MISSION VILLA PROPERTY PHOTO',
     },
   },
   {
@@ -5893,7 +5902,7 @@ export const LIVING_OPTIONS_OVERVIEW_CARDS: LivingOptionOverviewCard[] = [
     presetInquiryNote:
       'Exploring Living Options Overview: Interested in short-term Respite Care stay availability, dates, and assessment steps.',
     placeholderImage: {
-      src: 'https://images.unsplash.com/photo-1576765608535-5f04d1e3f289?auto=format&fit=crop&w=1400&q=85',
+      src: '/images/illustrative/approach-main.webp',
       alt: 'Illustrative placeholder: Attentive, warm conversation with a senior guest in a bright residential setting',
       caption: 'Short-term Respite Care stays that support both older adults and dedicated family caregivers',
       status: 'ILLUSTRATIVE — REPLACE BEFORE LAUNCH',
@@ -5917,7 +5926,7 @@ export interface LivingOptionAccommodationHighlight {
     src: string;
     alt: string;
     caption: string;
-    status: 'ILLUSTRATIVE — REPLACE BEFORE LAUNCH';
+    status: ImageStatus;
   };
 }
 
@@ -5943,7 +5952,7 @@ export const LIVING_OPTIONS_ACCOMMODATION_HIGHLIGHTS: LivingOptionAccommodationH
       'Awaiting official floor plan — ask our Daly City team to walk you through available Private Suites during your visit.',
     inquirySuiteValue: 'Private Suite',
     placeholderImage: {
-      src: 'https://images.unsplash.com/photo-1616594039964-ae9021a400a0?auto=format&fit=crop&w=1400&q=85',
+      src: '/images/illustrative/care-respite.webp',
       alt: 'Illustrative placeholder: Peaceful, sunlit private bedroom suite with residential furnishings',
       caption: 'Private Suites offer quiet sanctuary ready for treasured family photographs and keepsakes',
       status: 'ILLUSTRATIVE — REPLACE BEFORE LAUNCH',
@@ -5970,10 +5979,10 @@ export const LIVING_OPTIONS_ACCOMMODATION_HIGHLIGHTS: LivingOptionAccommodationH
       'Awaiting official floor plan — ask our team about companion matching and current Companion Unit openings.',
     inquirySuiteValue: 'Shared Suite',
     placeholderImage: {
-      src: 'https://images.unsplash.com/photo-1598928506311-c55ded91a20c?auto=format&fit=crop&w=1400&q=85',
-      alt: 'Illustrative placeholder: Inviting shared residential living space with warm natural daylight',
+      src: '/images/property/bedroom.webp',
+      alt: 'A furnished suite bedroom at Mission Villa with natural light',
       caption: 'Companion Units balance friendly camaraderie with personal dignity and comfort',
-      status: 'ILLUSTRATIVE — REPLACE BEFORE LAUNCH',
+      status: 'MISSION VILLA PROPERTY PHOTO',
     },
   },
   {
@@ -5997,10 +6006,10 @@ export const LIVING_OPTIONS_ACCOMMODATION_HIGHLIGHTS: LivingOptionAccommodationH
       'Awaiting official floor plan — view Jack & Jill suite layouts in person at 995 East Market Street.',
     inquirySuiteValue: 'Shared Suite',
     placeholderImage: {
-      src: 'https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=1400&q=85',
-      alt: 'Illustrative placeholder: Bright residential suite interior with comfortable seating and warm finishes',
+      src: '/images/property/community-lounge.webp',
+      alt: 'Mission Villa community lounge with armchairs, a sofa and natural light',
       caption: 'Jack & Jill suites offer defined personal sleeping quarters with an adjoining private bath',
-      status: 'ILLUSTRATIVE — REPLACE BEFORE LAUNCH',
+      status: 'MISSION VILLA PROPERTY PHOTO',
     },
   },
 ];
@@ -6250,7 +6259,7 @@ export interface ResourceLibraryItem {
     src: string;
     alt: string;
     caption: string;
-    status: 'ILLUSTRATIVE — REPLACE BEFORE LAUNCH';
+    status: ImageStatus;
   };
 }
 
@@ -6284,10 +6293,10 @@ export const RESOURCE_LIBRARY_ITEMS: ResourceLibraryItem[] = [
     verificationNote:
       'CLIENT CONFIRMATION REQUIRED: Reconfirm legacy referral credit and state assistance mentions with Mission Villa leadership before launch.',
     placeholderImage: {
-      src: 'https://images.unsplash.com/photo-1586023492125-27b2c045efd7?auto=format&fit=crop&w=1400&q=85',
-      alt: 'Illustrative placeholder: Calm residential sitting area suitable for unhurried family planning conversations',
+      src: '/images/property/sitting-nook-detail.webp',
+      alt: 'Sunlit sitting nook at Mission Villa with a Golden Gate Bridge mural',
       caption: 'Transparent, assessment-informed financial planning without high-pressure sales',
-      status: 'ILLUSTRATIVE — REPLACE BEFORE LAUNCH',
+      status: 'MISSION VILLA PROPERTY PHOTO',
     },
   },
   {
@@ -6309,7 +6318,7 @@ export const RESOURCE_LIBRARY_ITEMS: ResourceLibraryItem[] = [
     secondaryHref: '/for-families#grouped-family-faqs',
     secondaryCtaLabel: 'Search All 12 Grouped FAQs',
     placeholderImage: {
-      src: 'https://images.unsplash.com/photo-1576765608535-5f04d1e3f289?auto=format&fit=crop&w=1400&q=85',
+      src: '/images/illustrative/approach-main.webp',
       alt: 'Illustrative placeholder: Warm, reassuring conversation between family and care staff',
       caption: 'Practical questions, tour preparation, and compassionate guidance for relatives',
       status: 'ILLUSTRATIVE — REPLACE BEFORE LAUNCH',
@@ -6336,10 +6345,10 @@ export const RESOURCE_LIBRARY_ITEMS: ResourceLibraryItem[] = [
     verificationNote:
       'CLIENT CONFIRMATION & ASSET REQUIRED: Supply final approved Mission Villa PDF brochure and floor-plan inserts before production launch.',
     placeholderImage: {
-      src: 'https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=1400&q=85',
-      alt: 'Illustrative placeholder: Sunlit communal reading lounge and archival table setting',
+      src: '/images/property/community-lounge.webp',
+      alt: 'Mission Villa community lounge with armchairs, a sofa and natural light',
       caption: 'Request printed program guides and sample calendars for your Daly City visit',
-      status: 'ILLUSTRATIVE — REPLACE BEFORE LAUNCH',
+      status: 'MISSION VILLA PROPERTY PHOTO',
     },
   },
   {
@@ -6363,7 +6372,7 @@ export const RESOURCE_LIBRARY_ITEMS: ResourceLibraryItem[] = [
     verificationNote:
       'CLIENT CONFIRMATION REQUIRED: Inventory and approve extant articles from https://missionvillaseniorliving.com/ prior to activating /blog.',
     placeholderImage: {
-      src: 'https://images.unsplash.com/photo-1490750967868-88aa4486c946?auto=format&fit=crop&w=1400&q=85',
+      src: '/images/illustrative/life-create.webp',
       alt: 'Illustrative placeholder: Botanical study representing careful archival curation',
       caption: 'Every published resource is grounded in verified community offerings, never filler copy',
       status: 'ILLUSTRATIVE — REPLACE BEFORE LAUNCH',
@@ -6388,7 +6397,7 @@ export const RESOURCE_LIBRARY_ITEMS: ResourceLibraryItem[] = [
     secondaryHref: '/memory-care',
     secondaryCtaLabel: 'Explore Legacies™ Memory Care',
     placeholderImage: {
-      src: 'https://images.unsplash.com/photo-1616594039964-ae9021a400a0?auto=format&fit=crop&w=1400&q=85',
+      src: '/images/illustrative/care-respite.webp',
       alt: 'Illustrative placeholder: Peaceful residential suite interior with warm natural light',
       caption: 'Clear comparison of our two dedicated care offerings and suite layouts',
       status: 'ILLUSTRATIVE — REPLACE BEFORE LAUNCH',
@@ -6413,7 +6422,7 @@ export const RESOURCE_LIBRARY_ITEMS: ResourceLibraryItem[] = [
     secondaryHref: '/life-at-mission-villa',
     secondaryCtaLabel: 'Explore Life at Mission Villa',
     placeholderImage: {
-      src: 'https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=1400&q=85',
+      src: '/images/illustrative/hero-life.webp',
       alt: 'Illustrative placeholder: Freshly prepared meal served in a welcoming community dining room',
       caption: 'Practical everyday services and welcoming spaces in Daly City',
       status: 'ILLUSTRATIVE — REPLACE BEFORE LAUNCH',

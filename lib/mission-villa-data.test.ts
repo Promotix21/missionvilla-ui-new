@@ -1,5 +1,13 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+
+// Authentic property photos must be labelled as such; everything else stays marked illustrative.
+function assertProvenance(image: { src: string; status: string }) {
+  const expected = image.src.startsWith('/images/property/')
+    ? 'MISSION VILLA PROPERTY PHOTO'
+    : 'ILLUSTRATIVE — REPLACE BEFORE LAUNCH';
+  assert.equal(image.status, expected, image.src);
+}
 import {
   MISSION_VILLA_FACTS,
   CARE_PROGRAMS,
@@ -172,10 +180,10 @@ test('Memory Care page data includes 3 storyboard scenes, 3 suite formats, and 7
 
   // Every placeholder image must be explicitly marked ILLUSTRATIVE — REPLACE BEFORE LAUNCH
   for (const scene of MEMORY_CARE_STORYBOARD) {
-    assert.equal(scene.placeholderImage.status, 'ILLUSTRATIVE — REPLACE BEFORE LAUNCH');
+    assertProvenance(scene.placeholderImage);
   }
   for (const suite of MEMORY_CARE_SUITE_FORMATS) {
-    assert.equal(suite.placeholderImage.status, 'ILLUSTRATIVE — REPLACE BEFORE LAUNCH');
+    assertProvenance(suite.placeholderImage);
   }
 });
 
@@ -188,7 +196,7 @@ test('Respite Care page data includes scenarios, 6 service tiles, stay chapters,
 
   // Every stay chapter image must be marked ILLUSTRATIVE — REPLACE BEFORE LAUNCH
   for (const chapter of RESPITE_STAY_CHAPTERS) {
-    assert.equal(chapter.placeholderImage.status, 'ILLUSTRATIVE — REPLACE BEFORE LAUNCH');
+    assertProvenance(chapter.placeholderImage);
   }
 
   // Every timeline step must explicitly label itself as an example workflow
@@ -211,17 +219,17 @@ test('Life at Mission Villa page data includes 4 photo-led chapters, curated day
 
   // Verify placeholder image statuses
   for (const chapter of LIFESTYLE_STORY_CHAPTERS) {
-    assert.equal(chapter.primaryImage.status, 'ILLUSTRATIVE — REPLACE BEFORE LAUNCH');
+    assertProvenance(chapter.primaryImage);
   }
   for (const moment of CURATED_DAY_ILLUSTRATION) {
-    assert.equal(moment.placeholderImage.status, 'ILLUSTRATIVE — REPLACE BEFORE LAUNCH');
+    assertProvenance(moment.placeholderImage);
     assert.ok(
       moment.illustrationDisclaimer.toLowerCase().includes('curated day-in-the-life illustration'),
       `Moment ${moment.id} must state it is an illustration, not a fixed timetable`
     );
   }
   for (const plate of EDITORIAL_GALLERY_BAND_PLATES) {
-    assert.equal(plate.placeholderImage.status, 'ILLUSTRATIVE — REPLACE BEFORE LAUNCH');
+    assertProvenance(plate.placeholderImage);
   }
 });
 
@@ -234,7 +242,7 @@ test('Services & Amenities page data covers all 5 blueprint categories, 18 origi
   assert.equal(ASK_US_ABOUT_DISCLOSURES.length, 4);
 
   for (const cat of SERVICES_AMENITIES_CATEGORIES) {
-    assert.equal(cat.editorialPairingImage.status, 'ILLUSTRATIVE — REPLACE BEFORE LAUNCH');
+    assertProvenance(cat.editorialPairingImage);
   }
 
   // Filter by category
@@ -277,14 +285,11 @@ test('Suites & Floor Plans page data covers named formats, honest floor-plan pla
   for (const format of OFFICIAL_FLOOR_PLAN_FORMATS) {
     assert.equal(format.diagramAssetStatus, 'Awaiting official floor plan');
     assert.equal(format.officialDiagramPath, null);
-    assert.equal(
-      format.placeholderPreviewImage.status,
-      'ILLUSTRATIVE — REPLACE BEFORE LAUNCH'
-    );
+    assertProvenance(format.placeholderPreviewImage);
   }
 
   for (const plate of SUITE_ACCOMMODATION_GALLERY_PLATES) {
-    assert.equal(plate.placeholderImage.status, 'ILLUSTRATIVE — REPLACE BEFORE LAUNCH');
+    assertProvenance(plate.placeholderImage);
   }
 
   // Pure category filter verification
@@ -318,11 +323,11 @@ test('Gallery & Virtual Tour page data covers 5 blueprint categories, 10 masonry
 
   // Every gallery plate and virtual tour stop must explicitly carry 'ILLUSTRATIVE — REPLACE BEFORE LAUNCH'
   for (const plate of GALLERY_PHOTO_PLATES) {
-    assert.equal(plate.placeholderImage.status, 'ILLUSTRATIVE — REPLACE BEFORE LAUNCH');
+    assertProvenance(plate.placeholderImage);
     assert.ok(plate.editorialCaption.length > 20);
   }
   for (const stop of VIRTUAL_TOUR_STOPS) {
-    assert.equal(stop.placeholderImage.status, 'ILLUSTRATIVE — REPLACE BEFORE LAUNCH');
+    assertProvenance(stop.placeholderImage);
   }
 
   // Filter by each category
@@ -347,10 +352,10 @@ test('About Us page data covers 4 philosophy chapters, Daly City / San Bruno Mou
   assert.equal(ABOUT_PET_POLICY_NOTE.verificationStatus, 'CLIENT CONFIRMATION REQUIRED');
 
   for (const chapter of ABOUT_PHILOSOPHY_CHAPTERS) {
-    assert.equal(chapter.placeholderImage.status, 'ILLUSTRATIVE — REPLACE BEFORE LAUNCH');
+    assertProvenance(chapter.placeholderImage);
   }
   for (const landmark of DALY_CITY_GEOGRAPHY_LANDMARKS) {
-    assert.equal(landmark.placeholderImage.status, 'ILLUSTRATIVE — REPLACE BEFORE LAUNCH');
+    assertProvenance(landmark.placeholderImage);
   }
 
   // Verify San Bruno Mountain is explicitly featured in the local geography narrative
@@ -500,7 +505,7 @@ test('Page 09 For Families / FAQs data and pure helper functions obey guardrails
 
   // Verify all chapter images are explicitly marked ILLUSTRATIVE — REPLACE BEFORE LAUNCH
   for (const ch of FAMILY_INVOLVEMENT_CHAPTERS) {
-    assert.equal(ch.placeholderImage.status, 'ILLUSTRATIVE — REPLACE BEFORE LAUNCH');
+    assertProvenance(ch.placeholderImage);
   }
 });
 
@@ -589,7 +594,7 @@ test('Page 11 Living Options Overview data and pure helpers strictly compare Mem
 
   // Verify placeholder images are marked ILLUSTRATIVE — REPLACE BEFORE LAUNCH
   for (const card of LIVING_OPTIONS_OVERVIEW_CARDS) {
-    assert.equal(card.placeholderImage.status, 'ILLUSTRATIVE — REPLACE BEFORE LAUNCH');
+    assertProvenance(card.placeholderImage);
   }
 
   // Verify comparison categories and rows
@@ -614,7 +619,7 @@ test('Page 11 Living Options Overview data and pure helpers strictly compare Mem
   // Verify 3 accommodation highlights (Private Suite, Companion Unit, Jack & Jill)
   assert.equal(LIVING_OPTIONS_ACCOMMODATION_HIGHLIGHTS.length, 3);
   for (const acc of LIVING_OPTIONS_ACCOMMODATION_HIGHLIGHTS) {
-    assert.equal(acc.placeholderImage.status, 'ILLUSTRATIVE — REPLACE BEFORE LAUNCH');
+    assertProvenance(acc.placeholderImage);
     assert.ok(acc.floorPlanNotice.includes('Awaiting official floor plan'));
   }
   assert.equal(
@@ -658,7 +663,7 @@ test('Page 12 Resources Overview data and pure helpers enforce blog & brochure g
 
   // Every resource library item placeholder image must be marked ILLUSTRATIVE — REPLACE BEFORE LAUNCH
   for (const item of RESOURCE_LIBRARY_ITEMS) {
-    assert.equal(item.placeholderImage.status, 'ILLUSTRATIVE — REPLACE BEFORE LAUNCH');
+    assertProvenance(item.placeholderImage);
   }
 
   // Verify core Page 12 brief items exist: Financial Planning, Family FAQs, Brochure placeholder, and Blog inventory status

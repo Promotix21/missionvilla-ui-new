@@ -409,14 +409,14 @@ export default function ContactPage() {
                   <div className="relative w-full h-56 sm:h-full min-h-[240px] botanical-arch overflow-hidden bg-[#22122B] border border-[#D8C7A5]">
                     {/* REPLACEABLE ILLUSTRATIVE PLACEHOLDER PHOTO */}
                     <img
-                      src="https://images.unsplash.com/photo-1585320806297-9794b3e4eeae?auto=format&fit=crop&w=1200&q=85"
-                      alt="Illustrative placeholder: Welcoming sunlit garden pathway and residential courtyard entrance"
+                      src="/images/property/courtyard-patio.webp"
+                      alt="Mission Villa courtyard patio with umbrella tables and garden seating"
                       referrerPolicy="no-referrer"
                       className="w-full h-full object-cover"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-[#22122B]/85 via-[#22122B]/25 to-transparent" />
                     <div className="absolute top-3 left-1/2 -translate-x-1/2 px-2.5 py-1 rounded-full bg-[#22122B]/85 border border-[#D8C7A5]/40 text-[9px] font-semibold uppercase tracking-wider text-[#D8C7A5] whitespace-nowrap">
-                      ILLUSTRATIVE — REPLACE BEFORE LAUNCH
+                      MISSION VILLA · PROPERTY PHOTO
                     </div>
                     <div className="absolute bottom-3 inset-x-3 text-[#F7F4ED]">
                       <span className="text-[10px] uppercase tracking-[0.18em] text-[#8FAF78] font-semibold block">
@@ -1497,14 +1497,14 @@ export default function ContactPage() {
                       <div className="relative w-full h-64 sm:h-72 rounded-2xl overflow-hidden bg-[#22122B] border border-[#D8C7A5]">
                         {/* REPLACEABLE ILLUSTRATIVE PLACEHOLDER PHOTO */}
                         <img
-                          src="https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=1400&q=85"
-                          alt="Illustrative placeholder: Welcoming residential sitting room and garden view in Daly City"
+                          src="/images/property/community-lounge.webp"
+                          alt="Mission Villa community lounge with armchairs, a sofa and natural light"
                           referrerPolicy="no-referrer"
                           className="w-full h-full object-cover"
                         />
                         <div className="absolute inset-0 bg-gradient-to-t from-[#22122B]/90 via-[#22122B]/35 to-transparent" />
                         <div className="absolute top-3 left-3 px-3 py-1 rounded-full bg-[#22122B]/85 border border-[#D8C7A5]/40 text-[10px] font-semibold uppercase tracking-wider text-[#D8C7A5]">
-                          ILLUSTRATIVE — REPLACE BEFORE LAUNCH
+                          MISSION VILLA · PROPERTY PHOTO
                         </div>
                         <div className="absolute bottom-4 inset-x-4 text-[#F7F4ED] flex flex-wrap items-end justify-between gap-3">
                           <div>

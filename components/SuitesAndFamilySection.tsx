@@ -128,7 +128,7 @@ export default function SuitesAndFamilySection({
                 {activeSpace.title}
               </h3>
               <p className="text-[11px] text-[#F7F4ED]/75">
-                Illustrative placeholder photography · Schedule an in-person tour in Daly City to view our actual suites and living areas.
+                Mission Villa property photography with select illustrative imagery · Schedule an in-person tour in Daly City to view our actual suites and living areas.
               </p>
             </div>
           </div>

@@ -36,6 +36,7 @@ import {
   type SuiteGalleryFilterCategory,
   type OfficialFloorPlanFormatSpec,
   type VisitInquiryInput,
+  imageCreditLabel,
 } from '@/lib/mission-villa-data';
 
 const GALLERY_CATEGORIES: SuiteGalleryFilterCategory[] = [
@@ -322,7 +323,7 @@ export default function SuitesAndFloorPlansPage() {
                     Calm, Sunlit Accommodations Built Around Dignity
                   </h2>
                   <p className="text-[11px] text-[#F7F4ED]/75">
-                    Illustrative photography — replace before launch with official Mission Villa suite photos.
+                    {imageCreditLabel(SUITE_ACCOMMODATION_GALLERY_PLATES[0].placeholderImage.status)} · additional official suite photography to follow.
                   </p>
                 </div>
               </div>
@@ -407,7 +408,7 @@ export default function SuitesAndFloorPlansPage() {
                 Inside Our Private &amp; Companion Living Spaces
               </h2>
               <p className="text-sm sm:text-base text-[#29272B]/80 leading-relaxed pt-1">
-                Select any accommodation plate below to inspect larger imagery and spatial notes in our interactive lightbox. All current photographs are marked as illustrative placeholders to be replaced with official Mission Villa suite photography before launch.
+                Select any accommodation plate below to inspect larger imagery and spatial notes in our interactive lightbox. Each plate is labelled as either a Mission Villa property photograph or illustrative imagery awaiting official suite photography.
               </p>
             </div>
 
@@ -1091,7 +1092,7 @@ export default function SuitesAndFloorPlansPage() {
                   </div>
 
                   <div className="absolute bottom-3 right-3 px-2.5 py-1 rounded-md bg-black/50 backdrop-blur-sm text-[10px] text-[#F7F4ED]/85">
-                    Illustrative photo
+                    {imageCreditLabel(space.placeholderImage.status)}
                   </div>
                 </div>
 
